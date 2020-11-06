@@ -66,27 +66,3 @@ class TestCommands(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    #
-    # folder = r'C:\Program Files\nextnano\2020_07_31'
-    # config = {
-    #     'exe': os.path.join(folder, 'nextnano++', 'bin 64bit', 'nextnano++_Intel_64bit.exe'),
-    #     'license': os.path.join(r'C:\Users\jun-liang.wang\Documents\nextnano\License', 'License_nnp.lic'),
-    #     'database': os.path.join(folder, 'nextnano++', 'Syntax', 'database_nnp.in'),
-    #     'outputdirectory': r'E:\junliang.wang\nextnano\Output',
-    #     'threads': 4,
-    # }
-    # inputfile = r'E:\junliang.wang\OneDrive\Jobs\PhD\Scripts\nextnano\inputs\Example_5.in'
-    # cmd = command(inputfile,**config)
-    # print(cmd)
-    # execute(inputfile=inputfile,**config)
-    #
-    folder = r'C:\Program Files\nextnano\2020_07_31'
-    config = {
-        'exe': os.path.join(folder, 'nextnano3', 'Intel 64bit', 'nextnano3_Intel_64bit.exe'),
-        'license': os.path.join(r'C:\Users\jun-liang.wang\Documents\nextnano\License', 'License_nnp.lic'),
-        'database': os.path.join(folder, 'nextnano3', 'Syntax', 'database_nn3.in'),
-        'outputdirectory': r'E:\junliang.wang\nextnano\Output',
-        'threads': 4,
-    }
-    inputfile = os.path.join(os.getcwd(),folder_nn3,'example.in')
-    p=execute(inputfile=inputfile,**config)

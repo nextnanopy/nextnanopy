@@ -42,7 +42,4 @@ class TestMisc(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # name = find_unused_name('ex', ['ex.in', 'ex_2.in'], '.in',max_idx=True)
-    # print(name)
     unittest.main()
-    # pass

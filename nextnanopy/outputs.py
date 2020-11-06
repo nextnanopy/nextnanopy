@@ -2,11 +2,11 @@ import os
 from itertools import islice
 import numpy as np
 
-from .utils.datasets import Variable, Coord, InputVariable_nn3, InputVariable_nnp
-from .utils.mycollections import DictList
+from nextnanopy.utils.datasets import Variable, Coord, InputVariable_nn3, InputVariable_nnp
+from nextnanopy.utils.mycollections import DictList
 
-from .utils.formatting import is_nn3_variable, is_nnp_variable
-from .utils.formatting import parse_nn3_variable, parse_nnp_variable
+from nextnanopy.utils.formatting import is_nn3_variable, is_nnp_variable
+from nextnanopy.utils.formatting import parse_nn3_variable, parse_nnp_variable
 
 
 def load_message(method):
@@ -43,7 +43,7 @@ class Output(object):
         pass
 
 
-class Datafile(Output):
+class DataFile(Output):
     def __init__(self, fullpath):
         super().__init__(fullpath)
         self.load()

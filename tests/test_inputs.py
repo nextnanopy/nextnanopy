@@ -149,9 +149,4 @@ class Test_nn3(unittest.TestCase):
         os.remove(file.fullpath)
 
 if __name__ == '__main__':
-    #
-    # _folder = folder_nn3
-    # fullpath = os.path.join(_folder, 'only_variables.in')
-    # is_nn3_input_file(fullpath)
-    # f = InputFile(fullpath)
     unittest.main()

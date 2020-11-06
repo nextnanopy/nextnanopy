@@ -6,7 +6,7 @@ import shapely
 import shapely.geometry
 import shapely.ops
 from collections import OrderedDict
-from .utils.formatting import InputAssistant
+from nextnanopy.utils.formatting import InputAssistant
 
 units_factor = {
     'nm': 1e-9,

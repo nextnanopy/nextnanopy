@@ -2,8 +2,8 @@ import sys, os
 import subprocess
 import queue
 import threading
-from .utils.misc import get_filename, mkdir_if_not_exist
-from .utils.formatting import is_nn3_input_file, is_nnp_input_file
+from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
+from nextnanopy.utils.formatting import is_nn3_input_file, is_nnp_input_file
 from collections import OrderedDict
 
 

@@ -60,7 +60,4 @@ class TestShapes(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    fullpath = os.path.join(folder, 'example2.gds')
-    g = GdsPolygons(fullpath)
-    obs = g.get_obelisks(1, 2)
     unittest.main()

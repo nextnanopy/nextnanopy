@@ -1,12 +1,12 @@
-from .utils.formatting import text_to_lines, lines_to_text, input_file_type
-from .utils.formatting import is_nn3_variable, is_nnp_variable
-from .utils.formatting import parse_nn3_variable, parse_nnp_variable
+from nextnanopy.utils.formatting import text_to_lines, lines_to_text, input_file_type
+from nextnanopy.utils.formatting import is_nn3_variable, is_nnp_variable
+from nextnanopy.utils.formatting import parse_nn3_variable, parse_nnp_variable
 
-from .utils.mycollections import DictList
-from .utils.misc import savetxt
+from nextnanopy.utils.mycollections import DictList
+from nextnanopy.utils.misc import savetxt
+from nextnanopy.utils.datasets import InputVariable_nnp, InputVariable_nn3
+from nextnanopy.utils.config import NNConfig
 from .commands import execute as cmd_execute
-from .utils.datasets import InputVariable_nnp, InputVariable_nn3
-from .utils.config import NNConfig
 
 
 class InputFile(object):
@@ -46,6 +46,10 @@ class InputFile(object):
     def default_command_args(self):
         return self.config.config[self.type]
 
+    @property
+    def configpath(self):
+        return self.config.fullpath
+
     def find_type(self):
         self.type = input_file_type(self.fullpath)
         return self.type
@@ -62,7 +66,9 @@ class InputFile(object):
         self.load_raw()
         self.load_variables()
 
-    def save(self, fullpath, overwrite=False, automkdir=True):
+    def save(self, fullpath='', overwrite=False, automkdir=True):
+        if fullpath:
+            fullpath = self.fullpath
         self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
         return self.fullpath
 
@@ -107,3 +113,4 @@ class InputFile(object):
         if comment:
             self.variables[name].comment = comment
         return self.variables[name]
+

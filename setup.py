@@ -3,9 +3,11 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+opt_pkgs = ["gdspy", "Shapely", "matplotlib", "cycler"]
+
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.0-a.1",
+    version="0.1.0a.1",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',
@@ -14,7 +16,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords="nextnano",
     url="https://github.com/**",
-    packages=['nextnanopy'],
+    packages=setuptools.find_packages(),
     package_dir={"nextnanopy": "nextnanopy"},
     classifiers=[
         "Programming Language :: Python :: 3",
