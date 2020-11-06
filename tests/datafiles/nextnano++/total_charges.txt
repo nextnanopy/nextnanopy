@@ -1,0 +1,6 @@
+electron: -2.910148e+11  e/cm^2
+hole:     +0.000000e+00  e/cm^2
+donor:    +1.778903e+12  e/cm^2
+acceptor: -1.492000e+12  e/cm^2
+fixed:    0.000000e+00  e/cm^2
+total:    -4.111736e-19  e/cm^2

@@ -1,0 +1,664 @@
+!--------------------------------------------------------------------------------------------------
+! Fig. 4 and Fig. 5 include a 2DHG, i.e. the simulations including a GaN cap layer require a 2DHG.
+!--------------------------------------------------------------------------------------------------
+
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! For simulations without GaN cap layer (Fig. 2, Fig. 3 and Fig. 7)
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ %Ignore2DHG             = yes                                                ! ignore 2DHG                                      (DoNotShowInUserInterface)
+ %GaNClusterNumbers      = 4 5                                                ! GaN regions                                      (DoNotShowInUserInterface)
+ %AirRegionNumbers       =     6 7 8                                          ! air regions (8 = default region)                 (DoNotShowInUserInterface)
+
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+! For simulations including GaN cap layer  (Fig. 4 and Fig. 5)
+!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!%Ignore2DHG             = no                                                 ! ignore 2DHG                                      (DoNotShowInUserInterface)
+!%GaNClusterNumbers      = 4 5   7                                            ! GaN regions                                      (DoNotShowInUserInterface)
+!%AirRegionNumbers       =     6   8   cluster-number = 7  region-numbers = 7 ! air regions (8 = default region) and GaN cluster (DoNotShowInUserInterface)
+
+!***************************************************************************!
+! Input file for nextnano3 software. (c) nextnano GmbH
+!
+! This input file simulates the 2DEG of an AlGaN/GaN field effect transistor.
+!
+! The structure is described in this tutorial:
+!    Two-dimensional electron gas in an AlGaN/GaN field effect transistor
+!    https://www.nextnano.com/nextnano3/tutorial/1Dtutorial_AlGaN_GaN_FET.htm
+!
+! It is based on the following publication:
+!    [Jogai2003]
+!    Influence of surface states on the two-dimensional electron gas in AlGaN/GaN heterojunction field-effect transistors
+!    B. Jogai
+!    J. Appl. Phys. 93, 1631 (2003)
+!
+! Note: We apologize that this input file looks very complicated and nonintuitive.
+!       However, we wanted to pack both simulations, i.e. the one without (a) and
+!       the one including the GaN cap layer (b) into one file so that we only have to
+!       adjust the input file at the top lines in order to simulate either a) or b).
+!
+!***************************************************************************!
+
+!---------------------------------------------------------------------------------------------------------------------------------------
+! For Fig. 2 and Fig. 3 we apply an alloy sweep in order to calculate the 2DEG charge density as a function of the AlGaN mole fraction.
+!---------------------------------------------------------------------------------------------------------------------------------------
+ %AlloySweepActive       = no       ! 'yes'/'no', (Fig. 4, Fig. 7: no) sweep alloy concentration from 0.4 to 0.0
+!%AlloySweepActive       = yes      ! 'yes'/'no',                      sweep alloy concentration from 0.4 to 0.0
+
+ %FunctionParser         = yes      ! From now on, variables are not treated as strings any more but as floating point numbers. (DoNotShowInUserInterface)
+
+!++++++++++++++++++++++++++++++++
+ %AlloyContent           = 0.3      ! alloy content, for Fig. 7 and for GaN cap simulation (Fig. 4, Fig. 5, Fig. 6)  (DisplayUnit:)(RangeOfValues:From=0.4,To=0.0,Step=-0.05)
+!%AlloyContent           = 0.4      ! alloy content, for simulations without GaN cap (Fig. 2, Fig. 3)                (DisplayUnit:)(RangeOfValues:From=0.4,To=0.0,Step=-0.05)(HighlightInUserInterface)
+!++++++++++++++++++++++++++++++++
+
+!-------------------
+! Layer thicknesses
+!-------------------
+
+!------------------------------------------------------------------------------------------------------------------------------
+! For simulations without GaN cap, the thickness of the GaN cap is not relevant, therefore we use  (DoNotShowInUserInterface).
+!------------------------------------------------------------------------------------------------------------------------------
+!++++++++++++++++++++++++++++++++
+ %ThicknessGaNcap        =  5.0 ! thickness of GaN cap layer for GaN cap simulation (Fig. 4, Fig. 5), (ListOfValues:1,2,3,4,5,7,9,11,12,13,14,15,17,20,25,30)(DisplayUnit:nm)(HighlightInUserInterface)(DoNotShowInUserInterface)
+!%ThicknessGaNcap        =  5.0 ! thickness of GaN cap layer for GaN cap simulation (Fig. 4, Fig. 5), (ListOfValues:1,2,3,4,5,7,9,11,12,13,14,15,17,20,25,30)(DisplayUnit:nm)(HighlightInUserInterface)
+!%ThicknessGaNcap        = 14.0 ! thickness of GaN cap layer for GaN cap simulation (Fig. 6),         (ListOfValues:1,2,3,4,5,7,9,11,12,13,14,15,17,20,25,30)(DisplayUnit:nm)(HighlightInUserInterface)
+!++++++++++++++++++++++++++++++++
+
+!++++++++++++++++++++++++++++++++
+!%ThicknessAlGaN         = 30.0 ! thickness of AlGaN spacer, for Fig. 7 and for GaN cap simulation ==> 30 nm (Fig. 4, Fig. 5, Fig. 6), (ListOfValues:6,10,14,18,22,26,30,34,38,40)(DisplayUnit:nm)(HighlightInUserInterface)
+ %ThicknessAlGaN         = 30.0 ! thickness of AlGaN spacer, for Fig. 7 and for GaN cap simulation ==> 30 nm (Fig. 4, Fig. 5, Fig. 6), (ListOfValues:6,10,14,18,22,26,30,34,38,40)(DisplayUnit:nm)
+!++++++++++++++++++++++++++++++++
+
+!---------------------------------------------------------------------------------------------------
+!  [Jogai2003] assumes the Schottky barrier height to be fixed at 1.4 V, reached after convergence.
+!  [Jogai2003] assumes the E_c - E_d = 1.4 V.
+! ([Jogai2003] assumes the E_c - E_F = 1.42 V.)
+! Note that for Fig. 7, we have to sweep the Schottky barrier height using "RangeOfValues:...".
+!---------------------------------------------------------------------------------------------------
+!++++++++++++++++++++++++++++++++
+ %SchottkyBarrierHeight  = 1.4                               ! Schottky barrier height phi_B = E_c - E_F, used by [Jogai2003], see p. 1634, column 1    (ListOfValues:1.40,1.42,1.65)(RangeOfValues:From=0.0,To=4.0,Step=0.25)(DisplayUnit:V)(HighlightInUserInterface)
+!%SchottkyBarrierHeight  = 1.42                              ! Schottky barrier height phi_B = E_c - E_F, suggested for   MBE-grown samples [Jogai2003] (ListOfValues:1.40,1.42,1.65)(RangeOfValues:From=0.0,To=4.0,Step=0.25)(DisplayUnit:V)(HighlightInUserInterface)
+!%SchottkyBarrierHeight  = 1.65                              ! Schottky barrier height phi_B = E_c - E_F, suggested for MOCVD-grown samples [Jogai2003] (ListOfValues:1.40,1.42,1.65)(RangeOfValues:From=0.0,To=4.0,Step=0.25)(DisplayUnit:V)(HighlightInUserInterface)
+!++++++++++++++++++++++++++++++++
+
+ %xmin                   = - (1.0 + %ThicknessGaNcap)        ! minimum coordinate of whole structure (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %xmax                   = 70.0                              ! maximum coordinate of whole structure, [Jogai2003] uses 70 nm (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %ymin                   = 0.0                               ! minimum coordinate of whole structure along y direction (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %ymax                   = 5.0                               ! maximum coordinate of whole structure along y direction (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+ %MiddleGaNcap           =  %ThicknessGaNcap / 2             ! middle of GaN cap layer      (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %MiddleAlGaN            =  %ThicknessAlGaN  / 4             ! middle of AlGaN layer / 4    (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+!---------------
+! Grid spacings
+!---------------
+ %Spacing_QR             = 0.2                               ! grid spacing in quantum region (DisplayUnit:nm)(DoNotShowInUserInterface)
+ %Spacing_general        = 0.5 ! 1.0                         ! grid spacing elsewhere         (DisplayUnit:nm)(DoNotShowInUserInterface)
+
+!-------------------------------------------
+! Define coordinate of 2DEG quantum region.
+!-------------------------------------------
+ %QR_width_2DEG          = 24.0                                    ! width of quantum region of 2DEG (DisplayUnit:nm)(DoNotShowInUserInterface)
+ %QRLeft_2DEG            = %ThicknessAlGaN - %QR_width_2DEG * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %QRRight_2DEG           = %ThicknessAlGaN + %QR_width_2DEG * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+!-------------------------------------------
+! Define coordinate of 2DHG quantum region.
+!-------------------------------------------
+ %QRLeft_2DHG            = -%MiddleGaNcap * 1.5                    ! minimum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+ %QRRight_2DHG           =  %MiddleAlGaN  * 4/10                   ! maximum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+ %Temperature            = 300                                     ! temperature, [Jogai2003]: 300 K (DisplayUnit:K)
+
+ !----------------------------------------------------------------------------
+ ! If you need an integer, then call the variable '%INT(<name>)'.
+ !----------------------------------------------------------------------------
+ %INT(Nodes_Surface)       =  %MiddleGaNcap                 /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_QR_2DHG_GaN)   =  %MiddleGaNcap                 /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_QR_2DHG_AlGaN) =  %MiddleAlGaN                  /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-%MiddleAlGaN)    /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_QR_2DEG_AlGaN) = (%ThicknessAlGaN-%QRLeft_2DEG) /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-%ThicknessAlGaN)/%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodes_substrate)     = (%xmax-%QRRight_2DEG)          /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+ %INT(Nodesy)              = (%ymax-%ymin)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+
+!****** OVERALL SIMULATION PARAMETERS **************************************!
+
+!---------------------------------------------------------------------------!
+! orientation specifies the axes which are simulated                        !
+! e.g. in 1D, 0 0 1 means along z axis                                      !
+!---------------------------------------------------------------------------!
+$simulation-dimension                                                       !
+ dimension   = 2                                                            !
+ orientation = 1 1 0                                                        !
+$end_simulation-dimension                                                   !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$numeric-control                                                            !
+ simulation-dimension  = 2                                                  !
+ varshni-parameters-on = yes                                                ! Use temperature dependent band gaps.
+
+!zero-potential        = yes                                                ! Set initial electrostatic potential to 0 V.
+ zero-potential        = no                                                 !
+
+!use-band-gaps         = no    ! default setting of nextnano3               ! use 'conduction-band-energies' of material parameters (default)
+ use-band-gaps         = yes   ! to be consistent with nextnano++           ! use 'band-gaps'                of material parameters
+
+!schroedinger-masses-anisotropic = box                                      !
+!schroedinger-masses-anisotropic = 1D                                       !
+!schroedinger-masses-anisotropic = no                                       !
+!schroedinger-masses-anisotropic = yes                                      !
+
+ newton-method         = Newton-1
+
+$end_numeric-control                                                        !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$global-parameters                                                          !
+!lattice-temperature =   1d0                                                ! Kelvin
+!lattice-temperature = 300d0                                                ! Kelvin
+ lattice-temperature = %Temperature                                         ! Kelvin
+$end_global-parameters                                                      !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! Flow control is the possibility to control the actual computation.        !
+!---------------------------------------------------------------------------!
+$simulation-flow-control                                                    !
+!flow-scheme         = 0                                                    ! do (almost) nothing
+ flow-scheme         = 2                                                    ! self-consistent Schroedinger-Poisson
+!flow-scheme         = 3                                                    ! solve Schroedinger equation
+!strain-calculation  = no-strain                                            !
+ strain-calculation  = homogeneous-strain                                   !
+$end_simulation-flow-control                                                !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! The domain type in 1D usually is 0 0 1 which means that the simulated     !
+! dimension is the 0 0 1 axis.                                              !
+! z-coordinates specify the size of the simulated region in [nm].           !
+! pseudomorphic-on specifies the substrate material and therefore           !
+! determines strain.                                                        !
+!---------------------------------------------------------------------------!
+$domain-coordinates                                                         !
+ domain-type            = 1 0 0                                             !
+ x-coordinates          = %xmin %xmax
+ y-coordinates       = %ymin %ymax
+ !------------------------------------------------------------------------------------------------
+ ! With these Miller-Bravais indices, we can define a cation- or anion-faced structure.
+ !   ==>  anion-faced structure: hkil-x-direction = 0  0  0  1
+ !   ==> cation-faced structure: hkil-x-direction = 0  0  0 -1    <== considered in this tutorial
+ !------------------------------------------------------------------------------------------------
+!hkil-x-direction       = 0  0  0   1  !  anion-faced structure             ! Miller-Bravais indices of x coordinate axis
+ hkil-x-direction       = 0  0  0  -1  ! cation-faced structure             ! Miller-Bravais indices of x coordinate axis
+ hkil-y-direction       = 0  1  -1  0                                       ! Miller indices of y coordinate axis [0 0 1]
+
+ growth-coordinate-axis = 1 0 0                                             !
+ pseudomorphic-on       = GaN                                               !
+$end_domain-coordinates                                                     !
+!---------------------------------------------------------------------------!
+
+!****** END OVERALL SIMULATION PARAMETERS **********************************!
+
+
+!****** REGIONS AND CLUSTERS ***********************************************!
+
+!---------------------------------------------------------------------------!
+! You specified n regions in the simulation area. If they do not            !
+! completely fill the simulation area, the resulting rest area is           !
+! automatically assigned as region number n+1.                              !
+! So you ALWAYS have one region more than you actually specified (even if   !
+! they completely fill the simulation area).                                !
+! We could also set any region to a higher priority which means that it     !
+! would be on top of the lower priority region.                             !
+!---------------------------------------------------------------------------!
+$regions                                                                    !
+
+ !-----------------------------------------------------------------------------------
+ ! These are the regions of the AlGaN/GaN region (without surface or GaN cap layer).
+ !-----------------------------------------------------------------------------------
+ region-number = 1    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = 0d0    %MiddleAlGaN
+ y-coordinates = %ymin %ymax   
+
+ region-number = 2    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = %MiddleAlGaN    %QRLeft_2DEG
+ y-coordinates = %ymin %ymax   
+ 
+ region-number = 3    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = %QRLeft_2DEG    %ThicknessAlGaN
+ y-coordinates = %ymin %ymax   
+ 
+ region-number = 4    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = %ThicknessAlGaN %QRRight_2DEG
+ y-coordinates = %ymin %ymax   
+ 
+ region-number = 5    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = %QRRight_2DEG   %xmax
+ y-coordinates = %ymin %ymax   
+ 
+ !---------------------------------------------------------------------------------------
+ ! These are the regions left of the AlGaN/GaN region, i.e. the GaN cap and the surface.
+ !---------------------------------------------------------------------------------------
+ region-number = 6    base-geometry = rectangle  region-priority = 1            !
+ x-coordinates = %xmin    0d0                                               ! air
+!x-coordinates = %xmin    -%ThicknessGaNcap
+ y-coordinates = %ymin %ymax   
+
+ region-number = 7    base-geometry = rectangle  region-priority = 2            ! GaN cap layer
+ x-coordinates = -%ThicknessGaNcap     0d0
+ y-coordinates = %ymin %ymax   
+
+
+$end_regions                                                                !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! For every boundary between regions, there has to exist a grid line. And   !
+! between these grid lines there are a certain number of nodes which        !
+! determine the resolution of the simulated region. In order to specify     !
+! inhomogeneous grids you can use a grid factor different from one. This    !
+! means that the distance between each node is increased by this factor     !
+! from i to i+1.                                                            !
+!---------------------------------------------------------------------------!
+$grid-specification                                                         !
+ grid-type        =    1 1 0                                                !
+ x-grid-lines     =  %xmin -%ThicknessGaNcap -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      %ThicknessAlGaN           %QRRight_2DEG           %xmax
+ x-nodes          =       1                 %INT(Nodes_Surface) %INT(Nodes_QR_2DHG_GaN) %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+ x-grid-factors   =       1d0               1d0                 1d0                  1d0                  1d0                 1d0               1d0               1d0
+
+ y-grid-lines     =  %ymin  %ymax			
+ y-nodes          =       %INT(Nodesy)
+ y-grid-factors   =       1d0  
+$end_grid-specification                                                     !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! A cluster is a group of regions. Every region has to belong to a cluster  !
+! but a cluster can contain several regions. This is useful if you want to  !
+! construct more complicated objects of more regions which have the same    !
+! material.                                                                 !
+!---------------------------------------------------------------------------!
+$region-cluster                                                             !
+ cluster-number = 1    region-numbers = 1
+ cluster-number = 2    region-numbers = 2  
+ cluster-number = 3    region-numbers = 3
+ cluster-number = 4    region-numbers = 4  
+ cluster-number = 5    region-numbers = 5
+ cluster-number = 6    region-numbers = %AirRegionNumbers                   ! air
+!cluster-number = 6    region-numbers = 6                                   ! air
+!cluster-number = 6    region-numbers = 6 7 8                               ! air
+!cluster-number = 7    region-numbers =   7 8                               ! GaN cap layer
+$end_region-cluster                                                         !
+!---------------------------------------------------------------------------!
+
+!****** END REGIONS AND CLUSTER ********************************************!
+
+
+!****** MATERIALS AND ALLOY PROFILES ****************************************
+
+!---------------------------------------------------------------------------!
+! All materials used in the simulation region are listed here. A material   !
+! has to be assigned to each cluster.                                       !
+! In the case of alloys an alloy function has to be specified.              !
+!---------------------------------------------------------------------------!
+$material                                                                   !
+
+ material-number = 1                                                        !
+ material-name   = GaN
+ cluster-numbers = %GaNClusterNumbers
+!cluster-numbers = 4  5                                                     !
+!cluster-numbers = 4  5  7                                                  !
+
+ material-number = 2                                                        !
+ material-name   = Al(x)Ga(1-x)N
+ cluster-numbers = 1 2 3                                                    !
+ alloy-function  = constant
+
+ material-number = 3 
+ material-name   = Air-wz                                                   ! surface
+ cluster-numbers = 6  
+ 
+$end_material                                                               !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$alloy-function                                                             !
+
+ material-number              = 2                                           !
+ function-name                = constant
+!xalloy                       = 0.4d0                                     
+ xalloy                       = %AlloyContent
+
+
+ alloy-sweep-active           = %AlloySweepActive
+!alloy-sweep-active           = yes                                         ! to switch on alloy sweep
+!alloy-sweep-active           = no                                          ! to switch off alloy sweep
+
+
+!alloy-sweep-step-size        = -0.05d0                                     ! increase alloy concentration in each step by 0.05
+!alloy-sweep-number-of-steps  =  8                                          ! number of alloy sweep steps
+
+ alloy-sweep-step-size        = -0.025d0                                    ! increase alloy concentration in each step by 0.025
+ alloy-sweep-number-of-steps  = 16                                          ! number of alloy sweep steps
+
+$end_alloy-function                                                         !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! Here we are overwriting the database entries for GaN.                     !
+!---------------------------------------------------------------------------!
+$binary-wz-default                                                          !
+ binary-type                         = GaN-wz-default                       !
+ apply-to-material-numbers           = 1 2                                  !
+ conduction-band-masses              = 0.202d0   0.202d0   0.206d0          ! Gamma m_perp=0.202, m_perp=0.202, m_par=0.206 (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/GaN/bandstr.html
+                                       1.430d0   0.330d0   0.330d0          ! ?? U-point
+                                       2.170d0   0.280d0   0.280d0          ! ??
+ valence-band-masses                 = 1.6d0     1.6d0     1.1d0            ! hh m_perp=1.6 , m_perp=1.6 , m_par=1.1  (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/GaN/bandstr.html
+                                       0.15d0    0.15d0    1.1d0            ! lh m_perp=0.15, m_perp=0.15, m_par=1.1  (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/GaN/bandstr.html
+                                       1.1d0     1.1d0     0.15d0           ! so m_perp=1.1 , m_perp=1.1 , m_par=0.15 (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/GaN/bandstr.html
+
+ band-gaps                           = 3.510d0   7d0     7d0                ! [eV]   0 K - Gamma, ?, ? [Vurgaftman2]
+!conduction-band-energies            = 2.79967d0 6.190d0 6.490d0            ! 0 Kelvin Vurgaftman2 (3.510 eV), Gamma, 2nd, 3rd
+ valence-band-energies               = -0.726d0                             ! This is zb-entry. A. Zunger, "average" valence band energy E_v [eV]
+ varshni-parameters                  = 0.909d-3 0.00d0   0.00d0             ! alpha [eV/K](Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+                                       830d0    0.00d0   0.00d0             ! beta  [K]   (Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+
+ static-dielectric-constants         = 9.28d0    9.28d0   10.10d0           ! eps_a, eps_a, eps_c - Tsai et al., JAP 85, 1475 (1999)
+ lattice-constants                   = 0.3189d0  0.3189d0  0.5185d0         ! [nm]   a,a,c  Vurgaftman1 and Vurgaftman2 and Ambacher, Review  300 K
+ lattice-constants-temp-coeff        = 0d0       0d0       0d0              ! [nm/K] a,a,c  Lattice constants are almost constant in temperature range 0 - 300 K, at least for AlN. For AlN: S. Figge et al. APL 94, 101915 (2009)
+ elastic-constants                   = 390d0    145d0     106d0             ! Vurgaftman1 and Vurgaftman2
+                                       398d0    105d0                       ! c11,c12,c13,c33,c44
+ piezo-electric-constants            = 1.27d0   -0.35d0   -0.30d0           ! [C/m^2]  e33, e31 Vurgaftman1, e15 Ambacher
+                                       0d0 0d0 0d0 0d0 0d0 0d0 0d0 0d0      ! [C/m^2] B311,B312,B313,B333,B115,B125,B135,B344
+ pyro-polarization                   = 0d0       0d0      -0.034d0          ! [C/m^2] O. Ambacher and Vurgaftman2
+ absolute-deformation-potentials-cbs = -6.8d0   -6.8d0   -8.6d0             ! [eV] [Vurgaftman2]  absolute deformation potentials of Gamma conduction band minimum a_c (a axis), a_c (a axis), a_c (c axis)
+ uniax-vb-deformation-potentials     = -3.7d0   4.5d0    8.2d0              ! D1,D2,D3 [eV] [Vurgaftman2]
+                                       -4.1d0  -4.0d0   -5.5d0              ! D4,D5,D6 [eV] [Vurgaftman2]
+ 6x6kp-parameters                    = -7.21d0   -0.44d0     6.68d0         ! A1,A2,A3                     ! Vurgaftman2
+                                       -3.46d0   -3.40d0    -4.90d0         ! A4,A5,A6                     ! Vurgaftman2
+                                        0.010d0   0.00567d0  0.00567d0      ! Delta_1(cr),Delta_2,Delta_3  ! Vurgaftman2  Delta_2=Delta_3=0.017/3=Delta_so/3
+$end_binary-wz-default                                                      !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! Here we are overwriting the database entries for AlN.                     !
+!---------------------------------------------------------------------------!
+$binary-wz-default                                                          !
+ binary-type                         = AlN-wz-default                       !
+ apply-to-material-numbers           = 2                                    !
+ conduction-band-masses              = 0.30d0    0.30d0    0.32d0           ! Gamma Vurgaftman2  m_perp=0.30, m_perp=0.30, m_par=0.32 (with respect to c-axis)
+                                       0.222d0   0.222d0   0.738d0          ! 
+                                       0.33d0    0.33d0    0.52d0           ! K. Kim, W.R.l. Lambrecht, B. Segall, M. van Schilfgaarde
+ valence-band-masses                 = 10.42d0  10.42d0    3.53d0           ! hh m_perp=10.42, m_perp=10.42, m_par=3.53 (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/AlN/bandstr.html
+                                       0.24d0    0.24d0    3.53d0           ! lh m_perp=0.24 , m_perp=0.24 , m_par=3.53 (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/AlN/bandstr.html
+                                       3.81d0    3.81d0    0.25d0           ! so m_perp=3.81 , m_perp=3.81 , m_par=0.25 (with respect to c-axis) - http://www.ioffe.rssi.ru/SVA/NSM/Semicond/AlN/bandstr.html
+
+ band-gaps                           = 6.25d0    10d0      10d0             ! [eV]   0 K - Gamma, ?, ? [Vurgaftman2]
+!conduction-band-energies            = 4.724455883d0 5.710d0  5.41d0        ! 0 Kelvin Vurgaftman2 (6.25 eV) Gamma okay, L guess, X guess
+ valence-band-energies               = -1.526d0                             ! This is zb entry. A. Zunger, "average" valence band energy E_v [eV]
+
+!------------------------------------------------------------------------------
+! Note: We use GaN Varshni parameters also for AlN.
+!       Then the conduction band edges of nextnano3 and nextnano++ coincide and
+!       therefore it is easier to compare the results of nextnano3 and nextnano++ with each other.
+!       The problem currently is that
+!         - nextnano++ interpolates both the Varshni parameters and the band gaps.
+!         - nextnano3  interpolates only the band gaps (after Varshni parameters
+!           have been applied) which makes more sense.
+!------------------------------------------------------------------------------
+ varshni-parameters                  = 0.909d-3 0.00d0   0.00d0 ! GaN Varshni parameters (for testing purposes nn3 vs. nn++)   ! alpha [eV/K](Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+                                       830d0    0.00d0   0.00d0 ! GaN Varshni parameters (for testing purposes nn3 vs. nn++)   ! beta  [K]   (Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+
+! varshni-parameters                  = 1.799d-3 0.00d0   0.00d0             ! alpha [eV/K](Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+!                                       1462d0   0.00d0   0.00d0             ! beta  [K]   (Gamma, indirect, indirect) Vurgaftman1, Vurgaftman2
+
+ static-dielectric-constants         = 8.67d0    8.67d0    8.57d0           ! eps_a, eps_a, eps_c - S.M. Komirenko et al., PRB 59, 5013 (1999) (values taken from paper of V.A. Fonoberov et al., JAP 94, 7178 (2003)
+ lattice-constants                   = 0.3112d0  0.3112d0  0.4982d0         ! [nm]   a,a,c  Vurgaftman1 and Vurgaftman2 (and Review, Ambacher)  300 K
+ lattice-constants-temp-coeff        = 0d0       0d0       0d0              ! [nm/K] a,a,c  Lattice constants are almost constant in temperature range 0 - 300 K. S. Figge et al. APL 94, 101915 (2009)
+ elastic-constants                   = 396d0     137d0     108d0            ! [GPa] Vurgaftman1 and Vurgaftman2
+                                       373d0     116d0                      ! c11,c12,c13,c33,c44
+ piezo-electric-constants            = 1.79d0   -0.50d0   -0.48d0           ! [C/m^2]  e33, e31 Vurgaftman1, e15 Ambacher
+                                       0d0 0d0 0d0 0d0 0d0 0d0 0d0 0d0      ! [C/m^2] B311,B312,B313,B333,B115,B125,B135,B344
+ pyro-polarization                   = 0d0       0d0      -0.090d0          ! [C/m^2] O. Ambacher Review and Vurgaftman2
+ absolute-deformation-potentials-cbs = -3.9d0   -3.9d0  -20.5d0             ! [eV] [Vurgaftman2]  absolute deformation potentials of Gamma conduction band minimum a_c (a axis), a_c (a axis), a_c (c axis)
+ uniax-vb-deformation-potentials     = -17.1d0   7.9d0    8.8d0             ! D1,D2,D3 [eV] [Vurgaftman2]
+                                        -3.9d0  -3.4d0   -3.4d0             ! D4,D5,D6 [eV] [Vurgaftman2]
+ 6x6kp-parameters                    = -3.86d0   -0.25d0     3.58d0         ! A1,A2,A3                     ! Vurgaftman2
+                                       -1.32d0   -1.47d0    -1.64d0         ! A4,A5,A6                     ! Vurgaftman2  
+                                       -0.169d0   0.00633d0  0.00633d0      ! Delta_1(cr),Delta_2,Delta_3  ! Vurgaftman2  Delta_2=Delta_3=0.019/3=Delta_so/3
+$end_binary-wz-default                                                      !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! Here we are overwriting the database entries for AlGaN.                   !
+!---------------------------------------------------------------------------!
+$ternary-wz-default                                                         !
+ ternary-type                 = Al(x)Ga(1-x)N-wz-default                    !
+ apply-to-material-numbers    = 2                                           !
+ bow-band-gaps                = 0.7d0    0d0      0d0                       ! [Vurgaftman2] E_g
+!bow-conduction-band-energies = 0.7d0    0d0      0d0                       ! [Vurgaftman2] E_g
+ bow-pyro-polarization        = 0d0      0d0     -0.021d0                   ! [C/m^2] [Vurgaftman2] and Ambacher Review (GaN -0.034, AlN -0.090) (Ambacher has different sign in bowing formula and bowing parameter which is okay.)
+$end_ternary-wz-default                                                     !
+!---------------------------------------------------------------------------!
+
+!****** END MATERIALS AND ALLOY PROFILES ***********************************!
+
+!---------------------------------------------------------------------------!
+! POISSON BOUNDARY CONDITIONS                                               !
+!                                                                           !
+! In order to apply any voltage to the device you have to define contacts.  !
+! This is done by the Poisson boundary conditions.                          !
+!                                                                           !
+! There are mainly two different kinds:                                     !
+!     - Schottky (implies a Schottky barrier)                               !
+!     - ohmic (no barrier)                                                  !
+!                                                                           !
+! These Poisson clusters are assigned to the region-clusters.               !
+!---------------------------------------------------------------------------!
+$poisson-boundary-conditions                                                !
+
+!-----------------------------------------------------------------------------------------
+! We apply a Schottky barrier boundary condition to the cluster number that contains air.
+!-----------------------------------------------------------------------------------------
+ poisson-cluster-number     = 1                                             !
+ region-cluster-number      = 6                                             ! an integer number which refers to an existent region-cluster
+ applied-voltage            = 0.0d0                                         ! apply voltage to poisson-cluster
+ boundary-condition-type    = Schottky              
+ contact-control            = voltage              
+ schottky-barrier           = %SchottkyBarrierHeight
+!schottky-barrier           = 1.42d0                                        ! [V]
+
+$end_poisson-boundary-conditions                                            !
+!---------------------------------------------------------------------------!
+
+!****** QUANTUM ************************************************************!
+
+!---------------------------------------------------------------------------!
+! Including quantum models (1-band Schroedinger, multi-band k.p)            !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$quantum-regions                                                            !
+  region-number          = 1                                       !
+ base-geometry          = rectangle                                !
+ region-priority        = 1                                        !
+ x-coordinates          = %QRLeft_2DEG %QRRight_2DEG               ! [nm]
+ y-coordinates          = %ymin			%ymax			
+
+ region-number          = 2                                        !
+ base-geometry          = rectangle                                !
+ region-priority        = 2                                        !
+ x-coordinates          = %QRLeft_2DHG %QRRight_2DHG               ! [nm]
+ y-coordinates          = %ymin			%ymax
+$end_quantum-regions                                                        !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$quantum-cluster                                                            !
+ cluster-number         = 1                                                 ! 2DEG
+ region-numbers         = 1                                                 !
+ deactivate-cluster     = no                                                !
+!deactivate-cluster     = yes                                               !
+
+ cluster-number         = 2                                                 ! 2DHG
+ region-numbers         = 2                                                 !
+ deactivate-cluster     = %Ignore2DHG
+!deactivate-cluster     = no                                                !
+!deactivate-cluster     = yes                                               !
+$end_quantum-cluster                                                        !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$quantum-model-electrons                                                    ! 2DEG
+ model-number                            =  1                               !
+ model-name                              =  effective-mass                  ! 8x8kp or effective-mass
+ cluster-numbers                         =  1                               ! quantum cluster numbers to which this model applies
+ conduction-band-numbers                 =  1                               ! to select bands (minima) handled in Schroedinger equation
+ number-of-eigenvalues-per-band          =  25                ! [Jogai2003] ! how many eigenenergies have to be calculated in each band (minimum)
+ boundary-condition-100                  =  Dirichlet                       !
+!boundary-condition-100                  =  Neumann                         !
+ boundary-condition-010                  =  periodic                        !
+$end_quantum-model-electrons                                                !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! For the holes, [Jogai2003] is calculating 70 eigenstates.
+! [Jogai2003] is using 6x6 k.p. For the pr
+!---------------------------------------------------------------------------!
+$quantum-model-holes                                                        ! 2DHG
+ model-number                            =  1                               !
+ model-name                              =  effective-mass                  ! 8x8kp or effective-mass
+ cluster-numbers                         =  2                               ! quantum cluster numbers to which this model applies
+ valence-band-numbers                    =  1  2  3                         ! to select bands (minima) handled in Schroedinger equation
+ number-of-eigenvalues-per-band          =  70 70 70          ! [Jogai2003] ! how many eigenenergies have to be calculated in each band (minimum)
+ boundary-condition-100                  =  Dirichlet                       !
+!boundary-condition-100                  =  Neumann                         !
+ boundary-condition-010                  =  periodic                        !
+$end_quantum-model-holes                                                    !
+!---------------------------------------------------------------------------!
+
+!****** END QUANTUM ********************************************************!
+
+!****** OUTPUT *************************************************************!
+
+!---------------------------------------------------------------------------!
+! For the output the destination directories are free to choose whereas the !
+! filenames are fixed and incorporate all information about the files.      !
+! The directory names have to be present and also have to be written with   !
+! trailing slash.   -> PC: 'dir\'   UNIX: 'dir/'                            !
+! Most input specifiers are flags and have to be either 'yes' or 'no'.      !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+!$global-settings                                                           !
+!output-directory           = output/
+!debug-level                = 0                                             !
+!debug-level                = 4                                             !
+!$end_global-settings                                                       !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! This is the output for the strain.                                        !
+!---------------------------------------------------------------------------!
+$output-strain                                                              !
+ destination-directory                   = strain/
+ strain                                  = yes                              !
+ strain-simulation-system                = yes                              !
+ hydrostatic-strain                      = yes                              !
+!elastic-energy-density                  = yes                              !
+$end_output-strain                                                          !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! This is the output for the band structure and the potential.              !
+!---------------------------------------------------------------------------!
+$output-bandstructure                                                       !
+ destination-directory                   = band_structure/                      
+ conduction-band-numbers                 = 1                                !
+ valence-band-numbers                    = 1 2 3                            !
+ potential                               = yes                              !
+ electric-field                          = yes                              !
+$end_output-bandstructure                                                   !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! This is the output for the densities.                                     !
+!---------------------------------------------------------------------------!
+$output-densities                                                           !
+ destination-directory                   = densities/                      
+ electrons                               = yes                              !
+ holes                                   = yes                              !
+ charge-density                          = yes                              !
+ piezo-electricity                       = yes                              !
+ pyro-electricity                        = yes                              !
+ interface-density                       = yes                              !
+ integrated-density                      = yes                              !
+ subband-density                         = yes                              !
+$end_output-densities                                                       !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$output-1-band-schroedinger                                                 !
+ destination-directory                   = Schroedinger_1band/                      
+                                                                            !
+ conduction-band-numbers                 = 1                                ! 2DEG: 1=Gamma
+ cb-min-ev                               = 1                                !
+ cb-max-ev                               = 5                                !
+!cb-max-ev                               = 10                               !
+!cb-max-ev                               = 50                               !
+                                                                            !
+ valence-band-numbers                    = 1 2 3                            ! 2DHG: 1=hh, 2=lh, 3=so
+ vb-min-ev                               = 1                                !
+ vb-max-ev                               = 5                                !
+                                                                            !
+ scale                                   = 1.0d0                            !
+$end_output-1-band-schroedinger                                             !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! This is the output for the material parameters.                           !
+!---------------------------------------------------------------------------!
+$output-material                                                            !
+ destination-directory               = material_parameters/
+ conduction-band-energies            = conduction_band_energy
+ conduction-band-masses              = conduction_band_masses
+ valence-band-energies               = valence_band_energy
+ valence-band-masses                 = valence_band_masses
+ static-dielectric-constants         = static_dielectric_constants
+ lattice-constants                   = lattice_constants
+ elastic-constants                   = elastic_constants
+ piezoelectric-polarization          = piezo_constants
+ spontaneous-polarization            = pyro_constants
+ absolute-deformation-potentials-cbs = def_pot_cb_absolute
+ uniax-vb-deformation-potentials     = def_pot_vb_uniaxial
+$end_output-material                                                        !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+! This is the output for the current.                                       !
+!---------------------------------------------------------------------------!
+$output-current-data                                                        !
+ destination-directory                   = current/      
+ fermi-levels                            = yes                              !
+$end_output-current-data                                                    !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$output-file-format                                                         !
+ simulation-dimension     = 2                                               !
+ file-format              = AVS                                             !
+ VTK-XML                  = no                                              !
+$end_output-file-format                                                     !
+!---------------------------------------------------------------------------!
+
+!---------------------------------------------------------------------------!
+$output-section                                                             !
+ section-number = 1    section-name = slice_middle_along    section-type =  x     y = 2.5d0  !  1D slice through center
+$end_output-section                                                         !
+!---------------------------------------------------------------------------!
+
+!****** END OUTPUT *********************************************************!
+

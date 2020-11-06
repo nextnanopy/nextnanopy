@@ -1,0 +1,396 @@
+>Input file seems to be for nextnano++ (keyword 'global{' found)
+>Original input file     : E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in
+>Simulation output folder: E:\junliang.wang\nextnano\Output\1DAlGaAs_GaAs_nnp
+>Working input file      : E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in
+>Working directory       : C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit
+>Executable              : C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
+>Command line parameters :  --license "C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic" --database "C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in"  --threads 1 --outputdirectory "E:\junliang.wang\nextnano\Output\1DAlGaAs_GaAs_nnp" --noautooutdir "E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in"
+>nextnanomat version     : 4.2.8.1
+
+00:00:00 ================================================================================
+00:00:00 STARTING...
+00:00:00 ================================================================================
+00:00:00 Starting execution as:
+00:00:00 C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe --license C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic --database C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in --threads 1 --outputdirectory E:\junliang.wang\nextnano\Output\1DAlGaAs_GaAs_nnp --noautooutdir E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in 
+00:00:00 
+00:00:00 nextnano++ (1.6.54 - 2020.042401) Jul 31 2020
+00:00:00 =============================================================================
+00:00:00 COPYRIGHT NOTICE                                                             
+00:00:00 =============================================================================
+00:00:00 Please read the file 'copyright_nextnano++.txt' in your installation folder  
+00:00:00 for further information about the terms of copyright of the nextnano++ code  
+00:00:00 and of third party source codes and libraries used in the nextnano++ code.   
+00:00:00                                                                              
+00:00:00 In case this file is missing or seems incomplete or corrupted, please contact
+00:00:00 nextnano GmbH, Germany by submitting a support request on www.nextnano.de or 
+00:00:00 by sending an email to support@nextnano.com in order to receive a new copy.  
+00:00:00                                                                              
+00:00:00 ANY USE OF THE NEXTNANO++ CODE CONSTITUTES ACCEPTANCE OF THE TERMS OF THE    
+00:00:00 COPYRIGHT NOTICE.                                                            
+00:00:00 =============================================================================
+00:00:00 
+00:00:00 
+00:00:00 =============================================================================
+00:00:00  PROCESSING FILE: E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in
+00:00:00 =============================================================================
+00:00:00 
+00:00:00 Start time: Wed 2020-10-28, 11:29:46 (+0100)
+00:00:00 
+00:00:00 Process uses 1 of 4 available OpenMP threads.
+00:00:00 
+00:00:00 Preparing input validator...
+00:00:00 Reading input file (E:\junliang.wang\OneDrive\Jobs\PhD\Nextnano\Customer support\NN-1290\2020-10-28\1DAlGaAs_GaAs_nnp.in)...
+00:00:00 
+00:00:00 
+00:00:00 WARNING: Using database specified in command line.
+00:00:00 
+00:00:00 Preparing database validator...
+00:00:00 Reading database file (C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in)...
+00:00:00 
+00:00:00 Checking license:
+00:00:00 	 Valid From: 2020-10-8 To: 2021-12-31
+00:00:00 	 Licensed to: E-mail: jun-liang.wang@nextnano.com-2021-12-31-m4t6
+00:00:00 
+00:00:00 ********* SETUP SIMULATION *****************************************************
+00:00:00 
+00:00:00 NOTE: Using output directory specified from command line (nextnanomat), 
+00:00:00 
+00:00:00 NOTE: Setting output directory to: E:\junliang.wang\nextnano\Output\1DAlGaAs_GaAs_nnp\
+00:00:00 
+00:00:00 ********* Simulation Grid *********
+00:00:00 
+00:00:00 Creating grid 1 using:
+00:00:00     pos = 0     	spacing = 0.5
+00:00:00     pos = 10     	spacing = 0.5
+00:00:00     pos = 20     	spacing = 0.5
+00:00:00     pos = 30     	spacing = 0.5
+00:00:00     pos = 90     	spacing = 0.1
+00:00:00     pos = 400     	spacing = 5
+00:00:00 
+00:00:00 Grid dimension: 548 * 1 * 1 
+00:00:00 Number of unique grid points: 548
+00:00:00 Range in 1-direction:   0 , ... , 400
+00:00:00 
+00:00:00 
+00:00:00 ********* Rotation Matrix *********
+00:00:00  1.0000000,  0.0000000,  0.0000000
+00:00:00  0.0000000,  1.0000000,  0.0000000
+00:00:00  0.0000000,  0.0000000,  1.0000000
+00:00:00 
+00:00:00 ********* Periodicity *************
+00:00:00   0-direction:  not periodic
+00:00:00 
+00:00:00 Start initializing structure.
+00:00:00 Finished initializing structure.
+00:00:00 Structure initialization time: 0.005[s]
+00:00:00 
+00:00:00 Setting reference vacuum level to 6.3 eV.
+00:00:00 
+00:00:00 NOTE: Electron minimum density is 1e+10 cm^-3.
+00:00:00 NOTE: Hole minimum density is 1e+10 cm^-3.
+00:00:00 
+00:00:00 NOTE: Electron maximum density is 1e+30 cm^-3.
+00:00:00 NOTE: Hole maximum density is 1e+30 cm^-3.
+00:00:00 
+00:00:00 ***** Quantum Subgrid (2DEG) ******     
+00:00:00 Gridsize: 
+00:00:00 Grid dimension: 249 * 1 * 1 
+00:00:00 Number of unique grid points: 249
+00:00:00 Range in 1-direction:   85.0319539 , ... , 248.032375
+00:00:00 
+00:00:00 Calculating quantum density of states ... (2DEG_Gamma)
+00:00:00 
+00:00:00 ********* STRUCTURE OUTPUT *****************************************************
+00:00:00 Writing material indices...
+00:00:00 Writing contact indices...
+00:00:00 Writing donor density...
+00:00:00 Writing fixed charge density...
+00:00:00 
+00:00:00 ********* START CALCULATION ****************************************************
+00:00:00 
+00:00:00 Determine dirichlet points for contacts...
+00:00:00 
+00:00:00 Intrinsic charge time: 0.001[s]
+00:00:00 
+00:00:00 Discretizing Poisson equation...
+00:00:00 
+00:00:00 
+00:00:00 
+00:00:00 
+00:00:00 ========= STARTING CALCULATION FOR BIAS POINT ==================================
+00:00:00 gate 0 V   backgate -0 V   
+00:00:00 
+00:00:00 Determine electron Fermi level dirichlet values in contacts...
+00:00:00 Determine hole Fermi level dirichlet values in contacts...
+00:00:00 Initialize Fermi levels...
+00:00:00 Fermi level initialization time: 0.002[s]
+00:00:00 Initialize contacts as charge neutral...
+00:00:00 Determine potential Dirichlet values in Schottky and ohmic contacts...
+00:00:00 Update contact discretization in Poisson equation...
+00:00:00 
+00:00:00 Initialize electrostatic potential...
+00:00:00 Charge Neutrality time: 0.003[s]
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	99.70915169962517
+00:00:00   Newton step: 2	7.481685423403909
+00:00:00   Newton step: 3	1.439844607244896
+00:00:00   Newton step: 4	0.2775619229531272
+00:00:00   Newton step: 5	0.05442436986948125
+00:00:00   Newton step: 6	0.01203158025139562
+00:00:00   Newton step: 7	0.003954477372347387
+00:00:00   Newton step: 8	0.002006649927482974
+00:00:00   Newton step: 9	0.0001530601137746094
+00:00:00   Newton step: 10	4.972988069251226e-05
+00:00:00   Newton step: 11	1.477642000260307e-05
+00:00:00   Newton step: 12	2.813911755971973e-06
+00:00:00   Newton step: 13	1.46512611284872e-07
+00:00:00   Newton step: 14	4.335619798520064e-10
+00:00:00   Newton achieved/desired residual: 5.29119376e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51800187
+00:00:00   conduction band minimum: -0.0278041201
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 ******  SOLVING QUANTUM-POISSON EQUATIONS *----------------------------
+00:00:00 *----  Terminates after:   max_iter = 30
+00:00:00                         residual =       1.000000000e+05
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 1 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	0.003564354209361633
+00:00:00   Newton step: 2	0.0006444409481719048
+00:00:00   Newton step: 3	1.274691077816259e-05
+00:00:00   Newton step: 4	5.110232646041035e-09
+00:00:00   Newton achieved/desired residual: 4.9951182e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51791479
+00:00:00   conduction band minimum: -0.0384996935
+00:00:00 
+00:00:00  Solving 1 approximate subspace 1-band Schroedinger equation(s)...
+00:00:00    Solving dense hermitian eigenvalue problem (standard solver)...
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 1.261862807e+11   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 1.070368955e-02
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 2 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	0.0008901366968905123
+00:00:00   Newton step: 2	7.916418306169971e-06
+00:00:00   Newton step: 3	2.726403765988829e-08
+00:00:00   Newton achieved/desired residual: 7.74929396e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51788994
+00:00:00   conduction band minimum: -0.0392992043
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 2.568348129e+10   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 7.995351601e-04
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 3 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	0.0002802969751370559
+00:00:00   Newton step: 2	1.14809884149047e-06
+00:00:00   Newton achieved/desired residual: 5.68206556e-11 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789207
+00:00:00   conduction band minimum: -0.0388850626
+00:00:00 
+00:00:00  Solving 1 approximate subspace 1-band Schroedinger equation(s)...
+00:00:00    Solving dense hermitian eigenvalue problem (standard solver)...
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 5.877166311e+09   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 4.146481048e-04
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 4 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	5.20829174171011e-05
+00:00:00   Newton step: 2	1.100093411432588e-08
+00:00:00   Newton achieved/desired residual: 5.93076426e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789137
+00:00:00   conduction band minimum: -0.0388561529
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 1.197851016e+09   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 3.103745753e-05
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 5 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	1.199739305429823e-05
+00:00:00   Newton step: 2	4.211340614545428e-10
+00:00:00   Newton achieved/desired residual: 5.55815013e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789157
+00:00:00   conduction band minimum: -0.0388646175
+00:00:00 
+00:00:00  Solving 1 approximate subspace 1-band Schroedinger equation(s)...
+00:00:00    Solving dense hermitian eigenvalue problem (standard solver)...
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 7.522644017e+07   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 8.464641899e-06
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 6 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	2.159780727963887e-06
+00:00:00   Newton achieved/desired residual: 1.58739637e-11 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789156
+00:00:00   conduction band minimum: -0.0388660521
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 4.844156492e+07   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 1.434902214e-06
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 7 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	4.841511952243991e-07
+00:00:00   Newton achieved/desired residual: 8.67957336e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789155
+00:00:00   conduction band minimum: -0.0388656864
+00:00:00 
+00:00:00  Solving 1 approximate subspace 1-band Schroedinger equation(s)...
+00:00:00    Solving dense hermitian eigenvalue problem (standard solver)...
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 3.253110567e+06   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 3.656992953e-07
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 8 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	8.880327249267377e-08
+00:00:00   Newton achieved/desired residual: 5.53995026e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789155
+00:00:00   conduction band minimum: -0.0388656276
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 1.978813726e+06   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 5.880264675e-08
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 9 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	1.954208097513615e-08
+00:00:00   Newton achieved/desired residual: 5.47215604e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789155
+00:00:00   conduction band minimum: -0.0388656425
+00:00:00 
+00:00:00  Solving 1 approximate subspace 1-band Schroedinger equation(s)...
+00:00:00    Solving dense hermitian eigenvalue problem (standard solver)...
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 1.225399191e+05   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 1.489577128e-08
+00:00:00 
+00:00:00 QUANTUM-POISSON:  iteration = 10 of 30 ----------------------------
+00:00:00 
+00:00:00 Solving nonlinear Poisson equation...
+00:00:00   Newton step: 1	3.606404752604288e-09
+00:00:00   Newton achieved/desired residual: 5.15124056e-13 1.80951265e-10 (successful)
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (and calculate density)
+00:00:00 
+00:00:00   valence band maximum: -1.51789155
+00:00:00   conduction band minimum: -0.0388656449
+00:00:00 
+00:00:00  Solving 1 exact 1-band Schroedinger equation(s)...
+00:00:00     Tridiagonal real symmetric eigenvalue solver:           1          10
+00:00:00 
+00:00:00 Computing densities...
+00:00:00 
+00:00:00 QUANTUM-POISSON:   Residual_EDensity = 7.945884163e+04   Residual_HDensity = 0.000000000e+00
+00:00:00 QUANTUM-POISSON:   Residual_potential = 2.426685963e-09
+00:00:00 
+00:00:00 *----  SOLVING QUANTUM-POISSON FINISHED ----------------------------
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (quantum regions without density only)
+00:00:00 
+00:00:00 
+00:00:00 Solving Quantum Mechanics ---- (determine k-dispersion only)
+00:00:00 
+00:00:00 
+00:00:00 ********* OUTPUT ***************************************************************
+00:00:00 
+00:00:00 Writing charactaractics data(1)...
+00:00:00 Writing charactaractics data(2)...
+00:00:00 
+00:00:00 Writing electrostatic potential...
+00:00:00 
+00:00:00 Writing band edges...
+00:00:00 
+00:00:00 Writing Fermi levels...
+00:00:00 
+00:00:00 Writing results from quantum calculations...
+00:00:00 
+00:00:00 Writing carrier densities...
+00:00:00 Writing ionized dopant densities...
+00:00:00 
+00:00:00 ********* FINISHED CALCULATION *************************************************
+00:00:00 
+00:00:00 End time: Wed 2020-10-28, 11:29:46 (+0100)
+00:00:00 Total Poisson Solver Time: 0.017[s]
+00:00:00 Total Quantum Solver Time: 0.007[s]
+00:00:00 Simulator Run Time: 0.531[s]
+00:00:00 
+00:00:00 ================================================================================
+00:00:00 DONE.
+00:00:00 ================================================================================

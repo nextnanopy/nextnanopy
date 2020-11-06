@@ -1,0 +1,1385 @@
+>Input file seems to be for nextnano³ (keyword '$simulation-dimension' found)
+>Original input file     : E:\junliang.wang\OneDrive\Jobs\PhD\Scripts\repositories\nextnano\tests\datafiles\nextnano3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in
+>Simulation output folder: E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3
+>Working input file      : E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in
+>Working directory       : C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit
+>Executable              : C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
+>Command line parameters :  -license "C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic" -inputfile "E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in" -database "C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in"  -threads 1 -outputdirectory "E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\"
+>nextnanomat version     : 4.2.8.1
+
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Command line information
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  command line        = "C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe"  -license "C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic" -inputfile "E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in" -database "C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in"  -threads 1 -outputdirectory "E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\"
+00:00:00  command name        = C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
+00:00:00  command argument  1 = -license
+00:00:00  command argument  2 = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
+00:00:00  command argument  3 = -inputfile
+00:00:00  command argument  4 = E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in
+00:00:00  command argument  5 = -database
+00:00:00  command argument  6 = C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in
+00:00:00  command argument  7 = -threads
+00:00:00  command argument  8 = 1
+00:00:00  command argument  9 = -outputdirectory
+00:00:00  command argument 10 = E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\
+00:00:00  number of command arguments =  10
+00:00:00  Reading in input file:      'E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in'  (specified via command line)
+00:00:00  Reading in database file:   'C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in'  (specified via command line)
+00:00:00  Using the output directory: 'E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\'  (specified via command line)
+00:00:00  License file location:      'C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic'
+00:00:00  Using     1 parallel thread (useful for multi-core CPUs).
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Start time ==> Date: 2020-11-05   Time: 15:56:01 (+0100)
+00:00:00   
+00:00:00  ANY USE OF THIS CODE CONSTITUTES ACCEPTANCE OF THE TERMS OF THE COPYRIGHT NOTICE.
+00:00:00  
+00:00:00  ===============================================================================
+00:00:00  COPYRIGHT NOTICE
+00:00:00  ===============================================================================
+00:00:00  
+00:00:00  The original nextnano3 code has been modified by nextnano GmbH, Germany.
+00:00:00  This modified code is proprietary software.
+00:00:00  Proprietary software is computer software licensed under exclusive legal right
+00:00:00  of the copyright holder.
+00:00:00  The licensee is given the right to use the software under certain conditions,
+00:00:00  but restricted from other uses, such as modification, further distribution,
+00:00:00  or reverse engineering.
+00:00:00  
+00:00:00  Copyright (c) 2012 - 2020, nextnano GmbH, Germany.
+00:00:00  All rights reserved.
+00:00:00  
+00:00:00  Redistribution and use in source and binary forms, with or without modification,
+00:00:00  are not permitted.
+00:00:00  
+00:00:00  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+00:00:00  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+00:00:00  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+00:00:00  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+00:00:00  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+00:00:00  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+00:00:00  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+00:00:00  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+00:00:00  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+00:00:00  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+00:00:00  
+00:00:00  Please read the file 'copyright_nextnano3.txt' in your installation folder
+00:00:00  for further information about source code of third parties that is used
+00:00:00  in the nextnano3 code.
+00:00:00  
+00:00:00  ===============================================================================
+00:00:00  END OF COPYRIGHT NOTICE
+00:00:00  ===============================================================================
+00:00:00   
+00:00:00  -------------------------------------------------------------------------------
+00:00:00  nextnano3 - next generation 3D nano device simulator (version 2.2.0)
+00:00:00  -------------------------------------------------------------------------------
+00:00:00  Build type:                    Release
+00:00:00  Build date:                    2020-06-29
+00:00:00  Platform:                      Windows
+00:00:00  Architecture:                  64-bit
+00:00:00  Parallelization:               none
+00:00:00  Compiler:                      Intel(R) Visual Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 19.1.0.166 Build 20191121
+00:00:00  Compiler options:              /nologo /debug:minimal /MP /O2 /QaxCORE-AVX2 /assume:buffered_io /heap-arrays0 /fpp /stand:f03 /Qdiag-disable:5268 /names:lowercase /module:Release64/ /object:Release64/ /FdRelease64\vc160.pdb /libs:static /threads /Qmkl:parallel /c /Qlocation,link,C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.21.27702\bin\HostX64\x64 /Qm64
+00:00:00  Precompiled numerical library: MKL 2019 Update 4
+00:00:00  For documentation and support please visit our website: http://www.nextnano.com/nextnano3
+00:00:00  -------------------------------------------------------------------------------
+00:00:00 
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Environment / System information
+00:00:00  ------------------------------------------------------------------------------
+00:00:00   Your operating system is 64-bit.
+00:00:00  Environment variable 'HOMEPATH' = \Users\jun-liang.wang
+00:00:00  directory = \Users\
+00:00:00  Your working directory is:
+00:00:00 C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit
+00:00:00  Environment variable 'NEXTNANO' = 
+00:00:00  Environment variable 'OS' = Windows_NT
+00:00:00  Environment variable 'NUMBER_OF_PROCESSORS' = 4
+00:00:00  Environment variable 'MACHINE' = 
+00:00:00  Environment variable 'PROCESSOR_ARCHITECTURE' = AMD64
+00:00:00  Environment variable 'PROCESSOR_IDENTIFIER' = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
+00:00:00  ------------------------------------------------------------------------------
+00:00:00 
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Reading in input file: 'E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3.in'
+00:00:00  Macro status: Macro definition found in input file. # variables defined =    31
+00:00:00  
+00:00:00  definition variable #1: %Ignore2DHG <== yes
+00:00:00  definition variable #2: %GaNClusterNumbers <== 4 5
+00:00:00  definition variable #3: %AirRegionNumbers <== 6 7 8
+00:00:00  definition variable #4: %AlloySweepActive <== no
+00:00:00  definition variable #5: %FunctionParser <== yes
+00:00:00  definition variable #6: %AlloyContent <== 0.3
+00:00:00  definition variable #7: %ThicknessGaNcap <== 5.0
+00:00:00  definition variable #8: %ThicknessAlGaN <== 30.0
+00:00:00  definition variable #9: %SchottkyBarrierHeight <== 1.4
+00:00:00  definition variable #10: %xmin <== - (1.0 + %ThicknessGaNcap)
+00:00:00  definition variable #11: %xmax <== 70.0
+00:00:00  definition variable #12: %ymin <== 0.0
+00:00:00  definition variable #13: %ymax <== 5.0
+00:00:00  definition variable #14: %MiddleGaNcap <== %ThicknessGaNcap / 2
+00:00:00  definition variable #15: %MiddleAlGaN <== %ThicknessAlGaN  / 4
+00:00:00  definition variable #16: %Spacing_QR <== 0.2
+00:00:00  definition variable #17: %Spacing_general <== 0.5
+00:00:00  definition variable #18: %QR_width_2DEG <== 24.0
+00:00:00  definition variable #19: %QRLeft_2DEG <== %ThicknessAlGaN - %QR_width_2DEG * 1/8
+00:00:00  definition variable #20: %QRRight_2DEG <== %ThicknessAlGaN + %QR_width_2DEG * 7/8
+00:00:00  definition variable #21: %QRLeft_2DHG <== -%MiddleGaNcap * 1.5
+00:00:00  definition variable #22: %QRRight_2DHG <== %MiddleAlGaN  * 4/10
+00:00:00  definition variable #23: %Temperature <== 300
+00:00:00  definition variable #24: %INT(Nodes_Surface) <== %MiddleGaNcap                 /%Spacing_general - 1
+00:00:00  definition variable #25: %INT(Nodes_QR_2DHG_GaN) <== %MiddleGaNcap                 /%Spacing_QR      - 1
+00:00:00  definition variable #26: %INT(Nodes_QR_2DHG_AlGaN) <== %MiddleAlGaN                  /%Spacing_QR      - 1
+00:00:00  definition variable #27: %INT(Nodes_AlGaN) <== (%QRLeft_2DEG-%MiddleAlGaN)    /%Spacing_general - 1
+00:00:00  definition variable #28: %INT(Nodes_QR_2DEG_AlGaN) <== (%ThicknessAlGaN-%QRLeft_2DEG) /%Spacing_QR      - 1
+00:00:00  definition variable #29: %INT(Nodes_QR_2DEG_GaN) <== (%QRRight_2DEG-%ThicknessAlGaN)/%Spacing_QR      - 1
+00:00:00  definition variable #30: %INT(Nodes_substrate) <== (%xmax-%QRRight_2DEG)          /%Spacing_general - 1
+00:00:00  definition variable #31: %INT(Nodesy) <== (%ymax-%ymin)                  /%Spacing_general - 1
+00:00:00  
+00:00:00  Macro function parser: The following variables are evaluated: (6,...,31)
+00:00:00  variable #6: %AlloyContent = 0.3 = 0.300000000e0 (evaluated and replaced)
+00:00:00  variable #7: %ThicknessGaNcap = 5.0 = 5.00000000e0 (evaluated and replaced)
+00:00:00  variable #8: %ThicknessAlGaN = 30.0 = 30.0000000e0 (evaluated and replaced)
+00:00:00  variable #9: %SchottkyBarrierHeight = 1.4 = 1.40000000e0 (evaluated and replaced)
+00:00:00  variable #10: %xmin = - (1.0 + %ThicknessGaNcap) = -6.00000000e0 (evaluated and replaced)
+00:00:00  variable #11: %xmax = 70.0 = 70.0000000e0 (evaluated and replaced)
+00:00:00  variable #12: %ymin = 0.0 = 0.0e0 (evaluated and replaced)
+00:00:00  variable #13: %ymax = 5.0 = 5.00000000e0 (evaluated and replaced)
+00:00:00  variable #14: %MiddleGaNcap = %ThicknessGaNcap / 2 = 2.50000000e0 (evaluated and replaced)
+00:00:00  variable #15: %MiddleAlGaN = %ThicknessAlGaN  / 4 = 7.50000000e0 (evaluated and replaced)
+00:00:00  variable #16: %Spacing_QR = 0.2 = 0.200000000e0 (evaluated and replaced)
+00:00:00  variable #17: %Spacing_general = 0.5 = 0.500000000e0 (evaluated and replaced)
+00:00:00  variable #18: %QR_width_2DEG = 24.0 = 24.0000000e0 (evaluated and replaced)
+00:00:00  variable #19: %QRLeft_2DEG = %ThicknessAlGaN - %QR_width_2DEG * 1/8 = 27.0000000e0 (evaluated and replaced)
+00:00:00  variable #20: %QRRight_2DEG = %ThicknessAlGaN + %QR_width_2DEG * 7/8 = 51.0000000e0 (evaluated and replaced)
+00:00:00  variable #21: %QRLeft_2DHG = -%MiddleGaNcap * 1.5 = -3.75000000e0 (evaluated and replaced)
+00:00:00  variable #22: %QRRight_2DHG = %MiddleAlGaN  * 4/10 = 3.00000000e0 (evaluated and replaced)
+00:00:00  variable #23: %Temperature = 300 = 300.000000e0 (evaluated and replaced)
+00:00:00  variable #24: %INT(Nodes_Surface) = %MiddleGaNcap                 /%Spacing_general - 1 = 4 (evaluated and replaced)
+00:00:00  variable #25: %INT(Nodes_QR_2DHG_GaN) = %MiddleGaNcap                 /%Spacing_QR      - 1 = 12 (evaluated and replaced)
+00:00:00  variable #26: %INT(Nodes_QR_2DHG_AlGaN) = %MiddleAlGaN                  /%Spacing_QR      - 1 = 37 (evaluated and replaced)
+00:00:00  variable #27: %INT(Nodes_AlGaN) = (%QRLeft_2DEG-%MiddleAlGaN)    /%Spacing_general - 1 = 38 (evaluated and replaced)
+00:00:00  variable #28: %INT(Nodes_QR_2DEG_AlGaN) = (%ThicknessAlGaN-%QRLeft_2DEG) /%Spacing_QR      - 1 = 14 (evaluated and replaced)
+00:00:00  variable #29: %INT(Nodes_QR_2DEG_GaN) = (%QRRight_2DEG-%ThicknessAlGaN)/%Spacing_QR      - 1 = 104 (evaluated and replaced)
+00:00:00  variable #30: %INT(Nodes_substrate) = (%xmax-%QRRight_2DEG)          /%Spacing_general - 1 = 37 (evaluated and replaced)
+00:00:00  variable #31: %INT(Nodesy) = (%ymax-%ymin)                  /%Spacing_general - 1 = 9 (evaluated and replaced)
+00:00:00  ================>
+00:00:00  Replace variable '%Ignore2DHG' with its value: yes
+00:00:00  
+00:00:00  I found:        deactivate-cluster     = %Ignore2DHG
+00:00:00  Replaced with:  deactivate-cluster     = yes
+00:00:00  Macro line: !***macro*** %Ignore2DHG             = yes                                                ! ignore 2DHG                                      (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%GaNClusterNumbers' with its value: 4 5
+00:00:00  
+00:00:00  I found:        cluster-numbers = %GaNClusterNumbers
+00:00:00  Replaced with:  cluster-numbers = 4 5
+00:00:00  Macro line: !***macro*** %GaNClusterNumbers      = 4 5                                                ! GaN regions                                      (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%AirRegionNumbers' with its value: 6 7 8
+00:00:00  
+00:00:00  I found:        cluster-number = 6    region-numbers = %AirRegionNumbers                   ! air
+00:00:00  Replaced with:  cluster-number = 6    region-numbers = 6 7 8                   ! air
+00:00:00  Macro line: !***macro*** %AirRegionNumbers       =     6 7 8                                          ! air regions (8 = default region)                 (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%AlloySweepActive' with its value: no
+00:00:00  
+00:00:00  I found:        alloy-sweep-active           = %AlloySweepActive
+00:00:00  Replaced with:  alloy-sweep-active           = no
+00:00:00  Macro line: !***macro*** %AlloySweepActive       = no       ! 'yes'/'no', (Fig. 4, Fig. 7: no) sweep alloy concentration from 0.4 to 0.0 (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%FunctionParser' with its value: yes
+00:00:00  
+00:00:00  Macro line: !***macro*** %FunctionParser         = yes      ! From now on, variables are not treated as strings any more but as floating point numbers. (DoNotShowInUserInterface) (0 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%AlloyContent' with its value: 0.300000000e0
+00:00:00  
+00:00:00  I found:        xalloy                       = %AlloyContent
+00:00:00  Replaced with:  xalloy                       = 0.300000000e0
+00:00:00  Macro line: !***macro*** %AlloyContent           = 0.3      ! alloy content, for Fig. 7 and for GaN cap simulation (Fig. 4, Fig. 5, Fig. 6)  (DisplayUnit:)(RangeOfValues:From=0.4,To=0.0,Step=-0.05) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%ThicknessGaNcap' with its value: 5.00000000e0
+00:00:00  
+00:00:00  I found:        %xmin                   = - (1.0 + %ThicknessGaNcap)        ! minimum coordinate of whole structure (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %xmin                   = - (1.0 + 5.00000000e0)        ! minimum coordinate of whole structure (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %MiddleGaNcap           =  %ThicknessGaNcap / 2             ! middle of GaN cap layer      (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %MiddleGaNcap           =  5.00000000e0 / 2             ! middle of GaN cap layer      (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates = -%ThicknessGaNcap     0d0
+00:00:00  Replaced with:  x-coordinates = -5.00000000e0     0d0
+00:00:00  I found:        x-grid-lines     =  %xmin -%ThicknessGaNcap -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      %ThicknessAlGaN           %QRRight_2DEG           %xmax
+00:00:00  Replaced with:  x-grid-lines     =  %xmin -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      %ThicknessAlGaN           %QRRight_2DEG           %xmax
+00:00:00  Macro line: !***macro*** %ThicknessGaNcap        =  5.0 ! thickness of GaN cap layer for GaN cap simulation (Fig. 4, Fig. 5), (ListOfValues:1,2,3,4,5,7,9,11,12,13,14,15,17,20,25,30)(DisplayUnit:nm)(HighlightInUserInterface)(DoNotShowInUserInterface) (4 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%ThicknessAlGaN' with its value: 30.0000000e0
+00:00:00  
+00:00:00  I found:        %MiddleAlGaN            =  %ThicknessAlGaN  / 4             ! middle of AlGaN layer / 4    (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %MiddleAlGaN            =  30.0000000e0  / 4             ! middle of AlGaN layer / 4    (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %QRLeft_2DEG            = %ThicknessAlGaN - %QR_width_2DEG * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRLeft_2DEG            = 30.0000000e0 - %QR_width_2DEG * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %QRRight_2DEG           = %ThicknessAlGaN + %QR_width_2DEG * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRRight_2DEG           = 30.0000000e0 + %QR_width_2DEG * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DEG_AlGaN) = (%ThicknessAlGaN-%QRLeft_2DEG) /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-%QRLeft_2DEG) /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-%ThicknessAlGaN)/%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-30.0000000e0)/%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates = %QRLeft_2DEG    %ThicknessAlGaN
+00:00:00  Replaced with:  x-coordinates = %QRLeft_2DEG    30.0000000e0
+00:00:00  I found:        x-coordinates = %ThicknessAlGaN %QRRight_2DEG
+00:00:00  Replaced with:  x-coordinates = 30.0000000e0 %QRRight_2DEG
+00:00:00  I found:        x-grid-lines     =  %xmin -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      %ThicknessAlGaN           %QRRight_2DEG           %xmax
+00:00:00  Replaced with:  x-grid-lines     =  %xmin -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           %xmax
+00:00:00  Macro line: !***macro*** %ThicknessAlGaN         = 30.0 ! thickness of AlGaN spacer, for Fig. 7 and for GaN cap simulation ==> 30 nm (Fig. 4, Fig. 5, Fig. 6), (ListOfValues:6,10,14,18,22,26,30,34,38,40)(DisplayUnit:nm) (8 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%SchottkyBarrierHeight' with its value: 1.40000000e0
+00:00:00  
+00:00:00  I found:        schottky-barrier           = %SchottkyBarrierHeight
+00:00:00  Replaced with:  schottky-barrier           = 1.40000000e0
+00:00:00  Macro line: !***macro*** %SchottkyBarrierHeight  = 1.4                               ! Schottky barrier height phi_B = E_c - E_F, used by [Jogai2003], see p. 1634, column 1    (ListOfValues:1.40,1.42,1.65)(RangeOfValues:From=0.0,To=4.0,Step=0.25)(DisplayUnit:V)(HighlightInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%xmin' with its value: -6.00000000e0
+00:00:00  
+00:00:00  I found:        x-coordinates          = %xmin %xmax
+00:00:00  Replaced with:  x-coordinates          = -6.00000000e0 %xmax
+00:00:00  I found:        x-coordinates = %xmin    0d0                                               ! air
+00:00:00  Replaced with:  x-coordinates = -6.00000000e0    0d0                                               ! air
+00:00:00  I found:        x-grid-lines     =  %xmin -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           %xmax
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           %xmax
+00:00:00  Macro line: !***macro*** %xmin                   = - (1.0 + 5.00000000e0)        ! minimum coordinate of whole structure (DisplayUnit:nm) (DoNotShowInUserInterface) (3 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%xmax' with its value: 70.0000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodes_substrate)     = (%xmax-%QRRight_2DEG)          /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_substrate)     = (70.0000000e0-%QRRight_2DEG)          /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates          = -6.00000000e0 %xmax
+00:00:00  Replaced with:  x-coordinates          = -6.00000000e0 70.0000000e0
+00:00:00  I found:        x-coordinates = %QRRight_2DEG   %xmax
+00:00:00  Replaced with:  x-coordinates = %QRRight_2DEG   70.0000000e0
+00:00:00  I found:        x-grid-lines     =  -6.00000000e0 -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           %xmax
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Macro line: !***macro*** %xmax                   = 70.0                              ! maximum coordinate of whole structure, [Jogai2003] uses 70 nm (DisplayUnit:nm) (DoNotShowInUserInterface) (4 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%ymin' with its value: 0.0e0
+00:00:00  
+00:00:00  I found:        %INT(Nodesy)              = (%ymax-%ymin)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodesy)              = (%ymax-0.0e0)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        y-coordinates       = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates       = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-coordinates = %ymin %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 %ymax
+00:00:00  I found:        y-grid-lines     =  %ymin  %ymax
+00:00:00  Replaced with:  y-grid-lines     =  0.0e0  %ymax
+00:00:00  I found:        y-coordinates          = %ymin   %ymax
+00:00:00  Replaced with:  y-coordinates          = 0.0e0   %ymax
+00:00:00  I found:        y-coordinates          = %ymin   %ymax
+00:00:00  Replaced with:  y-coordinates          = 0.0e0   %ymax
+00:00:00  Macro line: !***macro*** %ymin                   = 0.0                               ! minimum coordinate of whole structure along y direction (DisplayUnit:nm) (DoNotShowInUserInterface) (12 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%ymax' with its value: 5.00000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodesy)              = (%ymax-0.0e0)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodesy)              = (5.00000000e0-0.0e0)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        y-coordinates       = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates       = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-coordinates = 0.0e0 %ymax
+00:00:00  Replaced with:  y-coordinates = 0.0e0 5.00000000e0
+00:00:00  I found:        y-grid-lines     =  0.0e0  %ymax
+00:00:00  Replaced with:  y-grid-lines     =  0.0e0  5.00000000e0
+00:00:00  I found:        y-coordinates          = 0.0e0   %ymax
+00:00:00  Replaced with:  y-coordinates          = 0.0e0   5.00000000e0
+00:00:00  I found:        y-coordinates          = 0.0e0   %ymax
+00:00:00  Replaced with:  y-coordinates          = 0.0e0   5.00000000e0
+00:00:00  Macro line: !***macro*** %ymax                   = 5.0                               ! maximum coordinate of whole structure along y direction (DisplayUnit:nm) (DoNotShowInUserInterface) (12 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%MiddleGaNcap' with its value: 2.50000000e0
+00:00:00  
+00:00:00  I found:        %QRLeft_2DHG            = -%MiddleGaNcap * 1.5                    ! minimum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRLeft_2DHG            = -2.50000000e0 * 1.5                    ! minimum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_Surface)       =  %MiddleGaNcap                 /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_Surface)       =  2.50000000e0                 /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DHG_GaN)   =  %MiddleGaNcap                 /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DHG_GaN)   =  2.50000000e0                 /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-grid-lines     =  -6.00000000e0 -5.00000000e0 -%MiddleGaNcap      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Macro line: !***macro*** %MiddleGaNcap           =  5.00000000e0 / 2             ! middle of GaN cap layer      (DisplayUnit:nm) (DoNotShowInUserInterface) (4 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%MiddleAlGaN' with its value: 7.50000000e0
+00:00:00  
+00:00:00  I found:        %QRRight_2DHG           =  %MiddleAlGaN  * 4/10                   ! maximum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRRight_2DHG           =  7.50000000e0  * 4/10                   ! maximum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DHG_AlGaN) =  %MiddleAlGaN                  /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DHG_AlGaN) =  7.50000000e0                  /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-%MiddleAlGaN)    /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-7.50000000e0)    /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates = 0d0    %MiddleAlGaN
+00:00:00  Replaced with:  x-coordinates = 0d0    7.50000000e0
+00:00:00  I found:        x-coordinates = %MiddleAlGaN    %QRLeft_2DEG
+00:00:00  Replaced with:  x-coordinates = 7.50000000e0    %QRLeft_2DEG
+00:00:00  I found:        x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     %MiddleAlGaN              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     7.50000000e0              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Macro line: !***macro*** %MiddleAlGaN            =  30.0000000e0  / 4             ! middle of AlGaN layer / 4    (DisplayUnit:nm) (DoNotShowInUserInterface) (6 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%Spacing_QR' with its value: 0.200000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodes_QR_2DHG_GaN)   =  2.50000000e0                 /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DHG_GaN)   =  2.50000000e0                 /0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DHG_AlGaN) =  7.50000000e0                  /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DHG_AlGaN) =  7.50000000e0                  /0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-%QRLeft_2DEG) /%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-%QRLeft_2DEG) /0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-30.0000000e0)/%Spacing_QR      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-30.0000000e0)/0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Macro line: !***macro*** %Spacing_QR             = 0.2                               ! grid spacing in quantum region (DisplayUnit:nm)(DoNotShowInUserInterface) (4 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%Spacing_general' with its value: 0.500000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodes_Surface)       =  2.50000000e0                 /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_Surface)       =  2.50000000e0                 /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-7.50000000e0)    /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-7.50000000e0)    /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_substrate)     = (70.0000000e0-%QRRight_2DEG)          /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_substrate)     = (70.0000000e0-%QRRight_2DEG)          /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodesy)              = (5.00000000e0-0.0e0)                  /%Spacing_general - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodesy)              = (5.00000000e0-0.0e0)                  /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  Macro line: !***macro*** %Spacing_general        = 0.5 ! 1.0                         ! grid spacing elsewhere         (DisplayUnit:nm)(DoNotShowInUserInterface) (4 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%QR_width_2DEG' with its value: 24.0000000e0
+00:00:00  
+00:00:00  I found:        %QRLeft_2DEG            = 30.0000000e0 - %QR_width_2DEG * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRLeft_2DEG            = 30.0000000e0 - 24.0000000e0 * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  I found:        %QRRight_2DEG           = 30.0000000e0 + %QR_width_2DEG * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %QRRight_2DEG           = 30.0000000e0 + 24.0000000e0 * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface)
+00:00:00  Macro line: !***macro*** %QR_width_2DEG          = 24.0                                    ! width of quantum region of 2DEG (DisplayUnit:nm)(DoNotShowInUserInterface) (2 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%QRLeft_2DEG' with its value: 27.0000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodes_AlGaN)         = (%QRLeft_2DEG-7.50000000e0)    /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_AlGaN)         = (27.0000000e0-7.50000000e0)    /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-%QRLeft_2DEG) /0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-27.0000000e0) /0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates = 7.50000000e0    %QRLeft_2DEG
+00:00:00  Replaced with:  x-coordinates = 7.50000000e0    27.0000000e0
+00:00:00  I found:        x-coordinates = %QRLeft_2DEG    30.0000000e0
+00:00:00  Replaced with:  x-coordinates = 27.0000000e0    30.0000000e0
+00:00:00  I found:        x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     7.50000000e0              %QRLeft_2DEG      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     7.50000000e0              27.0000000e0      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  I found:        x-coordinates          = %QRLeft_2DEG %QRRight_2DEG               ! [nm]
+00:00:00  Replaced with:  x-coordinates          = 27.0000000e0 %QRRight_2DEG               ! [nm]
+00:00:00  Macro line: !***macro*** %QRLeft_2DEG            = 30.0000000e0 - 24.0000000e0 * 1/8  ! minimum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface) (6 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%QRRight_2DEG' with its value: 51.0000000e0
+00:00:00  
+00:00:00  I found:        %INT(Nodes_QR_2DEG_GaN)   = (%QRRight_2DEG-30.0000000e0)/0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_QR_2DEG_GaN)   = (51.0000000e0-30.0000000e0)/0.200000000e0      - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        %INT(Nodes_substrate)     = (70.0000000e0-%QRRight_2DEG)          /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  Replaced with:  %INT(Nodes_substrate)     = (70.0000000e0-51.0000000e0)          /0.500000000e0 - 1  ! (DoNotShowInUserInterface)
+00:00:00  I found:        x-coordinates = 30.0000000e0 %QRRight_2DEG
+00:00:00  Replaced with:  x-coordinates = 30.0000000e0 51.0000000e0
+00:00:00  I found:        x-coordinates = %QRRight_2DEG   70.0000000e0
+00:00:00  Replaced with:  x-coordinates = 51.0000000e0   70.0000000e0
+00:00:00  I found:        x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     7.50000000e0              27.0000000e0      30.0000000e0           %QRRight_2DEG           70.0000000e0
+00:00:00  Replaced with:  x-grid-lines     =  -6.00000000e0 -5.00000000e0 -2.50000000e0      0d0                     7.50000000e0              27.0000000e0      30.0000000e0           51.0000000e0           70.0000000e0
+00:00:00  I found:        x-coordinates          = 27.0000000e0 %QRRight_2DEG               ! [nm]
+00:00:00  Replaced with:  x-coordinates          = 27.0000000e0 51.0000000e0               ! [nm]
+00:00:00  Macro line: !***macro*** %QRRight_2DEG           = 30.0000000e0 + 24.0000000e0 * 7/8  ! maximum coordinate of quantum region of 2DEG (DisplayUnit:nm) (DoNotShowInUserInterface) (6 replacements)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%QRLeft_2DHG' with its value: -3.75000000e0
+00:00:00  
+00:00:00  I found:        x-coordinates          = %QRLeft_2DHG %QRRight_2DHG               ! [nm]
+00:00:00  Replaced with:  x-coordinates          = -3.75000000e0 %QRRight_2DHG               ! [nm]
+00:00:00  Macro line: !***macro*** %QRLeft_2DHG            = -2.50000000e0 * 1.5                    ! minimum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%QRRight_2DHG' with its value: 3.00000000e0
+00:00:00  
+00:00:00  I found:        x-coordinates          = -3.75000000e0 %QRRight_2DHG               ! [nm]
+00:00:00  Replaced with:  x-coordinates          = -3.75000000e0 3.00000000e0               ! [nm]
+00:00:00  Macro line: !***macro*** %QRRight_2DHG           =  7.50000000e0  * 4/10                   ! maximum coordinate of quantum region of 2DHG (DisplayUnit:nm) (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%Temperature' with its value: 300.000000e0
+00:00:00  
+00:00:00  I found:        lattice-temperature = %Temperature                                         ! Kelvin
+00:00:00  Replaced with:  lattice-temperature = 300.000000e0                                         ! Kelvin
+00:00:00  Macro line: !***macro*** %Temperature            = 300                                     ! temperature, [Jogai2003]: 300 K (DisplayUnit:K) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_Surface)' with its value: 4
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 %INT(Nodes_Surface) %INT(Nodes_QR_2DHG_GaN) %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 %INT(Nodes_QR_2DHG_GaN) %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_Surface)       =  2.50000000e0                 /0.500000000e0 - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_QR_2DHG_GaN)' with its value: 12
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 %INT(Nodes_QR_2DHG_GaN) %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_QR_2DHG_GaN)   =  2.50000000e0                 /0.200000000e0      - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_QR_2DHG_AlGaN)' with its value: 37
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 12 %INT(Nodes_QR_2DHG_AlGaN) %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 37 %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_QR_2DHG_AlGaN) =  7.50000000e0                  /0.200000000e0      - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_AlGaN)' with its value: 38
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 12 37 %INT(Nodes_AlGaN) %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 37 38 %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_AlGaN)         = (27.0000000e0-7.50000000e0)    /0.500000000e0 - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_QR_2DEG_AlGaN)' with its value: 14
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 12 37 38 %INT(Nodes_QR_2DEG_AlGaN) %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 37 38 14 %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_QR_2DEG_AlGaN) = (30.0000000e0-27.0000000e0) /0.200000000e0      - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_QR_2DEG_GaN)' with its value: 104
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 12 37 38 14 %INT(Nodes_QR_2DEG_GaN) %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 37 38 14 104 %INT(Nodes_substrate)
+00:00:00  Macro line: !***macro*** %INT(Nodes_QR_2DEG_GaN)   = (51.0000000e0-30.0000000e0)/0.200000000e0      - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodes_substrate)' with its value: 37
+00:00:00  
+00:00:00  I found:        x-nodes          =       1                 4 12 37 38 14 104 %INT(Nodes_substrate)
+00:00:00  Replaced with:  x-nodes          =       1                 4 12 37 38 14 104 37
+00:00:00  Macro line: !***macro*** %INT(Nodes_substrate)     = (70.0000000e0-51.0000000e0)          /0.500000000e0 - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  ================>
+00:00:00  Replace variable '%INT(Nodesy)' with its value: 9
+00:00:00  
+00:00:00  I found:        y-nodes          =       %INT(Nodesy)
+00:00:00  Replaced with:  y-nodes          =       9
+00:00:00  Macro line: !***macro*** %INT(Nodesy)              = (5.00000000e0-0.0e0)                  /0.500000000e0 - 1  ! (DoNotShowInUserInterface) (1 replacement)
+00:00:00  
+00:00:00  
+00:00:00 
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Reading in database_nn3:   'C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in'
+00:00:00  C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in: Build up input queue for all database_nn3 entries. (finished)
+00:00:00 
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Processing input file.
+00:00:00  ------------------------------------------------------------------------------
+00:00:00  Using debug-level =          0 (no debug information is printed out) (default)
+00:00:00  Stacksize for OpenMP: OMP_STACKSIZE =       67108864 bytes (default) =    64.000 MB (MiB) (default)
+00:00:00  Warnings are switched off.
+00:00:00  Performing a 2D simulation in (x,y) plane.
+00:00:00  
+00:00:00  ---------------------------------------------------------------
+00:00:00  number of x-grid entries found in input file =            1
+00:00:00  number of y-grid entries found in input file =            1
+00:00:00  ---------------------------------------------------------------
+00:00:00  
+00:00:00  ---------------------------------------------------------------
+00:00:00  number of nodes to create in x-direction =        256
+00:00:00  number of nodes to create in y-direction =         11
+00:00:00  ---------------------------------------------------------------
+00:00:00  number of grid points along direction 1 =        255
+00:00:00  number of grid points along direction 2 =         10
+00:00:00  
+00:00:00  ---------------------------------------------------------------
+00:00:00  number of entries for  $region-cluster =            6
+00:00:00  ---------------------------------------------------------------
+00:00:00  
+00:00:00  Region rectangle processed:          380 grid points
+00:00:00  Region rectangle processed:         1050 grid points
+00:00:00  Region rectangle processed:          380 grid points
+00:00:00  Region rectangle processed:          200 grid points
+00:00:00  Region rectangle processed:          150 grid points
+00:00:00  Region rectangle processed:          390 grid points
+00:00:00  Region rectangle processed:          180 grid points
+00:00:00  no. of clusters                            =        6
+00:00:00  cluster     1: no. of material grid points =      380
+00:00:00  cluster     2: no. of material grid points =      390
+00:00:00  cluster     3: no. of material grid points =      150
+00:00:00  cluster     4: no. of material grid points =     1050
+00:00:00  cluster     5: no. of material grid points =      380
+00:00:00  cluster     6: no. of material grid points =      200
+00:00:00  material-number #     1: GaN
+00:00:00  material-type     =      GaN-wz-default
+00:00:00  apply to clusters =            4           5
+00:00:00  material-number #     2: Al(x)Ga(1-x)N
+00:00:00  material-type     =      Al(x)Ga(1-x)N-wz-default
+00:00:00  apply to clusters =            1           2           3
+00:00:00  alloy function    = constant
+00:00:00  material-number #     3: Air-wz
+00:00:00  material-type     =      Air-wz-default
+00:00:00  apply to clusters =            6
+00:00:00  The simulated structure contains at least one wurtzite material.
+00:00:00    Use material parameters from input file: material #     1: GaN
+00:00:00                               apply-to-material-numbers =            1
+00:00:00            2
+00:00:00    Use material parameters from input file: material #     2: Al(x)Ga(1-x)N
+00:00:00                               apply-to-material-numbers =            2
+00:00:00  For option 'homogeneous-strain' analytical equations in crystal system will be used.
+00:00:00  Newton's method set via input file to: Newton-1
+00:00:00  Calculate built-in potential as specified in input file.
+00:00:00  'band-gaps' instead of 'conduction-band-energies' are used.
+00:00:00  Varshni parameters were switched on.
+00:00:00  I will use temperature dependent energy gaps.
+00:00:00  (temperature dependent conduction-band-energies)
+00:00:00  $domain-coordinates: Getting lattice constants for substrate material = GaN
+00:00:00   substrate lattice constants for material      1 =     0.31890000    0.31890000    0.51850000 [nm]
+00:00:00   substrate lattice constants for material      2 =     0.31890000    0.31890000    0.51850000 [nm]
+00:00:00   substrate lattice constants for material      3 =     0.31890000    0.31890000    0.51850000 [nm]
+00:00:00 
+00:00:00  wurtzite crystal orientation (Bravais-Miller indices as specified in input file or database)
+00:00:00  hkil-x-direction   =          0         0         0        -1  ! i.e. x direction is perpendicular to this (hkil) plane
+00:00:00  hkil-y-direction   =          0         1        -1         0  ! i.e. y direction is perpendicular to this (hkil) plane
+00:00:00 (hkil-z-direction   =          2        -1        -1         0) ! i.e. z direction is perpendicular to this (hkil) plane (calculated)
+00:00:00 
+00:00:00  The cartesian 4-vectors [h,k,i,l/lambda] perpendicular to these (hkil) planes in the ideal hexagonal crystal are
+00:00:00  x: [ h, k, i, l/lambda ] = [           0.000000           0.000000           0.000000          -0.750000]
+00:00:00  y: [ h, k, i, l/lambda ] = [           0.000000           1.000000          -1.000000           0.000000]
+00:00:00 (z: [ h, k, i, l/lambda ] = [           2.000000          -1.000000          -1.000000           0.000000]) (3rd direction was calculated)
+00:00:00 
+00:00:00  The crystallographically symbolized [hkil] directions perpendicular to these (hkil) planes in the ideal hexagonal crystal are
+00:00:00  x: [ h, k, i, l ] = [                0                0                0               -9]
+00:00:00  y: [ h, k, i, l ] = [                0                1               -1                0]
+00:00:00  z:([ h, k, i, l ] = [                2               -1               -1                0])
+00:00:00 
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           0           0          -9
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is       180.000000 degree. (ideal c/a ratio)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is   -90.000000 degree. (ideal c/a ratio)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (ideal c/a ratio)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (ideal c/a ratio)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            2          -1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (ideal c/a ratio)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (ideal c/a ratio)
+00:00:00 
+00:00:00  wurtzite crystal orientation: (4-digit Bravais-Miller indices (hkil) and [hkil] are cooked down to 3-digit indices (hkl) and [(h-i)(k-i)(l)].
+00:00:00  x-direction:   symbolic [hkl] = [         0         0        -9]  (crystal a1,a2,c)
+00:00:00  y-direction:   symbolic [hkl] = [         1         2         0]  (crystal a1,a2,c)
+00:00:00 (z-direction:   symbolic [hkl] = [         3         0         0]) (crystal a1,a2,c)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           0           0          -9
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is       180.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is   -90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            2          -1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           0           0          -9
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is       180.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is   -90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            2          -1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           0           0          -9
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is       180.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is   -90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            0           1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00  ---------------------------
+00:00:00  symbolized [uvtw] direction =            2          -1          -1           0
+00:00:00  The angle between the direction [uvtw] and the plane (0001) is        90.000000 degree. (c/a ratio =     1.625902)
+00:00:00  The angle between the direction [uvtw] and the direction [0001] is     0.000000 degree. (c/a ratio =     1.625902)
+00:00:00   
+00:00:00  ----------------------------------------------------------------------
+00:00:00  Rotation matrix for material number =       1:
+00:00:00  (  0.000000000  0.000000000 -1.000000000 )   (hkl-x-direction-zb)
+00:00:00  (  0.500000000  0.866025404  0.000000000 )   (hkl-y-direction-zb)
+00:00:00  (  0.866025404 -0.500000000  0.000000000 )   (hkl-z-direction-zb)
+00:00:00  (transformation matrix for a vector from crystal coordinate system to simulation coordinate system: material_info(l)%transform_cxyz_to_xyz)
+00:00:00  
+00:00:00  Eigenvalues:
+00:00:00  (    -0.066987298,     0.997753828)    ==>   e^(+i theta) = cos(theta) + i sin(theta)
+00:00:00  (    -0.066987298,    -0.997753828)    ==>   e^(-i theta) = cos(theta) - i sin(theta)
+00:00:00  (     1.000000000,     0.000000000)    ==>   eigenvalue = 1: axis of rotation        
+00:00:00  
+00:00:00  Eigenvector: axis of rotation
+00:00:00  (     -0.250562807     0.000000000 ) 
+00:00:00  (     -0.935113127     0.000000000 ) 
+00:00:00  (      0.250562807     0.000000000 ) 
+00:00:00  
+00:00:00  Eigenvector: 2nd and 3rd
+00:00:00  (      0.045856176     0.683012702 ) 
+00:00:00  (      0.171137580    -0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  (      0.045856176    -0.683012702 ) 
+00:00:00  (      0.171137580     0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  sin(theta) =  (0.997753828302463,0.000000000000000E+000)
+00:00:00  cos(theta) =  (-6.698729810778081E-002,0.000000000000000E+000)
+00:00:00  theta = arcsin( sin(theta) ) =     86.159034284 ° =      0.478661302 [pi] =      1.503758829
+00:00:00  theta = arccos( cos(theta) ) =     93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation angle =      93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation axis  = [    -0.250562807    -0.935113127     0.250562807 ]
+00:00:00  Rotation matrix for material number =       2:
+00:00:00  (  0.000000000  0.000000000 -1.000000000 )   (hkl-x-direction-zb)
+00:00:00  (  0.500000000  0.866025404  0.000000000 )   (hkl-y-direction-zb)
+00:00:00  (  0.866025404 -0.500000000  0.000000000 )   (hkl-z-direction-zb)
+00:00:00  (transformation matrix for a vector from crystal coordinate system to simulation coordinate system: material_info(l)%transform_cxyz_to_xyz)
+00:00:00  
+00:00:00  Eigenvalues:
+00:00:00  (    -0.066987298,     0.997753828)    ==>   e^(+i theta) = cos(theta) + i sin(theta)
+00:00:00  (    -0.066987298,    -0.997753828)    ==>   e^(-i theta) = cos(theta) - i sin(theta)
+00:00:00  (     1.000000000,     0.000000000)    ==>   eigenvalue = 1: axis of rotation        
+00:00:00  
+00:00:00  Eigenvector: axis of rotation
+00:00:00  (     -0.250562807     0.000000000 ) 
+00:00:00  (     -0.935113127     0.000000000 ) 
+00:00:00  (      0.250562807     0.000000000 ) 
+00:00:00  
+00:00:00  Eigenvector: 2nd and 3rd
+00:00:00  (      0.045856176     0.683012702 ) 
+00:00:00  (      0.171137580    -0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  (      0.045856176    -0.683012702 ) 
+00:00:00  (      0.171137580     0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  sin(theta) =  (0.997753828302463,0.000000000000000E+000)
+00:00:00  cos(theta) =  (-6.698729810778081E-002,0.000000000000000E+000)
+00:00:00  theta = arcsin( sin(theta) ) =     86.159034284 ° =      0.478661302 [pi] =      1.503758829
+00:00:00  theta = arccos( cos(theta) ) =     93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation angle =      93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation axis  = [    -0.250562807    -0.935113127     0.250562807 ]
+00:00:00  Rotation matrix for material number =       3:
+00:00:00  (  0.000000000  0.000000000 -1.000000000 )   (hkl-x-direction-zb)
+00:00:00  (  0.500000000  0.866025404  0.000000000 )   (hkl-y-direction-zb)
+00:00:00  (  0.866025404 -0.500000000  0.000000000 )   (hkl-z-direction-zb)
+00:00:00  (transformation matrix for a vector from crystal coordinate system to simulation coordinate system: material_info(l)%transform_cxyz_to_xyz)
+00:00:00  
+00:00:00  Eigenvalues:
+00:00:00  (    -0.066987298,     0.997753828)    ==>   e^(+i theta) = cos(theta) + i sin(theta)
+00:00:00  (    -0.066987298,    -0.997753828)    ==>   e^(-i theta) = cos(theta) - i sin(theta)
+00:00:00  (     1.000000000,     0.000000000)    ==>   eigenvalue = 1: axis of rotation        
+00:00:00  
+00:00:00  Eigenvector: axis of rotation
+00:00:00  (     -0.250562807     0.000000000 ) 
+00:00:00  (     -0.935113127     0.000000000 ) 
+00:00:00  (      0.250562807     0.000000000 ) 
+00:00:00  
+00:00:00  Eigenvector: 2nd and 3rd
+00:00:00  (      0.045856176     0.683012702 ) 
+00:00:00  (      0.171137580    -0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  (      0.045856176    -0.683012702 ) 
+00:00:00  (      0.171137580     0.183012702 ) 
+00:00:00  (      0.684550319     0.000000000 ) 
+00:00:00  
+00:00:00  sin(theta) =  (0.997753828302463,0.000000000000000E+000)
+00:00:00  cos(theta) =  (-6.698729810778081E-002,0.000000000000000E+000)
+00:00:00  theta = arcsin( sin(theta) ) =     86.159034284 ° =      0.478661302 [pi] =      1.503758829
+00:00:00  theta = arccos( cos(theta) ) =     93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation angle =      93.840965716 ° =      0.521338698 [pi] =      1.637833825
+00:00:00        ==>    rotation axis  = [    -0.250562807    -0.935113127     0.250562807 ]
+00:00:00  ----------------------------------------------------------------------
+00:00:00   
+00:00:00  material_orientation:                   l =     1
+00:00:00  material_info(l)%interface_vector_in_cxyz = [     0.000000000     0.000000000    -1.000000000   ] (only used for 'homogeneous-strain')
+00:00:00  material_orientation:                   l =     2
+00:00:00  material_info(l)%interface_vector_in_cxyz = [     0.000000000     0.000000000    -1.000000000   ] (only used for 'homogeneous-strain')
+00:00:00  material_orientation:                   l =     3
+00:00:00  material_info(l)%interface_vector_in_cxyz = [     0.000000000     0.000000000    -1.000000000   ] (only used for 'homogeneous-strain')
+00:00:00  quantum cluster     1: no. of material grid points =     1200
+00:00:00  quantum cluster     2: no. of material grid points =      310
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00  Different boundary conditions for one quantum region not tested yet!
+00:00:00  They were tested for M. Povolotskyi's box-integration routines only.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models.
+00:00:00  Periodic boundary conditions not tested yet for every discretization method of quantum cluster.
+00:00:00 Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00 Different boundary conditions for one quantum cluster not tested yet for every discretization method.
+00:00:00 They were tested for box-integration routines.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00  Different boundary conditions for one quantum region not tested yet!
+00:00:00  They were tested for M. Povolotskyi's box-integration routines only.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models.
+00:00:00  Periodic boundary conditions not tested yet for every discretization method of quantum cluster.
+00:00:00 Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00 Different boundary conditions for one quantum cluster not tested yet for every discretization method.
+00:00:00 They were tested for box-integration routines.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00  Different boundary conditions for one quantum region not tested yet!
+00:00:00  They were tested for M. Povolotskyi's box-integration routines only.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models.
+00:00:00  Periodic boundary conditions not tested yet for every discretization method of quantum cluster.
+00:00:00 Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00 Different boundary conditions for one quantum cluster not tested yet for every discretization method.
+00:00:00 They were tested for box-integration routines.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00  Different boundary conditions for one quantum region not tested yet!
+00:00:00  They were tested for M. Povolotskyi's box-integration routines only.
+00:00:00  Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models.
+00:00:00  Periodic boundary conditions not tested yet for every discretization method of quantum cluster.
+00:00:00 Warning check_for_unique_clustering, SUBROUTINE: get_quantum_models:
+00:00:00 Different boundary conditions for one quantum cluster not tested yet for every discretization method.
+00:00:00 They were tested for box-integration routines.
+00:00:00  no. of material grid points        =         2550
+00:00:00  no. of materials present in device =            3
+00:00:00  material no.     1 (                 GaN):      1430 material grid points
+00:00:00  material no.     2 (       Al(x)Ga(1-x)N):       920 material grid points
+00:00:00  material no.     3 (              Air-wz):       200 material grid points
+00:00:00  magnetic field = no
+00:00:00  number of voltage-sweeps =     0
+00:00:00  Processing of input file finished.
+00:00:00 
+00:00:00  Parallelization using OpenMP.
+00:00:00  Setting number of parallel threads: NumberOfThreads =     1
+00:00:00  Your specified license file: C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
+00:00:00 	License is valid.
+00:00:00 	 Valid From: 2020-10-8 To: 2021-12-31
+00:00:00 	 Licensed to: E-mail: jun-liang.wang@nextnano.com-2021-12-31-m4t6
+00:00:00   
+00:00:00  device length along x direction:      76.000E+00 [nm]
+00:00:00  device length along y direction:       5.000E+00 [nm]
+00:00:00  Mesh finished.
+00:00:00   n_1         * n_2         =       256 *        11 =            2816
+00:00:00  Material grid points:
+00:00:00   n_1_MatGrid * n_2_MatGrid =       255 *        10 =            2550
+00:00:00  total device area =     380.000E+00 [nm^2]
+00:00:00   no interface:       2794 ==>       2794
+00:00:00    | interface:         22 ==>         44
+00:00:00    - interface:          0 ==>          0
+00:00:00    + interface:          0 ==>          0
+00:00:00                                -----------
+00:00:00                            lengvecV (including multiple grid points) =            2838
+00:00:00  total device area =     380.000E+00 [nm^2] (multiple grid points)
+00:00:00  main: Now setup quantum cluster.
+00:00:00  Quantum cluster #  2 is ignored because it was deactivated.
+00:00:00  number of material grid points in quantum cluster no.  1:     1200
+00:00:00  number of (quantum) grid points in quantum cluster no.  1:     1331
+00:00:00  minimum and maximum grid points on physical grid for quantum cluster no.  1
+00:00:00      imin =      98         , imax =     218
+00:00:00      jmin =       1         , jmax =      11
+00:00:00      xmin =      27.00 [nm] , xmax =      51.00 [nm], length of quantum cluster in x direction =      24.00 [nm]
+00:00:00      ymin =       0.00 [nm] , ymax =       5.00 [nm], length of quantum cluster in y direction =       5.00 [nm]
+00:00:00  SUM( qcV(num_qc)%norm_sgV ) =        122.500000E+00
+00:00:00  quantum cluster area =        120.000000E+00 [nm^2]
+00:00:00   main: Setup interface states done.
+00:00:00  temperature:       T =      300.000000000E+00 [K]
+00:00:00                     T =       26.850000000E+00 [°C]
+00:00:00                     T =       80.330000000E+00 [°F]
+00:00:00               k_B * T =       25.851991012E-03 [eV]
+00:00:00   main: Now calculate strain.
+00:00:00   strain-calculation = homogeneous-strain
+00:00:00   WARNING: 'homogeneous-strain' only works for layers (e.g. in 1D) 
+00:00:00   where the strain is homogeneous in 2 directions.
+00:00:00   Make sure that this is appropriate for your 2D/3D geometry.
+00:00:00  energy of elastic deformation =    23.73557665E+00 [eV/nm]
+00:00:00  energy density of elastic deformation (average) =    62.46204382E-03 [eV/nm^3]
+00:00:00                                                  =    10.00752263E-03 [GJ/m^3]
+00:00:00  Done strain output.
+00:00:00   Output of strain finished.
+00:00:00   main: Now generate new band structure of strained heterostructure.
+00:00:00  ------------------------------------------------------------------
+00:00:00  Conduction bands might have been resorted due to strain.
+00:00:00  ------------------------------------------------------------------
+00:00:00 
+00:00:00  ------------------------------------------------------------------
+00:00:00  material-number =     1: material-name = GaN
+00:00:00  ------------------------------------------------------------------
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   Old conduction band structure: 'number-of-minima-of-cband = ...   ...   ...
+00:00:00 
+00:00:00  (old) conduction band =   1: Gamma
+00:00:00  (new) conduction band =   1      has got (new) minima # 1: Gamma_1
+00:00:00   
+00:00:00  (old) conduction band =   2: ---
+00:00:00  (new) conduction band =   2      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00                                   has got (new) minima # 4: ---_4
+00:00:00   
+00:00:00  (old) conduction band =   3: ---
+00:00:00  (new) conduction band =   3      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00   
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   New conduction band structure:
+00:00:00 
+00:00:00  ==> (new) conduction band no. =  1:
+00:00:00      (old) conduction band no. =  1:  Gamma
+00:00:00      has got (old) minima # 1:        Gamma_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  2:
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 4:          ---_4  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  3:
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ------------------------------------------------------------------
+00:00:00  material-number =     2: material-name = Al(x)Ga(1-x)N
+00:00:00  ------------------------------------------------------------------
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   Old conduction band structure: 'number-of-minima-of-cband = ...   ...   ...
+00:00:00 
+00:00:00  (old) conduction band =   1: Gamma
+00:00:00  (new) conduction band =   1      has got (new) minima # 1: Gamma_1
+00:00:00   
+00:00:00  (old) conduction band =   2: ---
+00:00:00  (new) conduction band =   2      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00                                   has got (new) minima # 4: ---_4
+00:00:00   
+00:00:00  (old) conduction band =   3: ---
+00:00:00  (new) conduction band =   3      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00   
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   New conduction band structure:
+00:00:00 
+00:00:00  ==> (new) conduction band no. =  1:
+00:00:00      (old) conduction band no. =  1:  Gamma
+00:00:00      has got (old) minima # 1:        Gamma_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  2:
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 4:          ---_4  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  3:
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ------------------------------------------------------------------
+00:00:00  material-number =     3: material-name = Air-wz
+00:00:00  ------------------------------------------------------------------
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   Old conduction band structure: 'number-of-minima-of-cband = ...   ...   ...
+00:00:00 
+00:00:00  (old) conduction band =   1: Gamma
+00:00:00  (new) conduction band =   1      has got (new) minima # 1: Gamma_1
+00:00:00   
+00:00:00  (old) conduction band =   2: ---
+00:00:00  (new) conduction band =   2      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00                                   has got (new) minima # 4: ---_4
+00:00:00   
+00:00:00  (old) conduction band =   3: ---
+00:00:00  (new) conduction band =   3      has got (new) minima # 1: ---_1
+00:00:00                                   has got (new) minima # 2: ---_2
+00:00:00                                   has got (new) minima # 3: ---_3
+00:00:00   
+00:00:00 
+00:00:00  ----------------------------------------------------------------------------
+00:00:00   New conduction band structure:
+00:00:00 
+00:00:00  ==> (new) conduction band no. =  1:
+00:00:00      (old) conduction band no. =  1:  Gamma
+00:00:00      has got (old) minima # 1:        Gamma_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  2:
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  2:  ---
+00:00:00      has got (old) minima # 4:          ---_4  (spin degeneracy = 2)
+00:00:00  
+00:00:00  ==> (new) conduction band no. =  3:
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 1:          ---_1  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 2:          ---_2  (spin degeneracy = 2)
+00:00:00  
+00:00:00      (old) conduction band no. =  3:  ---
+00:00:00      has got (old) minima # 3:          ---_3  (spin degeneracy = 2)
+00:00:00  
+00:00:00  Setup dielectricity done.
+00:00:00  Diagonalize for each grid point 6x6 k.p Hamiltonian (including strain).
+00:00:00  Diagonalization finished.
+00:00:00  Setup band edge done.
+00:00:00  Setup of nonparabolicity done.
+00:00:00  Setup of DOS done.
+00:00:00   main: Check electrolyte (or graphene) done.
+00:00:00   main: Setup doping done.
+00:00:00  Writing material parameters to directory = E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\material_parameters/
+00:00:01  Writing material parameters for material 'GaN' to file:
+00:00:01  E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\material_parameters/MaterialParameters_Material1_GaN.txt
+00:00:01  Writing material parameters for material 'Al(x)Ga(1-x)N' to file:
+00:00:01  E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\material_parameters/MaterialParameters_Material2_Al(x)Ga(1-x)N,x=0.300,1-x=0.700.txt
+00:00:01  Writing material parameters for material 'Air-wz' to file:
+00:00:01  E:\junliang.wang\nextnano\Output\Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig4Fig1Fig7_2D_nn3\material_parameters/MaterialParameters_Material3_Air-wz.txt
+00:00:01   main: Output of material parameters finished. ($output-material)
+00:00:01   main: Get for each grid point the intrinsic density (bulk).
+00:00:01   
+00:00:01 Setup  piezoelectricity:
+00:00:01 Setup  pyroelectricity:
+00:00:01  Special treatment at contacts: Piezoelectric polarization set to zero.
+00:00:01  Special treatment at contacts:  Pyroelectric polarization set to zero.
+00:00:01  There are          2 different materials in quantum cluster #         1.
+00:00:01  No. of 1-band Schroedinger equations (for electrons) which have different conduction band edges (due to strain): num_sg =   1
+00:00:01  No. of these equations to calculate:   1
+00:00:01  No. of 1-band Schroedinger equations (el) to calculate:   1 (total, incl. effective mass tensor)
+00:00:01  main: Allocate quantum states done (single-band).
+00:00:01  main: Allocate quantum states done (k.p).
+00:00:01   Output of piezo charges done.
+00:00:01   Output of pyro  charges done.
+00:00:01  Equilibrium calculation.
+00:00:01  Calculate built-in potential classically (no quantum mechanics).
+00:00:01   ==> nonlinear Poisson equation
+00:00:01  Using     0.000000E+00 [V] as starting value for the electrostatic potential (initial guess).
+00:00:01  Calculating starting value (initial guess) for electrostatic potential based on doping.
+00:00:01  ========================================================================================
+00:00:01  We determine a useful initial guess for the electrostatic potential at each grid point.
+00:00:01  We check for each grid point if the donor N_D or acceptor N_A concentration dominates or
+00:00:01  if it is undoped.
+00:00:01    These 3 cases are:
+00:00:01      o If N_D > N_A:   E_F = E_c - E_D,ion / 2      (which is valid for T = 0 K)
+00:00:01      o If N_A > N_D:   E_F = E_v + E_A,ion / 2      (which is valid for T = 0 K)
+00:00:01      o If undoped:     E_F so that n_i = p_i (charge neutrality)
+00:00:01        This is roughly E_F = (E_c + E_v) / 2 (middle of the band gap) but will depend on        the density of states of all conduction and valence bands.
+00:00:01  ========================================================================================
+00:00:01  Poisson block: Define Poisson problem.
+00:00:01  
+00:00:01  Schottky Poisson boundary condition (voltage controlled)
+00:00:01   poisson-cluster-number =            1
+00:00:01    region-cluster-number =            6
+00:00:01   Internal Poisson boundary condition no. inside the code =            1
+00:00:01   number of material grid points in cluster               =        200
+00:00:01   Schottky barrier (built-in)         =     1.400000000000E+00 V
+00:00:01  -----------------------------------------------------------------------------
+00:00:01  Poisson block: Setup Poisson cluster points.
+00:00:01   This subroutine probably has to be called only once.
+00:00:01   (be careful for Fermi contacts or built-in potential)
+00:00:01  Poisson block: Setup Poisson matrix.
+00:00:01  Poisson block: Set Dirichlet boundary conditions.
+00:00:01   
+00:00:01  Solving nonlinear Poisson equation with Newton method.
+00:00:01  Newton: Max. iterations (NonLinPoissonIterations) =       50
+00:00:01  Newton: Tolerance       (NonLinPoissonResidual)   =     1.00000E-12
+00:00:01  Newton-1 iteration            1  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:        1       1      1.000000000000E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =            2
+00:00:01    residual =      3.904433193E+10
+00:00:01  Newton-1 iteration            2  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:        1       1      1.000000000000E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =            2
+00:00:01    residual =      1.074427013E+10
+00:00:01  Newton-1 iteration            3  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:        1       1      1.000000000000E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =            2
+00:00:01    residual =      2.513669524E-02
+00:00:01  Newton-1 iteration            4  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       46      62     15.582281540619E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           63
+00:00:01    residual =      2.339178055E-02
+00:00:01  Newton-1 iteration            5  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       46      62     15.582632479934E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           63
+00:00:01    residual =      2.164683272E-02
+00:00:01  Newton-1 iteration            6  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       46      62     15.378869244021E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           63
+00:00:01    residual =      2.146940349E-02
+00:00:01  Newton-1 iteration            7  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      62      1.699831182646E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           63
+00:00:01    residual =      2.126503725E-02
+00:00:01  Newton-1 iteration            8  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       48      61     96.352812831762E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           62
+00:00:01    residual =      2.088328463E-02
+00:00:01  Newton-1 iteration            9  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       46      59     33.597917368617E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           60
+00:00:01    residual =      1.990496579E-02
+00:00:01  Newton-1 iteration           10  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      58      6.858076684059E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           59
+00:00:01    residual =      1.655676053E-02
+00:00:01  Newton-1 iteration           11  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      54    272.593299934614E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:01    residual =      2.248953760E-03
+00:00:01  Newton-1 iteration           12  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       43      53      2.809795777525E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           54
+00:00:01    residual =      1.648969585E-04
+00:00:01  Newton-1 iteration           13  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       44      54     10.590921418075E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:01    residual =      3.459204039E-06
+00:00:01  Newton-1 iteration           14  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      53      8.263256452777E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           54
+00:00:01    residual =      4.047178488E-09
+00:00:01  Newton-1 iteration           15  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      53      1.036972388119E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           54
+00:00:01    residual =      1.191835231E-14
+00:00:01  Message newton: residual < specified residual   (|| fV || <= residual_requested)
+00:00:01   Residual criteria:        residual =      1.191835231E-14 (converged) (fV)
+00:00:01  (Absolute error criteria: error_abs =      9.446879631E-06 (not converged) (xV,xV_old))
+00:00:01  (Relative error criteria: error_rel =      7.166706566E-08 (not converged) (xV,xV_old))
+00:00:01  (Mixed    error criteria: error_mix =      9.446879631E-06 (not converged) (xV,xV_old))
+00:00:01  Updating classical built-in potential.
+00:00:01  Updating built-in potential.
+00:00:01  Calculate intrinsic density for built-in potential.
+00:00:01  
+00:00:01  main: *********************************************************************
+00:00:01  
+00:00:01   main: flow-scheme =            2
+00:00:01   main: Calculate nonlinear Schroedinger-Poisson equation.
+00:00:01  Poisson block: Define Poisson problem.
+00:00:01  
+00:00:01  Schottky Poisson boundary condition (voltage controlled)
+00:00:01   poisson-cluster-number =            1
+00:00:01    region-cluster-number =            6
+00:00:01   Internal Poisson boundary condition no. inside the code =            1
+00:00:01   number of material grid points in cluster               =        200
+00:00:01   applied voltage (Schottky contact)  =     0.000000000000E+00 V
+00:00:01  -----------------------------------------------------------------------------
+00:00:01  Poisson block: Setup Poisson matrix.
+00:00:01  Poisson block: Set Dirichlet boundary conditions.
+00:00:01   
+00:00:01  Solving Schroedinger-Poisson equation with predictor-corrector method.
+00:00:01  Max. iterations    (SchroedingerPoissonPreCorIter) =       12
+00:00:01  Required precision (SchroedingPoissonPreCorResid)  =     1.00000E-09
+00:00:01  Quantum cluster  1 is periodic along the direction 2. Length of the period is equal to      11 grid points.
+00:00:01  Solving single-band Schroedinger equation (el) in quantum cluster # 1 for superlattice for num_sg =  1, num_deg =  1 (    1 of     1).
+00:00:01    K_x =       0.000000E+00 [1/Angstrom]
+00:00:01    K_y =       0.000000E+00 [1/Angstrom]
+00:00:01  Setup Schroedinger matrix: Writing matrix elements into linked list.
+00:00:01  iterative solver, sparse matrix
+00:00:01  Setup 1x1 Schroedinger matrix (el): (counting elements...)
+00:00:01  total number of matrix elements in linked list =            3982
+00:00:01  Total number of matrix elements stored        =         3982
+00:00:01  Number of off-diagonal matrix elements stored =         2651
+00:00:01                          dimension             =         1331
+00:00:01                          off-diagonal elements =         2651
+00:00:01                          total size of array   =         3983
+00:00:01  Setup 1x1 Schroedinger matrix (el): dim =     1331
+00:00:01  Residual:              1.000000E-12
+00:00:01  Max. iterations:       1000
+00:00:01  ARNOLDI: The number of implicit update iterations was     11.
+00:00:01  Arnoldi (ARPACK-complex) output: converged eigenvalues =       31
+00:00:01  Eigenvalues (dir per):
+00:00:01  E_min =   -120.478556277E-03 [eV],  E_max =    504.879634020E-03 [eV],  Delta_E =    625.358190297E-03 [eV]
+00:00:01  -0.120478556276723       4.703198956264543E-003  5.033006973561147E-002
+00:00:01   7.632367012071280E-002  0.102029063742170       0.114963539671908     
+00:00:01   0.114963539671912       0.134754790475930       0.172566941401502     
+00:00:01   0.211558522600514       0.242238162962956       0.242238162962964     
+00:00:01   0.253837484604568       0.288591034561847       0.288591034561852     
+00:00:01   0.305944452956497       0.314711015302201       0.314711015302203     
+00:00:01   0.339731530015907       0.339731530015908       0.367114404851983     
+00:00:01   0.370926261489427       0.370926261489429       0.406004475198874     
+00:00:01   0.406004475198878       0.434391794312192       0.443406103974636     
+00:00:01   0.443406103974639       0.487877103151801       0.487877103151803     
+00:00:01   0.504879634020050     
+00:00:01  Newton: Max. iterations (NonLinPoissonIterations) =       50
+00:00:01  Newton: Tolerance       (NonLinPoissonResidual)   =     1.00000E-12
+00:00:01  Newton-1 iteration            1  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       42      52    296.570457245301E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           53
+00:00:01    residual =      3.909970154E-05
+00:00:01  Newton-1 iteration            2  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       45      54      4.463172369897E-03
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:01    residual =      6.820601159E-07
+00:00:01  Newton-1 iteration            3  of           50
+00:00:01  ILU_r preconditioner: path,maxfil          111          10
+00:00:01  cscg_R: iter,nstep,tol:       47      54    638.221651214913E-06
+00:00:01  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:01    residual =      2.138103317E-08
+00:00:01  Newton-1 iteration            4  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       48      53      9.730086167843E-03
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           54
+00:00:02    residual =      1.243788107E-09
+00:00:02  Newton-1 iteration            5  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       47      54    107.542978657337E-06
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      7.337389439E-11
+00:00:02  Newton-1 iteration            6  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       46      54     53.185857177753E-06
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      4.338319942E-12
+00:00:02  Newton-1 iteration            7  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       47      54      3.987400771797E-03
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      2.566328179E-13
+00:00:02  Message newton: residual < specified residual   (|| fV || <= residual_requested)
+00:00:02   Residual criteria:        residual =      2.566328179E-13 (converged) (fV)
+00:00:02  (Absolute error criteria: error_abs =      2.018418306E-08 (not converged) (xV,xV_old))
+00:00:02  (Relative error criteria: error_rel =      1.535433192E-10 (not converged) (xV,xV_old))
+00:00:02  (Mixed    error criteria: error_mix =      2.018418306E-08 (not converged) (xV,xV_old))
+00:00:02  Schroedinger-Poisson iteration        1 of       12
+00:00:02  achieved precision =     1.36134E-05, required =     1.00000E-09
+00:00:02  Quantum cluster  1 is periodic along the direction 2. Length of the period is equal to      11 grid points.
+00:00:02  Solving single-band Schroedinger equation (el) in quantum cluster # 1 for superlattice for num_sg =  1, num_deg =  1 (    1 of     1).
+00:00:02    K_x =       0.000000E+00 [1/Angstrom]
+00:00:02    K_y =       0.000000E+00 [1/Angstrom]
+00:00:02  Setup Schroedinger matrix: Writing matrix elements into linked list.
+00:00:02  iterative solver, sparse matrix
+00:00:02  Setup 1x1 Schroedinger matrix (el): (counting elements...)
+00:00:02  total number of matrix elements in linked list =            3982
+00:00:02  Total number of matrix elements stored        =         3982
+00:00:02  Number of off-diagonal matrix elements stored =         2651
+00:00:02                          dimension             =         1331
+00:00:02                          off-diagonal elements =         2651
+00:00:02                          total size of array   =         3983
+00:00:02  Setup 1x1 Schroedinger matrix (el): dim =     1331
+00:00:02  Residual:              1.000000E-12
+00:00:02  Max. iterations:       1000
+00:00:02  ARNOLDI: The number of implicit update iterations was      9.
+00:00:02  Arnoldi (ARPACK-complex) output: converged eigenvalues =       31
+00:00:02  Eigenvalues (dir per):
+00:00:02  E_min =   -122.260592496E-03 [eV],  E_max =    515.396660303E-03 [eV],  Delta_E =    637.657252800E-03 [eV]
+00:00:02  -0.122260592496378       1.581922723487009E-002  6.448448530178780E-002
+00:00:02   8.950814538094239E-002  0.112913922720766       0.112925767964253     
+00:00:02   0.114365169270219       0.146531944670297       0.183368845182775     
+00:00:02   0.221398606564175       0.253075351588435       0.253078216717740     
+00:00:02   0.264210111851602       0.302644468329546       0.302645606252129     
+00:00:02   0.317027939571048       0.327860775941659       0.327861535230357     
+00:00:02   0.351904138182910       0.351905117481596       0.378352586908716     
+00:00:02   0.382326016396386       0.382327279444151       0.416376025963488     
+00:00:02   0.416377479053425       0.445407482981117       0.453612264435142     
+00:00:02   0.453613682481515       0.498782661111433       0.498784024902264     
+00:00:02   0.515396660303123     
+00:00:02  Newton: Max. iterations (NonLinPoissonIterations) =       50
+00:00:02  Newton: Tolerance       (NonLinPoissonResidual)   =     1.00000E-12
+00:00:02  Newton-1 iteration            1  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       45      54    412.598730619924E-06
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      3.183088315E-08
+00:00:02  Newton-1 iteration            2  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       43      54      7.187234822857E-03
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      8.157326249E-14
+00:00:02  Message newton: residual < specified residual   (|| fV || <= residual_requested)
+00:00:02   Residual criteria:        residual =      8.157326249E-14 (converged) (fV)
+00:00:02  (Absolute error criteria: error_abs =      1.596923046E-05 (not converged) (xV,xV_old))
+00:00:02  (Relative error criteria: error_rel =      1.214848890E-07 (not converged) (xV,xV_old))
+00:00:02  (Mixed    error criteria: error_mix =      1.596923046E-05 (not converged) (xV,xV_old))
+00:00:02  Schroedinger-Poisson iteration        2 of       12
+00:00:02  achieved precision =     8.34503E-09, required =     1.00000E-09
+00:00:02  Quantum cluster  1 is periodic along the direction 2. Length of the period is equal to      11 grid points.
+00:00:02  Solving single-band Schroedinger equation (el) in quantum cluster # 1 for superlattice for num_sg =  1, num_deg =  1 (    1 of     1).
+00:00:02    K_x =       0.000000E+00 [1/Angstrom]
+00:00:02    K_y =       0.000000E+00 [1/Angstrom]
+00:00:02  Setup Schroedinger matrix: Writing matrix elements into linked list.
+00:00:02  iterative solver, sparse matrix
+00:00:02  Setup 1x1 Schroedinger matrix (el): (counting elements...)
+00:00:02  total number of matrix elements in linked list =            3982
+00:00:02  Total number of matrix elements stored        =         3982
+00:00:02  Number of off-diagonal matrix elements stored =         2651
+00:00:02                          dimension             =         1331
+00:00:02                          off-diagonal elements =         2651
+00:00:02                          total size of array   =         3983
+00:00:02  Setup 1x1 Schroedinger matrix (el): dim =     1331
+00:00:02  Residual:              1.000000E-12
+00:00:02  Max. iterations:       1000
+00:00:02  ARNOLDI: The number of implicit update iterations was     10.
+00:00:02  Arnoldi (ARPACK-complex) output: converged eigenvalues =       31
+00:00:02  Eigenvalues (dir per):
+00:00:02  E_min =   -122.320462399E-03 [eV],  E_max =    515.505388562E-03 [eV],  Delta_E =    637.825850961E-03 [eV]
+00:00:02  -0.122320462399438       1.576437598126047E-002  6.456553122994607E-002
+00:00:02   8.956056930390828E-002  0.112871753340353       0.112883501466161     
+00:00:02   0.114420689108053       0.146611480615527       0.183495557011694     
+00:00:02   0.221559550794328       0.253011256762919       0.253014553594605     
+00:00:02   0.264330065109744       0.302734476384069       0.302735758611990     
+00:00:02   0.317111143355988       0.327922152391258       0.327923002750661     
+00:00:02   0.351973122138163       0.351974214895016       0.378428107998277     
+00:00:02   0.382429541240764       0.382430940404912       0.416521684381245     
+00:00:02   0.416523276168446       0.445493477983023       0.453747275426879     
+00:00:02   0.453748817132717       0.498876626787215       0.498878112302483     
+00:00:02   0.515505388561667     
+00:00:02  Newton: Max. iterations (NonLinPoissonIterations) =       50
+00:00:02  Newton: Tolerance       (NonLinPoissonResidual)   =     1.00000E-12
+00:00:02  Newton-1 iteration            1  of           50
+00:00:02  ILU_r preconditioner: path,maxfil          111          10
+00:00:02  cscg_R: iter,nstep,tol:       43      54      2.274622321227E-03
+00:00:02  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:02    residual =      1.205798000E-10
+00:00:02  Newton-1 iteration            2  of           50
+00:00:03  ILU_r preconditioner: path,maxfil          111          10
+00:00:03  cscg_R: iter,nstep,tol:       45      54     12.101133699534E-03
+00:00:03  PCG_Kent (cscg_R): Number of matrix-vector products =           55
+00:00:03    residual =      6.064472274E-15
+00:00:03  Message newton: residual < specified residual   (|| fV || <= residual_requested)
+00:00:03   Residual criteria:        residual =      6.064472274E-15 (converged) (fV)
+00:00:03  (Absolute error criteria: error_abs =      1.068219062E-07 (not converged) (xV,xV_old))
+00:00:03  (Relative error criteria: error_rel =      8.126400246E-10 (not converged) (xV,xV_old))
+00:00:03  (Mixed    error criteria: error_mix =      1.068219062E-07 (not converged) (xV,xV_old))
+00:00:03  Schroedinger-Poisson iteration        3 of       12
+00:00:03  achieved precision =     3.53232E-11, required =     1.00000E-09
+00:00:03  max. deviation of electrostatic potential in last iteration:     3.93558E-08 [mV]
+00:00:03   main: flow-scheme part finished.
+00:00:03   main: Output of integrated density done.
+00:00:03  Now Output...
+00:00:03  Writing out Gamma conduction band edge.
+00:00:03  Writing out hh valence band edge.
+00:00:03  Writing out lh valence band edge.
+00:00:03  Writing out ch valence band edge.
+00:00:03  Writing out densities...
+00:00:03  Writing out densities...done
+00:00:03  Writing out quantum mechanics... (single-band)
+00:00:03  Output of el eigenvalues and wavefunctions done: band = Gamma
+00:00:03  Output of hl eigenvalues and wavefunctions done: band = heavy hole
+00:00:03  Output of hl eigenvalues and wavefunctions done: band = light hole
+00:00:03  Output of hl eigenvalues and wavefunctions done: band = split-off hole
+00:00:03     (==> This is the CPU    time for the whole quantum output.)
+00:00:03     (==> This is the SYSTEM time for the whole output.)
+00:00:03   
+00:00:03  -------------------------------------------------------------------------------
+00:00:03  nextnano3 - next generation 3D nano device simulator (version 2.2.0)
+00:00:03  -------------------------------------------------------------------------------
+00:00:03  -------------------------------------------------------------------------------
+00:00:03  Thank you for using nextnano3!
+00:00:03  Please be aware that nextnano3 is not a 'black box' tool.
+00:00:03  Understanding the underlying physics and/or the source code is a big advantage.
+00:00:03  -------------------------------------------------------------------------------
+00:00:03   
+00:00:03  Support? Feedback? Information? ==> support@nextnano.com
+00:00:03  Online Documentation            ==> http://www.nextnano.com/nextnano3
+00:00:03   
+00:00:03  -------------------------------------------------------------------------------
+00:00:03   
+00:00:03  *******************************************************************************
+00:00:03  Start time ==> Date: 2020-11-05   Time: 15:56:01 (+0100)
+00:00:03    End time ==> Date: 2020-11-05   Time: 15:56:05 (+0100)
+00:00:03  ----------------------------
+00:00:03  Total nextnano3 CPU time:   
+00:00:03  Program has used total of          3.0 seconds
+00:00:03  ----------------------------
+00:00:03  Total nextnano3 SYSTEM time:
+00:00:03  Program has used total of          3.7 seconds
+00:00:03  *******************************************************************************
+00:00:03 
+00:00:03 ================================================================================
+00:00:03 DONE.
+00:00:03 ================================================================================

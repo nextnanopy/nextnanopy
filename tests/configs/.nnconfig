@@ -1,0 +1,17 @@
+[nextnano3]
+exe = test
+license = 
+database = 
+outputdirectory = 
+threads = 0
+debuglevel = 0
+cancel = -1
+softkill = -1
+
+[nextnano++]
+exe = 
+license = 
+database = 
+outputdirectory = 
+threads = 0
+

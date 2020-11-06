@@ -1,0 +1,4 @@
+Index   Material
+    1   Air
+   11   GaAs
+   38   Al(x)Ga(1-x)As
