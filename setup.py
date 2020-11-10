@@ -7,7 +7,7 @@ opt_pkgs = ["gdspy", "Shapely", "matplotlib", "cycler"]
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.0a.1",
+    version="0.1.0a1",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',
@@ -16,7 +16,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords="nextnano",
     url="https://github.com/**",
-    packages=setuptools.find_packages(),
+    # packages=setuptools.find_packages(),
+    packages=["nextnanopy"],
     package_dir={"nextnanopy": "nextnanopy"},
     classifiers=[
         "Programming Language :: Python :: 3",
