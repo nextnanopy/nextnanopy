@@ -146,6 +146,13 @@ class GdsPolygons(object):
         shapes = [si.get_obelisks(zi, zf) for si in self.slices]
         return shapes
 
+    def get_polygonal_prims(self,zi,zf):
+        z = np.array([zi, zf])
+        axes = ['x','y','z']
+        shapes = [Polygonal_prism(axes=axes,vertexes=xy,height=z) for xy in self.polygons_xy]
+        return shapes
+
+
 
 class Shape(object):
     def __init__(self):
@@ -186,6 +193,28 @@ class Obelisk(Shape):
                 _kwargs[key] = getattr(self, key)
         return _kwargs
 
+class Polygonal_prism(Shape):
+
+    def __init__(self, axes=['x','y','z'],vertexes=[[10.5,14.0]],height=[0,10]):
+        super().__init__()
+        self.axes = axes
+        self.vertexes = vertexes
+        self.height = height
+
+    @property
+    def text(self):
+        return self._ia.region_polygonal_prism(**self.kwargs)
+
+    @property
+    def kwargs(self):
+        _kwargs = OrderedDict()
+        keys = ['axes', 'vertexes', 'height']
+        for key in keys:
+            if key not in dir(self):
+                raise KeyError(f'{key} is not defined in the attributes')
+            else:
+                _kwargs[key] = getattr(self, key)
+        return _kwargs
 
 class SlicedPolygon(shapely.geometry.Polygon):
     def __init__(self, *args, **kwargs):
@@ -378,3 +407,9 @@ class SlicedPolygon(shapely.geometry.Polygon):
             ax.fill(x, y, **fill_kw)
         ax.figure.tight_layout()
         return ax
+
+if __name__ == '__main__':
+    import os
+    folder = os.path.join('tests', 'gds')
+    fullpath = os.path.join(folder, 'example1.gds')
+    gpols = GdsPolygons(fullpath, unit='nm')

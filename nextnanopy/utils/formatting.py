@@ -383,6 +383,19 @@ class InputAssistant(object):
         content = self.paragraph(content)
         return self.block('cuboid', content)
 
+    def region_polygonal_prism(self, axes=['x','y','z'],vertexes=[[10.5,14.0]],height=[0,10]):
+        point = self.point(axes[2],*height)
+        blocks = [self.region_vertex(ax1=axes[0],ax2=axes[1],value1=v[0],value2=v[1]) for v in vertexes]
+        return self.merge_blocks('polygonal_prism', point, *blocks)
+
+    def region_vertex(self, ax1='x', ax2='y', value1=1.0, value2=2.0):
+        kwargs = {f'{ax1}': value1, f'{ax2}': value2}
+        points = [self.point(key, value) for key, value in kwargs.items()]
+        content = self.lines(*points)
+        content = self.add_indent(content)
+        content = self.paragraph(content)
+        return self.block(f'vertex', content)
+
     def region_doping_constant(self, name, conc):
         cblock = self.equal_block('constant', dict(name=name, conc=conc))
         return self.merge_blocks('doping', cblock)
@@ -619,3 +632,8 @@ class InputAssistant(object):
 
     def run_block(self, *blocks):
         return self.merge_blocks('run', *blocks)
+
+if __name__ == '__main__':
+    fa = InputAssistant()
+    a = fa.region_polygonal_prism()
+    print(a)
