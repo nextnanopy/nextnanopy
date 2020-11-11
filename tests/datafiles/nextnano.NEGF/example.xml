@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nextnano.NEGF Version="1.1.6">
+
+  <Header>
+    <Author>Thomas Grange</Author>
+    <Content>
+      This is an input file of the nextnano.NEGF code (formerly called nextnano.QCL) written by Thomas Grange that calculates transport and gain in quantum cascade structures.
+
+      Design:
+      [AdamsAPL2010]
+      GaAs / Al0.15Ga0.85 As terahertz quantum cascade lasers with double-phonon resonant depopulation operating up to 172 K
+      Applied Physics Letters 97, 131111 (2010)
+      doi: 10.1063/1.3496035
+      http://dx.doi.org/10.1063/1.3496035
+    </Content>
+  </Header>
+
+  
+  <SweepParameters>
+    <SweepType>Voltage</SweepType> <!-- SweepType: "Voltage" or "Temperature" -->
+     <Min unit="mV">4</Min> 	<!-- first/min voltage value in mV / period -->
+    <Max unit="mV">100</Max> 	<!-- last/max voltage value in mV / period -->
+    <Delta unit="mV">4</Delta> 	<!-- voltage increment in mV / period -->
+  </SweepParameters>
+
+  <Temperature unit="K">78</Temperature> <!-- Temperature of the lattice in Kelvin -->
+
+  <Crystal>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <Orientation>
+      <z_axis>
+        <h>0</h>
+        <k>0</k>
+        <l>1</l>
+      </z_axis>
+      <y_axis>
+       <h>0</h>
+        <k>1</k>
+        <l>0</l>
+      </y_axis>
+    </Orientation>
+    <Material_Substrate>
+      <Name>GaAs</Name>
+    </Material_Substrate>
+    <Strain>no</Strain>
+  </Crystal>
+
+  
+      
+   <Materials>
+
+    <Material>
+      <Name>GaAs</Name>
+      <Alias>well</Alias>
+      <Effective_mass_from_kp_parameters>yes</Effective_mass_from_kp_parameters>
+    </Material>
+
+    <Material>
+      <Name>Al(x)Ga(1-x)As</Name>
+      <Alloy_Composition>0.15</Alloy_Composition>
+      <Alias>barrier</Alias>
+      <Effective_mass_from_kp_parameters>yes</Effective_mass_from_kp_parameters>
+    </Material>
+    
+    <!-- Model nonparabolicity -->
+    <NonParabolicity>yes</NonParabolicity>
+   <Number_of_bands>3</Number_of_bands>
+    <UseConductionBandOffset>yes</UseConductionBandOffset>
+
+  </Materials>
+  
+  
+  
+  <Superlattice>
+	
+		
+	<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">6.3</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">7.0</Thickness>
+	</Layer>
+			
+	<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">3.2</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">5.6</Thickness>
+	</Layer>
+			
+	<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">5.6</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">6.3</Thickness>
+	</Layer>
+			
+	<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">1.2</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">5.7</Thickness>
+	</Layer>
+		
+	<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">5.2</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">6.4</Thickness>
+	</Layer>
+	
+		<Layer>
+		<Material>barrier</Material>
+		<Thickness unit="nm">1.0</Thickness>
+	</Layer>
+	<Layer>
+		<Material>well</Material>
+		<Thickness unit="nm">7.4</Thickness>
+	</Layer>
+
+	
+	<Doping>
+	  <!-- homogeneous doping between starting and end point -->
+	  <!-- doping can be in barriers or wells or both -->  
+	  <!-- origin = start of first barrier -->
+      <DopingStart unit="nm">46.1</DopingStart> 	<!-- with respect to origin -->
+      <DopingEnd unit="nm">52.5</DopingEnd>		<!-- with respect to origin -->
+
+	  <!-- Integer in order to choose how the doping density is specified:
+      ... 0 = 2D equivalent density per period in [cm^-2]
+      ... 1 = 3D doping density in the doped region in [cm^-3]
+      ... 2 = Averaged 3D doping density over the whole structure in [cm^-3] -->
+	  <Doping_Specification>1</Doping_Specification>
+      <Doping_Density>5.9e16</Doping_Density> <!-- Doping in units according to Doping_Specification-->
+	  
+	</Doping>
+	
+  </Superlattice>
+  
+  
+    <Scattering>
+
+	<Material_for_scattering_parameters>well</Material_for_scattering_parameters>
+
+	<Interface_Roughness>
+      <Amplitude_in_Z unit="nm">0.08</Amplitude_in_Z>
+	  <InterfaceAutoCorrelationType>0</InterfaceAutoCorrelationType> <!-- Correlation type: 0=Exponential, 1=Gaussian -->
+      <Correlation_Length_in_XY unit="nm">8</Correlation_Length_in_XY>
+	</Interface_Roughness>
+	
+    <!-- Acoustic phonons -->
+    <Acoustic_Phonon_Scattering>yes</Acoustic_Phonon_Scattering> <!-- Comment: Acoustic phonons are in general not efficient - can be neglected in most cases -->
+    <AcousticPhonon_Scattering_EnergyMax unit="meV">3.0</AcousticPhonon_Scattering_EnergyMax> <!-- Maximum acoustic phonon energy -->
+
+      <!-- Scattering by charged impurities -->
+      <!-- Effective temperature of the electrons involved in electrostatic screeening: 3 models available -->
+      <!-- model #1: Teff = T + Toffset * exp(-T/Toffset) with Toffset specified as Temperature_Offset_parameter  -->
+      <!-- model #2: self-consistent calculation (requires several iterations of the all calculation). The ccuracy specified by Accuracy_Self_consistent_Electron_Temperature -->
+      <!-- model #3: Teff is directly specified by Electron_Temperature_for_Screening-->
+      <Model_Temperature_for_Screening>1</Model_Temperature_for_Screening> <!-- integer 1,2 or 3 is required accordingly to the desired model -->
+      <Temperature_Offset_parameter>150</Temperature_Offset_parameter> <!-- enter Toffset for model#1 only such as Teff = T + Toffset * exp(-T/Toffset) -->
+      <Accuracy_Self_consistent_Electron_Temperature>0.05</Accuracy_Self_consistent_Electron_Temperature>  <!-- for model #2 only: self-consistent calculation until the effective temperature convergences below the desired accuracy-->
+      <Electron_Temperature_for_Screening>200</Electron_Temperature_for_Screening> <!-- for model#3 only: the effective temperature is directly specified -->
+      <ImpurityScattering_Strength>1.0</ImpurityScattering_Strength> <!-- 1.0 is the normal physical calculation. Other values may be used for testing the importance of impurity scattering. -->
+    
+      <Electron_Electron_Scattering>yes</Electron_Electron_Scattering>
+	
+      <Alloy_scattering>yes</Alloy_scattering>
+  </Scattering>
+  
+  <Poisson>yes</Poisson>
+  
+    <Lateral_motion>
+      <Material_for_lateral_motion>well</Material_for_lateral_motion>
+      <!-- Lateral energy spacing  -->
+      <Value unit="meV">4</Value>
+    </Lateral_motion>
+  
+
+  <Simulation_Parameter>
+	<!-- PERIODS -->
+    <Coherence_length_in_Periods>1</Coherence_length_in_Periods> <!-- 1 -> coherent transport from one period to the next | N -> coherent transport between N+1 periods -->
+    
+	<!-- BASIS STATE CALCULATION -->
+	<!-- parameters only affect the basis state calculation time. Not critical for total calculation time. -->
+	<!-- SPATIAL GRID -->
+	<!--   defines number of grid points per period -->
+	<Spatial_grid_spacing unit="nm">0.3</Spatial_grid_spacing>
+	<!-- number of periods used for basis state calculation only: -->
+	<!--   corresponds to 2N+1 k points per miniband -->
+	<Number_of_lateral_periods_for_band_structure>10</Number_of_lateral_periods_for_band_structure>
+	<!-- number of grid points/period * (2N+1) should stay below ~10^4 for fast calculation time -->
+	
+	
+	
+	<!-- ENERGY GRID -->
+	<!-- critical for calculation time! -->
+	<!-- It holds for higher temperatures: More broadening, i.e. less energy grid points are sufficient. -->
+    <Energy_grid_spacing unit="meV">2</Energy_grid_spacing>  <!-- homogeneously spaced grid -->
+    
+    <Emin_shift unit="meV">0</Emin_shift> <!-- 0 is the default value - a negative value increases the energy range of the Green functions towards low energies -->
+    <Emax_shift unit="meV">0</Emax_shift>  <!--  0 is the default value - a positive value increases the energy range of the Green functions towards high energies -->
+
+    <Energy_Range_Lateral unit="meV">80</Energy_Range_Lateral> <!-- xy-direction, evaluated from lowest state -->
+    <Energy_Range_Axial unit="meV">100</Energy_Range_Axial> <!-- z-direction,  evaluated from lowest state/miniband -->
+
+    <!-- The self-consistent loop ends successfully if the 2 following convergence factors are reached for the lesser Green's function and the current (relative difference between two consecutive iterations) -->
+    <Convergence_Value_GF>1e-3</Convergence_Value_GF>
+    <Convergence_Value_Current>1e-3</Convergence_Value_Current>
+
+    <!-- Number of maximum iterations if the above convergence values are not reached -->
+    <!-- Higher values give more accurate results. -->
+    <N_max_iterations>100</N_max_iterations>
+	
+  </Simulation_Parameter>
+
+  
+  <Output>
+    <!-- In order to output 2D energy resolved graphs-->
+    <EnergyResolvedPlots>yes</EnergyResolvedPlots>
+    <EnergyResolvedPlots_MinimumEnergyGridSpacing>2.0</EnergyResolvedPlots_MinimumEnergyGridSpacing>
+
+    <EnergyResolved_Gain>yes</EnergyResolved_Gain>
+  </Output>
+  
+  <Gain>
+	<!-- GainMethod:
+		   -1 .. no gain calculation
+			0 .. gain without self-consistency only 
+			1 .. gain with self-consistency only
+			2 .. gain with and without self-consistency
+	-->
+    <GainMethod>1</GainMethod>
+
+	<!-- with self-consistency: -->
+    <dE_Phot_Self_Consistent unit="meV">1</dE_Phot_Self_Consistent> <!-- energy spacing between two photon energies -->
+    <Ephoton_Min_Self_Consistent unit="meV">1</Ephoton_Min_Self_Consistent>
+    <Ephoton_Max_Self_Consistent unit="meV">30</Ephoton_Max_Self_Consistent>
+
+    <MaxNumber_SelfConsistent_Iterations>50</MaxNumber_SelfConsistent_Iterations>
+    <ConvergenceFactor_Gain_SelfConsistent>1e-4</ConvergenceFactor_Gain_SelfConsistent>
+
+    <!-- Calculation of gain only between the following values of potential drop per period -->
+    <Vmin unit="mV">70</Vmin>
+    <Vmax unit="mV">100</Vmax>
+
+  </Gain>
+
+
+</nextnano.NEGF>

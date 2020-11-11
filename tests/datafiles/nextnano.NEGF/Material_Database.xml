@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ########################################################################################## -->
+<!-- # Copyright notice - Material_Database.xml                                                                                                                 -->
+<!-- #                                                                                          -->
+<!-- # This material parameters database file and its content is copyright of nextnano GmbH.    -->
+<!-- # (c) 2020 nextnano GmbH. All rights reserved.                                             -->
+<!-- #                                                                                          -->
+<!-- # Any redistribution or reproduction of part or all of the contents in any form is         -->
+<!-- # prohibited without our express written permission.                                       -->
+<!-- # You may not, except with our express written permission, distribute it in public or      -->
+<!-- # commercially exploit the content.                                                        -->
+<!-- #                                                                                          -->
+<!-- # Obviously, if you have a valid license for the nextnano software, you are allowed to     -->
+<!-- # modify the content of this database file and share it with your research colleagues.     -->
+<!-- # If you include Supplementary Material in publications, it makes sense to only publish    -->
+<!-- # the material parameters that were actually used in the calculations but not the entire   -->
+<!-- # database. It also makes sense to include your nextnano input files in Supplementary      -->
+<!-- # Material. In fact, the best practice is to include the material parameters directly      -->
+<!-- # into the input file.                                                                     -->
+<!-- ########################################################################################## -->
+<Database version="2020_03_13">
+
+
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Note:                                                              -->
+<!-- The following entries are only relevant for the nextnano.MSB code (i.e. not used in nextnano.NEGF) -->
+<!--   o <LOPhononWidth>                                                -->
+<!--   o <AcousticPhononEnergy>                                         -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <!-- group IV -->
+  <Material>
+    <Name>SiL</Name> <!-- L band of Si -->
+	<CrystalStructure>Zincblende</CrystalStructure>
+      <ConductionBandOffset Unit="eV">1.4447</ConductionBandOffset>
+	<MaterialDensity Unit="kg/m^3">2.329e3</MaterialDensity> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Si/basic.html -->
+	<VelocityOfSound Unit="m/s">9e3</VelocityOfSound>
+	<ValenceBandOffset Unit="eV">1.090</ValenceBandOffset> <!-- take Qteish value of -6.93 and shift it by 8.02 to align it with Zunger's average valence band energy (van der Walle model) -->
+	<LOPhononEnergy Unit="eV">63e-3</LOPhononEnergy> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Si/mechanic.html -->
+	<EpsStatic>11.7</EpsStatic> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Si/basic.html -->
+    <EpsOptic>11.7</EpsOptic>
+    <Lattice_a Unit="nm">0.54256</Lattice_a>   <!-- at 0K -->
+    <Elastic_c11 Unit="GPa">165.77</Elastic_c11> 
+    <Elastic_c12 Unit="GPa">63.93</Elastic_c12>  
+    <Elastic_c44 Unit="GPa">79.62</Elastic_c44>  
+    <DeformationPotential Unit="eV">-0.66</DeformationPotential> 
+     <ElectronMass Unit="m0">0.1865</ElectronMass> <!-- axial -->
+
+  </Material>
+
+
+  <Material>
+    <Name>GeL</Name> <!-- L band of Ge -->
+	<CrystalStructure>Zincblende</CrystalStructure>
+      <ConductionBandOffset Unit="eV">0.8375</ConductionBandOffset>
+	<MaterialDensity Unit="kg/m^3">5.3234e3</MaterialDensity> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html -->
+	<VelocityOfSound Unit="m/s">5.2e3</VelocityOfSound>
+	<EpsStatic>16.2</EpsStatic> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html -->
+    <EpsOptic>16.2</EpsOptic>
+	<LOPhononEnergy Unit="eV">37e-3</LOPhononEnergy> <!--  http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html -->
+	<Optical_Deformation_Potential Unit="eV/cm">3.5e8</Optical_Deformation_Potential> <!-- for L valleys, Virgilio et al, Phys. ReV. B 89, 045311 (2014) -->
+	<Lattice_a Unit="nm">0.56405</Lattice_a>   <!--  at 0 K -->
+    <Elastic_c11 Unit="GPa">128.53</Elastic_c11> 
+    <Elastic_c12 Unit="GPa">48.26</Elastic_c12>  
+    <Elastic_c44 Unit="GPa">66.80</Elastic_c44>  	
+    <DeformationPotential Unit="eV">-1.54</DeformationPotential>
+    <ElectronMass Unit="m0">0.135</ElectronMass> <!-- axial mass for [001] growth direction. NEW VALUE: Ciano et al, Physical Review Applied 11, 014003 (2019) -->
+     <ElectronMass_inPlane Unit="m0">0.30</ElectronMass_inPlane>
+</Material>
+
+  <Material>
+    <Name>SiL(x)GeL(1-x)</Name> <!-- L band of Si -->
+    <Alloy>SiL(x)</Alloy>
+    <Alloy>GeL(1-x)</Alloy>
+	<CrystalStructure>Zincblende</CrystalStructure>
+	<Lattice_a Unit="nm">0.0026174</Lattice_a> 
+  </Material>
+
+  <!-- binary zinc blende compounds -->
+
+  <!-- gallium arsenide -->
+  <Material>
+    <Name>GaAs</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">2.979</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-0.80</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.346</ValenceBandOffset>     <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+<!--<ValenceBandOffset Unit="eV">1.45966666</ValenceBandOffset>--> <!-- E_v,average + 1/3 Delta_so = 1.346 + 1/3 0.341 -->
+    <BandGap Unit="eV">1.519</BandGap>                 <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.5405e-3</BandGapAlpha> <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">204</BandGapBeta>            <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.067</ElectronMass> <!-- Vurgaftman -->
+    <EpsStatic>12.93</EpsStatic>
+    <EpsOptic>10.89</EpsOptic>   <!-- http://www.ioffe.ru/SVA/NSM/Semicond/GaAs/basic.html -->
+     <DeformationPotential Unit="eV">-7.17</DeformationPotential><!-- Vurgaftman -->
+    <!--<DeformationPotential Unit="eV">-9.36</DeformationPotential> -->      <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -1.21 - 8.15 = -9.36 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <ValenceDefPotHydro Unit="eV">1.16</ValenceDefPotHydro>
+    <ValenceDefPotUniaxial_b Unit="eV">-2.0</ValenceDefPotUniaxial_b>    
+<MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">4.73e3</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">36e-3</LOPhononEnergy> <!-- http://www.ioffe.ru/SVA/NSM/Semicond/GaAs/optic.html -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <TOPhononEnergy Unit="eV">33.86e-3</TOPhononEnergy>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <Ep Unit="eV"> 28.8</Ep>  <!-- Vurgaftman -->
+    <S>-2.88</S> <!-- S = 1 + 2F = 1 + 2 (-1.94) = -2.88) [Vurgaftman] -->
+    <DeltaSO Unit="eV"> 0.341 </DeltaSO>        <!-- Vurgaftman -->
+    <Lattice_a Unit="nm">0.565325</Lattice_a>   <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">122.1</Elastic_c11> <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">56.6</Elastic_c12>  <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">60.0</Elastic_c44>  <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">-0.160</Piezo_e14>  <!-- experimental value S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+</Material>
+
+  <!-- aluminium arsenide -->
+  <Material>
+    <Name>AlAs</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">4.049</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-1.33</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">0.857</ValenceBandOffset>     <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+<!--<ValenceBandOffset Unit="eV">0.95033333</ValenceBandOffset> --> <!-- E_v,average + 1/3 Delta_so = 0.857 + 1/3 0.28 -->
+    <BandGap Unit="eV">3.099</BandGap>                 <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.885e-3</BandGapAlpha>  <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">530</BandGapBeta>            <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.15</ElectronMass> <!-- Vurgaftman -->
+    <EpsStatic>10.064</EpsStatic>
+    <EpsOptic>8.162</EpsOptic>
+    <DeformationPotential Unit="eV">-5.64</DeformationPotential> <!-- Vurgaftman -->
+    <!--<DeformationPotential Unit="eV">-7.40</DeformationPotential>-->    <!-- a_c(Gamma) = a_v + a_gap(Gamma) = 1.53 - 8.93 = -7.40 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <ValenceDefPotHydro Unit="eV">2.47</ValenceDefPotHydro>
+    <ValenceDefPotUniaxial_b Unit="eV">-2.3</ValenceDefPotUniaxial_b>
+    <MaterialDensity Unit="kg/m^3">3.72e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">6.4e3</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">50e-3</LOPhononEnergy> <!-- J. Piprek (low-temperature optical phonon energy) -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy> <!-- Peter Greck had 2e-3? Reference? -->
+    <Ep Unit="eV">21.1</Ep>   <!-- Vurgaftman -->
+    <S>0.04</S> <!-- S = 1 + 2F = 1 + 2 (-0.48) = 0.04) [Vurgaftman] -->
+    <DeltaSO Unit="eV">0.28</DeltaSO>           <!-- Vurgaftman -->
+    <Lattice_a  Unit="nm">0.56611</Lattice_a>   <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">125.0</Elastic_c11> <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">53.4</Elastic_c12>  <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">54.2</Elastic_c44>  <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">-0.015</Piezo_e14>  <!-- calculated by S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+</Material>
+
+  <!-- indium arsenide -->
+  <Material>
+    <Name>InAs</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">1.937</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-0.59</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.39</ValenceBandOffset>      <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+    <BandGap Unit="eV">0.417</BandGap> <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.276e-3</BandGapAlpha> <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">93</BandGapBeta> <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.026</ElectronMass> <!-- Vurgaftman -->
+    <EpsStatic>15.15</EpsStatic>
+    <EpsOptic>12.25</EpsOptic>
+    <DeformationPotential Unit="eV">-5.08</DeformationPotential> <!-- Vurgaftman -->
+    <!--<DeformationPotential Unit="eV">-6.66</DeformationPotential>-->    <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -1.00 - 5.66 = -6.66 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <ValenceDefPotHydro Unit="eV">1.0</ValenceDefPotHydro>
+    <ValenceDefPotUniaxial_b Unit="eV">-1.8</ValenceDefPotUniaxial_b>
+    <MaterialDensity Unit="kg/m^3">5.61e3</MaterialDensity>     <!-- Reference? -->
+<!--<MaterialDensity Unit="kg/m^3">5.68e3</MaterialDensity> --> <!-- Reference? -->
+    <VelocityOfSound Unit="m/s">3.97e3</VelocityOfSound>        <!-- Reference? -->
+<!--<VelocityOfSound Unit="m/s">4.17e3</VelocityOfSound> -->    <!-- Reference? -->
+    <LOPhononEnergy Unit="eV">29e-3</LOPhononEnergy> <!-- http://www.ioffe.ru/SVA/NSM/Semicond/InAs/optic.html -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <Ep Unit="eV">21.5</Ep>   <!-- Vurgaftman -->
+	<S>-4.80</S> <!-- S = 1 + 2F = 1 + 2 (-2.90) = -4.80) [Vurgaftman] -->
+    <DeltaSO Unit="eV">0.39</DeltaSO>            <!-- Vurgaftman -->
+    <Lattice_a Unit="nm">0.60583</Lattice_a>     <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">83.29</Elastic_c11>  <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">45.26</Elastic_c12>  <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">39.59</Elastic_c44>  <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">-0.044</Piezo_e14>   <!-- experimental value S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+</Material>
+
+  <!-- indium phosphide -->
+  <Material>
+    <Name>InP</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">2.524</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-0.94</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.064</ValenceBandOffset>     <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+    <BandGap Unit="eV">1.4236</BandGap> <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.363e-3</BandGapAlpha> <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">162</BandGapBeta> <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.0795</ElectronMass>
+    <EpsStatic>12.61</EpsStatic>
+    <EpsOptic>9.61</EpsOptic>
+<!--<DeformationPotential Unit="eV">-6.0</DeformationPotential>--> <!-- Vurgaftman -->
+    <DeformationPotential Unit="eV">-6.34</DeformationPotential>   <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -0.41 - 5.93 = -6.34 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>     <!-- GaAs value -->
+    <VelocityOfSound Unit="m/s">4.73e3</VelocityOfSound>         <!-- GaAs value -->
+    <LOPhononEnergy Unit="eV">43e-3</LOPhononEnergy> <!-- J. Piprek (low-temperature optical phonon energy) -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth> <!-- GaAs value -->
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy> <!-- GaAs value -->
+    <TOPhononEnergy Unit="eV">33.86e-3</TOPhononEnergy>     <!-- GaAs value -->
+    <Ep Unit="eV">20.07</Ep>   <!-- Vurgaftman -->
+    <S>-1.6202</S>  <!-- S = 1 + 2F = 1 + 2 (-1.31) = -1.62) [Vurgaftman] -->
+<!--<S>-1.62</S>--> <!-- S = 1 + 2F = 1 + 2 (-1.31) = -1.62) [Vurgaftman] -->
+    <DeltaSO Unit="eV"> 0.108 </DeltaSO>        <!-- Vurgaftman -->
+    <Lattice_a Unit="nm">0.58697</Lattice_a>    <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">101.1</Elastic_c11> <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">56.1</Elastic_c12>  <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">45.6</Elastic_c44>  <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">0.056</Piezo_e14>   <!-- POSITIVE!!! calculated by      S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+</Material>
+
+  <!-- gallium antimonide -->
+  <Material>
+    <Name>GaSb</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">2.842</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-0.03</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.777</ValenceBandOffset>     <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+    <BandGap Unit="eV">0.812</BandGap> <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.417e-3</BandGapAlpha> <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">140</BandGapBeta> <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.039</ElectronMass> <!-- Vurgaftman -->
+    <Ep Unit="eV">27.0</Ep>  <!-- Vurgaftman -->
+    <S>-2.252</S>   <!-- S = 1 + 2F = 1 + 2 (-1.63) = -2.26) [Vurgaftman] -->
+<!--<S>-2.26</S>--> <!-- S = 1 + 2F = 1 + 2 (-1.63) = -2.26) [Vurgaftman] -->
+    <DeltaSO Unit="eV">0.76</DeltaSO>           <!-- Vurgaftman -->
+    <EpsStatic>15.69</EpsStatic>
+    <EpsOptic>14.44</EpsOptic>
+<!--<DeformationPotential Unit="eV">-7.5</DeformationPotential>--> <!-- Vurgaftman -->
+    <DeformationPotential Unit="eV">-9.33</DeformationPotential>   <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -1.32 - 8.01 = -9.33 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <MaterialDensity Unit="kg/m^3">5.614e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">3.83e3</VelocityOfSound>        <!-- Reference? -->
+<!--<VelocityOfSound Unit="m/s">4.2e3</VelocityOfSound>  -->    <!-- Reference? -->
+    <LOPhononEnergy Unit="eV">24e-3</LOPhononEnergy> <!-- J. Piprek (low-temperature optical phonon energy) -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <Lattice_a Unit="nm">0.60959</Lattice_a>   <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">88.42</Elastic_c11> <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">40.26</Elastic_c12> <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">43.22</Elastic_c44> <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">-0.172</Piezo_e14>  <!-- calculated by S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+  </Material>
+
+  <!-- indium antimonide -->
+  <Material>
+    <Name>InSb</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+<!--<ValenceBandOffset Unit="eV">0</ValenceBandOffset> --> <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.750</ValenceBandOffset>     <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+    <ConductionBandOffset Unit="eV">2.255</ConductionBandOffset>
+    <BandGap Unit="eV">0.235</BandGap> <!-- Vurgaftman -->
+    <BandGapAlpha Unit="eV/K">0.32e-3</BandGapAlpha> <!-- Vurgaftman -->
+    <BandGapBeta Unit="K">170</BandGapBeta> <!-- Vurgaftman -->
+    <ElectronMass Unit="m0">0.0135</ElectronMass> <!-- Vurgaftman -->
+    <EpsStatic>17.5</EpsStatic>
+    <EpsOptic>15.68</EpsOptic>
+<!--<DeformationPotential Unit="eV">-6.94</DeformationPotential>--> <!-- Vurgaftman -->
+    <DeformationPotential Unit="eV">-6.04</DeformationPotential>   <!-- a_c(Gamma) = a_v + a_gap(Gamma) = 0.31 - 6.35 = -6.04 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <MaterialDensity Unit="kg/m^3">5.77e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">3.42e3</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">22e-3</LOPhononEnergy> <!-- J. Piprek (low-temperature optical phonon energy) -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <Lattice_a Unit="nm">0.64794</Lattice_a>    <!-- Vurgaftman -->
+    <Elastic_c11 Unit="GPa">68.47</Elastic_c11> <!-- Vurgaftman -->
+    <Elastic_c12 Unit="GPa">37.35</Elastic_c12> <!-- Vurgaftman -->
+    <Elastic_c44 Unit="GPa">31.11</Elastic_c44> <!-- Vurgaftman -->
+    <Piezo_e14 Unit="C/m^2">-0.076</Piezo_e14> <!-- calculated by S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+  </Material>
+
+  <!-- aluminium antimonide -->
+  <Material>
+    <Name>AlSb</Name>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">3.996</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-0.41</ValenceBandOffset> -->    <!-- Vurgaftman -->
+    <ValenceBandOffset Unit="eV">1.385</ValenceBandOffset>    <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+    <ElectronMass Unit="m0">0.14</ElectronMass>    <!-- Vurgaftman -->
+    <BandGap Unit="eV">2.386</BandGap>
+    <BandGapAlpha Unit="eV/K">0.39e-3</BandGapAlpha>
+    <BandGapBeta Unit="K">140</BandGapBeta>
+    <EpsStatic>12.04</EpsStatic>
+    <EpsOptic>10.24</EpsOptic>
+<!--<DeformationPotential Unit="eV">-4.5</DeformationPotential> -->    <!-- Vurgaftman -->
+    <DeformationPotential Unit="eV">-8.12</DeformationPotential>     <!-- a_c(Gamma) = a_v + a_gap(Gamma) = 0.73 - 8.85 = -8.12 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">42e-3</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>    <!-- J. Piprek (low-temperature optical phonon energy) -->
+    <Ep Unit="eV">18.7</Ep>    <!-- Vurgaftman -->
+    <S>-0.118</S>    <!-- S = 1 + 2F = 1 + 2 (-0.56) = -0.12) [Vurgaftman] -->
+<!--<S>-0.12</S>-->    <!-- S = 1 + 2F = 1 + 2 (-0.56) = -0.12) [Vurgaftman] -->
+    <DeltaSO Unit="eV">0.676</DeltaSO>    <!-- Vurgaftman -->
+    <Lattice_a Unit="nm">0.60959</Lattice_a>
+    <Elastic_c11 Unit="GPa">87.69</Elastic_c11>
+    <Elastic_c12 Unit="GPa">43.41</Elastic_c12>
+    <Elastic_c44 Unit="GPa">40.76</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">-0.055</Piezo_e14>    <!-- calculated by S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+  </Material>
+
+
+  <!-- binary wurtzite compounds  -->
+
+  <!-- gallium nitride -->
+  <Material>
+    <Name>GaN</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <ConductionBandOffset Unit="eV">2.79967</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-2.64</ValenceBandOffset> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) (zincblende value) -->
+    <ValenceBandOffset Unit="eV">-0.726</ValenceBandOffset>    <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) (zincblende value) -->
+<!--<BandGap Unit="eV">3.507</BandGap> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">3.510</BandGap>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapAlpha Unit="eV/K">0.909e-3</BandGapAlpha>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapBeta Unit="K">830</BandGapBeta>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <ElectronMass Unit="m0">0.2</ElectronMass>    <!-- Vurgaftman -->
+    <EpsStatic>9.28</EpsStatic>
+    <EpsStatic_a>9.28</EpsStatic_a>
+    <EpsStatic_c>10.10</EpsStatic_c>
+    <EpsOptic>5.29</EpsOptic>
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+<!--<DeformationPotential Unit="eV">-6.5</DeformationPotential> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001): a_1 = -6.5, a_2 = -11.8 -->
+    <DeformationPotential Unit="eV">-4.9</DeformationPotential>    <!-- I. Vurgaftman, JAP 94, 3675 (2003): a_1 = -4.9, a_2 = -11.3 -->
+    <MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">5.96e3</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">90e-3</LOPhononEnergy>
+    <TOPhononEnergy Unit="eV">0</TOPhononEnergy>
+    <Ep Unit="eV"> 14.4</Ep>    <!-- Vurgaftman -->
+    <S>1</S>    <!-- S = 1 + 2F = 1 + 2 (0) = 1) [Vurgaftman] -->
+<!--<DeltaCr Unit="eV">0.019</DeltaCr> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<!--<DeltaCr Unit="eV">0.010</DeltaCr> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+<!--<DeltaSO Unit="eV">0.014</DeltaSO> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <DeltaSO Unit="eV">0.017</DeltaSO>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_a Unit="nm">0.3189</Lattice_a>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_c Unit="nm">0.5185</Lattice_c>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c11 Unit="GPa">390</Elastic_c11>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c12 Unit="GPa">145</Elastic_c12>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c13 Unit="GPa">106</Elastic_c13>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c33 Unit="GPa">398</Elastic_c33>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c44 Unit="GPa">105</Elastic_c44>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Piezo_e33 Unit="C/m^2">1.27</Piezo_e33>
+    <Piezo_e31 Unit="C/m^2">-0.35</Piezo_e31> <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Piezo_e15 Unit="C/m^2">-0.3</Piezo_e15>
+<!--<Pyro Unit="C/m^2">-0.029</Pyro> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Pyro Unit="C/m^2">-0.034</Pyro>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+  
+</Material>
+
+  <!-- aluminium nitride -->
+  <Material>
+    <Name>AlN</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <ConductionBandOffset Unit="eV">4.724455883</ConductionBandOffset>
+<!--<ValenceBandOffset Unit="eV">-3.44</ValenceBandOffset> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) (zincblende value) -->
+    <ValenceBandOffset Unit="eV">-1.526</ValenceBandOffset>    <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) (zincblende value) -->
+<!--<BandGap Unit="eV">6.23</BandGap> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">6.25</BandGap>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapAlpha Unit="eV/K">1.799e-3</BandGapAlpha>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapBeta Unit="K">1462</BandGapBeta>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <ElectronMass Unit="m0">0.3</ElectronMass>    <!-- Vurgaftman -->
+    <EpsStatic>8.67</EpsStatic>
+    <EpsStatic_a>8.67</EpsStatic_a>
+    <EpsStatic_c>8.57</EpsStatic_c>
+    <EpsOptic>4.68</EpsOptic>
+<!--<DeformationPotential Unit="eV">-9.0</DeformationPotential> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001): a_1 = -9.0, a_2 = -9.0 -->
+    <DeformationPotential Unit="eV">-3.4</DeformationPotential>    <!-- I. Vurgaftman, JAP 94, 3675 (2003): a_1 = -3.4, a_2 = -11.8 -->
+    <MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">5.96e3</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">90e-3</LOPhononEnergy>    <!-- GaN value -->
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>    <!-- GaN value -->
+    <TOPhononEnergy Unit="eV">0</TOPhononEnergy>
+    <Ep Unit="eV"> 14.5</Ep>    <!-- Vurgaftman -->
+    <S>1</S>    <!-- S = 1 + 2F = 1 + 2 (0) = 1) [Vurgaftman] -->
+<!--<DeltaCr Unit="eV">-0.164</DeltaCr> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<!--<DeltaCr Unit="eV">-0.169</DeltaCr> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <DeltaSO Unit="eV">0.019</DeltaSO>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_a Unit="nm">0.3112</Lattice_a>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_c Unit="nm">0.4982</Lattice_c>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c11 Unit="GPa">396</Elastic_c11>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c12 Unit="GPa">137</Elastic_c12>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c13 Unit="GPa">108</Elastic_c13>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c33 Unit="GPa">373</Elastic_c33>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c44 Unit="GPa">116</Elastic_c44>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Piezo_e33 Unit="C/m^2">1.79</Piezo_e33>  <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Piezo_e31 Unit="C/m^2">-0.50</Piezo_e31> <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Piezo_e15 Unit="C/m^2">-0.48</Piezo_e15>  <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<!--<Pyro Unit="C/m^2">-0.081</Pyro>  -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<Pyro Unit="C/m^2">-0.090</Pyro>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <!--<Pyro Unit="C/m^2">-0.04</Pyro> -->    <!-- Park and Chuang, Appl. Phys. Lett. 76, 1981 (2000) -->
+  </Material>
+
+  <!-- indium nitride -->
+  <Material>
+    <Name>InN</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <ConductionBandOffset Unit="eV">4.724455883</ConductionBandOffset>
+    <!--<ValenceBandOffset Unit="eV">-1.59</ValenceBandOffset> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) (zincblende value) -->
+    <ValenceBandOffset Unit="eV">-0.462</ValenceBandOffset>    <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) (zincblende value) -->
+    <!--<BandGap Unit="eV">1.994</BandGap> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">0.78</BandGap>   <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapAlpha Unit="eV/K">0.245e-3</BandGapAlpha>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <BandGapBeta Unit="K">624</BandGapBeta>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <EpsStatic>8.67</EpsStatic>
+    <EpsStatic_a>8.67</EpsStatic_a>
+    <EpsStatic_c>8.57</EpsStatic_c>
+    <EpsOptic>4.68</EpsOptic>
+    <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+    <ElectronMass Unit="m0">0.12</ElectronMass>    <!-- Vurgaftman -->
+<!--<DeformationPotential Unit="eV">-9.0</DeformationPotential> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001): a_1 = -9.0, a_2 = -9.0 -->
+    <DeformationPotential Unit="eV">-3.5</DeformationPotential>    <!-- I. Vurgaftman, JAP 94, 3675 (2003): a_1 = -3.5, a_2 = -3.5 -->
+    <MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>
+    <VelocityOfSound Unit="m/s">5.96e3</VelocityOfSound>
+    <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+    <LOPhononEnergy Unit="eV">90e-3</LOPhononEnergy>    <!-- GaN value -->
+    <TOPhononEnergy Unit="eV">0</TOPhononEnergy>
+    <Ep Unit="eV"> 14.5</Ep>    <!-- Vurgaftman -->
+    <S>1</S>    <!-- S = 1 + 2F = 1 + 2 (0) = 1) [Vurgaftman] -->
+<!--<DeltaCr Unit="eV">0.041</DeltaCr> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<!--<DeltaCr Unit="eV">0.040</DeltaCr> -->    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+<!--<DeltaSO Unit="eV">0.001</DeltaSO> -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <DeltaSO Unit="eV">0.005</DeltaSO>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_a Unit="nm">0.3545</Lattice_a>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Lattice_c Unit="nm">0.5703</Lattice_c>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c11 Unit="GPa">223</Elastic_c11>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c12 Unit="GPa">115</Elastic_c12>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c13 Unit="GPa">92</Elastic_c13>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c33 Unit="GPa">224</Elastic_c33>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Elastic_c44 Unit="GPa">48</Elastic_c44>    <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+    <Piezo_e33 Unit="C/m^2">0.97</Piezo_e33>    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Piezo_e31 Unit="C/m^2">-0.57</Piezo_e31>    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <Piezo_e15 Unit="C/m^2">-0.48</Piezo_e15>    <!-- AlN value -->
+<!--<Pyro Unit="C/m^2">-0.032</Pyro>  -->    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<Pyro Unit="C/m^2">-0.042</Pyro>   <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+  </Material>
+  
+  <!-- Bowing parameters for ternary zinc blende compounds -->
+
+  <!-- aluminium gallium arsenide -->
+  <Material>
+    <Name>Al(x)Ga(1-x)As</Name>
+    <Alloy>AlAs(x)</Alloy>
+    <Alloy>GaAs(1-x)</Alloy>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">0.318</ConductionBandOffset>   <!-- To match a band offset of 0.120 eV for GaAs/Al(0.15)Ga(0.85)As -->
+    <ValenceBandOffset Unit="eV">0</ValenceBandOffset>
+    <BandGap Unit="eV">-0.127</BandGap>
+    <BandGap_CUBIC Unit="eV">1.310</BandGap_CUBIC>     <!-- Cubic bowing for AlGaAs (see Vurgaftman): BandGap = (1-x) BandGap(GaAs) + x BandGap(AlAs) - x(1-x)(BandGap(Bowing) + x*BandGap_CUBIC) -->
+    <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+    <BandGapBeta Unit="K">0</BandGapBeta>
+    <ElectronMass Unit="m0">0</ElectronMass>
+    <DeltaSO Unit="eV">0</DeltaSO>                                <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <EpsStatic>0</EpsStatic>
+    <EpsOptic>0</EpsOptic>
+    <DeformationPotential Unit="eV">0</DeformationPotential>
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">0</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+    <Lattice_a  Unit="nm">0</Lattice_a>
+    <Elastic_c11 Unit="GPa">0</Elastic_c11>
+    <Elastic_c12 Unit="GPa">0</Elastic_c12>
+    <Elastic_c44 Unit="GPa">0</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+</Material>
+
+  <!-- indium gallium arsenide -->
+  <Material>
+    <Name>In(x)Ga(1-x)As</Name>
+    <Alloy>InAs(x)</Alloy>
+    <Alloy>GaAs(1-x)</Alloy>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+    <ValenceBandOffset Unit="eV">-0.38</ValenceBandOffset>           <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">0.477</BandGap>                               <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+    <BandGapBeta Unit="K">0</BandGapBeta>
+    <DeltaSO Unit="eV">0.15</DeltaSO>                                <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <ElectronMass Unit="m0">0.0091</ElectronMass>                    <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <EpsStatic>0</EpsStatic>
+    <EpsOptic>0</EpsOptic>
+    <S Unit="eV">3.54</S>                                            <!-- I. Vurgaftman, JAP 89, 5815 (2001) --> <!-- bowing(S) = 2 * bowing(F) = 2 * (1.77) [Vurgaftman] -->
+    <Ep Unit="eV">-1.48</Ep>                                         <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <DeformationPotential Unit="eV">2.61</DeformationPotential>      <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">0</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+    <Lattice_a  Unit="nm">0</Lattice_a>
+    <Elastic_c11 Unit="GPa">0</Elastic_c11>
+    <Elastic_c12 Unit="GPa">0</Elastic_c12>
+    <Elastic_c44 Unit="GPa">0</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+</Material>
+
+  <!-- gallium arsenic antimonide -->
+  <Material>
+    <Name>GaAs(x)Sb(1-x)</Name>
+    <Alloy>GaAs(x)</Alloy>
+    <Alloy>GaSb(1-x)</Alloy>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+    <ValenceBandOffset Unit="eV">-1.06</ValenceBandOffset>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">1.43</BandGap>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+    <BandGapBeta Unit="K">0</BandGapBeta>
+    <ElectronMass Unit="m0">0</ElectronMass>
+    <DeltaSO Unit="eV">0.6</DeltaSO>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <EpsStatic>0</EpsStatic>
+    <EpsOptic>0</EpsOptic>
+    <DeformationPotential Unit="eV">0</DeformationPotential>
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">0</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+    <Lattice_a  Unit="nm">0</Lattice_a>
+    <Elastic_c11 Unit="GPa">0</Elastic_c11>
+    <Elastic_c12 Unit="GPa">0</Elastic_c12>
+    <Elastic_c44 Unit="GPa">0</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+</Material>
+
+  <!-- aluminium indium arsenide -->
+  <Material>
+    <Name>Al(x)In(1-x)As</Name>
+    <Alloy>AlAs(x)</Alloy>
+    <Alloy>InAs(1-x)</Alloy>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+    <ValenceBandOffset Unit="eV">-0.64</ValenceBandOffset>            <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">0.70</BandGap>                                 <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+    <BandGapBeta Unit="K">0</BandGapBeta>
+    <ElectronMass Unit="m0">0.049</ElectronMass>                     <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <DeltaSO Unit="eV">0.15</DeltaSO>                                <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <S Unit="eV">-8.88</S>                                           <!-- I. Vurgaftman, JAP 89, 5815 (2001) --> <!-- bowing(S) = 2 * bowing(F) = 2 * (-4.44) -->
+    <Ep Unit="eV">-4.81</Ep>                                         <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <EpsStatic>0</EpsStatic>
+    <EpsOptic>0</EpsOptic>
+    <DeformationPotential Unit="eV">-1.4</DeformationPotential>      <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">0</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+    <Lattice_a  Unit="nm">0</Lattice_a>
+    <Elastic_c11 Unit="GPa">0</Elastic_c11>
+    <Elastic_c12 Unit="GPa">0</Elastic_c12>
+    <Elastic_c44 Unit="GPa">0</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+</Material>
+
+  <!-- indium arsenic antimonide -->
+  <Material>
+    <Name>In(x)As(1-x)Sb</Name>
+    <Alloy>InAs(x)</Alloy>
+    <Alloy>InSb(1-x)</Alloy>
+    <CrystalStructure>Zincblende</CrystalStructure>
+    <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+    <ValenceBandOffset Unit="eV">0</ValenceBandOffset>
+    <BandGap Unit="eV">0.67</BandGap> <!-- [Vurgaftman]-->
+    <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+    <BandGapBeta Unit="K">0</BandGapBeta>
+    <ElectronMass Unit="m0">0.035</ElectronMass> <!-- [Vurgaftman]-->
+    <EpsStatic>0</EpsStatic>
+    <EpsOptic>0</EpsOptic>
+    <DeformationPotential Unit="eV">0</DeformationPotential>
+    <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+    <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+    <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+    <LOPhononWidth Unit="eV">0</LOPhononWidth>
+    <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+    <Lattice_a  Unit="nm">0</Lattice_a>
+    <Elastic_c11 Unit="GPa">0</Elastic_c11>
+    <Elastic_c12 Unit="GPa">0</Elastic_c12>
+    <Elastic_c44 Unit="GPa">0</Elastic_c44>
+    <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+</Material>
+
+  <!-- aluminium arsenic antimonide -->
+  <Material>
+      <Name>AlAs(x)Sb(1-x)</Name>
+      <CrystalStructure>Zincblende</CrystalStructure>
+      <Alloy>AlAs(x)</Alloy>
+      <Alloy>AlSb(1-x)</Alloy>
+      <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+      <ValenceBandOffset Unit="eV">-1.71</ValenceBandOffset>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+      <BandGap Unit="eV">0.8</BandGap>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+      <DeltaSO Unit="eV">0.15</DeltaSO>   <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+      <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+      <BandGapBeta Unit="K">0</BandGapBeta>
+      <ElectronMass Unit="m0">0.0</ElectronMass>
+      <EpsStatic>0</EpsStatic>
+      <EpsOptic>0</EpsOptic>
+      <DeformationPotential Unit="eV">0</DeformationPotential>
+      <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+      <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+      <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+      <LOPhononWidth Unit="eV">0</LOPhononWidth>
+      <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+      <Lattice_a  Unit="nm">0</Lattice_a>
+      <Elastic_c11 Unit="GPa">0</Elastic_c11>
+      <Elastic_c12 Unit="GPa">0</Elastic_c12>
+      <Elastic_c44 Unit="GPa">0</Elastic_c44>
+      <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+  </Material>
+
+  <!-- Ternary wurtzite compounds -->
+
+  <!-- aluminium gallium nitride -->
+  <Material>
+    <Name>Al(x)Ga(1-x)N</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <Alloy>AlN(x)</Alloy>
+    <Alloy>GaN(1-x)</Alloy>
+<!--    <BandGap Unit="eV">1.0</BandGap> -->     <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+<BandGap Unit="eV">0.7</BandGap>     <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+<Pyro Unit="C/m^2">-0.021</Pyro>  <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+  </Material>
+
+  <!-- aluminium indium nitride -->
+  <Material>
+    <Name>Al(x)In(1-x)N</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <Alloy>AlN(x)</Alloy>
+    <Alloy>InN(1-x)</Alloy>
+<!--<BandGap Unit="eV">16-9.1x</BandGap> -->     <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+	<BandGap Unit="eV">2.5</BandGap>        <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+	<Pyro Unit="C/m^2">-0.070</Pyro>      <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+  </Material>
+
+  <!-- indium gallium nitride -->
+  <Material>
+    <Name>In(x)Ga(1-x)N</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <Alloy>InN(x)</Alloy>
+    <Alloy>GaN(1-x)</Alloy>
+    <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+    <ValenceBandOffset Unit="eV">0</ValenceBandOffset>
+ <!-- <BandGap Unit="eV">3.0</BandGap> -->              <!-- I. Vurgaftman, JAP 89, 5815 (2001) -->
+    <BandGap Unit="eV">1.4</BandGap>         <!-- I. Vurgaftman, JAP 94, 3675 (2003) (zincblende?) -->
+    <Pyro Unit="C/m^2">-0.037</Pyro>      <!-- I. Vurgaftman, JAP 94, 3675 (2003) -->
+  </Material>
+
+  <!-- quaternary wurtzite compounds -->
+
+  <!-- aluminium indium gallium nitride -->
+  <Material>
+    <Name>Al(x)In(y)Ga(1-x-y)N</Name>
+    <CrystalStructure>Wurtzite</CrystalStructure>
+    <Alloy>AlN(x)</Alloy> <!-- binary 1 -->
+    <Alloy>InN(y)</Alloy> <!-- binary 2 -->
+    <Alloy>GaN(1-x-y)</Alloy> <!-- binary 3 -->
+	<Ternary_xy>Al(x)In(1-x)N</Ternary_xy> <!-- ternary 12 -->
+	<Ternary_x>Al(x)Ga(1-x)N</Ternary_x> <!-- ternary 13 -->
+	<Ternary_y>In(x)Ga(1-x)N</Ternary_y>  <!-- ternary 23 -->
+  </Material>
+</Database>

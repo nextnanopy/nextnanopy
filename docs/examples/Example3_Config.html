@@ -13158,19 +13158,25 @@ div#notebook {
 <div class="output_text output_subarea output_execute_result">
 <pre>NNConfig(C:\Users\jun-liang.wang\.nnconfig)
 [nextnano3]
-exe = 
-license = 
-database = 
+exe = C:\Program Files\nextnano\2020_10_16\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
+license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
+database = C:\Program Files\nextnano\2020_10_16\nextnano3\Syntax\database_nn3.in
 threads = 0
-outputdirectory = 
+outputdirectory = E:\junliang.wang\nextnano\Output
 debuglevel = 0
 cancel = -1
 softkill = -1
 [nextnano++]
-exe = 
-license = 
-database = 
-outputdirectory = 
+exe = C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
+license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
+database = C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in
+outputdirectory = E:\junliang.wang\nextnano\Output
+threads = 0
+[nextnano.NEGF]
+exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe
+license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
+database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
+outputdirectory = E:\junliang.wang\nextnano\Output
 threads = 0</pre>
 </div>
 
@@ -13193,15 +13199,20 @@ threads = 0</pre>
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe&#39;</span><span class="p">)</span>
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;license&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic&#39;</span><span class="p">)</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in&#39;</span><span class="p">)</span>
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano++&#39;</span><span class="p">,</span><span class="s1">&#39;outputdirectory&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;E:\junliang.wang\nextnano\Output&#39;</span><span class="p">)</span>
 
-<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_10_16\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe&#39;</span><span class="p">)</span>
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;license&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic&#39;</span><span class="p">)</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\2020_10_16\nextnano3\Syntax\database_nn3.in&#39;</span><span class="p">)</span>
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano3&#39;</span><span class="p">,</span><span class="s1">&#39;outputdirectory&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;E:\junliang.wang\nextnano\Output&#39;</span><span class="p">)</span>
+
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;license&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;outputdirectory&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;E:\junliang.wang\nextnano\Output&#39;</span><span class="p">)</span>
 
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1">#save permanently</span>
 </pre></div>
@@ -13237,18 +13248,24 @@ threads = 0</pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>NNConfig(C:\Users\jun-liang.wang\.nnconfig)
 [nextnano3]
-exe = C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
+exe = C:\Program Files\nextnano\2020_10_16\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
 license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in
+database = C:\Program Files\nextnano\2020_10_16\nextnano3\Syntax\database_nn3.in
 threads = 0
 outputdirectory = E:\junliang.wang\nextnano\Output
 debuglevel = 0
 cancel = -1
 softkill = -1
 [nextnano++]
-exe = C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
+exe = C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
 license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in
+database = C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in
+outputdirectory = E:\junliang.wang\nextnano\Output
+threads = 0
+[nextnano.NEGF]
+exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe
+license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
+database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
 outputdirectory = E:\junliang.wang\nextnano\Output
 threads = 0</pre>
 </div>
@@ -13262,7 +13279,7 @@ threads = 0</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Execute-input-with-default-config">Execute input with default config<a class="anchor-link" href="#Execute-input-with-default-config">&#182;</a></h1><p>By loading an input file with InputFile class, it will automatically detect the type (nextnano++ or nextnano3) and it loads the corresponding configuration parameters ready for execution.</p>
+<h1 id="Execute-input-with-default-config">Execute input with default config<a class="anchor-link" href="#Execute-input-with-default-config">&#182;</a></h1><p>By loading an input file with InputFile class, it will automatically detect the type (nextnano++, nextnano3 or nextnano.NEGF) and it loads the corresponding configuration parameters ready for execution.</p>
 
 </div>
 </div>
@@ -13338,18 +13355,24 @@ threads = 0</pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>NNConfig(C:\Users\jun-liang.wang\.nnconfig)
 [nextnano3]
-exe = C:\Program Files\nextnano\2020_07_31\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
+exe = C:\Program Files\nextnano\2020_10_16\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
 license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_07_31\nextnano3\Syntax\database_nn3.in
+database = C:\Program Files\nextnano\2020_10_16\nextnano3\Syntax\database_nn3.in
 threads = 0
 outputdirectory = E:\junliang.wang\nextnano\Output
 debuglevel = 0
 cancel = -1
 softkill = -1
 [nextnano++]
-exe = C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
+exe = C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
 license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in
+database = C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in
+outputdirectory = E:\junliang.wang\nextnano\Output
+threads = 0
+[nextnano.NEGF]
+exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe
+license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
+database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
 outputdirectory = E:\junliang.wang\nextnano\Output
 threads = 0</pre>
 </div>
@@ -13391,7 +13414,7 @@ threads = 0</pre>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>File type: nextnano++
-execute arguments: {&#39;exe&#39;: &#39;C:\\Program Files\\nextnano\\2020_07_31\\nextnano++\\bin 64bit\\nextnano++_Intel_64bit.exe&#39;, &#39;license&#39;: &#39;C:\\Users\\jun-liang.wang\\Documents\\nextnano\\License\\License_nnp.lic&#39;, &#39;database&#39;: &#39;C:\\Program Files\\nextnano\\2020_07_31\\nextnano++\\Syntax\\database_nnp.in&#39;, &#39;outputdirectory&#39;: &#39;E:\\junliang.wang\\nextnano\\Output&#39;, &#39;threads&#39;: 0}
+execute arguments: {&#39;exe&#39;: &#39;C:\\Program Files\\nextnano\\2020_10_16\\nextnano++\\bin 64bit\\nextnano++_Intel_64bit.exe&#39;, &#39;license&#39;: &#39;C:\\Users\\jun-liang.wang\\Documents\\nextnano\\License\\License_nnp.lic&#39;, &#39;database&#39;: &#39;C:\\Program Files\\nextnano\\2020_10_16\\nextnano++\\Syntax\\database_nnp.in&#39;, &#39;outputdirectory&#39;: &#39;E:\\junliang.wang\\nextnano\\Output&#39;, &#39;threads&#39;: 0}
 </pre>
 </div>
 </div>
@@ -13429,14 +13452,14 @@ execute arguments: {&#39;exe&#39;: &#39;C:\\Program Files\\nextnano\\2020_07_31\
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit
+<pre>C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit
 ================================================================================
 STARTING...
 ================================================================================
 Starting execution as:
-C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe --license C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic --database C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in --threads 0 --outputdirectory E:\junliang.wang\nextnano\Output\example --noautooutdir E:\junliang.wang\datafiles\nextnano++\example.in 
+C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe --license C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic --database C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in --threads 0 --outputdirectory E:\junliang.wang\nextnano\Output\example --noautooutdir E:\junliang.wang\datafiles\nextnano++\example.in 
 
-nextnano++ (1.6.54 - 2020.042401) Jul 31 2020
+nextnano++ (1.6.79 - 2020.092201) Oct 16 2020
 =============================================================================
 COPYRIGHT NOTICE                                                             
 =============================================================================
@@ -13457,9 +13480,11 @@ COPYRIGHT NOTICE.
  PROCESSING FILE: E:\junliang.wang\datafiles\nextnano++\example.in
 =============================================================================
 
-Start time: Mon 2020-11-09, 10:33:28 (+0100)
+Start time: Wed 2020-11-11, 15:37:52 (+0100)
 
-Process uses 4 of 4 available OpenMP threads.
+Simulation process uses 4 of 4 available OpenMP threads (system default).
+
+BLAS and LAPACK libraries use 4 of 4 available threads (system default).
 
 Preparing input validator...
 Reading input file (E:\junliang.wang\datafiles\nextnano++\example.in)...
@@ -13468,7 +13493,7 @@ Reading input file (E:\junliang.wang\datafiles\nextnano++\example.in)...
 WARNING: Using database specified in command line.
 
 Preparing database validator...
-Reading database file (C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in)...
+Reading database file (C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in)...
 
 Checking license:
 	 Valid From: 2020-10-8 To: 2021-12-31
@@ -13515,6 +13540,8 @@ NOTE: Hole minimum density is 1e+10 cm^-3.
 NOTE: Electron maximum density is 1e+30 cm^-3.
 NOTE: Hole maximum density is 1e+30 cm^-3.
 
+NOTE: Minimal recombination is DISABLED.
+
 ***** Quantum Subgrid (2DEG) ******     
 Gridsize: 
 Grid dimension: 249 * 1 * 1 
@@ -13532,7 +13559,6 @@ Writing fixed charge density...
 ********* START CALCULATION ****************************************************
 
 Determine dirichlet points for contacts...
-
 Intrinsic charge time: 0[s]
 
 Discretizing Poisson equation...
@@ -13546,13 +13572,13 @@ gate 0 V   backgate -0 V
 Determine electron Fermi level dirichlet values in contacts...
 Determine hole Fermi level dirichlet values in contacts...
 Initialize Fermi levels...
-Fermi level initialization time: 0.002[s]
+Fermi level initialization time: 0[s]
 Initialize contacts as charge neutral...
 Determine potential Dirichlet values in Schottky and ohmic contacts...
 Update contact discretization in Poisson equation...
 
 Initialize electrostatic potential...
-Charge Neutrality time: 0.001[s]
+Charge Neutrality time: 0.002[s]
 
 Solving nonlinear Poisson equation...
   Newton step: 1	99.70915169962517
@@ -13569,7 +13595,7 @@ Solving nonlinear Poisson equation...
   Newton step: 12	2.813911755971973e-06
   Newton step: 13	1.46512611284872e-07
   Newton step: 14	4.335619798520064e-10
-  Newton achieved/desired residual: 5.29119376e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.29119376e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13592,7 +13618,7 @@ Solving nonlinear Poisson equation...
   Newton step: 2	0.0006444409481719048
   Newton step: 3	1.274691077816259e-05
   Newton step: 4	5.110232646041035e-09
-  Newton achieved/desired residual: 4.9951182e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 4.9951182e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13613,7 +13639,7 @@ Solving nonlinear Poisson equation...
   Newton step: 1	0.0008901366968905123
   Newton step: 2	7.916418306169971e-06
   Newton step: 3	2.726403765988829e-08
-  Newton achieved/desired residual: 7.74929396e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 7.74929396e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13633,7 +13659,7 @@ QUANTUM-POISSON:  iteration = 3 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	0.0002802969751370559
   Newton step: 2	1.14809884149047e-06
-  Newton achieved/desired residual: 5.68206556e-11 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.68206556e-11 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13653,7 +13679,7 @@ QUANTUM-POISSON:  iteration = 4 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	5.20829174171011e-05
   Newton step: 2	1.100093411432588e-08
-  Newton achieved/desired residual: 5.93076426e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.93076426e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13673,7 +13699,7 @@ QUANTUM-POISSON:  iteration = 5 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	1.199739305429823e-05
   Newton step: 2	4.211340614545428e-10
-  Newton achieved/desired residual: 5.55815013e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.55815013e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13692,7 +13718,7 @@ QUANTUM-POISSON:  iteration = 6 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	2.159780727963887e-06
-  Newton achieved/desired residual: 1.58739637e-11 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 1.58739637e-11 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13711,7 +13737,7 @@ QUANTUM-POISSON:  iteration = 7 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	4.841511952243991e-07
-  Newton achieved/desired residual: 8.67957336e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 8.67957336e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13730,7 +13756,7 @@ QUANTUM-POISSON:  iteration = 8 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	8.880327249267377e-08
-  Newton achieved/desired residual: 5.53995026e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.53995026e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13749,7 +13775,7 @@ QUANTUM-POISSON:  iteration = 9 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	1.954208097513615e-08
-  Newton achieved/desired residual: 5.47215604e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.47215604e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13768,7 +13794,7 @@ QUANTUM-POISSON:  iteration = 10 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	3.606404752604288e-09
-  Newton achieved/desired residual: 5.15124056e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.15124056e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -13793,8 +13819,8 @@ Solving Quantum Mechanics ---- (determine k-dispersion only)
 
 ********* OUTPUT ***************************************************************
 
-Writing charactaractics data(1)...
-Writing charactaractics data(2)...
+Writing characteristics data(1)...
+Writing characteristics data(2)...
 
 Writing electrostatic potential...
 
@@ -13809,10 +13835,10 @@ Writing ionized dopant densities...
 
 ********* FINISHED CALCULATION *************************************************
 
-End time: Mon 2020-11-09, 10:33:28 (+0100)
-Total Poisson Solver Time: 0.013[s]
+End time: Wed 2020-11-11, 15:37:53 (+0100)
+Total Poisson Solver Time: 0.012[s]
 Total Quantum Solver Time: 0.006[s]
-Simulator Run Time: 0.304[s]
+Simulator Run Time: 0.291[s]
 
 ================================================================================
 DONE.
@@ -13829,7 +13855,7 @@ DONE.
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;subprocess.Popen at 0x1facedce970&gt;</pre>
+<pre>&lt;subprocess.Popen at 0x27eb4230490&gt;</pre>
 </div>
 
 </div>
@@ -13867,14 +13893,14 @@ DONE.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit
+<pre>C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit
 ================================================================================
 STARTING...
 ================================================================================
 Starting execution as:
-C:\Program Files\nextnano\2020_07_31\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe --license C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic --database C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in --threads 4 --outputdirectory C:\Users\jun-liang.wang\Downloads\example --noautooutdir E:\junliang.wang\datafiles\nextnano++\example.in 
+C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe --license C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic --database C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in --threads 4 --outputdirectory C:\Users\jun-liang.wang\Downloads\example --noautooutdir E:\junliang.wang\datafiles\nextnano++\example.in 
 
-nextnano++ (1.6.54 - 2020.042401) Jul 31 2020
+nextnano++ (1.6.79 - 2020.092201) Oct 16 2020
 =============================================================================
 COPYRIGHT NOTICE                                                             
 =============================================================================
@@ -13895,9 +13921,11 @@ COPYRIGHT NOTICE.
  PROCESSING FILE: E:\junliang.wang\datafiles\nextnano++\example.in
 =============================================================================
 
-Start time: Mon 2020-11-09, 10:33:29 (+0100)
+Start time: Wed 2020-11-11, 15:37:53 (+0100)
 
-Process uses 4 of 4 available OpenMP threads.
+Simulation process uses 4 of 4 available OpenMP threads (specified via command line).
+
+BLAS and LAPACK libraries use 4 of 4 available threads (specified via command line).
 
 Preparing input validator...
 Reading input file (E:\junliang.wang\datafiles\nextnano++\example.in)...
@@ -13906,7 +13934,7 @@ Reading input file (E:\junliang.wang\datafiles\nextnano++\example.in)...
 WARNING: Using database specified in command line.
 
 Preparing database validator...
-Reading database file (C:\Program Files\nextnano\2020_07_31\nextnano++\Syntax\database_nnp.in)...
+Reading database file (C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in)...
 
 Checking license:
 	 Valid From: 2020-10-8 To: 2021-12-31
@@ -13953,6 +13981,8 @@ NOTE: Hole minimum density is 1e+10 cm^-3.
 NOTE: Electron maximum density is 1e+30 cm^-3.
 NOTE: Hole maximum density is 1e+30 cm^-3.
 
+NOTE: Minimal recombination is DISABLED.
+
 ***** Quantum Subgrid (2DEG) ******     
 Gridsize: 
 Grid dimension: 249 * 1 * 1 
@@ -13970,8 +14000,7 @@ Writing fixed charge density...
 ********* START CALCULATION ****************************************************
 
 Determine dirichlet points for contacts...
-
-Intrinsic charge time: 0.001[s]
+Intrinsic charge time: 0[s]
 
 Discretizing Poisson equation...
 
@@ -13984,7 +14013,7 @@ gate 0 V   backgate -0 V
 Determine electron Fermi level dirichlet values in contacts...
 Determine hole Fermi level dirichlet values in contacts...
 Initialize Fermi levels...
-Fermi level initialization time: 0.003[s]
+Fermi level initialization time: 0.001[s]
 Initialize contacts as charge neutral...
 Determine potential Dirichlet values in Schottky and ohmic contacts...
 Update contact discretization in Poisson equation...
@@ -14007,7 +14036,7 @@ Solving nonlinear Poisson equation...
   Newton step: 12	2.813911755971973e-06
   Newton step: 13	1.46512611284872e-07
   Newton step: 14	4.335619798520064e-10
-  Newton achieved/desired residual: 5.29119376e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.29119376e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14030,7 +14059,7 @@ Solving nonlinear Poisson equation...
   Newton step: 2	0.0006444409481719048
   Newton step: 3	1.274691077816259e-05
   Newton step: 4	5.110232646041035e-09
-  Newton achieved/desired residual: 4.9951182e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 4.9951182e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14051,7 +14080,7 @@ Solving nonlinear Poisson equation...
   Newton step: 1	0.0008901366968905123
   Newton step: 2	7.916418306169971e-06
   Newton step: 3	2.726403765988829e-08
-  Newton achieved/desired residual: 7.74929396e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 7.74929396e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14071,7 +14100,7 @@ QUANTUM-POISSON:  iteration = 3 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	0.0002802969751370559
   Newton step: 2	1.14809884149047e-06
-  Newton achieved/desired residual: 5.68206556e-11 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.68206556e-11 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14091,7 +14120,7 @@ QUANTUM-POISSON:  iteration = 4 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	5.20829174171011e-05
   Newton step: 2	1.100093411432588e-08
-  Newton achieved/desired residual: 5.93076426e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.93076426e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14111,7 +14140,7 @@ QUANTUM-POISSON:  iteration = 5 of 30 ----------------------------
 Solving nonlinear Poisson equation...
   Newton step: 1	1.199739305429823e-05
   Newton step: 2	4.211340614545428e-10
-  Newton achieved/desired residual: 5.55815013e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.55815013e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14130,7 +14159,7 @@ QUANTUM-POISSON:  iteration = 6 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	2.159780727963887e-06
-  Newton achieved/desired residual: 1.58739637e-11 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 1.58739637e-11 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14149,7 +14178,7 @@ QUANTUM-POISSON:  iteration = 7 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	4.841511952243991e-07
-  Newton achieved/desired residual: 8.67957336e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 8.67957336e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14168,7 +14197,7 @@ QUANTUM-POISSON:  iteration = 8 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	8.880327249267377e-08
-  Newton achieved/desired residual: 5.53995026e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.53995026e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14187,7 +14216,7 @@ QUANTUM-POISSON:  iteration = 9 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	1.954208097513615e-08
-  Newton achieved/desired residual: 5.47215604e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.47215604e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14206,7 +14235,7 @@ QUANTUM-POISSON:  iteration = 10 of 30 ----------------------------
 
 Solving nonlinear Poisson equation...
   Newton step: 1	3.606404752604288e-09
-  Newton achieved/desired residual: 5.15124056e-13 1.80951265e-10 (successful)
+  Newton achieved/desired residual: 5.15124056e-13 1.80951265e-10
 
 Solving Quantum Mechanics ---- (and calculate density)
 
@@ -14231,8 +14260,8 @@ Solving Quantum Mechanics ---- (determine k-dispersion only)
 
 ********* OUTPUT ***************************************************************
 
-Writing charactaractics data(1)...
-Writing charactaractics data(2)...
+Writing characteristics data(1)...
+Writing characteristics data(2)...
 
 Writing electrostatic potential...
 
@@ -14247,10 +14276,10 @@ Writing ionized dopant densities...
 
 ********* FINISHED CALCULATION *************************************************
 
-End time: Mon 2020-11-09, 10:33:29 (+0100)
+End time: Wed 2020-11-11, 15:37:53 (+0100)
 Total Poisson Solver Time: 0.013[s]
 Total Quantum Solver Time: 0.006[s]
-Simulator Run Time: 0.325[s]
+Simulator Run Time: 0.296[s]
 
 ================================================================================
 DONE.
@@ -14267,7 +14296,7 @@ DONE.
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;subprocess.Popen at 0x1facca69040&gt;</pre>
+<pre>&lt;subprocess.Popen at 0x27eb425c850&gt;</pre>
 </div>
 
 </div>
@@ -14361,6 +14390,12 @@ debuglevel = 0
 cancel = -1
 softkill = -1
 [nextnano++]
+exe = 
+license = 
+database = 
+outputdirectory = 
+threads = 0
+[nextnano.NEGF]
 exe = 
 license = 
 database = 

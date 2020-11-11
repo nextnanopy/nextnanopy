@@ -7,6 +7,7 @@ import os
 
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
+folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
 
 
 class TestCommands(unittest.TestCase):
@@ -42,6 +43,19 @@ class TestCommands(unittest.TestCase):
         self.assertEqual(command_nn3(**kwargs), cmd)
         self.assertEqual(command(**kwargs), cmd)
 
+    def test_commands_negf(self):
+        self.maxDiff = None
+        inputfile = os.path.join(folder_negf, 'example.xml')
+        exe = os.path.join('nextnano.NEGF', 'nextnano.NEGF.exe')
+        license = os.path.join(r'License', 'License_nnQCL.lic')
+        database = os.path.join('nextnano.NEGF', 'Material_Database.xml')
+        outputdirectory = r'tests\datafiles'
+        threads = 4
+        cmd = f'"{exe}" "{inputfile}" "{outputdirectory}" "{database}" "{license}" -threads {threads}'
+        kwargs = dict(inputfile=inputfile, exe=exe, license=license, database=database, outputdirectory=outputdirectory,
+                      threads=threads)
+        self.assertEqual(command_negf(**kwargs), cmd)
+        self.assertEqual(command(**kwargs), cmd)
 
     def test_path(self):
         self.assertEqual(_path('aa\nb.test'), '"aa\nb.test"')

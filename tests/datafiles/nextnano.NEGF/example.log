@@ -1,0 +1,1539 @@
+>Input file seems to be for nextnano.NEGF (keyword '<Simulation' found)
+>Original input file     : C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF sample files\THz_QCL_GaAs_AlGaAs_Adams_APL2010.xml
+>Simulation output folder: E:\junliang.wang\nextnano\Output\THz_QCL_GaAs_AlGaAs_Adams_APL2010
+>Working input file      : E:\junliang.wang\nextnano\Output\THz_QCL_GaAs_AlGaAs_Adams_APL2010\THz_QCL_GaAs_AlGaAs_Adams_APL2010.xml
+>Working directory       : C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF
+>Executable              : C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe
+>Command line parameters : "E:\junliang.wang\nextnano\Output\THz_QCL_GaAs_AlGaAs_Adams_APL2010\THz_QCL_GaAs_AlGaAs_Adams_APL2010.xml" "E:\junliang.wang\nextnano\Output\THz_QCL_GaAs_AlGaAs_Adams_APL2010" "C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml" "C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnQCL.lic" 
+>nextnanomat version     : 4.2.8.1
+
+00:00:01 Reading in license file: C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnQCL.lic
+00:00:01 	 Valid From: 2020-10-8 To: 2021-12-31
+00:00:01 	 Licensed to: E-mail: jun-liang.wang@nextnano.com-2021-12-31-m4t6
+00:00:01 ****************************************************************
+00:00:01  nextnano.NEGF (formerly nextnano.QCL) - Quantum Transport Simulator based on the non-equilibrium Green's function method 
+00:00:01  (C) Thomas Grange, 2017 (C) nextnano GmbH 2017-2020
+00:00:01  All rights reserved 
+00:00:01  Version 2020-06-18 
+00:00:01 ****************************************************************
+00:00:01 Detecting the number of physical cores...
+00:00:02 Number of physical cores: 4
+00:00:02 ****************************************************************
+00:00:02  Material GaAs found in the database
+00:00:02 ****************************************************************
+00:00:02 ****************************************************************
+00:00:02  Material GaAs found in the database
+00:00:02 ****************************************************************
+00:00:02 ****************************************************************
+00:00:02  Material Al(x)Ga(1-x)As found in the database
+00:00:02 15% of AlAs in Al(x)Ga(1-x)As
+00:00:02 85% of GaAs in Al(x)Ga(1-x)As
+00:00:02 ****************************************************************
+00:00:04 Electron temperature for screening = 167.178082195529 K
+00:00:04 Averaged static dielectric constant = 12.7711699507389
+00:00:04 Electron temperature for screening = 167.178082195529 K
+00:00:04 Debye screening length = 40.4952060872761 nm
+00:00:04 Calculating axial electronic structure...
+00:00:04 Smoothing of k.p parameters: auto mode
+00:00:04 Smoothing length for Ep (Kane) parameter = 0.138987832862837 nm
+00:00:04 Smoothing length for S (remote bands) parameter = 0.134903202616831 nm
+00:13:29 Energy min = 2989.73530568538
+00:13:29 Energy max = 3046.61700961134
+00:13:29 
+00:13:29 Number of minibands = 6
+00:13:29 Energy of miniband #1  Emean = 3003.60356237144
+00:13:29 Energy of miniband #2  Emean = 3009.43077826354
+00:13:29 Energy of miniband #3  Emean = 3015.34239636436
+00:13:29 Energy of miniband #4  Emean = 3032.2850936765
+00:13:29 Energy of miniband #5  Emean = 3035.29540831006
+00:13:29 Energy of miniband #6  Emean = 3046.4438305204
+00:14:22 ...done.
+00:14:22 Calculating dipoles...
+00:14:22 ...done
+00:14:22 Calculating current operator...
+00:19:31 ...done.
+00:19:31 in-plane mass used for lateral motion 0.06697267577819
+00:19:31 ****************************************************************
+00:19:31 Discretization of energy levels in the lateral directions (in meV) 
+00:19:31 0
+00:19:31 4
+00:19:31 9.25583940126114
+00:19:31 11.0972800312765
+00:19:31 15.6979997221297
+00:19:31 19.5241359015618
+00:19:31 23.2839682306537
+00:19:31 29.2475052726706
+00:19:31 31.0621386263899
+00:19:31 31.9844765037197
+00:19:31 40.2276894239298
+00:19:31 41.7778786048329
+00:19:31 43.9234216604175
+00:19:31 52.4317035673091
+00:19:31 52.6473753274351
+00:19:31 58.0922126165995
+00:19:31 59.8990101537486
+00:19:31 64.5794679071902
+00:19:31 65.8327953126046
+00:19:31 73.5436443342653
+00:19:31 77.1959709297017
+00:19:31 77.5630207942607
+00:19:31 80.4090121631141
+00:19:31 Number of lateral states = 22
+00:19:31 ****************************************************************
+00:19:32 ****************************************************************
+00:19:32 ****************************************************************
+00:19:32 Voltage drop per period = 4 meV  
+00:19:32 ****************************************************************
+00:19:32 Setting energy grid
+00:19:32 Number of energy grid points = 131
+00:19:32 Energy grid spacing = 2 meV
+00:19:32 
+00:19:32 ****************************************************************
+00:19:32 ****************************************************************
+00:19:32 Calculating coupling with optical phonons
+00:20:51 ...OK
+00:20:51 ****************************************************************
+00:20:51 Calculating coupling with acoustic phonons
+00:22:01 ****************************************************************
+00:22:01 Calculating elastic scattering
+00:22:26 ****************************************************************
+00:22:26 Calculating Phonon Green functions 
+00:22:26 ****************************************************************
+00:22:26 Check normalization of lesser Green's function= 0.93924575071364
+00:22:26 Check normalization of spectral function = 0.93581490874511
+00:22:26 ****************************************************************
+00:22:26 Iteration 0
+00:22:28 cpu time for self-energy = 1 seconds 902 milliseconds
+00:22:28 Current density = 0 A/cm^2
+00:22:29 cpu time for Dyson-Keldysh =  0 seconds 571 milliseconds
+00:22:29 
+00:22:29  Convergence factor = 0.115873113766193
+00:22:29  Current convergence factor = 2
+00:22:29 Self-consistent factor =  0.5
+00:22:29 
+00:22:29 Check normalization of lesser Green's function= 0.476251326550683
+00:22:29 Check normalization of spectral function = 0.995978735975561
+00:22:29 cpu time for 1D carrier density output =  0 seconds 7 milliseconds
+00:22:29 cpu time per iteration of the NEGF equations =  2 seconds 508 milliseconds
+00:22:29 ****************************************************************
+00:22:29 Iteration 1
+00:22:31 cpu time for self-energy = 1 seconds 905 milliseconds
+00:22:31 Current density = 707.725108955404 A/cm^2
+00:22:31 cpu time for Dyson-Keldysh =  0 seconds 498 milliseconds
+00:22:31 
+00:22:31  Convergence factor = 0.103861240593902
+00:22:31  Current convergence factor = 2
+00:22:31 Self-consistent factor =  0.5
+00:22:31 
+00:22:31 Check normalization of lesser Green's function= 0.740520589321852
+00:22:31 Check normalization of spectral function = 0.979557520543498
+00:22:31 cpu time for Poisson solver =  0 seconds 10 milliseconds
+00:22:31 cpu time per iteration of the NEGF equations =  2 seconds 451 milliseconds
+00:22:31 ****************************************************************
+00:22:31 Iteration 2
+00:22:33 cpu time for self-energy = 2 seconds 29 milliseconds
+00:22:33 Current density = 279.491449874552 A/cm^2
+00:22:33 cpu time for Dyson-Keldysh =  0 seconds 375 milliseconds
+00:22:34 
+00:22:34  Convergence factor = 0.0784920116326456
+00:22:34  Current convergence factor = 0.867557690864489
+00:22:34 Self-consistent factor =  0.5
+00:22:34 
+00:22:34 Check normalization of lesser Green's function= 0.914137446447822
+00:22:34 Check normalization of spectral function = 1.0009504040596
+00:22:34 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:34 cpu time per iteration of the NEGF equations =  2 seconds 430 milliseconds
+00:22:34 ****************************************************************
+00:22:34 Iteration 3
+00:22:35 cpu time for self-energy = 1 seconds 831 milliseconds
+00:22:35 Current density = 124.905470963768 A/cm^2
+00:22:36 cpu time for Dyson-Keldysh =  0 seconds 449 milliseconds
+00:22:36 
+00:22:36  Convergence factor = 0.0369924778698624
+00:22:36  Current convergence factor = 0.764525993869215
+00:22:36 Self-consistent factor =  0.5
+00:22:36 
+00:22:36 Check normalization of lesser Green's function= 0.979179408630897
+00:22:36 Check normalization of spectral function = 0.998815477467098
+00:22:36 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:36 cpu time per iteration of the NEGF equations =  2 seconds 307 milliseconds
+00:22:36 ****************************************************************
+00:22:36 Iteration 4
+00:22:38 cpu time for self-energy = 1 seconds 804 milliseconds
+00:22:38 Current density = 71.5093702138615 A/cm^2
+00:22:38 cpu time for Dyson-Keldysh =  0 seconds 492 milliseconds
+00:22:38 
+00:22:38  Convergence factor = 0.0191618790274221
+00:22:38  Current convergence factor = 0.543707394306499
+00:22:38 Self-consistent factor =  0.5
+00:22:38 
+00:22:38 Check normalization of lesser Green's function= 1.00007857510099
+00:22:38 Check normalization of spectral function = 0.99903416669318
+00:22:38 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:38 cpu time per iteration of the NEGF equations =  2 seconds 322 milliseconds
+00:22:38 ****************************************************************
+00:22:38 Iteration 5
+00:22:40 cpu time for self-energy = 1 seconds 787 milliseconds
+00:22:40 Current density = 50.1169492514631 A/cm^2
+00:22:40 cpu time for Dyson-Keldysh =  0 seconds 348 milliseconds
+00:22:40 
+00:22:40  Convergence factor = 0.0135323391951995
+00:22:40  Current convergence factor = 0.351772890217192
+00:22:40 Self-consistent factor =  0.5
+00:22:40 
+00:22:40 Check normalization of lesser Green's function= 1.00456057796295
+00:22:40 Check normalization of spectral function = 0.999413976741317
+00:22:40 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:40 cpu time per iteration of the NEGF equations =  2 seconds 160 milliseconds
+00:22:40 ****************************************************************
+00:22:40 Iteration 6
+00:22:42 cpu time for self-energy = 2 seconds 79 milliseconds
+00:22:42 Current density = 40.4558970222578 A/cm^2
+00:22:43 cpu time for Dyson-Keldysh =  0 seconds 536 milliseconds
+00:22:43 
+00:22:43  Convergence factor = 0.0105587527888693
+00:22:43  Current convergence factor = 0.213332198924355
+00:22:43 Self-consistent factor =  0.5
+00:22:43 
+00:22:43 Check normalization of lesser Green's function= 1.00344873543469
+00:22:43 Check normalization of spectral function = 0.999626531696285
+00:22:43 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:43 cpu time per iteration of the NEGF equations =  2 seconds 642 milliseconds
+00:22:43 ****************************************************************
+00:22:43 Iteration 7
+00:22:45 cpu time for self-energy = 2 seconds 222 milliseconds
+00:22:45 Current density = 36.286645052929 A/cm^2
+00:22:46 cpu time for Dyson-Keldysh =  0 seconds 457 milliseconds
+00:22:46 
+00:22:46  Convergence factor = 0.00849936649484197
+00:22:46  Current convergence factor = 0.108655560699151
+00:22:46 Self-consistent factor =  0.5
+00:22:46 
+00:22:46 Check normalization of lesser Green's function= 1.00125939177745
+00:22:46 Check normalization of spectral function = 0.999770686785384
+00:22:46 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:46 cpu time per iteration of the NEGF equations =  2 seconds 705 milliseconds
+00:22:46 ****************************************************************
+00:22:46 Iteration 8
+00:22:48 cpu time for self-energy = 1 seconds 888 milliseconds
+00:22:48 Current density = 35.1959960822794 A/cm^2
+00:22:48 cpu time for Dyson-Keldysh =  0 seconds 440 milliseconds
+00:22:48 
+00:22:48  Convergence factor = 0.00723940292429171
+00:22:48  Current convergence factor = 0.0305150720043117
+00:22:48 Self-consistent factor =  0.5
+00:22:48 
+00:22:48 Check normalization of lesser Green's function= 0.999144575649229
+00:22:48 Check normalization of spectral function = 0.99980591555845
+00:22:48 cpu time for Poisson solver =  0 seconds 24 milliseconds
+00:22:48 cpu time per iteration of the NEGF equations =  2 seconds 378 milliseconds
+00:22:48 ****************************************************************
+00:22:48 Iteration 9
+00:22:50 cpu time for self-energy = 1 seconds 763 milliseconds
+00:22:50 Current density = 35.9092603492737 A/cm^2
+00:22:50 cpu time for Dyson-Keldysh =  0 seconds 476 milliseconds
+00:22:50 
+00:22:50  Convergence factor = 0.00614450057726487
+00:22:50  Current convergence factor = 0.0200622092596188
+00:22:50 Self-consistent factor =  0.5
+00:22:50 
+00:22:50 Check normalization of lesser Green's function= 0.997376855567614
+00:22:50 Check normalization of spectral function = 0.999755631404494
+00:22:50 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:50 cpu time per iteration of the NEGF equations =  2 seconds 265 milliseconds
+00:22:50 ****************************************************************
+00:22:50 Iteration 10
+00:22:52 cpu time for self-energy = 2 seconds 173 milliseconds
+00:22:52 Current density = 37.5869807067909 A/cm^2
+00:22:53 cpu time for Dyson-Keldysh =  0 seconds 492 milliseconds
+00:22:53 
+00:22:53  Convergence factor = 0.00522379088461883
+00:22:53  Current convergence factor = 0.0456545894976419
+00:22:53 Self-consistent factor =  0.5
+00:22:53 
+00:22:53 Check normalization of lesser Green's function= 0.996412137485234
+00:22:53 Check normalization of spectral function = 0.999714317872064
+00:22:53 cpu time for 1D carrier density output =  0 seconds 19 milliseconds
+00:22:53 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:53 cpu time per iteration of the NEGF equations =  2 seconds 712 milliseconds
+00:22:53 ****************************************************************
+00:22:53 Iteration 11
+00:22:56 cpu time for self-energy = 2 seconds 543 milliseconds
+00:22:56 Current density = 39.6400410704756 A/cm^2
+00:22:56 cpu time for Dyson-Keldysh =  0 seconds 504 milliseconds
+00:22:56 
+00:22:56  Convergence factor = 0.00460584666591009
+00:22:56  Current convergence factor = 0.0531694817807678
+00:22:56 Self-consistent factor =  0.5
+00:22:56 
+00:22:56 Check normalization of lesser Green's function= 0.996207194772395
+00:22:56 Check normalization of spectral function = 0.999694565052279
+00:22:56 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:22:56 cpu time per iteration of the NEGF equations =  3 seconds 81 milliseconds
+00:22:56 ****************************************************************
+00:22:56 Iteration 12
+00:22:58 cpu time for self-energy = 1 seconds 997 milliseconds
+00:22:58 Current density = 41.6893950956658 A/cm^2
+00:22:59 cpu time for Dyson-Keldysh =  0 seconds 641 milliseconds
+00:22:59 
+00:22:59  Convergence factor = 0.00415005005429781
+00:22:59  Current convergence factor = 0.0503963662308879
+00:22:59 Self-consistent factor =  0.55
+00:22:59 
+00:22:59 Check normalization of lesser Green's function= 0.996459853103527
+00:22:59 Check normalization of spectral function = 0.999685849435249
+00:22:59 cpu time for Poisson solver =  0 seconds 2 milliseconds
+00:22:59 cpu time per iteration of the NEGF equations =  2 seconds 673 milliseconds
+00:22:59 ****************************************************************
+00:22:59 Iteration 13
+00:23:01 cpu time for self-energy = 2 seconds 26 milliseconds
+00:23:01 Current density = 43.5209702824157 A/cm^2
+00:23:01 cpu time for Dyson-Keldysh =  0 seconds 521 milliseconds
+00:23:01 
+00:23:01  Convergence factor = 0.00413661342927563
+00:23:01  Current convergence factor = 0.0429894926191921
+00:23:01 Self-consistent factor =  0.605
+00:23:01 
+00:23:01 Check normalization of lesser Green's function= 0.996947365841866
+00:23:01 Check normalization of spectral function = 0.999681170469745
+00:23:01 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:01 cpu time per iteration of the NEGF equations =  2 seconds 582 milliseconds
+00:23:01 ****************************************************************
+00:23:01 Iteration 14
+00:23:03 cpu time for self-energy = 1 seconds 712 milliseconds
+00:23:03 Current density = 45.1934361213334 A/cm^2
+00:23:03 cpu time for Dyson-Keldysh =  0 seconds 423 milliseconds
+00:23:03 
+00:23:04  Convergence factor = 0.00409646399210054
+00:23:04  Current convergence factor = 0.0377044925782658
+00:23:04 Self-consistent factor =  0.6655
+00:23:04 
+00:23:04 Check normalization of lesser Green's function= 0.997556394606681
+00:23:04 Check normalization of spectral function = 0.999677873385541
+00:23:04 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:04 cpu time per iteration of the NEGF equations =  2 seconds 173 milliseconds
+00:23:04 ****************************************************************
+00:23:04 Iteration 15
+00:23:05 cpu time for self-energy = 1 seconds 860 milliseconds
+00:23:05 Current density = 46.6015809769896 A/cm^2
+00:23:06 cpu time for Dyson-Keldysh =  0 seconds 540 milliseconds
+00:23:06 
+00:23:06  Convergence factor = 0.00406159359584959
+00:23:06  Current convergence factor = 0.0306802024808797
+00:23:06 Self-consistent factor =  0.73205
+00:23:06 
+00:23:06 Check normalization of lesser Green's function= 0.998164600179531
+00:23:06 Check normalization of spectral function = 0.999676053715377
+00:23:06 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:06 cpu time per iteration of the NEGF equations =  2 seconds 430 milliseconds
+00:23:06 ****************************************************************
+00:23:06 Iteration 16
+00:23:08 cpu time for self-energy = 1 seconds 953 milliseconds
+00:23:08 Current density = 47.6908169709546 A/cm^2
+00:23:08 cpu time for Dyson-Keldysh =  0 seconds 539 milliseconds
+00:23:08 
+00:23:08  Convergence factor = 0.00405282196017515
+00:23:08  Current convergence factor = 0.0231033681965838
+00:23:08 Self-consistent factor =  0.805255
+00:23:08 
+00:23:08 Check normalization of lesser Green's function= 0.998705433977265
+00:23:08 Check normalization of spectral function = 0.999676494601731
+00:23:08 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:08 cpu time per iteration of the NEGF equations =  2 seconds 532 milliseconds
+00:23:08 ****************************************************************
+00:23:08 Iteration 17
+00:23:10 cpu time for self-energy = 1 seconds 941 milliseconds
+00:23:10 Current density = 48.4537538178459 A/cm^2
+00:23:11 cpu time for Dyson-Keldysh =  0 seconds 629 milliseconds
+00:23:11 
+00:23:11  Convergence factor = 0.00408692055909706
+00:23:11  Current convergence factor = 0.0158706173553396
+00:23:11 Self-consistent factor =  0.885780500000001
+00:23:11 
+00:23:11 Check normalization of lesser Green's function= 0.999163628083139
+00:23:11 Check normalization of spectral function = 0.999679765268577
+00:23:11 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:11 cpu time per iteration of the NEGF equations =  2 seconds 629 milliseconds
+00:23:11 ****************************************************************
+00:23:11 Iteration 18
+00:23:13 cpu time for self-energy = 2 seconds 19 milliseconds
+00:23:13 Current density = 48.9187581484222 A/cm^2
+00:23:14 cpu time for Dyson-Keldysh =  0 seconds 523 milliseconds
+00:23:14 
+00:23:14  Convergence factor = 0.00421017812924625
+00:23:14  Current convergence factor = 0.00955103901884487
+00:23:14 Self-consistent factor =  0.974358550000001
+00:23:14 
+00:23:14 Check normalization of lesser Green's function= 0.999550389928705
+00:23:14 Check normalization of spectral function = 0.999685932106908
+00:23:14 cpu time for Poisson solver =  0 seconds 2 milliseconds
+00:23:14 cpu time per iteration of the NEGF equations =  2 seconds 587 milliseconds
+00:23:14 ****************************************************************
+00:23:14 Iteration 19
+00:23:16 cpu time for self-energy = 2 seconds 174 milliseconds
+00:23:16 Current density = 49.1329264503575 A/cm^2
+00:23:16 cpu time for Dyson-Keldysh =  0 seconds 577 milliseconds
+00:23:16 
+00:23:16  Convergence factor = 0.0043874694397646
+00:23:16  Current convergence factor = 0.00436847776377663
+00:23:16 Self-consistent factor =  1.071794405
+00:23:16 
+00:23:16 Check normalization of lesser Green's function= 0.999883530018999
+00:23:16 Check normalization of spectral function = 0.999694886154267
+00:23:17 cpu time for Poisson solver =  0 seconds 27 milliseconds
+00:23:17 cpu time per iteration of the NEGF equations =  2 seconds 807 milliseconds
+00:23:17 ****************************************************************
+00:23:17 Iteration 20
+00:23:19 cpu time for self-energy = 2 seconds 153 milliseconds
+00:23:19 Current density = 49.1423853709702 A/cm^2
+00:23:19 cpu time for Dyson-Keldysh =  0 seconds 516 milliseconds
+00:23:19 
+00:23:19  Convergence factor = 0.00459674810764356
+00:23:19  Current convergence factor = 0.000192498409567303
+00:23:19 Self-consistent factor =  1.12538412525
+00:23:19 
+00:23:19 Check normalization of lesser Green's function= 1.00017325781594
+00:23:19 Check normalization of spectral function = 0.999706675901195
+00:23:19 cpu time for 1D carrier density output =  0 seconds 7 milliseconds
+00:23:19 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:19 cpu time per iteration of the NEGF equations =  2 seconds 726 milliseconds
+00:23:19 ****************************************************************
+00:23:19 Iteration 21
+00:23:22 cpu time for self-energy = 2 seconds 293 milliseconds
+00:23:22 Current density = 48.9766791493385 A/cm^2
+00:23:22 cpu time for Dyson-Keldysh =  0 seconds 657 milliseconds
+00:23:22 
+00:23:22  Convergence factor = 0.0045976483002258
+00:23:22  Current convergence factor = 0.00337765596200529
+00:23:22 Self-consistent factor =  1.1816533315125
+00:23:22 
+00:23:22 Check normalization of lesser Green's function= 1.00038849754546
+00:23:22 Check normalization of spectral function = 0.999721238634168
+00:23:22 cpu time for Poisson solver =  0 seconds 2 milliseconds
+00:23:22 cpu time per iteration of the NEGF equations =  2 seconds 994 milliseconds
+00:23:22 ****************************************************************
+00:23:22 Iteration 22
+00:23:24 cpu time for self-energy = 2 seconds 137 milliseconds
+00:23:24 Current density = 48.6616775198977 A/cm^2
+00:23:25 cpu time for Dyson-Keldysh =  0 seconds 487 milliseconds
+00:23:25 
+00:23:25  Convergence factor = 0.00458706722119855
+00:23:25  Current convergence factor = 0.00645241563226973
+00:23:25 Self-consistent factor =  1.24073599808813
+00:23:25 
+00:23:25 Check normalization of lesser Green's function= 1.00047745777787
+00:23:25 Check normalization of spectral function = 0.999737023228799
+00:23:25 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:25 cpu time per iteration of the NEGF equations =  2 seconds 675 milliseconds
+00:23:25 ****************************************************************
+00:23:25 Iteration 23
+00:23:27 cpu time for self-energy = 2 seconds 83 milliseconds
+00:23:27 Current density = 48.2262646811404 A/cm^2
+00:23:28 cpu time for Dyson-Keldysh =  0 seconds 566 milliseconds
+00:23:28 
+00:23:28  Convergence factor = 0.00452794017606702
+00:23:28  Current convergence factor = 0.00898796751929702
+00:23:28 Self-consistent factor =  1.30277279799253
+00:23:28 
+00:23:28 Check normalization of lesser Green's function= 1.00038195875563
+00:23:28 Check normalization of spectral function = 0.999752268436772
+00:23:28 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:28 cpu time per iteration of the NEGF equations =  2 seconds 681 milliseconds
+00:23:28 ****************************************************************
+00:23:28 Iteration 24
+00:23:29 cpu time for self-energy = 1 seconds 833 milliseconds
+00:23:29 Current density = 47.7125820096592 A/cm^2
+00:23:30 cpu time for Dyson-Keldysh =  0 seconds 568 milliseconds
+00:23:30 
+00:23:30  Convergence factor = 0.00440589950727146
+00:23:30  Current convergence factor = 0.0107085438109712
+00:23:30 Self-consistent factor =  1.36791143789216
+00:23:30 
+00:23:30 Check normalization of lesser Green's function= 1.00006694068569
+00:23:30 Check normalization of spectral function = 0.999765008687405
+00:23:30 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:30 cpu time per iteration of the NEGF equations =  2 seconds 451 milliseconds
+00:23:30 ****************************************************************
+00:23:30 Iteration 25
+00:23:32 cpu time for self-energy = 1 seconds 943 milliseconds
+00:23:32 Current density = 47.1703335660721 A/cm^2
+00:23:33 cpu time for Dyson-Keldysh =  0 seconds 563 milliseconds
+00:23:33 
+00:23:33  Convergence factor = 0.00422994962980161
+00:23:33  Current convergence factor = 0.0114298436193025
+00:23:33 Self-consistent factor =  1.43630700978677
+00:23:33 
+00:23:33 Check normalization of lesser Green's function= 0.999609597335121
+00:23:33 Check normalization of spectral function = 0.999773822898831
+00:23:33 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:33 cpu time per iteration of the NEGF equations =  2 seconds 544 milliseconds
+00:23:33 ****************************************************************
+00:23:33 Iteration 26
+00:23:35 cpu time for self-energy = 2 seconds 40 milliseconds
+00:23:35 Current density = 46.6412938769775 A/cm^2
+00:23:35 cpu time for Dyson-Keldysh =  0 seconds 606 milliseconds
+00:23:35 
+00:23:35  Convergence factor = 0.00404596880555625
+00:23:35  Current convergence factor = 0.0112787658313633
+00:23:35 Self-consistent factor =  1.5
+00:23:35 
+00:23:35 Check normalization of lesser Green's function= 0.999169106697896
+00:23:35 Check normalization of spectral function = 0.999778430933642
+00:23:35 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:35 cpu time per iteration of the NEGF equations =  2 seconds 693 milliseconds
+00:23:35 ****************************************************************
+00:23:35 Iteration 27
+00:23:37 cpu time for self-energy = 2 seconds 43 milliseconds
+00:23:37 Current density = 46.1375949529252 A/cm^2
+00:23:38 cpu time for Dyson-Keldysh =  0 seconds 595 milliseconds
+00:23:38 
+00:23:38  Convergence factor = 0.00388264822259181
+00:23:38  Current convergence factor = 0.0108580503691047
+00:23:38 Self-consistent factor =  1.5
+00:23:38 
+00:23:38 Check normalization of lesser Green's function= 0.998869912497382
+00:23:38 Check normalization of spectral function = 0.999779527315287
+00:23:38 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:38 cpu time per iteration of the NEGF equations =  2 seconds 670 milliseconds
+00:23:38 ****************************************************************
+00:23:38 Iteration 28
+00:23:40 cpu time for self-energy = 2 seconds 31 milliseconds
+00:23:40 Current density = 45.6543751146994 A/cm^2
+00:23:41 cpu time for Dyson-Keldysh =  0 seconds 555 milliseconds
+00:23:41 
+00:23:41  Convergence factor = 0.00361704896322176
+00:23:41  Current convergence factor = 0.0105285862776412
+00:23:41 Self-consistent factor =  1.5
+00:23:41 
+00:23:41 Check normalization of lesser Green's function= 0.998736820418663
+00:23:41 Check normalization of spectral function = 0.999778596112348
+00:23:41 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:41 cpu time per iteration of the NEGF equations =  2 seconds 627 milliseconds
+00:23:41 ****************************************************************
+00:23:41 Iteration 29
+00:23:42 cpu time for self-energy = 1 seconds 911 milliseconds
+00:23:42 Current density = 45.1987789626512 A/cm^2
+00:23:43 cpu time for Dyson-Keldysh =  0 seconds 579 milliseconds
+00:23:43 
+00:23:43  Convergence factor = 0.00341310372866153
+00:23:43  Current convergence factor = 0.0100292864166338
+00:23:43 Self-consistent factor =  1.5
+00:23:43 
+00:23:43 Check normalization of lesser Green's function= 0.998688557922539
+00:23:43 Check normalization of spectral function = 0.999776729484542
+00:23:43 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:43 cpu time per iteration of the NEGF equations =  2 seconds 544 milliseconds
+00:23:43 ****************************************************************
+00:23:43 Iteration 30
+00:23:45 cpu time for self-energy = 1 seconds 920 milliseconds
+00:23:45 Current density = 44.7646139217706 A/cm^2
+00:23:46 cpu time for Dyson-Keldysh =  0 seconds 571 milliseconds
+00:23:46 
+00:23:46  Convergence factor = 0.00325257680019989
+00:23:46  Current convergence factor = 0.00965203794477624
+00:23:46 Self-consistent factor =  1.5
+00:23:46 
+00:23:46 Check normalization of lesser Green's function= 0.998657367636448
+00:23:46 Check normalization of spectral function = 0.999774003323092
+00:23:46 cpu time for 1D carrier density output =  0 seconds 6 milliseconds
+00:23:46 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:46 cpu time per iteration of the NEGF equations =  2 seconds 556 milliseconds
+00:23:46 ****************************************************************
+00:23:46 Iteration 31
+00:23:48 cpu time for self-energy = 2 seconds 84 milliseconds
+00:23:48 Current density = 44.359552595506 A/cm^2
+00:23:48 cpu time for Dyson-Keldysh =  0 seconds 556 milliseconds
+00:23:48 
+00:23:48  Convergence factor = 0.00309976649730284
+00:23:48  Current convergence factor = 0.00908982023828741
+00:23:48 Self-consistent factor =  1.5
+00:23:48 
+00:23:48 Check normalization of lesser Green's function= 0.998674747506991
+00:23:48 Check normalization of spectral function = 0.999772366209672
+00:23:48 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:48 cpu time per iteration of the NEGF equations =  2 seconds 680 milliseconds
+00:23:48 ****************************************************************
+00:23:48 Iteration 32
+00:23:50 cpu time for self-energy = 1 seconds 922 milliseconds
+00:23:50 Current density = 43.9632962312443 A/cm^2
+00:23:51 cpu time for Dyson-Keldysh =  0 seconds 550 milliseconds
+00:23:51 
+00:23:51  Convergence factor = 0.00300961713604926
+00:23:51  Current convergence factor = 0.00897290722673465
+00:23:51 Self-consistent factor =  1.5
+00:23:51 
+00:23:51 Check normalization of lesser Green's function= 0.998610618259967
+00:23:51 Check normalization of spectral function = 0.999768145893673
+00:23:51 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:51 cpu time per iteration of the NEGF equations =  2 seconds 505 milliseconds
+00:23:51 ****************************************************************
+00:23:51 Iteration 33
+00:23:53 cpu time for self-energy = 2 seconds 52 milliseconds
+00:23:53 Current density = 43.5813999823071 A/cm^2
+00:23:53 cpu time for Dyson-Keldysh =  0 seconds 480 milliseconds
+00:23:53 
+00:23:53  Convergence factor = 0.00285128048233558
+00:23:53  Current convergence factor = 0.00872460047164039
+00:23:53 Self-consistent factor =  1.5
+00:23:53 
+00:23:53 Check normalization of lesser Green's function= 0.99877839188278
+00:23:53 Check normalization of spectral function = 0.999769611725077
+00:23:53 cpu time for Poisson solver =  0 seconds 8 milliseconds
+00:23:53 cpu time per iteration of the NEGF equations =  2 seconds 570 milliseconds
+00:23:53 ****************************************************************
+00:23:53 Iteration 34
+00:23:55 cpu time for self-energy = 1 seconds 912 milliseconds
+00:23:55 Current density = 43.2001407614774 A/cm^2
+00:23:56 cpu time for Dyson-Keldysh =  0 seconds 590 milliseconds
+00:23:56 
+00:23:56  Convergence factor = 0.00304402550793463
+00:23:56  Current convergence factor = 0.00878664327832899
+00:23:56 Self-consistent factor =  1.5
+00:23:56 
+00:23:56 Check normalization of lesser Green's function= 0.998425068432331
+00:23:56 Check normalization of spectral function = 0.999761067095678
+00:23:56 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:56 cpu time per iteration of the NEGF equations =  2 seconds 534 milliseconds
+00:23:56 ****************************************************************
+00:23:56 Iteration 35
+00:23:58 cpu time for self-energy = 1 seconds 852 milliseconds
+00:23:58 Current density = 42.8523538474306 A/cm^2
+00:23:58 cpu time for Dyson-Keldysh =  0 seconds 555 milliseconds
+00:23:58 
+00:23:58  Convergence factor = 0.00361919066248863
+00:23:58  Current convergence factor = 0.00808313380402038
+00:23:58 Self-consistent factor =  0.5
+00:23:58 
+00:23:58 Check normalization of lesser Green's function= 0.99923530294998
+00:23:58 Check normalization of spectral function = 0.9997766280275
+00:23:58 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:23:58 cpu time per iteration of the NEGF equations =  2 seconds 465 milliseconds
+00:23:58 ****************************************************************
+00:23:58 Iteration 36
+00:24:00 cpu time for self-energy = 2 seconds 22 milliseconds
+00:24:00 Current density = 42.4684169242079 A/cm^2
+00:24:01 cpu time for Dyson-Keldysh =  0 seconds 495 milliseconds
+00:24:01 
+00:24:01  Convergence factor = 0.00172610991604855
+00:24:01  Current convergence factor = 0.00899984657312371
+00:24:01 Self-consistent factor =  0.5
+00:24:01 
+00:24:01 Check normalization of lesser Green's function= 0.998727328170158
+00:24:01 Check normalization of spectral function = 0.999764445105317
+00:24:01 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:01 cpu time per iteration of the NEGF equations =  2 seconds 553 milliseconds
+00:24:01 ****************************************************************
+00:24:01 Iteration 37
+00:24:03 cpu time for self-energy = 2 seconds 86 milliseconds
+00:24:03 Current density = 42.3734358273347 A/cm^2
+00:24:04 cpu time for Dyson-Keldysh =  0 seconds 477 milliseconds
+00:24:04 
+00:24:04  Convergence factor = 0.000840793142561584
+00:24:04  Current convergence factor = 0.00223901515096363
+00:24:04 Self-consistent factor =  0.5
+00:24:04 
+00:24:04 Check normalization of lesser Green's function= 0.998670866326303
+00:24:04 Check normalization of spectral function = 0.999757885822587
+00:24:04 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:04 cpu time per iteration of the NEGF equations =  2 seconds 602 milliseconds
+00:24:04 ****************************************************************
+00:24:04 Iteration 38
+00:24:06 cpu time for self-energy = 2 seconds 22 milliseconds
+00:24:06 Current density = 42.2741204820008 A/cm^2
+00:24:06 cpu time for Dyson-Keldysh =  0 seconds 492 milliseconds
+00:24:06 
+00:24:06  Convergence factor = 0.000803884896451373
+00:24:06  Current convergence factor = 0.00234656142868215
+00:24:06 Self-consistent factor =  0.55
+00:24:06 
+00:24:06 Check normalization of lesser Green's function= 0.9986239341061
+00:24:06 Check normalization of spectral function = 0.999757374084111
+00:24:06 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:06 cpu time per iteration of the NEGF equations =  2 seconds 543 milliseconds
+00:24:06 ****************************************************************
+00:24:06 Iteration 39
+00:24:09 cpu time for self-energy = 2 seconds 429 milliseconds
+00:24:09 Current density = 42.1953112113976 A/cm^2
+00:24:09 cpu time for Dyson-Keldysh =  0 seconds 483 milliseconds
+00:24:09 
+00:24:09  Convergence factor = 0.000860860889989488
+00:24:09  Current convergence factor = 0.00186598320891511
+00:24:09 Self-consistent factor =  0.605
+00:24:09 
+00:24:09 Check normalization of lesser Green's function= 0.998576772734032
+00:24:09 Check normalization of spectral function = 0.999756410448788
+00:24:09 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:09 cpu time per iteration of the NEGF equations =  2 seconds 943 milliseconds
+00:24:09 ****************************************************************
+00:24:09 Iteration 40
+00:24:11 cpu time for self-energy = 2 seconds 11 milliseconds
+00:24:11 Current density = 42.1149807660479 A/cm^2
+00:24:12 cpu time for Dyson-Keldysh =  0 seconds 536 milliseconds
+00:24:12 
+00:24:12  Convergence factor = 0.000935353966196205
+00:24:12  Current convergence factor = 0.00190559049116327
+00:24:12 Self-consistent factor =  0.6655
+00:24:12 
+00:24:12 Check normalization of lesser Green's function= 0.998538396799008
+00:24:12 Check normalization of spectral function = 0.999755348493944
+00:24:12 cpu time for 1D carrier density output =  0 seconds 2 milliseconds
+00:24:12 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:12 cpu time per iteration of the NEGF equations =  2 seconds 596 milliseconds
+00:24:12 ****************************************************************
+00:24:12 Iteration 41
+00:24:14 cpu time for self-energy = 1 seconds 966 milliseconds
+00:24:14 Current density = 42.020032747582 A/cm^2
+00:24:14 cpu time for Dyson-Keldysh =  0 seconds 607 milliseconds
+00:24:14 
+00:24:14  Convergence factor = 0.00102789630148602
+00:24:14  Current convergence factor = 0.00225703935854324
+00:24:14 Self-consistent factor =  0.73205
+00:24:14 
+00:24:14 Check normalization of lesser Green's function= 0.998521666743433
+00:24:14 Check normalization of spectral function = 0.999754428389465
+00:24:14 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:14 cpu time per iteration of the NEGF equations =  2 seconds 620 milliseconds
+00:24:14 ****************************************************************
+00:24:14 Iteration 42
+00:24:16 cpu time for self-energy = 2 seconds 4 milliseconds
+00:24:16 Current density = 41.8984161677899 A/cm^2
+00:24:17 cpu time for Dyson-Keldysh =  0 seconds 548 milliseconds
+00:24:17 
+00:24:17  Convergence factor = 0.00113125958345535
+00:24:17  Current convergence factor = 0.00289844679838349
+00:24:17 Self-consistent factor =  0.5
+00:24:17 
+00:24:17 Check normalization of lesser Green's function= 0.998534542082922
+00:24:17 Check normalization of spectral function = 0.999753734900831
+00:24:17 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:17 cpu time per iteration of the NEGF equations =  2 seconds 592 milliseconds
+00:24:17 ****************************************************************
+00:24:17 Iteration 43
+00:24:19 cpu time for self-energy = 1 seconds 982 milliseconds
+00:24:19 Current density = 41.7439201342214 A/cm^2
+00:24:19 cpu time for Dyson-Keldysh =  0 seconds 524 milliseconds
+00:24:19 
+00:24:19  Convergence factor = 0.000772873515399048
+00:24:19  Current convergence factor = 0.00369420655613156
+00:24:19 Self-consistent factor =  0.5
+00:24:19 
+00:24:19 Check normalization of lesser Green's function= 0.998559499691045
+00:24:19 Check normalization of spectral function = 0.999753167225533
+00:24:19 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:19 cpu time per iteration of the NEGF equations =  2 seconds 547 milliseconds
+00:24:19 ****************************************************************
+00:24:19 Iteration 44
+00:24:22 cpu time for self-energy = 2 seconds 645 milliseconds
+00:24:22 Current density = 41.6286247381496 A/cm^2
+00:24:23 cpu time for Dyson-Keldysh =  0 seconds 515 milliseconds
+00:24:23 
+00:24:23  Convergence factor = 0.000766669831622401
+00:24:23  Current convergence factor = 0.00276578809602909
+00:24:23 Self-consistent factor =  0.55
+00:24:23 
+00:24:23 Check normalization of lesser Green's function= 0.998583745152513
+00:24:23 Check normalization of spectral function = 0.99975278940683
+00:24:23 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:23 cpu time per iteration of the NEGF equations =  3 seconds 210 milliseconds
+00:24:23 ****************************************************************
+00:24:23 Iteration 45
+00:24:25 cpu time for self-energy = 1 seconds 969 milliseconds
+00:24:25 Current density = 41.5158662343133 A/cm^2
+00:24:25 cpu time for Dyson-Keldysh =  0 seconds 487 milliseconds
+00:24:25 
+00:24:25  Convergence factor = 0.000834088672096948
+00:24:25  Current convergence factor = 0.00271235057229707
+00:24:25 Self-consistent factor =  0.605
+00:24:25 
+00:24:25 Check normalization of lesser Green's function= 0.998603660355332
+00:24:25 Check normalization of spectral function = 0.999752265546878
+00:24:25 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:25 cpu time per iteration of the NEGF equations =  2 seconds 489 milliseconds
+00:24:25 ****************************************************************
+00:24:25 Iteration 46
+00:24:27 cpu time for self-energy = 1 seconds 797 milliseconds
+00:24:27 Current density = 41.3985334253221 A/cm^2
+00:24:27 cpu time for Dyson-Keldysh =  0 seconds 548 milliseconds
+00:24:27 
+00:24:28  Convergence factor = 0.000911536707980468
+00:24:28  Current convergence factor = 0.00283021548664235
+00:24:28 Self-consistent factor =  0.6655
+00:24:28 
+00:24:28 Check normalization of lesser Green's function= 0.998622604274366
+00:24:28 Check normalization of spectral function = 0.999751609481766
+00:24:28 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:28 cpu time per iteration of the NEGF equations =  2 seconds 387 milliseconds
+00:24:28 ****************************************************************
+00:24:28 Iteration 47
+00:24:30 cpu time for self-energy = 1 seconds 979 milliseconds
+00:24:30 Current density = 41.273364310827 A/cm^2
+00:24:30 cpu time for Dyson-Keldysh =  0 seconds 499 milliseconds
+00:24:30 
+00:24:30  Convergence factor = 0.000999063737385609
+00:24:30  Current convergence factor = 0.00302809341318332
+00:24:30 Self-consistent factor =  0.73205
+00:24:30 
+00:24:30 Check normalization of lesser Green's function= 0.998645375039556
+00:24:30 Check normalization of spectral function = 0.999750875869101
+00:24:30 cpu time for Poisson solver =  0 seconds 17 milliseconds
+00:24:30 cpu time per iteration of the NEGF equations =  2 seconds 528 milliseconds
+00:24:30 ****************************************************************
+00:24:30 Iteration 48
+00:24:32 cpu time for self-energy = 2 seconds 110 milliseconds
+00:24:32 Current density = 41.1356495683556 A/cm^2
+00:24:33 cpu time for Dyson-Keldysh =  0 seconds 473 milliseconds
+00:24:33 
+00:24:33  Convergence factor = 0.00109531144115652
+00:24:33  Current convergence factor = 0.0033422252248599
+00:24:33 Self-consistent factor =  0.805255
+00:24:33 
+00:24:33 Check normalization of lesser Green's function= 0.998675128813319
+00:24:33 Check normalization of spectral function = 0.999750117540467
+00:24:33 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:33 cpu time per iteration of the NEGF equations =  2 seconds 619 milliseconds
+00:24:33 ****************************************************************
+00:24:33 Iteration 49
+00:24:35 cpu time for self-energy = 1 seconds 973 milliseconds
+00:24:35 Current density = 40.9812664180465 A/cm^2
+00:24:35 cpu time for Dyson-Keldysh =  0 seconds 545 milliseconds
+00:24:35 
+00:24:35  Convergence factor = 0.00119913801928198
+00:24:35  Current convergence factor = 0.00376008154847721
+00:24:35 Self-consistent factor =  0.885780500000001
+00:24:35 
+00:24:35 Check normalization of lesser Green's function= 0.99871160631053
+00:24:35 Check normalization of spectral function = 0.999749324123173
+00:24:35 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:35 cpu time per iteration of the NEGF equations =  2 seconds 575 milliseconds
+00:24:35 ****************************************************************
+00:24:35 Iteration 50
+00:24:37 cpu time for self-energy = 2 seconds 171 milliseconds
+00:24:37 Current density = 40.8077451861667 A/cm^2
+00:24:38 cpu time for Dyson-Keldysh =  0 seconds 492 milliseconds
+00:24:38 
+00:24:38  Convergence factor = 0.00130976198933284
+00:24:38  Current convergence factor = 0.00424314289844851
+00:24:38 Self-consistent factor =  0.974358550000001
+00:24:38 
+00:24:38 Check normalization of lesser Green's function= 0.998751094361284
+00:24:38 Check normalization of spectral function = 0.999748420084384
+00:24:38 cpu time for 1D carrier density output =  0 seconds 5 milliseconds
+00:24:38 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:38 cpu time per iteration of the NEGF equations =  2 seconds 700 milliseconds
+00:24:38 ****************************************************************
+00:24:38 Iteration 51
+00:24:40 cpu time for self-energy = 1 seconds 882 milliseconds
+00:24:40 Current density = 40.6146705014231 A/cm^2
+00:24:40 cpu time for Dyson-Keldysh =  0 seconds 542 milliseconds
+00:24:40 
+00:24:40  Convergence factor = 0.00142654378467513
+00:24:40  Current convergence factor = 0.0047425437605384
+00:24:40 Self-consistent factor =  1.071794405
+00:24:40 
+00:24:40 Check normalization of lesser Green's function= 0.99878879995528
+00:24:40 Check normalization of spectral function = 0.999747329788703
+00:24:40 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:40 cpu time per iteration of the NEGF equations =  2 seconds 460 milliseconds
+00:24:40 ****************************************************************
+00:24:40 Iteration 52
+00:24:42 cpu time for self-energy = 1 seconds 826 milliseconds
+00:24:42 Current density = 40.4028037244877 A/cm^2
+00:24:43 cpu time for Dyson-Keldysh =  0 seconds 507 milliseconds
+00:24:43 
+00:24:43  Convergence factor = 0.00154891393905802
+00:24:43  Current convergence factor = 0.00523015013636822
+00:24:43 Self-consistent factor =  1.12538412525
+00:24:43 
+00:24:43 Check normalization of lesser Green's function= 0.998821628926409
+00:24:43 Check normalization of spectral function = 0.999746021394411
+00:24:43 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:43 cpu time per iteration of the NEGF equations =  2 seconds 370 milliseconds
+00:24:43 ****************************************************************
+00:24:43 Iteration 53
+00:24:45 cpu time for self-energy = 1 seconds 951 milliseconds
+00:24:45 Current density = 40.1722326367158 A/cm^2
+00:24:45 cpu time for Dyson-Keldysh =  0 seconds 486 milliseconds
+00:24:45 
+00:24:45  Convergence factor = 0.00160059478048978
+00:24:45  Current convergence factor = 0.00572313952768956
+00:24:45 Self-consistent factor =  1.1816533315125
+00:24:45 
+00:24:45 Check normalization of lesser Green's function= 0.998847770951909
+00:24:45 Check normalization of spectral function = 0.999744489090264
+00:24:45 cpu time for Poisson solver =  0 seconds 11 milliseconds
+00:24:45 cpu time per iteration of the NEGF equations =  2 seconds 476 milliseconds
+00:24:45 ****************************************************************
+00:24:45 Iteration 54
+00:24:47 cpu time for self-energy = 1 seconds 936 milliseconds
+00:24:47 Current density = 39.9324110698075 A/cm^2
+00:24:48 cpu time for Dyson-Keldysh =  0 seconds 649 milliseconds
+00:24:48 
+00:24:48  Convergence factor = 0.00165046058940592
+00:24:48  Current convergence factor = 0.00598770697456521
+00:24:48 Self-consistent factor =  1.24073599808813
+00:24:48 
+00:24:48 Check normalization of lesser Green's function= 0.99886829454498
+00:24:48 Check normalization of spectral function = 0.999742810014937
+00:24:48 cpu time for Poisson solver =  0 seconds 3 milliseconds
+00:24:48 cpu time per iteration of the NEGF equations =  2 seconds 618 milliseconds
+00:24:48 ****************************************************************
+00:24:48 Iteration 55
+00:24:50 cpu time for self-energy = 1 seconds 917 milliseconds
+00:24:50 Current density = 39.6822751878134 A/cm^2
+00:24:50 cpu time for Dyson-Keldysh =  0 seconds 613 milliseconds
+00:24:50 
+00:24:50  Convergence factor = 0.00169710570749457
+00:24:50  Current convergence factor = 0.00628366181547708
+00:24:50 Self-consistent factor =  1.30277279799253
+00:24:50 
+00:24:50 Check normalization of lesser Green's function= 0.998881986150241
+00:24:50 Check normalization of spectral function = 0.999740964670878
+00:24:50 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:50 cpu time per iteration of the NEGF equations =  2 seconds 575 milliseconds
+00:24:50 ****************************************************************
+00:24:50 Iteration 56
+00:24:53 cpu time for self-energy = 2 seconds 65 milliseconds
+00:24:53 Current density = 39.4231168016878 A/cm^2
+00:24:53 cpu time for Dyson-Keldysh =  0 seconds 546 milliseconds
+00:24:53 
+00:24:53  Convergence factor = 0.00174298393080439
+00:24:53  Current convergence factor = 0.00655223062822305
+00:24:53 Self-consistent factor =  1.36791143789216
+00:24:53 
+00:24:53 Check normalization of lesser Green's function= 0.998891449667188
+00:24:53 Check normalization of spectral function = 0.999738935225352
+00:24:53 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:53 cpu time per iteration of the NEGF equations =  2 seconds 650 milliseconds
+00:24:53 ****************************************************************
+00:24:53 Iteration 57
+00:24:55 cpu time for self-energy = 1 seconds 898 milliseconds
+00:24:55 Current density = 39.1529990050709 A/cm^2
+00:24:56 cpu time for Dyson-Keldysh =  0 seconds 509 milliseconds
+00:24:56 
+00:24:56  Convergence factor = 0.00178781746540955
+00:24:56  Current convergence factor = 0.00687531558014905
+00:24:56 Self-consistent factor =  1.43630700978677
+00:24:56 
+00:24:56 Check normalization of lesser Green's function= 0.998901039427503
+00:24:56 Check normalization of spectral function = 0.999736763323953
+00:24:56 cpu time for Poisson solver =  0 seconds 15 milliseconds
+00:24:56 cpu time per iteration of the NEGF equations =  2 seconds 451 milliseconds
+00:24:56 ****************************************************************
+00:24:56 Iteration 58
+00:24:57 cpu time for self-energy = 1 seconds 877 milliseconds
+00:24:57 Current density = 38.8712447333602 A/cm^2
+00:24:58 cpu time for Dyson-Keldysh =  0 seconds 508 milliseconds
+00:24:58 
+00:24:58  Convergence factor = 0.00183169419705459
+00:24:58  Current convergence factor = 0.00722222371434191
+00:24:58 Self-consistent factor =  1.5
+00:24:58 
+00:24:58 Check normalization of lesser Green's function= 0.998913338882776
+00:24:58 Check normalization of spectral function = 0.999734587330524
+00:24:58 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:24:58 cpu time per iteration of the NEGF equations =  2 seconds 431 milliseconds
+00:24:58 ****************************************************************
+00:24:58 Iteration 59
+00:25:00 cpu time for self-energy = 2 seconds 19 milliseconds
+00:25:00 Current density = 38.5782264712121 A/cm^2
+00:25:01 cpu time for Dyson-Keldysh =  0 seconds 497 milliseconds
+00:25:01 
+00:25:01  Convergence factor = 0.00186631264648953
+00:25:01  Current convergence factor = 0.00756669497133652
+00:25:01 Self-consistent factor =  1.5
+00:25:01 
+00:25:01 Check normalization of lesser Green's function= 0.998922893662165
+00:25:01 Check normalization of spectral function = 0.999732161761089
+00:25:01 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:01 cpu time per iteration of the NEGF equations =  2 seconds 550 milliseconds
+00:25:01 ****************************************************************
+00:25:01 Iteration 60
+00:25:02 cpu time for self-energy = 1 seconds 950 milliseconds
+00:25:02 Current density = 38.2765099050389 A/cm^2
+00:25:03 cpu time for Dyson-Keldysh =  0 seconds 552 milliseconds
+00:25:03 
+00:25:03  Convergence factor = 0.00181723987534012
+00:25:03  Current convergence factor = 0.00785160630038772
+00:25:03 Self-consistent factor =  1.5
+00:25:03 
+00:25:03 Check normalization of lesser Green's function= 0.998937206536439
+00:25:03 Check normalization of spectral function = 0.999729824754419
+00:25:03 cpu time for 1D carrier density output =  0 seconds 9 milliseconds
+00:25:03 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:03 cpu time per iteration of the NEGF equations =  2 seconds 547 milliseconds
+00:25:03 ****************************************************************
+00:25:03 Iteration 61
+00:25:05 cpu time for self-energy = 1 seconds 948 milliseconds
+00:25:05 Current density = 37.9787040474812 A/cm^2
+00:25:05 cpu time for Dyson-Keldysh =  0 seconds 427 milliseconds
+00:25:05 
+00:25:05  Convergence factor = 0.00176986647370498
+00:25:05  Current convergence factor = 0.00781076708389055
+00:25:05 Self-consistent factor =  1.5
+00:25:05 
+00:25:05 Check normalization of lesser Green's function= 0.998947584678155
+00:25:05 Check normalization of spectral function = 0.999727490531181
+00:25:06 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:06 cpu time per iteration of the NEGF equations =  2 seconds 426 milliseconds
+00:25:06 ****************************************************************
+00:25:06 Iteration 62
+00:25:08 cpu time for self-energy = 2 seconds 197 milliseconds
+00:25:08 Current density = 37.6855203051277 A/cm^2
+00:25:08 cpu time for Dyson-Keldysh =  0 seconds 500 milliseconds
+00:25:08 
+00:25:08  Convergence factor = 0.00172329101585794
+00:25:08  Current convergence factor = 0.00774960015415388
+00:25:08 Self-consistent factor =  1.5
+00:25:08 
+00:25:08 Check normalization of lesser Green's function= 0.998945000571899
+00:25:08 Check normalization of spectral function = 0.999724968634249
+00:25:08 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:08 cpu time per iteration of the NEGF equations =  2 seconds 751 milliseconds
+00:25:08 ****************************************************************
+00:25:08 Iteration 63
+00:25:10 cpu time for self-energy = 2 seconds 116 milliseconds
+00:25:10 Current density = 37.401312061696 A/cm^2
+00:25:11 cpu time for Dyson-Keldysh =  0 seconds 471 milliseconds
+00:25:11 
+00:25:11  Convergence factor = 0.00167215190123845
+00:25:11  Current convergence factor = 0.00757012206996092
+00:25:11 Self-consistent factor =  1.5
+00:25:11 
+00:25:11 Check normalization of lesser Green's function= 0.998972020390539
+00:25:11 Check normalization of spectral function = 0.999723152483334
+00:25:11 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:11 cpu time per iteration of the NEGF equations =  2 seconds 616 milliseconds
+00:25:11 ****************************************************************
+00:25:11 Iteration 64
+00:25:13 cpu time for self-energy = 1 seconds 912 milliseconds
+00:25:13 Current density = 37.1161849092493 A/cm^2
+00:25:13 cpu time for Dyson-Keldysh =  0 seconds 532 milliseconds
+00:25:13 
+00:25:13  Convergence factor = 0.00164328805861882
+00:25:13  Current convergence factor = 0.00765262291506804
+00:25:13 Self-consistent factor =  1.5
+00:25:13 
+00:25:13 Check normalization of lesser Green's function= 0.998927671866413
+00:25:13 Check normalization of spectral function = 0.999719797372503
+00:25:13 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:13 cpu time per iteration of the NEGF equations =  2 seconds 493 milliseconds
+00:25:13 ****************************************************************
+00:25:13 Iteration 65
+00:25:15 cpu time for self-energy = 1 seconds 873 milliseconds
+00:25:15 Current density = 36.8392987772762 A/cm^2
+00:25:16 cpu time for Dyson-Keldysh =  0 seconds 453 milliseconds
+00:25:16 
+00:25:16  Convergence factor = 0.00157341815675773
+00:25:16  Current convergence factor = 0.00748791348986869
+00:25:16 Self-consistent factor =  1.5
+00:25:16 
+00:25:16 Check normalization of lesser Green's function= 0.999053671870593
+00:25:16 Check normalization of spectral function = 0.999720095324561
+00:25:16 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:16 cpu time per iteration of the NEGF equations =  2 seconds 358 milliseconds
+00:25:16 ****************************************************************
+00:25:16 Iteration 66
+00:25:18 cpu time for self-energy = 1 seconds 995 milliseconds
+00:25:18 Current density = 36.5585258155688 A/cm^2
+00:25:18 cpu time for Dyson-Keldysh =  0 seconds 573 milliseconds
+00:25:18 
+00:25:18  Convergence factor = 0.00161849013641467
+00:25:18  Current convergence factor = 0.0076507161694477
+00:25:18 Self-consistent factor =  1.5
+00:25:18 
+00:25:18 Check normalization of lesser Green's function= 0.998819458988372
+00:25:18 Check normalization of spectral function = 0.999713647170708
+00:25:18 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:18 cpu time per iteration of the NEGF equations =  2 seconds 604 milliseconds
+00:25:18 ****************************************************************
+00:25:18 Iteration 67
+00:25:20 cpu time for self-energy = 1 seconds 738 milliseconds
+00:25:20 Current density = 36.2995545873304 A/cm^2
+00:25:21 cpu time for Dyson-Keldysh =  0 seconds 566 milliseconds
+00:25:21 
+00:25:21  Convergence factor = 0.00175625465089528
+00:25:21  Current convergence factor = 0.00710892262893532
+00:25:21 Self-consistent factor =  1.5
+00:25:21 
+00:25:21 Check normalization of lesser Green's function= 0.999329482238232
+00:25:21 Check normalization of spectral function = 0.999721685498251
+00:25:21 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:21 cpu time per iteration of the NEGF equations =  2 seconds 336 milliseconds
+00:25:21 ****************************************************************
+00:25:21 Iteration 68
+00:25:22 cpu time for self-energy = 1 seconds 808 milliseconds
+00:25:22 Current density = 36.0089973269153 A/cm^2
+00:25:23 cpu time for Dyson-Keldysh =  0 seconds 560 milliseconds
+00:25:23 
+00:25:23  Convergence factor = 0.00234097625762098
+00:25:23  Current convergence factor = 0.00803659464124459
+00:25:23 Self-consistent factor =  0.5
+00:25:23 
+00:25:23 Check normalization of lesser Green's function= 0.998362309776103
+00:25:23 Check normalization of spectral function = 0.999706653664072
+00:25:23 cpu time for Poisson solver =  0 seconds 2 milliseconds
+00:25:23 cpu time per iteration of the NEGF equations =  2 seconds 400 milliseconds
+00:25:23 ****************************************************************
+00:25:23 Iteration 69
+00:25:25 cpu time for self-energy = 1 seconds 874 milliseconds
+00:25:25 Current density = 35.7873262812178 A/cm^2
+00:25:25 cpu time for Dyson-Keldysh =  0 seconds 493 milliseconds
+00:25:25 
+00:25:25  Convergence factor = 0.00122295199344949
+00:25:25  Current convergence factor = 0.00617499711844306
+00:25:25 Self-consistent factor =  0.5
+00:25:25 
+00:25:25 Check normalization of lesser Green's function= 0.999050327994313
+00:25:25 Check normalization of spectral function = 0.999756482543472
+00:25:25 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:25 cpu time per iteration of the NEGF equations =  2 seconds 416 milliseconds
+00:25:25 ****************************************************************
+00:25:25 Iteration 70
+00:25:27 cpu time for self-energy = 2 seconds 3 milliseconds
+00:25:27 Current density = 35.6719215989189 A/cm^2
+00:25:28 cpu time for Dyson-Keldysh =  0 seconds 556 milliseconds
+00:25:28 
+00:25:28  Convergence factor = 0.000474416263064757
+00:25:28  Current convergence factor = 0.00322994393930511
+00:25:28 Self-consistent factor =  0.5
+00:25:28 
+00:25:28 Check normalization of lesser Green's function= 0.998993487068991
+00:25:28 Check normalization of spectral function = 0.999709905161688
+00:25:28 cpu time for 1D carrier density output =  0 seconds 1 milliseconds
+00:25:28 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:28 cpu time per iteration of the NEGF equations =  2 seconds 607 milliseconds
+00:25:28 ****************************************************************
+00:25:28 Iteration 71
+00:25:30 cpu time for self-energy = 1 seconds 987 milliseconds
+00:25:30 Current density = 35.5956546295613 A/cm^2
+00:25:31 cpu time for Dyson-Keldysh =  0 seconds 531 milliseconds
+00:25:31 
+00:25:31  Convergence factor = 0.000448693747829955
+00:25:31  Current convergence factor = 0.00214029923265754
+00:25:31 Self-consistent factor =  0.55
+00:25:31 
+00:25:31 Check normalization of lesser Green's function= 0.998939261942831
+00:25:31 Check normalization of spectral function = 0.999709300185456
+00:25:31 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:31 cpu time per iteration of the NEGF equations =  2 seconds 579 milliseconds
+00:25:31 ****************************************************************
+00:25:31 Iteration 72
+00:25:33 cpu time for self-energy = 1 seconds 880 milliseconds
+00:25:33 Current density = 35.5315633348688 A/cm^2
+00:25:33 cpu time for Dyson-Keldysh =  0 seconds 509 milliseconds
+00:25:33 
+00:25:33  Convergence factor = 0.000481191069735709
+00:25:33  Current convergence factor = 0.00180215946937539
+00:25:33 Self-consistent factor =  0.605
+00:25:33 
+00:25:33 Check normalization of lesser Green's function= 0.99889179910691
+00:25:33 Check normalization of spectral function = 0.999708500155403
+00:25:33 cpu time for Poisson solver =  0 seconds 17 milliseconds
+00:25:33 cpu time per iteration of the NEGF equations =  2 seconds 435 milliseconds
+00:25:33 ****************************************************************
+00:25:33 Iteration 73
+00:25:35 cpu time for self-energy = 1 seconds 883 milliseconds
+00:25:35 Current density = 35.4645885277226 A/cm^2
+00:25:36 cpu time for Dyson-Keldysh =  0 seconds 551 milliseconds
+00:25:36 
+00:25:36  Convergence factor = 0.000524341813410769
+00:25:36  Current convergence factor = 0.00188671654418204
+00:25:36 Self-consistent factor =  0.6655
+00:25:36 
+00:25:36 Check normalization of lesser Green's function= 0.998862353237369
+00:25:36 Check normalization of spectral function = 0.999707556897837
+00:25:36 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:36 cpu time per iteration of the NEGF equations =  2 seconds 477 milliseconds
+00:25:36 ****************************************************************
+00:25:36 Iteration 74
+00:25:38 cpu time for self-energy = 2 seconds 168 milliseconds
+00:25:38 Current density = 35.3863410638427 A/cm^2
+00:25:38 cpu time for Dyson-Keldysh =  0 seconds 557 milliseconds
+00:25:38 
+00:25:38  Convergence factor = 0.000578491581891196
+00:25:38  Current convergence factor = 0.00220879145357696
+00:25:38 Self-consistent factor =  0.5
+00:25:38 
+00:25:38 Check normalization of lesser Green's function= 0.998859010895175
+00:25:38 Check normalization of spectral function = 0.999706663004269
+00:25:38 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:38 cpu time per iteration of the NEGF equations =  2 seconds 779 milliseconds
+00:25:38 ****************************************************************
+00:25:38 Iteration 75
+00:25:40 cpu time for self-energy = 1 seconds 807 milliseconds
+00:25:40 Current density = 35.2897464016741 A/cm^2
+00:25:41 cpu time for Dyson-Keldysh =  0 seconds 489 milliseconds
+00:25:41 
+00:25:41  Convergence factor = 0.000436454270595288
+00:25:41  Current convergence factor = 0.00273344678893764
+00:25:41 Self-consistent factor =  0.5
+00:25:41 
+00:25:41 Check normalization of lesser Green's function= 0.998874895719361
+00:25:41 Check normalization of spectral function = 0.999705914788653
+00:25:41 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:41 cpu time per iteration of the NEGF equations =  2 seconds 335 milliseconds
+00:25:41 ****************************************************************
+00:25:41 Iteration 76
+00:25:43 cpu time for self-energy = 1 seconds 928 milliseconds
+00:25:43 Current density = 35.2089134482241 A/cm^2
+00:25:43 cpu time for Dyson-Keldysh =  0 seconds 637 milliseconds
+00:25:43 
+00:25:43  Convergence factor = 0.000434412367145126
+00:25:43  Current convergence factor = 0.00229317702271361
+00:25:43 Self-consistent factor =  0.55
+00:25:43 
+00:25:43 Check normalization of lesser Green's function= 0.998892153280264
+00:25:43 Check normalization of spectral function = 0.999705514044876
+00:25:43 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:43 cpu time per iteration of the NEGF equations =  2 seconds 618 milliseconds
+00:25:43 ****************************************************************
+00:25:43 Iteration 77
+00:25:45 cpu time for self-energy = 1 seconds 958 milliseconds
+00:25:45 Current density = 35.1269521970777 A/cm^2
+00:25:46 cpu time for Dyson-Keldysh =  0 seconds 546 milliseconds
+00:25:46 
+00:25:46  Convergence factor = 0.000475017548190297
+00:25:46  Current convergence factor = 0.00233056778058819
+00:25:46 Self-consistent factor =  0.605
+00:25:46 
+00:25:46 Check normalization of lesser Green's function= 0.99890862181114
+00:25:46 Check normalization of spectral function = 0.999705081968956
+00:25:46 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:46 cpu time per iteration of the NEGF equations =  2 seconds 540 milliseconds
+00:25:46 ****************************************************************
+00:25:46 Iteration 78
+00:25:48 cpu time for self-energy = 2 seconds 52 milliseconds
+00:25:48 Current density = 35.0377139397982 A/cm^2
+00:25:48 cpu time for Dyson-Keldysh =  0 seconds 575 milliseconds
+00:25:49 
+00:25:49  Convergence factor = 0.000521784980898762
+00:25:49  Current convergence factor = 0.00254368080667323
+00:25:49 Self-consistent factor =  0.6655
+00:25:49 
+00:25:49 Check normalization of lesser Green's function= 0.998929177910108
+00:25:49 Check normalization of spectral function = 0.999704590948563
+00:25:49 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:49 cpu time per iteration of the NEGF equations =  2 seconds 664 milliseconds
+00:25:49 ****************************************************************
+00:25:49 Iteration 79
+00:25:51 cpu time for self-energy = 1 seconds 972 milliseconds
+00:25:51 Current density = 34.9391374009921 A/cm^2
+00:25:51 cpu time for Dyson-Keldysh =  0 seconds 522 milliseconds
+00:25:51 
+00:25:51  Convergence factor = 0.000574769250966838
+00:25:51  Current convergence factor = 0.00281740423918536
+00:25:51 Self-consistent factor =  0.5
+00:25:51 
+00:25:51 Check normalization of lesser Green's function= 0.998956794604442
+00:25:51 Check normalization of spectral function = 0.999704065765604
+00:25:51 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:51 cpu time per iteration of the NEGF equations =  2 seconds 541 milliseconds
+00:25:51 ****************************************************************
+00:25:51 Iteration 80
+00:25:53 cpu time for self-energy = 2 seconds 167 milliseconds
+00:25:53 Current density = 34.828972643774 A/cm^2
+00:25:54 cpu time for Dyson-Keldysh =  0 seconds 557 milliseconds
+00:25:54 
+00:25:54  Convergence factor = 0.000432431108169111
+00:25:54  Current convergence factor = 0.00315802612819463
+00:25:54 Self-consistent factor =  0.5
+00:25:54 
+00:25:54 Check normalization of lesser Green's function= 0.998980063652076
+00:25:54 Check normalization of spectral function = 0.999703542247008
+00:25:54 cpu time for 1D carrier density output =  0 seconds 1 milliseconds
+00:25:54 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:54 cpu time per iteration of the NEGF equations =  2 seconds 756 milliseconds
+00:25:54 ****************************************************************
+00:25:54 Iteration 81
+00:25:56 cpu time for self-energy = 1 seconds 986 milliseconds
+00:25:56 Current density = 34.7447919771733 A/cm^2
+00:25:56 cpu time for Dyson-Keldysh =  0 seconds 648 milliseconds
+00:25:56 
+00:25:56  Convergence factor = 0.000430371738242057
+00:25:56  Current convergence factor = 0.00241989684069299
+00:25:56 Self-consistent factor =  0.55
+00:25:56 
+00:25:56 Check normalization of lesser Green's function= 0.999000085332357
+00:25:56 Check normalization of spectral function = 0.99970322592805
+00:25:56 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:56 cpu time per iteration of the NEGF equations =  2 seconds 668 milliseconds
+00:25:56 ****************************************************************
+00:25:56 Iteration 82
+00:25:59 cpu time for self-energy = 2 seconds 58 milliseconds
+00:25:59 Current density = 34.6617512332489 A/cm^2
+00:25:59 cpu time for Dyson-Keldysh =  0 seconds 511 milliseconds
+00:25:59 
+00:25:59  Convergence factor = 0.000469263578425977
+00:25:59  Current convergence factor = 0.00239287940540808
+00:25:59 Self-consistent factor =  0.605
+00:25:59 
+00:25:59 Check normalization of lesser Green's function= 0.999014747104062
+00:25:59 Check normalization of spectral function = 0.99970285052712
+00:25:59 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:25:59 cpu time per iteration of the NEGF equations =  2 seconds 608 milliseconds
+00:25:59 ****************************************************************
+00:25:59 Iteration 83
+00:26:01 cpu time for self-energy = 1 seconds 914 milliseconds
+00:26:01 Current density = 34.5728546046996 A/cm^2
+00:26:02 cpu time for Dyson-Keldysh =  0 seconds 532 milliseconds
+00:26:02 
+00:26:02  Convergence factor = 0.000513166456106001
+00:26:02  Current convergence factor = 0.00256798251317984
+00:26:02 Self-consistent factor =  0.6655
+00:26:02 
+00:26:02 Check normalization of lesser Green's function= 0.999028430600536
+00:26:02 Check normalization of spectral function = 0.999702399020732
+00:26:02 cpu time for Poisson solver =  0 seconds 7 milliseconds
+00:26:02 cpu time per iteration of the NEGF equations =  2 seconds 482 milliseconds
+00:26:02 ****************************************************************
+00:26:02 Iteration 84
+00:26:04 cpu time for self-energy = 1 seconds 965 milliseconds
+00:26:04 Current density = 34.475830930692 A/cm^2
+00:26:04 cpu time for Dyson-Keldysh =  0 seconds 479 milliseconds
+00:26:04 
+00:26:04  Convergence factor = 0.000562466957781559
+00:26:04  Current convergence factor = 0.00281029749531669
+00:26:04 Self-consistent factor =  0.73205
+00:26:04 
+00:26:04 Check normalization of lesser Green's function= 0.999044980909017
+00:26:04 Check normalization of spectral function = 0.999701891328484
+00:26:04 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:04 cpu time per iteration of the NEGF equations =  2 seconds 495 milliseconds
+00:26:04 ****************************************************************
+00:26:04 Iteration 85
+00:26:06 cpu time for self-energy = 1 seconds 928 milliseconds
+00:26:06 Current density = 34.3680012815965 A/cm^2
+00:26:07 cpu time for Dyson-Keldysh =  0 seconds 522 milliseconds
+00:26:07 
+00:26:07  Convergence factor = 0.000616615029681428
+00:26:07  Current convergence factor = 0.0031325870635166
+00:26:07 Self-consistent factor =  0.805255
+00:26:07 
+00:26:07 Check normalization of lesser Green's function= 0.999065475986355
+00:26:07 Check normalization of spectral function = 0.999701361914681
+00:26:07 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:07 cpu time per iteration of the NEGF equations =  2 seconds 491 milliseconds
+00:26:07 ****************************************************************
+00:26:07 Iteration 86
+00:26:08 cpu time for self-energy = 1 seconds 829 milliseconds
+00:26:08 Current density = 34.2473478770876 A/cm^2
+00:26:09 cpu time for Dyson-Keldysh =  0 seconds 473 milliseconds
+00:26:09 
+00:26:09  Convergence factor = 0.000675181855224198
+00:26:09  Current convergence factor = 0.00351680508773186
+00:26:09 Self-consistent factor =  0.885780500000001
+00:26:09 
+00:26:09 Check normalization of lesser Green's function= 0.999088890813201
+00:26:09 Check normalization of spectral function = 0.999700824037809
+00:26:09 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:09 cpu time per iteration of the NEGF equations =  2 seconds 349 milliseconds
+00:26:09 ****************************************************************
+00:26:09 Iteration 87
+00:26:11 cpu time for self-energy = 1 seconds 848 milliseconds
+00:26:11 Current density = 34.1127386297602 A/cm^2
+00:26:11 cpu time for Dyson-Keldysh =  0 seconds 545 milliseconds
+00:26:11 
+00:26:11  Convergence factor = 0.000737930616629471
+00:26:11  Current convergence factor = 0.00393824098844204
+00:26:11 Self-consistent factor =  0.974358550000001
+00:26:11 
+00:26:11 Check normalization of lesser Green's function= 0.999112894207459
+00:26:11 Check normalization of spectral function = 0.999700252394136
+00:26:11 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:11 cpu time per iteration of the NEGF equations =  2 seconds 435 milliseconds
+00:26:11 ****************************************************************
+00:26:11 Iteration 88
+00:26:13 cpu time for self-energy = 1 seconds 951 milliseconds
+00:26:13 Current density = 33.9638164065223 A/cm^2
+00:26:14 cpu time for Dyson-Keldysh =  0 seconds 526 milliseconds
+00:26:14 
+00:26:14  Convergence factor = 0.00080468817829034
+00:26:14  Current convergence factor = 0.00437513981600741
+00:26:14 Self-consistent factor =  1.071794405
+00:26:14 
+00:26:14 Check normalization of lesser Green's function= 0.999135074884128
+00:26:14 Check normalization of spectral function = 0.999699612507669
+00:26:14 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:14 cpu time per iteration of the NEGF equations =  2 seconds 515 milliseconds
+00:26:14 ****************************************************************
+00:26:14 Iteration 89
+00:26:16 cpu time for self-energy = 2 seconds 6 milliseconds
+00:26:16 Current density = 33.8005117469175 A/cm^2
+00:26:16 cpu time for Dyson-Keldysh =  0 seconds 579 milliseconds
+00:26:16 
+00:26:16  Convergence factor = 0.000875304615503725
+00:26:16  Current convergence factor = 0.00481978244468308
+00:26:16 Self-consistent factor =  1.12538412525
+00:26:16 
+00:26:16 Check normalization of lesser Green's function= 0.999154053467261
+00:26:16 Check normalization of spectral function = 0.999698886682429
+00:26:17 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:17 cpu time per iteration of the NEGF equations =  2 seconds 639 milliseconds
+00:26:17 ****************************************************************
+00:26:17 Iteration 90
+00:26:18 cpu time for self-energy = 1 seconds 843 milliseconds
+00:26:18 Current density = 33.6223855068428 A/cm^2
+00:26:19 cpu time for Dyson-Keldysh =  0 seconds 558 milliseconds
+00:26:19 
+00:26:19  Convergence factor = 0.000906536848950332
+00:26:19  Current convergence factor = 0.00528385006666904
+00:26:19 Self-consistent factor =  1.1816533315125
+00:26:19 
+00:26:19 Check normalization of lesser Green's function= 0.999169071823139
+00:26:19 Check normalization of spectral function = 0.999698069703024
+00:26:19 cpu time for 1D carrier density output =  0 seconds 14 milliseconds
+00:26:19 cpu time for Poisson solver =  0 seconds 2 milliseconds
+00:26:19 cpu time per iteration of the NEGF equations =  2 seconds 447 milliseconds
+00:26:19 ****************************************************************
+00:26:19 Iteration 91
+00:26:21 cpu time for self-energy = 2 seconds 59 milliseconds
+00:26:21 Current density = 33.437047827317 A/cm^2
+00:26:21 cpu time for Dyson-Keldysh =  0 seconds 470 milliseconds
+00:26:21 
+00:26:22  Convergence factor = 0.000936874042922304
+00:26:22  Current convergence factor = 0.00552756473805104
+00:26:22 Self-consistent factor =  1.24073599808813
+00:26:22 
+00:26:22 Check normalization of lesser Green's function= 0.999180796853574
+00:26:22 Check normalization of spectral function = 0.999697207457357
+00:26:22 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:22 cpu time per iteration of the NEGF equations =  2 seconds 574 milliseconds
+00:26:22 ****************************************************************
+00:26:22 Iteration 92
+00:26:23 cpu time for self-energy = 1 seconds 873 milliseconds
+00:26:23 Current density = 33.244352198464 A/cm^2
+00:26:24 cpu time for Dyson-Keldysh =  0 seconds 522 milliseconds
+00:26:24 
+00:26:24  Convergence factor = 0.000965582863725925
+00:26:24  Current convergence factor = 0.00577959157361725
+00:26:24 Self-consistent factor =  1.30277279799253
+00:26:24 
+00:26:24 Check normalization of lesser Green's function= 0.999187644768819
+00:26:24 Check normalization of spectral function = 0.99969628344483
+00:26:24 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:24 cpu time per iteration of the NEGF equations =  2 seconds 427 milliseconds
+00:26:24 ****************************************************************
+00:26:24 Iteration 93
+00:26:26 cpu time for self-energy = 2 seconds 342 milliseconds
+00:26:26 Current density = 33.0449490981024 A/cm^2
+00:26:27 cpu time for Dyson-Keldysh =  0 seconds 510 milliseconds
+00:26:27 
+00:26:27  Convergence factor = 0.000994272513835119
+00:26:27  Current convergence factor = 0.00601614729561037
+00:26:27 Self-consistent factor =  1.36791143789216
+00:26:27 
+00:26:27 Check normalization of lesser Green's function= 0.999193022994178
+00:26:27 Check normalization of spectral function = 0.999695278281088
+00:26:27 cpu time for Poisson solver =  0 seconds 11 milliseconds
+00:26:27 cpu time per iteration of the NEGF equations =  2 seconds 892 milliseconds
+00:26:27 ****************************************************************
+00:26:27 Iteration 94
+00:26:29 cpu time for self-energy = 1 seconds 894 milliseconds
+00:26:29 Current density = 32.8377613030222 A/cm^2
+00:26:29 cpu time for Dyson-Keldysh =  0 seconds 550 milliseconds
+00:26:29 
+00:26:29  Convergence factor = 0.00102285029703891
+00:26:29  Current convergence factor = 0.00628959536785276
+00:26:29 Self-consistent factor =  1.43630700978677
+00:26:29 
+00:26:29 Check normalization of lesser Green's function= 0.9991985506411
+00:26:29 Check normalization of spectral function = 0.999694197261643
+00:26:29 cpu time for Poisson solver =  0 seconds 13 milliseconds
+00:26:29 cpu time per iteration of the NEGF equations =  2 seconds 486 milliseconds
+00:26:29 ****************************************************************
+00:26:29 Iteration 95
+00:26:31 cpu time for self-energy = 1 seconds 975 milliseconds
+00:26:31 Current density = 32.6223747688487 A/cm^2
+00:26:32 cpu time for Dyson-Keldysh =  0 seconds 528 milliseconds
+00:26:32 
+00:26:32  Convergence factor = 0.00105121210564978
+00:26:32  Current convergence factor = 0.00658069313931656
+00:26:32 Self-consistent factor =  1.5
+00:26:32 
+00:26:32 Check normalization of lesser Green's function= 0.999206250734716
+00:26:32 Check normalization of spectral function = 0.999693162367125
+00:26:32 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:32 cpu time per iteration of the NEGF equations =  2 seconds 539 milliseconds
+00:26:32 ****************************************************************
+00:26:32 Iteration 96
+00:26:34 cpu time for self-energy = 1 seconds 821 milliseconds
+00:26:34 Current density = 32.3990659172714 A/cm^2
+00:26:34 cpu time for Dyson-Keldysh =  0 seconds 524 milliseconds
+00:26:34 
+00:26:34  Convergence factor = 0.00107443264164561
+00:26:34  Current convergence factor = 0.00686877587518693
+00:26:34 Self-consistent factor =  1.5
+00:26:34 
+00:26:34 Check normalization of lesser Green's function= 0.999212869634061
+00:26:34 Check normalization of spectral function = 0.999691983696704
+00:26:34 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:34 cpu time per iteration of the NEGF equations =  2 seconds 381 milliseconds
+00:26:34 ****************************************************************
+00:26:34 Iteration 97
+00:26:36 cpu time for self-energy = 1 seconds 802 milliseconds
+00:26:36 Current density = 32.1693086607612 A/cm^2
+00:26:37 cpu time for Dyson-Keldysh =  0 seconds 529 milliseconds
+00:26:37 
+00:26:37  Convergence factor = 0.00104964936460136
+00:26:37  Current convergence factor = 0.00711671179619051
+00:26:37 Self-consistent factor =  1.5
+00:26:37 
+00:26:37 Check normalization of lesser Green's function= 0.999221535414406
+00:26:37 Check normalization of spectral function = 0.999690908623924
+00:26:37 cpu time for Poisson solver =  0 seconds 11 milliseconds
+00:26:37 cpu time per iteration of the NEGF equations =  2 seconds 371 milliseconds
+00:26:37 ****************************************************************
+00:26:37 Iteration 98
+00:26:39 cpu time for self-energy = 1 seconds 952 milliseconds
+00:26:39 Current density = 31.943085234598 A/cm^2
+00:26:39 cpu time for Dyson-Keldysh =  0 seconds 476 milliseconds
+00:26:39 
+00:26:39  Convergence factor = 0.00102534062907817
+00:26:39  Current convergence factor = 0.00705708872866069
+00:26:39 Self-consistent factor =  1.5
+00:26:39 
+00:26:39 Check normalization of lesser Green's function= 0.999227760312027
+00:26:39 Check normalization of spectral function = 0.999689825458585
+00:26:39 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:39 cpu time per iteration of the NEGF equations =  2 seconds 459 milliseconds
+00:26:39 ****************************************************************
+00:26:39 Iteration 99
+00:26:41 cpu time for self-energy = 2 seconds 179 milliseconds
+00:26:41 Current density = 31.7208517361321 A/cm^2
+00:26:42 cpu time for Dyson-Keldysh =  0 seconds 510 milliseconds
+00:26:42 
+00:26:42  Convergence factor = 0.00100051067604936
+00:26:42  Current convergence factor = 0.00698145634845146
+00:26:42 Self-consistent factor =  1.5
+00:26:42 
+00:26:42 Check normalization of lesser Green's function= 0.999226142727361
+00:26:42 Check normalization of spectral function = 0.999688685937718
+00:26:42 cpu time for Poisson solver =  0 seconds 1 milliseconds
+00:26:42 cpu time per iteration of the NEGF equations =  2 seconds 729 milliseconds
+00:26:42 ****************************************************************
+00:26:42  Simulation has partially converged: convergence values not fully reached before N_max_iterations
+00:27:02 Current density = 31.5044394003721
+00:28:09 cpu time for writing 1D plots (carrier density and potentials) =  0 seconds 27 milliseconds
+00:29:26 
+00:29:26 Unhandled Exception: System.AggregateException: One or more errors occurred. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+00:29:26    at nextnano.NEGF.SelfEnergies.<>c__DisplayClass29_0.<SEN>b__3(Int32 ns1)
+00:29:26    at Nextnano.Types.Scheduler.<>c__DisplayClass6_0.<For>b__0(Tuple`2 range, ParallelLoopState loopState)
+00:29:26    at System.Threading.Tasks.Parallel.<>c__DisplayClass42_0`2.<PartitionerForEachWorker>b__1()
+00:29:26    at System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
+00:29:26    at System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object <p0>)
+00:29:26    --- End of inner exception stack trace ---
+00:29:26    at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+00:29:26    at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+00:29:26    at System.Threading.Tasks.Parallel.PartitionerForEachWorker[TSource,TLocal](Partitioner`1 source, ParallelOptions parallelOptions, Action`1 simpleBody, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+00:29:26    at System.Threading.Tasks.Parallel.ForEach[TSource](Partitioner`1 source, ParallelOptions parallelOptions, Action`2 body)
+00:29:26    at Nextnano.Types.Scheduler.For(Int32 start, Int32 count, Action`1 body, Int32 spread)
+00:29:26    at nextnano.NEGF.SelfEnergies.SEN(Geometry geometry, GreenFunction Green, States states, EnergyGrid Egrid, OpticalPhonons frohlich, ElasticScattering elastic, Acoustic acoustic, PhononGreenFunct Dfunct, Int32 nTF, Int32 ElementTypesNeeded, DensityModes densityModes, Boolean Separate_Mechanisms)
+00:29:26    at nextnano.NEGF.NEGFOffDiag.run(States states, EnergyGrid Egrid, Transport transport, FileResults file)
+00:29:26    at nextnano.NEGF.Transport.transpVeryCore(Geometry geom, FileResults file, NEGFOffDiag NEGF)
+00:29:26    at nextnano.NEGF.Transport.transpCore(Geometry geom, FileResults file, NEGFOffDiag NEGF)
+00:29:26    at nextnano.NEGF.Transport.transp(FileResults file, States stOld, String ZorD, NEGFOffDiag NEGF, Simulator simulator)
+00:29:26    at nextnano.NEGF.Transport.transpV(Double Vmin, Double Vmax, Double deltaV, Simulator simulator)
+00:29:26    at nextnano.NEGF.Transport..ctor(Simulator simulator, Double Vmin, Double Vmax, Double deltaV)
+00:29:26    at nextnano.NEGF.Simulator.Run(String typeEXE, Boolean DateInFolder, Int32 threadsCommandLine)
+00:29:26    at nextnano.NEGF.Program.Main(String[] args)
+(nextnano.NEGF exit code: -532462766)

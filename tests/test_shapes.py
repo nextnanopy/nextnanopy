@@ -1,8 +1,6 @@
 import unittest
-from nextnanopy.shapes import GdsPolygons, units_factor, validate_unit
-import os
+from nextnanopy.shapes import GdsPolygonsRaw, units_factor, validate_unit
 import numpy as np
-from os.path import join
 import os
 
 np_equal = np.testing.assert_almost_equal
@@ -22,7 +20,7 @@ class TestShapes(unittest.TestCase):
 
     def test_example0(self):
         fullpath = os.path.join(folder, 'example0.gds')
-        gpols = GdsPolygons(fullpath, unit='nm')
+        gpols = GdsPolygonsRaw(fullpath, unit='nm')
         self.assertEqual(gpols.fullpath, fullpath)
         np_equal(gpols.labels, [0])
         self.assertEqual(gpols.unit, 'nm')
@@ -44,7 +42,7 @@ class TestShapes(unittest.TestCase):
 
     def test_example1(self):
         fullpath = os.path.join(folder, 'example1.gds')
-        gpols = GdsPolygons(fullpath, unit='nm')
+        gpols = GdsPolygonsRaw(fullpath, unit='nm')
         np_equal(gpols.labels, [0, 1, 2, 3])
         self.assertEqual(gpols.nb_polygons, 4)
         self.assertEqual(len(gpols.slices[0].slices), 2)
@@ -52,7 +50,7 @@ class TestShapes(unittest.TestCase):
 
     def test_example2(self):
         fullpath = os.path.join(folder, 'example2.gds')
-        gpols = GdsPolygons(fullpath, unit='nm')
+        gpols = GdsPolygonsRaw(fullpath, unit='nm')
         np_equal(gpols.labels, [0, 1])
         self.assertEqual(gpols.nb_polygons, 2)
         self.assertEqual(len(gpols.slices[0].slices), 3)

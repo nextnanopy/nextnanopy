@@ -1,10 +1,10 @@
 import unittest
 import os
-from nextnanopy.inputs import *
-from nextnanopy.utils.formatting import is_nn3_input_file, is_nnp_input_file
+from nextnanopy.inputs import InputFile
 
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
+folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
 
 class Test_nnp(unittest.TestCase):
     def test_load(self):
@@ -76,11 +76,16 @@ class Test_nnp(unittest.TestCase):
                          os.path.join(folder_nnp, 'only_variables_0.in'))
         os.remove(file.fullpath)
 
+    def test_config(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+        from nextnanopy import config
+        for key, value in config.config['nextnano++'].items():
+            self.assertEqual(file.default_command_args[key],value)
 
 class Test_nn3(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
-        self.assertTrue(is_nn3_input_file(fullpath))
 
         file = InputFile(fullpath)
         self.assertEqual(file.type, 'nextnano3')
@@ -147,6 +152,46 @@ class Test_nn3(unittest.TestCase):
         self.assertEqual(file.save(file.fullpath, overwrite=False),
                          os.path.join(folder_nn3, 'only_variables_0.in'))
         os.remove(file.fullpath)
+
+    def test_config(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        file = InputFile(fullpath)
+        from nextnanopy import config
+        for key, value in config.config['nextnano3'].items():
+            self.assertEqual(file.default_command_args[key],value)
+
+class Test_negf(unittest.TestCase):
+    def test_load(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+
+        file = InputFile(fullpath)
+        self.assertEqual(file.type, 'nextnano.NEGF')
+
+        self.assertEqual(len(file.variables.keys()), 0)
+
+        fullpath = os.path.join(folder_negf, 'virtual_file.xml')
+        self.assertRaises(FileNotFoundError, InputFile, fullpath)
+
+    def test_set_variables(self):
+        fullpath = os.path.join(folder_negf,  'example.xml')
+        file = InputFile(fullpath)
+        self.assertRaises(KeyError, file.set_variable, name='new_variable')
+
+    def test_fullpath(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
+
+        self.assertEqual(file.fullpath, fullpath)
+        self.assertEqual(file.save(file.fullpath, overwrite=False),
+                         os.path.join(folder_negf, 'example_0.xml'))
+        os.remove(file.fullpath)
+
+    def test_config(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
+        from nextnanopy import config
+        for key, value in config.config['nextnano.NEGF'].items():
+            self.assertEqual(file.default_command_args[key],value)
 
 if __name__ == '__main__':
     unittest.main()
