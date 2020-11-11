@@ -110,14 +110,3 @@ class InputFile(InputFileTemplate):
         elif self.type == 'nextnano.NEGF':
             from nextnanopy.negf.inputs import InputFile as _InputFile
         self.variables = _InputFile(self.fullpath).variables
-
-
-if __name__ == '__main__':
-    import os
-
-    folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
-    folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
-    file = 'example.in'
-    fp = os.path.join(folder_nnp,file)
-    fp = os.path.join(folder_nn3,file)
-    fi = InputFile(fp)

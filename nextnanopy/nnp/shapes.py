@@ -7,7 +7,20 @@ import numpy as np
 class GDSPolygons(GdsPolygonsRaw):
 
     def get_obelisks(self, zi, zf):
-        shapes = [si.get_obelisks(zi, zf) for si in self.slices]
+        shapes = []
+        z = np.array([zi, zf] * 2)
+        for si in self.slices:
+            xs, ys = si.correct_xy()
+            for x, y in zip(xs, ys):
+                kwargs = {
+                    'base_x': x[:2],
+                    'base_y': y[:2],
+                    'base_z': z[:2],
+                    'top_x': x[2:],
+                    'top_y': y[2:],
+                    'top_z': z[2:],
+                }
+                shapes.append(Obelisk(**kwargs))
         return shapes
 
     def get_polygonal_prims(self, zi, zf):

@@ -62,7 +62,7 @@ class Dat(Output):
             raise NotImplementedError('.dat file without header')
         else:
             header = headers[-1]  # take the last one by default
-        header = re.split('\[|\]', header)
+        header = re.split(r'\[|\]', header)
         header = [hi.strip() for hi in header]
         columns, units = header[0::2], header[1::2]
         diff = len(columns) - len(units)
@@ -110,17 +110,3 @@ class Dat(Output):
         self.coords = coords
         self.variables = variables
         return coords, variables
-
-
-if __name__ == '__main__':
-    import os
-
-    folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
-    folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
-    folder_negf = os.path.join('tests', 'datafiles', 'negf')
-    file = 'bandedges_1d.dat'
-    fp = os.path.join(folder_nnp, file)
-    fp = os.path.join(folder_negf, 'ReducedRealSpaceModes.dat')
-    # fp = r'E:\junliang.wang\nextnano\Output\THz_QCL_GaAs_AlGaAs_Adams_APL2010\Input\E_p (Kane energy).dat'
-    # fp = os.path.join(folder_nn3,file)
-    fi = Dat(fp)

@@ -302,22 +302,6 @@ class SlicedPolygon(shapely.geometry.Polygon):
             x = p_follow
         return x, y
 
-    def get_obelisks(self, zi, zf):
-        xs, ys = self.correct_xy()
-        z = np.array([zi, zf] * 2)
-        obelisks = []
-        for x, y in zip(xs, ys):
-            kwargs = {
-                'base_x': x[:2],
-                'base_y': y[:2],
-                'base_z': z[:2],
-                'top_x': x[2:],
-                'top_y': y[2:],
-                'top_z': z[2:],
-            }
-            obelisks.append(Obelisk(**kwargs))
-        return obelisks
-
     def show_slices(self, ax=None, fill_kw={}):
         plt.ion()
         if not ax:

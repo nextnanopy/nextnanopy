@@ -259,20 +259,3 @@ def reshape_values(values, *dims):
     shape = tuple([dim for dim in dims])
     values = np.reshape(values, shape)
     return np.transpose(values)
-
-
-if __name__ == '__main__':
-    import os
-
-    folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
-    folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
-    folder_negf = os.path.join('tests', 'datafiles', 'negf')
-    file = 'bandedges_1d.dat'
-    fp = os.path.join(folder_nnp, file)
-    fp = os.path.join(folder_negf,'ReducedRealSpaceModes.dat')
-    fp = os.path.join(folder_negf,'E_p (Kane energy).dat')
-    fp = os.path.join(folder_nnp,'bandedges_2d.fld')
-
-    # fp = os.path.join(folder_nn3,file)
-    # from nextnanopy.negf.outputs import Dat
-    fi = DataFile(fp,type='nextnano++')

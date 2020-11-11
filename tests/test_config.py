@@ -6,7 +6,7 @@ import unittest
 class Test_NNConfig(unittest.TestCase):
     def test_default_nn3(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nnconfig')
+        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano3' in config.validators.keys())
@@ -23,7 +23,7 @@ class Test_NNConfig(unittest.TestCase):
 
     def test_default_nnp(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nnconfig')
+        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano++' in config.validators.keys())
@@ -40,7 +40,7 @@ class Test_NNConfig(unittest.TestCase):
 
     def test_default_negf(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nnconfig')
+        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano.NEGF' in config.validators.keys())
@@ -56,7 +56,7 @@ class Test_NNConfig(unittest.TestCase):
             os.remove(config.fullpath)
 
     def test_load_nn3(self):
-        fullpath = os.path.join('tests', '.nnconfig')
+        fullpath = os.path.join('tests', '.nextnanopy-config')
         config = NNConfig(fullpath)
 
         self.assertEqual(config.fullpath, fullpath)
@@ -88,7 +88,7 @@ class Test_NNConfig(unittest.TestCase):
             os.remove(config.fullpath)
 
     def test_load_nnp(self):
-        fullpath = os.path.join('tests', '.nnconfig')
+        fullpath = os.path.join('tests', '.nextnanopy-config')
         config = NNConfig(fullpath)
 
         self.assertEqual(config.fullpath, fullpath)
@@ -120,7 +120,7 @@ class Test_NNConfig(unittest.TestCase):
             os.remove(config.fullpath)
 
     def test_load_negf(self):
-        fullpath = os.path.join('tests', '.nnconfig')
+        fullpath = os.path.join('tests', '.nextnanopy-config')
         config = NNConfig(fullpath)
 
         self.assertEqual(config.fullpath, fullpath)

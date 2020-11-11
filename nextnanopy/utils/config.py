@@ -112,8 +112,15 @@ class Config(object):
 
 class NNConfig(Config):
     def __init__(self, fullpath=''):
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nnconfig')
+        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
         validators = {}
+        validators['nextnano++'] = {
+            'exe': str_to_path,
+            'license': str_to_path,
+            'database': str_to_path,
+            'outputdirectory': str_to_path,
+            'threads': int,
+        }
         validators['nextnano3'] = {
             'exe': str_to_path,
             'license': str_to_path,
@@ -124,13 +131,6 @@ class NNConfig(Config):
             'cancel': int,
             'softkill': int,
         }
-        validators['nextnano++'] = {
-            'exe': str_to_path,
-            'license': str_to_path,
-            'database': str_to_path,
-            'outputdirectory': str_to_path,
-            'threads': int,
-        }
         validators['nextnano.NEGF'] = {
             'exe': str_to_path,
             'license': str_to_path,
@@ -140,6 +140,13 @@ class NNConfig(Config):
         }
 
         self.default = {}
+        self.default['nextnano++'] = {
+            'exe': '',
+            'license': '',
+            'database': '',
+            'outputdirectory': '',
+            'threads': 0,
+        }
         self.default['nextnano3'] = {
             'exe': '',
             'license': '',
@@ -149,13 +156,6 @@ class NNConfig(Config):
             'debuglevel': 0,
             'cancel': -1,
             'softkill': -1,
-        }
-        self.default['nextnano++'] = {
-            'exe': '',
-            'license': '',
-            'database': '',
-            'outputdirectory': '',
-            'threads': 0,
         }
         self.default['nextnano.NEGF'] = {
             'exe': '',
@@ -177,11 +177,3 @@ class NNConfig(Config):
                 self.add_section(section)
             for option, value in self.default[section].items():
                 self.set(section, option, value)
-
-
-if __name__ == '__main__':
-    # fullpath = os.path.join('tests', 'configs', '.nnconfig')
-    # c = Config(fullpath)
-    c = NNConfig()
-    # print(os.path.isfile(default_config))
-    # pass
