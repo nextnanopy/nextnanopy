@@ -158,7 +158,7 @@ def start_log(process, filepath):
         target=read_output, args=(process.stderr, [q.put, err.append]))
     twrite = threading.Thread(target=write_output, args=(q.get, filepath))
     for t in (tout, terr, twrite):
-        t.daemon = True
+        t.daemon = False
         t.start()
     process.wait()
     for t in (tout, terr):
