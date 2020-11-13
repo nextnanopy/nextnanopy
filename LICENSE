@@ -1,7 +1,11 @@
 BSD 3-Clause License
 
+<<<<<<< HEAD
 Copyright (c) 2020, Junliang WANG
 Copyright (c) 2020, nextnano GmbH, Germany
+=======
+Copyright (c) 2020, nextnanopy
+>>>>>>> a8460ac48ad13803e9c24ce72e93ad514f8759ac
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
