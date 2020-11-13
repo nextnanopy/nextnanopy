@@ -110,7 +110,7 @@ class Config(object):
 
 
 class NNConfig(Config):
-    def __init__(self, fullpath=''):
+    def __init__(self, fullpath=None):
         default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
         validators = {}
         validators['nextnano++'] = {
@@ -136,6 +136,13 @@ class NNConfig(Config):
             'database': str_to_path,
             'outputdirectory': str_to_path,
             'threads': int,
+        }
+        validators['nextnano.MSB'] = {
+            'exe': str_to_path,
+            'license': str_to_path,
+            'database': str_to_path,
+            'outputdirectory': str_to_path,
+            'debug': int,
         }
 
         self.default = {}
@@ -163,7 +170,14 @@ class NNConfig(Config):
             'outputdirectory': '',
             'threads': 0,
         }
-        if not fullpath:
+        self.default['nextnano.MSB'] = {
+            'exe': '',
+            'license': '',
+            'database': '',
+            'outputdirectory': '',
+            'debug': 0,
+        }
+        if fullpath is None:
             fullpath = default_fullpath
         super().__init__(fullpath, validators)
         if not os.path.isfile(fullpath):

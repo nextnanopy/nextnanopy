@@ -16,6 +16,8 @@ def input_file_type(fullpath):
         return 'nextnano++'
     elif is_negf_input_file(fullpath):
         return 'nextnano.NEGF'
+    elif is_msb_input_file(fullpath):
+        return 'nextnano.MSB'
     else:
         return 'not valid'
 
@@ -40,6 +42,11 @@ def is_nnp_input_file(fullpath):
 
 def is_negf_input_file(fullpath):
     fmt = fmts['nextnano.NEGF']
+    return pattern_in_file(fullpath, fmt['input_pattern'])
+
+
+def is_msb_input_file(fullpath):
+    fmt = fmts['nextnano.MSB']
     return pattern_in_file(fullpath, fmt['input_pattern'])
 
 

@@ -4,7 +4,7 @@ from nextnanopy.shapes import GdsPolygonsRaw
 import numpy as np
 
 
-class GDSPolygons(GdsPolygonsRaw):
+class GdsPolygons(GdsPolygonsRaw):
 
     def get_obelisks(self, zi, zf):
         shapes = []
@@ -23,7 +23,7 @@ class GDSPolygons(GdsPolygonsRaw):
                 shapes.append(Obelisk(**kwargs))
         return shapes
 
-    def get_polygonal_prims(self, zi, zf):
+    def get_polygonal_prisms(self, zi, zf):
         z = np.array([zi, zf])
         axes = ['x', 'y', 'z']
         shapes = [Polygonal_prism(axes=axes, vertexes=xy, height=z) for xy in self.polygons_xy]

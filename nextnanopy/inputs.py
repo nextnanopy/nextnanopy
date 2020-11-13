@@ -52,7 +52,7 @@ class InputFileTemplate(object):
         return self.type
 
     def validate(self):
-        if self.type not in ['nextnano++', 'nextnano3','nextnano.NEGF']:
+        if self.type not in ['nextnano++', 'nextnano3','nextnano.NEGF','nextnano.MSB']:
             raise ValueError(f'Not valid input file')
 
     def load(self, fullpath):
@@ -113,4 +113,6 @@ class InputFile(InputFileTemplate):
             from nextnanopy.nn3.inputs import InputFile as _InputFile
         elif self.type == 'nextnano.NEGF':
             from nextnanopy.negf.inputs import InputFile as _InputFile
+        elif self.type == 'nextnano.MSB':
+            from nextnanopy.msb.inputs import InputFile as _InputFile
         self.variables = _InputFile(self.fullpath).variables

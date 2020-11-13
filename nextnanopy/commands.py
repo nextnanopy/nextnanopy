@@ -3,7 +3,7 @@ import subprocess
 import queue
 import threading
 from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
-from nextnanopy.utils.formatting import is_nn3_input_file, is_nnp_input_file, is_negf_input_file
+from nextnanopy.utils.formatting import is_nn3_input_file, is_nnp_input_file, is_negf_input_file, is_msb_input_file
 from collections import OrderedDict
 
 
@@ -43,6 +43,8 @@ def command(
         return command_nnp(**cmd_kwargs)
     elif is_negf_input_file(inputfile):
         return command_negf(**cmd_kwargs)
+    elif is_msb_input_file(inputfile):
+        return command_msb(**cmd_kwargs)
     else:
         raise ValueError(f'Input file is not valid')
 
@@ -126,6 +128,26 @@ def command_negf(
         license=[_path(license), ''],
         threads=['-threads', threads],
     )
+    return generate_command(cmd_args.values())
+
+def command_msb(
+        inputfile,
+        exe,
+        license,
+        database,
+        outputdirectory,
+        debug=0,
+        **kwargs,
+):
+    cmd_args = OrderedDict(
+        exe=[_path(exe), ''],
+        inputfile=[_path(inputfile), ''],
+        license=['-license', _path(license)],
+        database=['-database', _path(database)],
+        outputdirectory=['-outputdirectory', _path(outputdirectory)],
+    )
+    if debug == 1:
+        cmd_args['debug'] = ['-debug', debug]
     return generate_command(cmd_args.values())
 
 def send(cmd):
