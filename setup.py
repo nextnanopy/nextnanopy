@@ -7,7 +7,7 @@ opt_pkgs = ["gdspy", "Shapely", "matplotlib", "cycler"]
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.0a4",
+    version="0.1.0a5",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',
