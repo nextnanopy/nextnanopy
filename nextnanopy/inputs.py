@@ -1,8 +1,8 @@
-from nextnanopy.utils.formatting import text_to_lines, lines_to_text, input_file_type
+from nextnanopy.utils.formatting import text_to_lines, lines_to_text
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.misc import savetxt
-from nextnanopy.utils.config import NNConfig
 from nextnanopy.commands import execute as cmd_execute
+from nextnanopy import defaults
 
 
 class InputFileTemplate(object):
@@ -10,13 +10,13 @@ class InputFileTemplate(object):
         self.raw_lines = []
         self.variables = DictList()
         self.fullpath = fullpath
-        self.type = 'not valid'
+        self.product = 'not valid'
         if fullpath is not None:
             self.load(fullpath)
         if configpath is None:
-            self.config = NNConfig()
+            self.config = defaults.NNConfig()
         else:
-            self.config = NNConfig(configpath)
+            self.config = defaults.NNConfig(configpath)
 
     @property
     def text(self):
@@ -41,24 +41,24 @@ class InputFileTemplate(object):
 
     @property
     def default_command_args(self):
-        return self.config.config[self.type]
+        return self.config.config[self.product]
 
     @property
     def configpath(self):
         return self.config.fullpath
 
-    def find_type(self):
-        self.type = input_file_type(self.fullpath)
-        return self.type
+    def find_product(self):
+        self.product = defaults.input_file_type(self.fullpath)
+        return self.product
 
     def validate(self):
-        if self.type not in ['nextnano++', 'nextnano3','nextnano.NEGF','nextnano.MSB']:
+        if self.product not in defaults.products:
             raise ValueError(f'Not valid input file')
 
     def load(self, fullpath):
         self.clear()
         self.fullpath = fullpath
-        self.find_type()
+        self.find_product()
         self.validate()
         self.load_raw()
         self.load_variables()
@@ -107,12 +107,5 @@ class InputFileTemplate(object):
 class InputFile(InputFileTemplate):
 
     def load_variables(self):
-        if self.type == 'nextnano++':
-            from nextnanopy.nnp.inputs import InputFile as _InputFile
-        elif self.type == 'nextnano3':
-            from nextnanopy.nn3.inputs import InputFile as _InputFile
-        elif self.type == 'nextnano.NEGF':
-            from nextnanopy.negf.inputs import InputFile as _InputFile
-        elif self.type == 'nextnano.MSB':
-            from nextnanopy.msb.inputs import InputFile as _InputFile
+        _InputFile = defaults.get_InputFile(self.product)
         self.variables = _InputFile(self.fullpath).variables

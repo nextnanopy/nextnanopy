@@ -11,7 +11,7 @@ folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
 class TestOutputs_nnp(unittest.TestCase):
 
     def test_dat(self):
-        df = outputs.DataFile(join(folder_nnp, 'bandedges_1d.dat'), type='nextnano++')
+        df = outputs.DataFile(join(folder_nnp, 'bandedges_1d.dat'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords['x'].name, 'x')
         self.assertEqual(df.coords['x'].unit, 'nm')
@@ -23,7 +23,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
-        df = outputs.DataFile(join(folder_nnp, 'wf_occupation_1d.dat'), type='nextnano++')
+        df = outputs.DataFile(join(folder_nnp, 'wf_occupation_1d.dat'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 2)
         self.assertEqual(df.variables['no.'].name, 'no.')
@@ -36,7 +36,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['dkeys'], [])
 
     def test_avs(self):
-        df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), type='nextnano++')
+        df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ['x', 'y'])
         self.assertEqual(df.coords['x'].unit, 'nm')
@@ -54,7 +54,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['field'], 'rectilinear')
 
     def test_txt(self):
-        df = outputs.DataFile(join(folder_nnp, 'variables_input.txt'), type='nextnano++')
+        df = outputs.DataFile(join(folder_nnp, 'variables_input.txt'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 3)
         self.assertEqual(df.variables['var_1'].name, 'var_1')
@@ -63,7 +63,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.variables['var_2'].value, 75)
         self.assertEqual(df.variables['string'].value, '"hello"')
 
-        df = outputs.DataFile(join(folder_nnp, 'variables_database.txt'), type='nextnano++')
+        df = outputs.DataFile(join(folder_nnp, 'variables_database.txt'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 0)
 
@@ -80,7 +80,7 @@ class TestOutputs_nnp(unittest.TestCase):
 class TestOutputs_nn3(unittest.TestCase):
 
     def test_dat(self):
-        df = outputs.DataFile(join(folder_nn3, 'bandedges_1d.dat'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'bandedges_1d.dat'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords['position'].name, 'position')
         self.assertEqual(df.coords['position'].unit, 'nm')
@@ -92,7 +92,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
-        df = outputs.DataFile(join(folder_nn3, 'wf_shift_1d.dat'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'wf_shift_1d.dat'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(len(df.variables.keys()), 10)
         self.assertEqual(df.coords['position'].name, 'position')
@@ -104,7 +104,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
-        df = outputs.DataFile(join(folder_nn3, 'bandedges_2d_cut.dat'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'bandedges_2d_cut.dat'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords['position'].name, 'position')
         self.assertEqual(df.coords['position'].unit, 'nm')
@@ -117,7 +117,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['dkeys'], [0])
 
     def test_avs(self):
-        df = outputs.DataFile(join(folder_nn3, 'bandedges_2d.fld'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'bandedges_2d.fld'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ['x', 'y'])
         self.assertEqual(df.coords['x'].unit, 'nm')
@@ -135,7 +135,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['field'], 'rectilinear')
 
     def test_txt(self):
-        df = outputs.DataFile(join(folder_nn3, 'variables_input.txt'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'variables_input.txt'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 3)
         self.assertEqual(df.variables['var_1'].name, 'var_1')
@@ -144,7 +144,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.variables['var_2'].value, 75)
         self.assertEqual(df.variables['string'].value, '"hello"')
 
-        df = outputs.DataFile(join(folder_nn3, 'variables_database.txt'), type='nextnano3')
+        df = outputs.DataFile(join(folder_nn3, 'variables_database.txt'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 0)
 
@@ -157,7 +157,7 @@ class TestOutputs_nn3(unittest.TestCase):
 class TestOutputs_negf(unittest.TestCase):
 
     def test_dat(self):
-        df = outputs.DataFile(join(folder_negf, 'ReducedRealSpaceModes.dat'), type='nextnano.NEGF')
+        df = outputs.DataFile(join(folder_negf, 'ReducedRealSpaceModes.dat'), product='nextnano.NEGF')
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords['Position'], df.coords[0])
         self.assertEqual(df.coords['Position'].name, 'Position')
@@ -175,7 +175,7 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
-        df = outputs.DataFile(join(folder_negf, 'E_p (Kane energy).dat'), type='nextnano.NEGF')
+        df = outputs.DataFile(join(folder_negf, 'E_p (Kane energy).dat'), product='nextnano.NEGF')
         self.assertEqual(df.coords['Position'], df.coords[0])
         self.assertEqual(df.coords['Position'].name, 'Position')
         self.assertEqual(df.coords['Position'].unit, 'nm')

@@ -1,5 +1,5 @@
 import os
-from nextnanopy.utils.config import NNConfig
+from nextnanopy.defaults import NNConfig
 import unittest
 
 
@@ -10,12 +10,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano3' in config.validators.keys())
-        self.assertTrue('nextnano3' in config.default.keys())
+        self.assertTrue('nextnano3' in config.defaults.keys())
         self.assertTrue('nextnano3' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory','debuglevel','cancel','softkill']
         for option in options:
             self.assertTrue(option in config.validators['nextnano3'].keys())
-            self.assertTrue(option in config.default['nextnano3'].keys())
+            self.assertTrue(option in config.defaults['nextnano3'].keys())
             self.assertTrue(option in config.config['nextnano3'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
 
@@ -25,12 +25,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano++' in config.validators.keys())
-        self.assertTrue('nextnano++' in config.default.keys())
+        self.assertTrue('nextnano++' in config.defaults.keys())
         self.assertTrue('nextnano++' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory']
         for option in options:
             self.assertTrue(option in config.validators['nextnano++'].keys())
-            self.assertTrue(option in config.default['nextnano++'].keys())
+            self.assertTrue(option in config.defaults['nextnano++'].keys())
             self.assertTrue(option in config.config['nextnano++'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
 
@@ -40,12 +40,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano.NEGF' in config.validators.keys())
-        self.assertTrue('nextnano.NEGF' in config.default.keys())
+        self.assertTrue('nextnano.NEGF' in config.defaults.keys())
         self.assertTrue('nextnano.NEGF' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory']
         for option in options:
             self.assertTrue(option in config.validators['nextnano.NEGF'].keys())
-            self.assertTrue(option in config.default['nextnano.NEGF'].keys())
+            self.assertTrue(option in config.defaults['nextnano.NEGF'].keys())
             self.assertTrue(option in config.config['nextnano.NEGF'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
 
@@ -55,12 +55,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, fullpath)
         self.assertTrue('nextnano3' in config.validators.keys())
-        self.assertTrue('nextnano3' in config.default.keys())
+        self.assertTrue('nextnano3' in config.defaults.keys())
         self.assertTrue('nextnano3' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory','debuglevel','cancel','softkill']
         for option in options:
             self.assertTrue(option in config.validators['nextnano3'].keys())
-            self.assertTrue(option in config.default['nextnano3'].keys())
+            self.assertTrue(option in config.defaults['nextnano3'].keys())
             self.assertTrue(option in config.config['nextnano3'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
         if os.path.isfile(config.fullpath):
@@ -87,12 +87,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, fullpath)
         self.assertTrue('nextnano++' in config.validators.keys())
-        self.assertTrue('nextnano++' in config.default.keys())
+        self.assertTrue('nextnano++' in config.defaults.keys())
         self.assertTrue('nextnano++' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory']
         for option in options:
             self.assertTrue(option in config.validators['nextnano++'].keys())
-            self.assertTrue(option in config.default['nextnano++'].keys())
+            self.assertTrue(option in config.defaults['nextnano++'].keys())
             self.assertTrue(option in config.config['nextnano++'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
         if os.path.isfile(config.fullpath):
@@ -119,12 +119,12 @@ class Test_NNConfig(unittest.TestCase):
 
         self.assertEqual(config.fullpath, fullpath)
         self.assertTrue('nextnano.NEGF' in config.validators.keys())
-        self.assertTrue('nextnano.NEGF' in config.default.keys())
+        self.assertTrue('nextnano.NEGF' in config.defaults.keys())
         self.assertTrue('nextnano.NEGF' in config.config.keys())
         options = ['exe', 'license', 'database', 'threads', 'outputdirectory']
         for option in options:
             self.assertTrue(option in config.validators['nextnano.NEGF'].keys())
-            self.assertTrue(option in config.default['nextnano.NEGF'].keys())
+            self.assertTrue(option in config.defaults['nextnano.NEGF'].keys())
             self.assertTrue(option in config.config['nextnano.NEGF'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
         if os.path.isfile(config.fullpath):

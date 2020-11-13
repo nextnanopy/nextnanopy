@@ -1,5 +1,5 @@
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.utils.formatting import is_msb_input_file
+from nextnanopy.msb.defaults import is_msb_input_file
 
 
 class InputFile(InputFileTemplate):

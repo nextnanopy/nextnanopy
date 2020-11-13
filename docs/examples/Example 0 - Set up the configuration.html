@@ -13152,26 +13152,32 @@ div#notebook {
 <div class="output_text output_subarea output_execute_result">
 <pre>NNConfig(C:\Users\jun-liang.wang\.nextnanopy-config)
 [nextnano++]
-exe = C:\Program Files\nextnano\2020_10_16\nextnano++\bin 64bit\nextnano++_Intel_64bit.exe
-license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_10_16\nextnano++\Syntax\database_nnp.in
-outputdirectory = E:\junliang.wang\nextnano\Output
+exe = 
+license = 
+database = 
+outputdirectory = 
 threads = 0
 [nextnano3]
-exe = C:\Program Files\nextnano\2020_10_16\nextnano3\Intel 64bit\nextnano3_Intel_64bit.exe
-license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnp.lic
-database = C:\Program Files\nextnano\2020_10_16\nextnano3\Syntax\database_nn3.in
+exe = 
+license = 
+database = 
 threads = 0
-outputdirectory = E:\junliang.wang\nextnano\Output
+outputdirectory = 
 debuglevel = 0
 cancel = -1
 softkill = -1
 [nextnano.NEGF]
-exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.NEGF.exe
-license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
-database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
-outputdirectory = E:\junliang.wang\nextnano\Output
-threads = 0</pre>
+exe = 
+license = 
+database = 
+outputdirectory = 
+threads = 0
+[nextnano.MSB]
+exe = 
+license = 
+database = 
+outputdirectory = 
+debug = 0</pre>
 </div>
 
 </div>
@@ -13204,7 +13210,7 @@ threads = 0</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;C:\\Program Files\\nextnano\\2020_10_16\\nextnano++\\bin 64bit\\nextnano++_Intel_64bit.exe&#39;</pre>
+<pre>&#39;&#39;</pre>
 </div>
 
 </div>
@@ -13237,11 +13243,7 @@ threads = 0</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;exe&#39;: &#39;C:\\Program Files\\nextnano\\2020_10_16\\nextnano++\\bin 64bit\\nextnano++_Intel_64bit.exe&#39;,
- &#39;license&#39;: &#39;C:\\Users\\jun-liang.wang\\Documents\\nextnano\\License\\License_nnp.lic&#39;,
- &#39;database&#39;: &#39;C:\\Program Files\\nextnano\\2020_10_16\\nextnano++\\Syntax\\database_nnp.in&#39;,
- &#39;outputdirectory&#39;: &#39;E:\\junliang.wang\\nextnano\\Output&#39;,
- &#39;threads&#39;: 0}</pre>
+<pre>{&#39;exe&#39;: &#39;&#39;, &#39;license&#39;: &#39;&#39;, &#39;database&#39;: &#39;&#39;, &#39;outputdirectory&#39;: &#39;&#39;, &#39;threads&#39;: 0}</pre>
 </div>
 
 </div>
@@ -13324,6 +13326,11 @@ You can find in the Simulation tab, the executable paths for each nextnano softw
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml&#39;</span><span class="p">)</span>
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.NEGF&#39;</span><span class="p">,</span><span class="s1">&#39;outputdirectory&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;E:\junliang.wang\nextnano\Output&#39;</span><span class="p">)</span>
 
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.MSB&#39;</span><span class="p">,</span><span class="s1">&#39;exe&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\x86\nextnano.MSB-intel.exe&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.MSB&#39;</span><span class="p">,</span><span class="s1">&#39;license&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnMSB.lic&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.MSB&#39;</span><span class="p">,</span><span class="s1">&#39;database&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\Materials.xml&#39;</span><span class="p">)</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;nextnano.MSB&#39;</span><span class="p">,</span><span class="s1">&#39;outputdirectory&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;E:\junliang.wang\nextnano\Output&#39;</span><span class="p">)</span>
+
 <span class="n">nn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1">#save permanently</span>
 </pre></div>
 
@@ -13377,7 +13384,13 @@ exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.N
 license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
 database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
 outputdirectory = E:\junliang.wang\nextnano\Output
-threads = 0</pre>
+threads = 0
+[nextnano.MSB]
+exe = C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\x86\nextnano.MSB-intel.exe
+license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnMSB.lic
+database = C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\Materials.xml
+outputdirectory = E:\junliang.wang\nextnano\Output
+debug = 0</pre>
 </div>
 
 </div>
@@ -13447,7 +13460,13 @@ exe = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\nextnano.N
 license = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\License\License_nnQCL.lic
 database = C:\Program Files\nextnano\nextnanoNEGF_2020_06_22\nextnano.NEGF\Material_Database.xml
 outputdirectory = E:\junliang.wang\nextnano\Output
-threads = 0</pre>
+threads = 0
+[nextnano.MSB]
+exe = C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\x86\nextnano.MSB-intel.exe
+license = C:\Users\jun-liang.wang\Documents\nextnano\License\License_nnMSB.lic
+database = C:\Program Files\nextnano\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB\Materials.xml
+outputdirectory = E:\junliang.wang\nextnano\Output
+debug = 0</pre>
 </div>
 
 </div>
@@ -13506,7 +13525,7 @@ COPYRIGHT NOTICE.
  PROCESSING FILE: E:\junliang.wang\datafiles\nextnano++\example.in
 =============================================================================
 
-Start time: Fri 2020-11-13, 11:34:15 (+0100)
+Start time: Fri 2020-11-13, 16:31:06 (+0100)
 
 Simulation process uses 4 of 4 available OpenMP threads (system default).
 
@@ -13585,7 +13604,7 @@ Writing fixed charge density...
 ********* START CALCULATION ****************************************************
 
 Determine dirichlet points for contacts...
-Intrinsic charge time: 0[s]
+Intrinsic charge time: 0.001[s]
 
 Discretizing Poisson equation...
 
@@ -13861,10 +13880,10 @@ Writing ionized dopant densities...
 
 ********* FINISHED CALCULATION *************************************************
 
-End time: Fri 2020-11-13, 11:34:16 (+0100)
-Total Poisson Solver Time: 0.013[s]
-Total Quantum Solver Time: 0.005[s]
-Simulator Run Time: 0.282[s]
+End time: Fri 2020-11-13, 16:31:06 (+0100)
+Total Poisson Solver Time: 0.011[s]
+Total Quantum Solver Time: 0.008[s]
+Simulator Run Time: 0.302[s]
 
 ================================================================================
 DONE.
@@ -13881,7 +13900,7 @@ DONE.
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;subprocess.Popen at 0x1debaee2e20&gt;</pre>
+<pre>&lt;subprocess.Popen at 0x2c128bae190&gt;</pre>
 </div>
 
 </div>
@@ -13956,7 +13975,7 @@ COPYRIGHT NOTICE.
  PROCESSING FILE: E:\junliang.wang\datafiles\nextnano++\example.in
 =============================================================================
 
-Start time: Fri 2020-11-13, 11:34:17 (+0100)
+Start time: Fri 2020-11-13, 16:31:09 (+0100)
 
 Simulation process uses 4 of 4 available OpenMP threads (specified via command line).
 
@@ -14054,7 +14073,7 @@ Determine potential Dirichlet values in Schottky and ohmic contacts...
 Update contact discretization in Poisson equation...
 
 Initialize electrostatic potential...
-Charge Neutrality time: 0.001[s]
+Charge Neutrality time: 0.002[s]
 
 Solving nonlinear Poisson equation...
   Newton step: 1	99.70915169962517
@@ -14311,10 +14330,10 @@ Writing ionized dopant densities...
 
 ********* FINISHED CALCULATION *************************************************
 
-End time: Fri 2020-11-13, 11:34:18 (+0100)
-Total Poisson Solver Time: 0.01[s]
-Total Quantum Solver Time: 0.007[s]
-Simulator Run Time: 0.29[s]
+End time: Fri 2020-11-13, 16:31:10 (+0100)
+Total Poisson Solver Time: 0.012[s]
+Total Quantum Solver Time: 0.006[s]
+Simulator Run Time: 0.288[s]
 
 ================================================================================
 DONE.
@@ -14331,7 +14350,7 @@ DONE.
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;subprocess.Popen at 0x1debaa631f0&gt;</pre>
+<pre>&lt;subprocess.Popen at 0x2c1287240d0&gt;</pre>
 </div>
 
 </div>
@@ -14398,6 +14417,12 @@ license =
 database = 
 outputdirectory = 
 threads = 0
+[nextnano.MSB]
+exe = 
+license = 
+database = 
+outputdirectory = 
+debug = 0
 </pre>
 </div>
 </div>

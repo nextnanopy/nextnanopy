@@ -1,55 +1,3 @@
-from nextnanopy.nnp.format import fmt as nnpfmt
-from nextnanopy.nn3.format import fmt as nn3fmt
-from nextnanopy.negf.format import fmt as negffmt
-
-fmts = {
-    'nextnano++': nnpfmt,
-    'nextnano3': nn3fmt,
-    'nextnano.NEGF': negffmt,
-}
-
-
-def input_file_type(fullpath):
-    if is_nn3_input_file(fullpath):
-        return 'nextnano3'
-    elif is_nnp_input_file(fullpath):
-        return 'nextnano++'
-    elif is_negf_input_file(fullpath):
-        return 'nextnano.NEGF'
-    elif is_msb_input_file(fullpath):
-        return 'nextnano.MSB'
-    else:
-        return 'not valid'
-
-
-def pattern_in_file(fullpath, input_pattern):
-    with open(fullpath, 'r') as f:
-        for line in f:
-            if input_pattern in line:
-                return True
-    return False
-
-
-def is_nn3_input_file(fullpath):
-    fmt = fmts['nextnano3']
-    return pattern_in_file(fullpath, fmt['input_pattern'])
-
-
-def is_nnp_input_file(fullpath):
-    fmt = fmts['nextnano++']
-    return pattern_in_file(fullpath, fmt['input_pattern'])
-
-
-def is_negf_input_file(fullpath):
-    fmt = fmts['nextnano.NEGF']
-    return pattern_in_file(fullpath, fmt['input_pattern'])
-
-
-def is_msb_input_file(fullpath):
-    fmt = fmts['nextnano.MSB']
-    return pattern_in_file(fullpath, fmt['input_pattern'])
-
-
 def is_variable(text, var_char):
     boolean = False
     text = str(text).strip()
@@ -58,27 +6,6 @@ def is_variable(text, var_char):
     elif text[0] == var_char and '=' in text:
         boolean = True
     return boolean
-
-
-def is_nn3_variable(text):
-    fmt = fmts['nextnano3']
-    return is_variable(text, var_char=fmt['var_char'])
-
-
-def is_nnp_variable(text):
-    fmt = fmts['nextnano++']
-    return is_variable(text, var_char=fmt['var_char'])
-
-
-def autofmt_variable_value(value):
-    cases = [int, float, str]
-    for case in cases:
-        try:
-            value = case(value)
-            break
-        except:
-            pass
-    return value
 
 
 def parse_variable(text, var_char, com_char):
@@ -96,14 +23,39 @@ def parse_variable(text, var_char, com_char):
     return name, value, comment
 
 
-def parse_nn3_variable(text):
-    fmt = fmts['nextnano3']
-    return parse_variable(text, var_char=fmt['var_char'], com_char=fmt['com_char'])
+def autofmt_variable_value(value):
+    cases = [int, float, str]
+    for case in cases:
+        try:
+            value = case(value)
+            break
+        except:
+            pass
+    return value
 
 
-def parse_nnp_variable(text):
-    fmt = fmts['nextnano++']
-    return parse_variable(text, var_char=fmt['var_char'], com_char=fmt['com_char'])
+def pattern_in_file(fullpath, input_pattern):
+    with open(fullpath, 'r') as f:
+        for line in f:
+            if input_pattern in line:
+                return True
+    return False
+
+
+def generate_command(args):
+    cmd = []
+    for case in args:
+        arg, value = case
+        _a, _v = _bool(arg), _bool(value)
+        if not _a:
+            continue
+        elif _a and not _v:
+            cmdi = f"{arg}"
+        else:
+            cmdi = f"{arg} {value}"
+        cmd.append(cmdi)
+    cmd = ' '.join(cmd)
+    return cmd
 
 
 def text(init='', mid='', end='', fmt=lambda i, m, f: i + m + f):
@@ -137,3 +89,36 @@ def preview(text, nums=True):
             print(f'{i} {line}')
         else:
             print(f'{line}')
+
+
+def str_to_bool(string,
+                true_cases=['true', 't', 'yes', 'y', '1'],
+                false_cases=['false', 'f', 'no', 'n', '0'],
+                ):
+    str_low = string.lower()
+    if str_low in true_cases:
+        value = True
+    elif str_low in false_cases:
+        value = False
+    else:
+        raise ValueError('Ambiguos string to be converted to boolean')
+    return value
+
+
+def str_to_path(string):
+    path = r'{}'.format(string)
+    return path
+
+
+def _path(path):
+    if path:
+        path = r'{}'.format(path)
+        path = f'"{path}"'
+    return path
+
+
+def _bool(_in):
+    if _in == 0:
+        return True
+    else:
+        return bool(_in)

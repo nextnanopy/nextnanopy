@@ -1,5 +1,4 @@
 from copy import deepcopy
-from nextnanopy.utils.formatting import fmts
 
 
 class Data(object):
@@ -88,11 +87,3 @@ class InputVariable(Data):
         return t
 
 
-class InputVariable_nnp(InputVariable):
-    var_char = fmts['nextnano++']['var_char']
-    com_char = fmts['nextnano++']['com_char']
-
-
-class InputVariable_nn3(InputVariable):
-    var_char = fmts['nextnano3']['var_char']
-    com_char = fmts['nextnano3']['com_char']

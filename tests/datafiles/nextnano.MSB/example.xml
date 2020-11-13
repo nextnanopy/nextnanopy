@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nextnano.MSB Version="1.0.1">
+  <Header>
+    <Author>Bernhard Huber</Author>
+    <Version>1.0</Version>
+    <Content>
+      Quantum Well Structure - InGaAs/GaAs n-i-n heterostructure
+
+      This input file is based on the article:
+        [Kubis_HCIS14_2005]
+        Self-consistent quantum transport theory of carrier capture in heterostructures
+        T. Kubis, A. Trellakis, P. Vogl
+        Proceedings of the 14th International Conference on Nonequilibrium Carrier Dynamics in Semiconductors, M. Saraniti and U. Ravaioli, eds., Chicago, USA, July 25-19, 2005, Springer Proceedings in Physics, vol. 110, pp. 369-372
+
+      More details can be found here:
+        Applying the NEGF method to a quantum well
+        http://www.nextnano.com/nextnano3/tutorial/1Dtutorial_QW_NEGF.htm
+
+    </Content>
+  </Header>
+  <Output>
+    <Directory Comment="Name of output folder for calculated results.">../../Output/QW_InGaAs</Directory>
+    <WriteOutputEveryNthIteration Comment="Determines how frequent output is written.">2</WriteOutputEveryNthIteration>
+    <MaxNumberOfEigenstates Comment="Determines number of eigenstates written in output.">15</MaxNumberOfEigenstates>
+
+    <FormatAsciiEnabled Comment="Enable output for ASCII files containing data in columns.">true</FormatAsciiEnabled>
+    <FormatAsciiExt Comment="Specify the file extension for ASCII files containing data in columns.">.dat</FormatAsciiExt>
+
+    <FormatGnuPlotEnabled Comment="Enable GnuPlot output based on text output.">true</FormatGnuPlotEnabled>
+    <FormatGnuPlotExt Comment="Specify the file extension for GnuPlot output.">.gnu.plt</FormatGnuPlotExt>
+
+    <FormatAvsEnabled Comment="Enable AVS output.">true</FormatAvsEnabled>
+    <FormatAvsExt Comment="Specify the file extension for AVS files.">.avs</FormatAvsExt>
+    <FormatAvsBinary Comment="Specify AVS output mode [binary|ascii]">binary</FormatAvsBinary>
+
+    <FormatTextEnabled Comment="Enable text output.">true</FormatTextEnabled>
+    <FormatTextExt Comment="Specify the file extension for text files.">.txt</FormatTextExt>
+  </Output>
+  <Variables>
+    <Constant>
+      <Name Comment="In concentration of well.">Well</Name>
+      <Value Unit="[0..1]">0.14</Value>
+    </Constant>
+    <!--<Iterator>
+      <Name>T</Name>
+      <Initial Unit="K">100</Initial>
+      <Final Unit="K">200</Final>
+      <Steps Comment="Note that the value is calculated via Initial+[0..Steps-1]*(Final-Initial)/(Steps-1)">11</Steps>
+    </Iterator>-->
+    <!--<Iterator>
+      <Name>T</Name>
+      <Initial Unit="K">100</Initial>
+      <Delta Unit="K">10</Delta>
+      <Steps Comment="Note that the value is calculated via Initial+[0..Steps-1]*Delta">11</Steps>
+    </Iterator>-->
+  </Variables>
+  <Device>
+    <Temperature Unit="K">300</Temperature>
+    <Grid>
+     <!-- <Spacing Unit="nm">0.25</Spacing> -->
+          <Spacing Unit="nm">1.00</Spacing>
+     <!-- <Spacing Unit="nm">0.70</Spacing> -->
+     <!-- <Spacing Unit="nm">1.00</Spacing> -->
+    </Grid>
+    <Energy>
+      <Nodes Comment="Number of energy grid points.">1001</Nodes>
+      <Range Unit="eV" Comment="Offset is based on conduction band edge, i.e. Input\BandEdge_conduction_input.dat.">0.4</Range>
+    </Energy>
+
+    <Crystal>Zincblende</Crystal>
+
+    <Orientation>
+      <x_axis>
+        <h>1</h>
+        <k>0</k>
+        <l>0</l>
+      </x_axis>
+      <y_axis>
+        <h>0</h>
+        <k>1</k>
+        <l>0</l>
+      </y_axis>
+    </Orientation>
+
+    <Substrate>
+      <Material Base="GaAs"/>
+    </Substrate>
+    <Strain Calculate="no"/>
+
+    <!-- Begin Layers-->
+ 
+   <Layer BeginCluster="Center">
+      <Thickness Unit="nm">17.0</Thickness>
+      <Material Base="GaAs"/>
+      <Probes>1.0</Probes>
+      <Doping Unit="1/cm^3">1e18</Doping>
+    </Layer>
+    <Layer>
+      <Thickness Unit="nm">2.0</Thickness>
+      <Material Base="GaAs"/>
+      <Probes>1.0</Probes>
+      <Doping Unit="1/cm^3">0</Doping>
+    </Layer>
+    <Layer>
+      <Thickness Unit="nm">12.0</Thickness>
+      <Material Base="In(x)Ga(1-x)As" AlloyX="Well" />
+<!--  <Material Base="In(x)Ga(1-x)As" AlloyX="Well" CalculateBandedge="no"/> -->
+      <Probes>1.0</Probes>
+      <Doping>0</Doping>
+    </Layer>
+    <Layer>
+      <Thickness Unit="nm">2.0</Thickness>
+      <Material Base="GaAs"/>
+      <Probes>1.0</Probes>
+      <Doping Unit="1/cm^3">0</Doping>
+    </Layer>
+   <Layer EndCluster="Center">
+      <Thickness Unit="nm">17.0</Thickness>
+      <Material Base="GaAs"/>
+      <Probes>1.0</Probes>
+      <Doping Unit="1/cm^3">1e18</Doping>
+    </Layer>
+ 
+    <!-- End Layers -->
+
+    <!-- Begin Contacts -->
+    <Lead Name="Source">
+      <Voltage>
+        <SpecifiedByElectricField>no</SpecifiedByElectricField>
+        <Initial Unit="V">0.000</Initial>
+      </Voltage>
+    </Lead>
+    <Lead Name="Drain">
+      <Voltage>
+        <SpecifiedByElectricField Comment="Specifies the voltage as electrical field across the device. The units of Initial, Final, and Delta are [kV/cm]. Valid input is [yes|no]. Default is [no].">no</SpecifiedByElectricField>
+        <Cluster>Center</Cluster>
+        <Initial Unit="V">0</Initial>
+        <Final Unit="V">0</Final>
+    <!-- <Steps Comment="Note that the value is calculated via Initial+[0..Steps-1]*(Final-Initial)/(Steps-1)">16</Steps> -->
+        <Steps Unit="#">1</Steps>
+      </Voltage>
+    </Lead>
+    <!-- End Contacts -->
+
+    <Material_Parameters>
+      <OverwriteMaterial>
+        <!-- gallium arsenide -->
+        <Material>
+          <Name>GaAs</Name>
+          <!--<ConductionBandOffset Unit="eV">2.979</ConductionBandOffset> -->
+          <ConductionBandOffset Unit="eV">-1.519</ConductionBandOffset>
+          <!-- E_v,average -->
+          <!--<ConductionBandOffset Unit="eV">1.45966666</ConductionBandOffset>-->
+          <!-- E_v,average + 1/3 Delta_so = 1.346 + 1/3 0.341 -->
+          <ValenceBandOffset Unit="eV">-1.519</ValenceBandOffset>
+          <!-- E_v,average -->
+          <!--<ValenceBandOffset Unit="eV">-0.80</ValenceBandOffset> -->
+          <!-- Vurgaftman -->
+          <!--<ValenceBandOffset Unit="eV">1.346</ValenceBandOffset>-->
+          <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+          <BandGap Unit="eV">1.519</BandGap>
+          <!-- Vurgaftman -->
+
+          <!--<BandGapAlpha Unit="eV/K">0.5405e-3</BandGapAlpha>-->
+          <!-- Vurgaftman -->
+          <!--<BandGapBeta Unit="K">204</BandGapBeta>-->
+          <!-- Vurgaftman -->
+          <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+          <!-- set value to zero -->
+          <BandGapBeta Unit="K">0</BandGapBeta>
+          <!-- set value to zero -->
+
+          <ElectronMass Unit="m0">0.067</ElectronMass>
+          <!-- Vurgaftman -->
+          <EpsStatic>12.93</EpsStatic>
+          <!-- 10.89 is the value used by T. Kubis in article -->
+          <EpsOptic>10.89</EpsOptic>
+          <!-- http://www.ioffe.ru/SVA/NSM/Semicond/GaAs/basic.html -->
+          <!--<DeformationPotential Unit="eV">-7.17</DeformationPotential> -->
+          <!-- Vurgaftman -->
+          <DeformationPotential Unit="eV">-9.36</DeformationPotential>
+          <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -1.21 - 8.15 = -9.36 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+          <!--<MaterialDensity Unit="kg/m^3">5.316e3</MaterialDensity>-->
+          <MaterialDensity Unit="kg/m^3">5.32e3</MaterialDensity>
+          <!-- [Kubis] -->
+          <!--<VelocityOfSound Unit="m/s">4.73e3</VelocityOfSound>-->
+          <VelocityOfSound Unit="m/s">5.2e3</VelocityOfSound>
+          <!-- [Kubis] -->
+          <LOPhononEnergy Unit="eV">35e-3</LOPhononEnergy>
+          <!-- J. Piprek (low-temperature optical phonon energy) -->
+          <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+          <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+          <Lattice_a Unit="nm">0.565325</Lattice_a>
+          <!-- Vurgaftman -->
+          <Elastic_c11 Unit="GPa">122.1</Elastic_c11>
+          <!-- Vurgaftman -->
+          <Elastic_c12 Unit="GPa">56.6</Elastic_c12>
+          <!-- Vurgaftman -->
+          <Elastic_c44 Unit="GPa">60.0</Elastic_c44>
+          <!-- Vurgaftman -->
+          <Piezo_e14 Unit="C/m^2">-0.160</Piezo_e14>
+          <!-- experimental value S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+        </Material>
+        <!-- indium arsenide -->
+        <Material>
+          <Name>InAs</Name>
+          <!--<ConductionBandOffset Unit="eV">1.937</ConductionBandOffset> -->
+          <ConductionBandOffset Unit="eV">-1.4884285714285714285714285714286</ConductionBandOffset>
+          <!-- to get a CBO of -0.150 eV for In0.14Ga0.86As -->
+          <!--<ValenceBandOffset Unit="eV">-0.59</ValenceBandOffset> -->
+          <!-- Vurgaftman -->
+          <ValenceBandOffset Unit="eV">-1.4884285714285714285714285714286</ValenceBandOffset>
+          <!-- to get a CBO of -0.150 eV for In0.14Ga0.86As -->
+          <!--<ValenceBandOffset Unit="eV">1.39</ValenceBandOffset>-->
+          <!-- S.-H. Wei, A. Zunger, APL 72, 2011 (1998) -->
+          <!-- Band gap of In0.14Ga0.86As is 1.36472 eV -->
+          <BandGap Unit="eV">0.417</BandGap>
+          <!-- Vurgaftman -->
+
+          <!--<BandGapAlpha Unit="eV/K">0.276e-3</BandGapAlpha>-->
+          <!-- Vurgaftman -->
+          <!--<BandGapBeta Unit="K">93</BandGapBeta>-->
+          <!-- Vurgaftman -->
+          <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+          <!-- set value to zero -->
+          <BandGapBeta Unit="K">0</BandGapBeta>
+          <!-- set value to zero -->
+
+          <!--<ElectronMass Unit="m0">0.026</ElectronMass>-->
+          <!-- Vurgaftman -->
+          <ElectronMass Unit="m0">0.067</ElectronMass>
+          <!-- GaAs value used by T. Kubis in article -->
+
+          <!--<EpsStatic>15.15</EpsStatic>-->
+          <EpsStatic>12.93</EpsStatic>
+          <!-- GaAs value used by T. Kubis in article -->
+
+          <!--<EpsOptic>12.25</EpsOptic>-->
+          <EpsOptic>10.89</EpsOptic>
+          <!-- GaAs value used by T. Kubis in article -->
+
+          <!--<DeformationPotential Unit="eV">-5.08</DeformationPotential>-->
+          <!-- Vurgaftman -->
+          <DeformationPotential Unit="eV">-6.66</DeformationPotential>
+          <!-- a_c(Gamma) = a_v + a_gap(Gamma) = -1.00 - 5.66 = -6.66 (S.-H. Wei, A. Zunger, PRB 60, 5404 (1999)) -->
+          <!--<MaterialDensity Unit="kg/m^3">5.61e3</MaterialDensity>-->
+          <MaterialDensity Unit="kg/m^3">5.32e3</MaterialDensity>
+          <!-- [Kubis] -->
+          <!--<VelocityOfSound Unit="m/s">3.97e3</VelocityOfSound>-->
+          <VelocityOfSound Unit="m/s">5.2e3</VelocityOfSound>
+          <!-- [Kubis] -->
+
+          <!--<LOPhononEnergy Unit="eV">30e-3</LOPhononEnergy>-->
+          <!-- J. Piprek (low-temperature optical phonon energy) -->
+          <LOPhononEnergy Unit="eV">35e-3</LOPhononEnergy>
+          <!-- GaAs value used by T. Kubis in article -->
+
+          <LOPhononWidth Unit="eV">3e-3</LOPhononWidth>
+          <AcousticPhononEnergy Unit="eV">5e-3</AcousticPhononEnergy>
+          <Lattice_a Unit="nm">0.60583</Lattice_a>
+          <!-- Vurgaftman -->
+          <Elastic_c11 Unit="GPa">83.29</Elastic_c11>
+          <!-- Vurgaftman -->
+          <Elastic_c12 Unit="GPa">45.26</Elastic_c12>
+          <!-- Vurgaftman -->
+          <Elastic_c44 Unit="GPa">39.59</Elastic_c44>
+          <!-- Vurgaftman -->
+          <Piezo_e14 Unit="C/m^2">-0.044</Piezo_e14>
+          <!-- experimental value S. Gironcoli et al., PRL 62(24), 2853 (1989) -->
+
+        </Material>
+
+        <!-- indium gallium arsenide -->
+        <Material>
+          <Name>In(x)Ga(1-x)As</Name>
+          <Alloy>InAs(x)</Alloy>
+          <Alloy>GaAs(1-x)</Alloy>
+          <ConductionBandOffset Unit="eV">0</ConductionBandOffset>
+
+          <!--<ValenceBandOffset Unit="eV">-0.38</ValenceBandOffset>-->
+          <!-- [Vurgaftman]-->
+          <!--<ValenceBandOffset Unit="eV">-0.46167</ValenceBandOffset><!-- used by T. Kubis in article -->
+          <ValenceBandOffset Unit="eV">0</ValenceBandOffset>
+
+          <!--<BandGap Unit="eV">0.477</BandGap>-->
+          <!-- [Vurgaftman]-->
+          <BandGap Unit="eV">0</BandGap>
+          <BandGapAlpha Unit="eV/K">0</BandGapAlpha>
+          <BandGapBeta Unit="K">0</BandGapBeta>
+          <!--<ElectronMass Unit="m0">0.0091</ElectronMass>-->
+          <!-- [Vurgaftman]-->
+          <ElectronMass Unit="m0">0</ElectronMass>
+          <EpsStatic>0</EpsStatic>
+          <EpsOptic>0</EpsOptic>
+          <DeformationPotential Unit="eV">2.61</DeformationPotential>
+          <!-- [Vurgaftman]-->
+          <MaterialDensity Unit="kg/m^3">0</MaterialDensity>
+          <VelocityOfSound Unit="m/s">0</VelocityOfSound>
+          <LOPhononEnergy Unit="eV">0</LOPhononEnergy>
+          <LOPhononWidth Unit="eV">0</LOPhononWidth>
+          <AcousticPhononEnergy Unit="eV">0</AcousticPhononEnergy>
+          <Lattice_a  Unit="nm">0</Lattice_a>
+          <Elastic_c11 Unit="GPa">0</Elastic_c11>
+          <Elastic_c12 Unit="GPa">0</Elastic_c12>
+          <Elastic_c44 Unit="GPa">0</Elastic_c44>
+          <Piezo_e14 Unit="C/m^2">0</Piezo_e14>
+        </Material>
+
+      </OverwriteMaterial>
+    </Material_Parameters>
+    
+  </Device>
+
+  <MSB-1Band>
+    <MaxGreenIts Comment="Max. iterations within the G^R cycle.">25</MaxGreenIts>
+    <MaxGreenDelta Unit="1/nm/eV" Comment="Max. relative change between two cycles to abort iteration.">3e-7</MaxGreenDelta>
+
+    <MaxProbeIts Comment="Max. iterations for current conservation calculation. Only used if Core.ProbeMode=iterative">15</MaxProbeIts>
+    <MaxProbeNorm Unit="A/cm^2" Comment="Max. absolute leakage current to abort iteration.">1e-9</MaxProbeNorm>
+
+    <PoissonOuterDamping Comment ="(1-damping)*Vnew + damping*Vold"> 0.3</PoissonOuterDamping>
+    <PoissonInnerDamping> 0.3 </PoissonInnerDamping>
+
+    <MaxPoissonOuterIts Comment="Max. outer Poisson iterations where G^R is recalculated.">25</MaxPoissonOuterIts>
+    <MaxPoissonInnerIts Comment="Max. inner Poisson iterations where the density predictor is used.">15</MaxPoissonInnerIts>
+
+    <MaxPoissonDensityNorm Unit="1/cm^3" Comment="Max. absolute density deviation to abort Poisson iterations.">1e9</MaxPoissonDensityNorm>
+    <MaxPoissonCorrectorNorm Unit="V" Comment="Max. absolute potential deviation to abort Poisson iterations.">1e-4</MaxPoissonCorrectorNorm>
+
+    <Core>
+      <BallisticCalculation Comment="yes or no (default is no)">yes</BallisticCalculation>
+      <ProbeMode Comment="Specify method to calculate current conservation. Novel (more stable) method is 'direct'. [direct|iterative]">direct</ProbeMode>
+      <VoltageMode Comment="Specify handling of applied bias voltage. Drop-mode ensures that the specified voltage drops along the device. Flat-mode uses Neumann boundary conditions that do not guarantee a complete voltage drop. [drop|flat]">flat</VoltageMode>
+      <ScatteringStrengthConst Unit="eV" Comment="Additional constant scattering strength for every probe. Typical values are 0.001-0.01 and zero disables this scattering mechanism.">0.01</ScatteringStrengthConst>
+      <ScatteringStrengthBP Unit="eV" Comment="Additional scattering via Büttiker-Probes. Typical values are 0.001-0.01.">0.01</ScatteringStrengthBP>
+      <ScatteringStrengthMSB Unit="[0..1]" Comment="Novel scatterng via MSB. Scattering strength is calculated from material parameters. This parameter tunes the scattering rates from 0.0=disabled over 1.0=normal to X=amplified. ">1.0</ScatteringStrengthMSB>
+    </Core>
+
+  </MSB-1Band>
+</nextnano.MSB>

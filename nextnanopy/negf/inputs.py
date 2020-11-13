@@ -1,5 +1,5 @@
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.utils.formatting import is_negf_input_file
+from nextnanopy.negf.defaults import is_negf_input_file
 
 
 class InputFile(InputFileTemplate):

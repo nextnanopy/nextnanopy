@@ -5,6 +5,8 @@ import numpy as np
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
 
+from nextnanopy import defaults
+
 
 def load_message(method):
     def f(*args, **kwargs):
@@ -39,16 +41,17 @@ class Output(object):
     def load(self):
         pass
 
-    def get_coord(self,key):
+    def get_coord(self, key):
         return self.coords[key]
 
-    def get_variable(self,key):
+    def get_variable(self, key):
         return self.variables[key]
 
+
 class DataFileTemplate(Output):
-    def __init__(self, fullpath, type=None):
+    def __init__(self, fullpath, product=None):
         super().__init__(fullpath)
-        self.type = type
+        self.product = product
         self.load()
 
     @load_message
@@ -68,20 +71,14 @@ class DataFileTemplate(Output):
 
 
 class DataFile(DataFileTemplate):
-    def __init__(self, fullpath, type=None):
-        super().__init__(fullpath, type=type)
+    def __init__(self, fullpath, product=None):
+        super().__init__(fullpath, product=product)
 
     def get_loader(self):
-        if self.type == 'nextnano3':
-            from nextnanopy.nn3.outputs import DataFile as loader
-        elif self.type == 'nextnano++':
-            from nextnanopy.nnp.outputs import DataFile as loader
-        elif self.type == 'nextnano.NEGF':
-            from nextnanopy.negf.outputs import DataFile as loader
-        elif self.type == 'nextnano.MSB':
-            raise NotImplementedError('Loading datafile from nextnano.MSB is not implemented yet')
+        if self.product:
+            loader = defaults.get_DataFile(self.product)
         else:
-            print('[Warning] nextnano type is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB')
+            print('[Warning] nextnano product is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB')
             print('[Warning] Autosearching for the best loading method. Note: The result may not be correct')
             loader = self.find_loader()
         return loader
@@ -90,7 +87,7 @@ class DataFile(DataFileTemplate):
         from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
         from nextnanopy.nn3.outputs import DataFile as DataFile_nn3
         from nextnanopy.negf.outputs import DataFile as DataFile_negf
-        Dats = [DataFile_nn3, DataFile_nnp,DataFile_negf]
+        Dats = [DataFile_nn3, DataFile_nnp, DataFile_negf]
         for Dati in Dats:
             try:
                 df = Dati(self.fullpath)

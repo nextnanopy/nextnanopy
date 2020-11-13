@@ -13081,11 +13081,11 @@ div#notebook {
 <div class="highlight"><pre><span></span><span class="n">my_input</span> <span class="o">=</span> <span class="n">nextnanopy</span><span class="o">.</span><span class="n">InputFile</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">)</span>
 </pre></div>
 <p>This object contains all the relevant information of the input file such as the raw text, the variables and the configuration for the execution (see Example 0).</p>
-<p>When you create <code>my_input</code>, the class will first check automatically the type of the input file (nextnano++, nextnano3 or nextnano.NEGF). Then, it will get the raw text and extract all variables defined in the file like:</p>
+<p>When you create <code>my_input</code>, the class will first check automatically the type of the input file (nextnano++, nextnano3, nextnano.NEGF or nexntano.MSB). Then, it will get the raw text and extract all variables defined in the file like:</p>
 
 <pre><code>$my_var = 3 # in nextnano++
 %my_var = 3 ! in nextnano3</code></pre>
-<p>Note that loading variables or sweeping parameters are not implemented for nextnano.NEGF yet.</p>
+<p>Note that loading variables or sweeping parameters are not implemented for nextnano.NEGF nor nextnano.MSB yet.</p>
 
 </div>
 </div>
@@ -13591,7 +13591,7 @@ save(fullpath=None, overwrite=False, automkdir=True) method of nextnanopy.inputs
 <div class="highlight"><pre><span></span><span class="n">my_input</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
 </pre></div>
 <p>Note that if you have modified one or more variables, you must save the file before execution.</p>
-<p>The <code>execute</code> method without any arguments, it will use the configuration stored in <code>my_input.config</code>. As explained in Example 0, it will automatically detect the nextnano product (nextnano++, nextnano3 or nextnano.NEGF) and will load the corresponding configuration parameters prior execution.</p>
+<p>The <code>execute</code> method without any arguments, it will use the configuration stored in <code>my_input.config</code>. As explained in Example 0, it will automatically detect the nextnano product (nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB) and will load the corresponding configuration parameters prior execution.</p>
 <p>The optional arguments are:</p>
 <ul>
 <li>exe: path to nextnano executable</li>

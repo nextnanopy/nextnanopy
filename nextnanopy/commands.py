@@ -3,22 +3,9 @@ import subprocess
 import queue
 import threading
 from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
-from nextnanopy.utils.formatting import is_nn3_input_file, is_nnp_input_file, is_negf_input_file, is_msb_input_file
+from nextnanopy.utils.formatting import _path, _bool
 from collections import OrderedDict
-
-
-def _path(path):
-    if path:
-        path = r'{}'.format(path)
-        path = f'"{path}"'
-    return path
-
-
-def _bool(_in):
-    if _in == 0:
-        return True
-    else:
-        return bool(_in)
+from nextnanopy import defaults
 
 
 def command(
@@ -27,128 +14,20 @@ def command(
         license,
         database,
         outputdirectory,
-        **kwargs,
+        **opt_kwargs,
 ):
-    cmd_kwargs = dict(
+    kwargs = dict(
         inputfile=inputfile,
         exe=exe,
         license=license,
         database=database,
         outputdirectory=outputdirectory,
     )
-    cmd_kwargs.update(kwargs)
-    if is_nn3_input_file(inputfile):
-        return command_nn3(**cmd_kwargs)
-    elif is_nnp_input_file(inputfile):
-        return command_nnp(**cmd_kwargs)
-    elif is_negf_input_file(inputfile):
-        return command_negf(**cmd_kwargs)
-    elif is_msb_input_file(inputfile):
-        return command_msb(**cmd_kwargs)
-    else:
-        raise ValueError(f'Input file is not valid')
+    kwargs.update(opt_kwargs)
+    product = defaults.input_file_type(inputfile)
+    cmd = defaults.get_command(product)
+    return cmd(**kwargs)
 
-
-def generate_command(args):
-    cmd = []
-    for case in args:
-        arg, value = case
-        _a, _v = _bool(arg), _bool(value)
-        if not _a:
-            continue
-        elif _a and not _v:
-            cmdi = f"{arg}"
-        else:
-            cmdi = f"{arg} {value}"
-        cmd.append(cmdi)
-    cmd = ' '.join(cmd)
-    return cmd
-
-
-def command_nn3(
-        inputfile,
-        exe,
-        license,
-        database,
-        outputdirectory,
-        threads=0,
-        debuglevel=0,
-        cancel=-1,
-        softkill=-1,
-        **kwargs,
-):
-    cmd_args = OrderedDict(
-        exe=[_path(exe), ''],
-        license=['-license', _path(license)],
-        inputfile=['-inputfile', _path(inputfile)],
-        database=['-database', _path(database)],
-        threads=['-threads', threads],
-        outputdirectory=['-outputdirectory', _path(outputdirectory)],
-        debuglevel=['-debuglevel', debuglevel],
-        cancel=['-cancel', cancel],
-        softkill=['-softkill', softkill],
-    )
-    return generate_command(cmd_args.values())
-
-
-def command_nnp(
-        inputfile,
-        exe,
-        license,
-        database,
-        outputdirectory,
-        threads=0,
-        **kwargs,
-):
-    cmd_args = OrderedDict(
-        exe=[_path(exe), ''],
-        license=['--license', _path(license)],
-        database=['--database', _path(database)],
-        threads=['--threads', threads],
-        outputdirectory=['--outputdirectory', _path(outputdirectory)],
-        noautooutdir=['--noautooutdir', ''],
-        inputfile=[_path(inputfile), ''],
-    )
-    return generate_command(cmd_args.values())
-
-def command_negf(
-        inputfile,
-        exe,
-        license,
-        database,
-        outputdirectory,
-        threads=0,
-        **kwargs,
-):
-    cmd_args = OrderedDict(
-        exe=[_path(exe), ''],
-        inputfile=[_path(inputfile), ''],
-        outputdirectory=[_path(outputdirectory), ''],
-        database=[_path(database), ''],
-        license=[_path(license), ''],
-        threads=['-threads', threads],
-    )
-    return generate_command(cmd_args.values())
-
-def command_msb(
-        inputfile,
-        exe,
-        license,
-        database,
-        outputdirectory,
-        debug=0,
-        **kwargs,
-):
-    cmd_args = OrderedDict(
-        exe=[_path(exe), ''],
-        inputfile=[_path(inputfile), ''],
-        license=['-license', _path(license)],
-        database=['-database', _path(database)],
-        outputdirectory=['-outputdirectory', _path(outputdirectory)],
-    )
-    if debug == 1:
-        cmd_args['debug'] = ['-debug', debug]
-    return generate_command(cmd_args.values())
 
 def send(cmd):
     PIPE = subprocess.PIPE

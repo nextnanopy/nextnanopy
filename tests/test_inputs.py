@@ -11,7 +11,7 @@ class Test_nnp(unittest.TestCase):
         fullpath = os.path.join(folder_nnp, 'only_variables.in')
 
         file = InputFile(fullpath)
-        self.assertEqual(file.type, 'nextnano++')
+        self.assertEqual(file.product, 'nextnano++')
 
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables['float'].name, 'float')
@@ -100,7 +100,7 @@ class Test_nn3(unittest.TestCase):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
 
         file = InputFile(fullpath)
-        self.assertEqual(file.type, 'nextnano3')
+        self.assertEqual(file.product, 'nextnano3')
 
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables['float'].name, 'float')
@@ -198,7 +198,7 @@ class Test_negf(unittest.TestCase):
         fullpath = os.path.join(folder_negf, 'example.xml')
 
         file = InputFile(fullpath)
-        self.assertEqual(file.type, 'nextnano.NEGF')
+        self.assertEqual(file.product, 'nextnano.NEGF')
 
         self.assertEqual(len(file.variables.keys()), 0)
 

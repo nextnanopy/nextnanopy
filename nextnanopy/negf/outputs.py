@@ -7,7 +7,7 @@ import re
 
 class DataFile(DataFileTemplate):
     def __init__(self, fullpath):
-        super().__init__(fullpath, type='nextnano.NEGF')
+        super().__init__(fullpath, product='nextnano.NEGF')
         self.load()
 
     def get_loader(self):

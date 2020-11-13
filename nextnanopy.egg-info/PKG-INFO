@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: nextnanopy
-Version: 0.1.0a2
+Version: 0.1.0a4
 Summary: Useful tools to interface the nextnano software (https://www.nextnano.com/)
 Home-page: https://github.com/**
 Author: nextnano GmbH
@@ -14,18 +14,33 @@ Description: # NEXTNANOPY README
         [![Downloads](https://img.shields.io/**)](https://github.com/**/releases)
         
         nextnanopy is a Python module to interface the [nextnano](https://www.nextnano.com/) software. This package includes features for:
+        * **Output files**: user-friendly method to load the datafiles which allows easy and flexible post-processing. 
         * **Input files:** load input files, set variables, save by finding unused name, execute the file, write input files, etc.
-        * **Output files**: user-friendly method to load the datafiles which allows easy and flexible post-processing.
+        * **Configuration**: setup default nextnano configuration (path to executables, databases, licenses, etc).
         * **Import from GDS files**: load polygons from GDS files and user-friendly methods to generate raw text of nextnano shapes (beta).
         
+        **Note:** the license is not compulsory for the general use of nextnanopy, unless you would like to execute input files via Python.
         
+        are you using nextnano to optimize some parameter in order to have a better performance device? In
         
         ## Future of nextnanopy
-        Currently, it only supports files and features from nextnano++ and nextnano3, although the goal is to extend the functionalities to nextnano.NEGF and nextnano.MSB in future releases.
+        Currently, nextnanopy has basic features for nextnano++, nextnano3 and nextnano.NEGF although the goal is to extend the functionalities to nextnano.MSB in future releases.
         
-        On the other hand, the helper for the creation of input files will be improved as well as the generation of nextnano shapes. 
+        In future releases, we would like to implement:
+        
+        * **Common post-processing methods**: like loading and plotting together bandedges, eigenenergies and eigenlevels, colormap of potential landscape with GDS polygons on top, etc.
+        * **Support for any nextnano.NEGF datafiles**: in the current release, it is only implemented the loading of .dat files (most of them).
+        * **User-friendly input file creation/modification**: the idea is to load any input file and it would detect all the different blocks so the user can easily modify parameters like 'boundary conditions' or 'region material'. Similarly, it should be user-friendly to create any input file from scratch via Python.
+        * **Feedback loops**: a routine that allows the user to optimize any figure of merit of a device with a given set of input variables. The user can set a post-processing routine to get the figure of merit from the simulated data and later, a new set of input variables will be generated and executed. This feedback loop will repeat until a set of conditions are satisfied.
+        * **Improve documentation**: in the source code as well as in the website.
+        * **Guidelines for contributors**: set of rules if you want to contribute to the project.
          
         ## Installation
+        
+        ### Requirements
+        
+        You need a working python 3.x installation to be able to use nextnanopy. We highly recommend installing [Anaconda](https://www.anaconda.com/), which takes care of installing Python and managing packages. 
+        Make sure to download the latest version with python 3.8.
         
         ### Dependencies:
         

@@ -1,14 +1,13 @@
 import numpy as np
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.outputs import Output, AvsAscii, DataFileTemplate
-from nextnanopy.utils.formatting import parse_nnp_variable, is_nnp_variable
-from nextnanopy.utils.datasets import InputVariable_nnp
+from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_variable, InputVariable_nnp
 from nextnanopy.utils.datasets import Variable, Coord
 
 
 class DataFile(DataFileTemplate):
     def __init__(self, fullpath):
-        super().__init__(fullpath, type='nextnano++')
+        super().__init__(fullpath, product='nextnano++')
         self.load()
 
     def get_loader(self):

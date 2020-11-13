@@ -1,7 +1,6 @@
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.utils.datasets import InputVariable_nn3
-from nextnanopy.utils.formatting import parse_nn3_variable, is_nn3_input_file, is_nn3_variable
+from nextnanopy.nn3.defaults import parse_nn3_variable, is_nn3_input_file, is_nn3_variable, InputVariable_nn3
 
 
 class InputFile(InputFileTemplate):
