@@ -19,7 +19,7 @@ install_requires = [
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.0b1",
+    version="0.1.0",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',
@@ -83,7 +83,7 @@ othererror_template = '''
 # now test the versions of extras
 for extra, (module_name, min_version, install_method) in extras.items():
     try:
-        module = import_module(module_name)
+        module = import_module(module_name.lower())
         if StrictVersion(module.__version__) < StrictVersion(min_version):
             print(version_template.format(module_name, min_version, extra, install_method))
     except ImportError:
