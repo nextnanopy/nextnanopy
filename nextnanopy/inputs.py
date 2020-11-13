@@ -11,9 +11,9 @@ class InputFileTemplate(object):
         self.variables = DictList()
         self.fullpath = fullpath
         self.type = 'not valid'
-        if fullpath:
+        if fullpath is not None:
             self.load(fullpath)
-        if not configpath:
+        if configpath is None:
             self.config = NNConfig()
         else:
             self.config = NNConfig(configpath)
@@ -63,8 +63,8 @@ class InputFileTemplate(object):
         self.load_raw()
         self.load_variables()
 
-    def save(self, fullpath='', overwrite=False, automkdir=True):
-        if fullpath:
+    def save(self, fullpath=None, overwrite=False, automkdir=True):
+        if fullpath is None:
             fullpath = self.fullpath
         self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
         return self.fullpath
@@ -90,14 +90,18 @@ class InputFileTemplate(object):
     def load_variables(self):
         pass
 
-    def set_variable(self, name, value=None, comment=''):
+    def get_variable(self, name):
         if name not in self.variables.keys():
             raise KeyError(f'{name} is not a valid variable.')
-        if value:
-            self.variables[name].value = value
-        if comment:
-            self.variables[name].comment = comment
         return self.variables[name]
+
+    def set_variable(self, name, value=None, comment=None):
+        var = self.get_variable(name)
+        if value is not None:
+            var.value = value
+        if comment is not None:
+            var.comment = comment
+        return var
 
 
 class InputFile(InputFileTemplate):

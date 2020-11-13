@@ -79,9 +79,9 @@ def find_unused_in_folder(fullpath, overwrite=False):
 
 
 def savetxt(fullpath, text, overwrite=False, automkdir=True):
-    fullpath = find_unused_in_folder(fullpath, overwrite)
     if automkdir:
         mkdir_if_not_exist(get_folder(fullpath))
+    fullpath = find_unused_in_folder(fullpath, overwrite)
     with open(fullpath, 'w+') as file:
         print(f'Saving {fullpath}...')
         file.write(text)

@@ -16,10 +16,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     keywords="nextnano",
     url="https://github.com/**",
-    # packages=setuptools.find_packages(),
     packages=setuptools.find_packages(exclude=["tests"]),
-    # packages=["nextnanopy"],
-    # package_dir={"nextnanopy": "nextnanopy"},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",

@@ -64,8 +64,7 @@ class Config(object):
             print('')
 
     def get_options(self, section):
-        config = self.get_config()
-        options = config[section]
+        options = self.config[section]
         return options
 
     def save(self, fullpath=''):

@@ -1,5 +1,5 @@
 import os
-from nextnanopy.utils.config import Config, NNConfig
+from nextnanopy.utils.config import NNConfig
 import unittest
 
 
@@ -18,8 +18,6 @@ class Test_NNConfig(unittest.TestCase):
             self.assertTrue(option in config.default['nextnano3'].keys())
             self.assertTrue(option in config.config['nextnano3'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
-        if os.path.isfile(config.fullpath):
-            os.remove(config.fullpath)
 
     def test_default_nnp(self):
         config = NNConfig()
@@ -35,8 +33,6 @@ class Test_NNConfig(unittest.TestCase):
             self.assertTrue(option in config.default['nextnano++'].keys())
             self.assertTrue(option in config.config['nextnano++'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
-        if os.path.isfile(config.fullpath):
-            os.remove(config.fullpath)
 
     def test_default_negf(self):
         config = NNConfig()
@@ -52,8 +48,6 @@ class Test_NNConfig(unittest.TestCase):
             self.assertTrue(option in config.default['nextnano.NEGF'].keys())
             self.assertTrue(option in config.config['nextnano.NEGF'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
-        if os.path.isfile(config.fullpath):
-            os.remove(config.fullpath)
 
     def test_load_nn3(self):
         fullpath = os.path.join('tests', '.nextnanopy-config')

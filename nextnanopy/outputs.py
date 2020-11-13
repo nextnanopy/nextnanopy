@@ -39,6 +39,11 @@ class Output(object):
     def load(self):
         pass
 
+    def get_coord(self,key):
+        return self.coords[key]
+
+    def get_variable(self,key):
+        return self.variables[key]
 
 class DataFileTemplate(Output):
     def __init__(self, fullpath, type=None):
