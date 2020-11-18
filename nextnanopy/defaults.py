@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 from nextnanopy.utils.config import Config
 
 products = ['nextnano++', 'nextnano3', 'nextnano.NEGF', 'nextnano.MSB']
-config_default_path = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+default_folder = str(Path.home())
+config_default_path = os.path.join(default_folder, '.nextnanopy-config')
 
 
 def get_InputFile(product):

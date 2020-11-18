@@ -61,6 +61,8 @@ pip install nextnanopy
 python setup.py install
 ```
 
+For more information, please, see the documents in docs folder.
+
 ## Documentation
 
 Currently, the complete documentation is not available yet. However, there are few examples located in docs/examples that will help you to start playing with nextnanopy.
@@ -76,6 +78,8 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 ### Upcoming
 * Detailed documentation
 
+### Version 0.1.1 (Nov 18th, 2020)
+* Bug fix: find the home path for OSX and Linux. 
 
 ### Version 0.1.0 (Nov 13th, 2020)
 * Initial release.
