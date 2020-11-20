@@ -32,10 +32,12 @@ class Test_nnp(unittest.TestCase):
         self.assertEqual(file.variables['NoSpacing'].name, 'NoSpacing')
         self.assertEqual(file.variables['NoSpacing'].value, int('7'))
         self.assertEqual(file.variables['NoSpacing'].comment, 'this is a comment')
+        self.assertEqual(file.variables['NoSpacing'].text, '$NoSpacing = 7 # this is a comment')
 
         self.assertEqual(file.variables['MAYUS'].name, 'MAYUS')
         self.assertEqual(file.variables['MAYUS'].value, 'TEXT')
         self.assertEqual(file.variables['MAYUS'].comment, '')
+        self.assertEqual(file.variables['MAYUS'].text, '$MAYUS = TEXT')
 
         fullpath = os.path.join(folder_nnp, 'virtual_file.in')
         self.assertRaises(FileNotFoundError, InputFile, fullpath)

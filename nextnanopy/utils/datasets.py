@@ -81,9 +81,9 @@ class InputVariable(Data):
 
     @property
     def text(self):
-        t = f'{self.name} = {self.value}'
+        t = f'{self.var_char}{self.name} = {self.value}'
         if self.comment:
-            t = f'{self.var_char}{t} {self.com_char} {self.comment}'
+            t = f'{t} {self.com_char} {self.comment}'
         return t
 
 
