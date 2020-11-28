@@ -1,5 +1,5 @@
 import unittest
-from nextnanopy.utils.misc import find_unused_name
+from nextnanopy.utils.misc import *
 
 
 class TestMisc(unittest.TestCase):
@@ -42,4 +42,9 @@ class TestMisc(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+    import os
+    p = r'E:\junliang.wang\OneDrive\Jobs\PhD\Scripts\nextnanopy\inputs'
+    fp = os.path.join(p,'hemt#5_1d.in')
+    names = find_unused_in_folder(fp,overwrite=False)
+    print(names)
