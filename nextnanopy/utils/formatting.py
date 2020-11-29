@@ -42,6 +42,12 @@ def pattern_in_file(fullpath, input_pattern):
     return False
 
 
+def pattern_in_text(text, input_pattern):
+    if input_pattern in text:
+        return True
+    return False
+
+
 def generate_command(args):
     cmd = []
     for case in args:

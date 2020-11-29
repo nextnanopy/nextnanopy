@@ -1,6 +1,6 @@
 from nextnanopy.utils.datasets import InputVariable
 from nextnanopy.utils.formatting import str_to_path, _path, pattern_in_file, is_variable, parse_variable, \
-    generate_command
+    generate_command, pattern_in_text
 from collections import OrderedDict
 
 fmt = {
@@ -68,6 +68,10 @@ def parse_nn3_variable(text):
 
 def is_nn3_input_file(fullpath):
     return pattern_in_file(fullpath, fmt['input_pattern'])
+
+
+def is_nn3_input_text(text):
+    return pattern_in_text(text, fmt['input_pattern'])
 
 
 class InputVariable_nn3(InputVariable):

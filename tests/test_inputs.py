@@ -97,6 +97,33 @@ class Test_nnp(unittest.TestCase):
         for key, value in config.config['nextnano++'].items():
             self.assertEqual(file.default_command_args[key],value)
 
+    def test_text(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+
+        file = InputFile(fullpath)
+        text = file.text
+
+        new_file = InputFile()
+        self.assertEqual(new_file.product, 'not valid')
+        self.assertEqual(new_file.fullpath, None)
+        self.assertEqual(new_file.text, '')
+        self.assertEqual(new_file.raw_lines, [])
+
+        new_file.text = text
+        self.assertEqual(new_file.product, 'nextnano++')
+        self.assertEqual(new_file.fullpath, None)
+        self.assertEqual(new_file.text, text)
+        self.assertEqual(new_file.lines, file.lines)
+        self.assertEqual(new_file.variables['MAYUS'].name, 'MAYUS')
+        self.assertEqual(new_file.variables['MAYUS'].value, 'TEXT')
+        self.assertEqual(new_file.variables['MAYUS'].comment, '')
+        self.assertEqual(new_file.variables['MAYUS'].text, '$MAYUS = TEXT')
+        self.assertRaises(ValueError, new_file.save)
+        self.assertEqual(new_file.save(file.fullpath, overwrite=False),
+                         os.path.join(folder_nnp, 'only_variables_0.in'))
+        os.remove(new_file.fullpath)
+
+
 class Test_nn3(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
@@ -195,6 +222,32 @@ class Test_nn3(unittest.TestCase):
         os.remove(file.fullpath)
         os.rmdir(new_folder)
 
+    def test_text(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+
+        file = InputFile(fullpath)
+        text = file.text
+
+        new_file = InputFile()
+        self.assertEqual(new_file.product, 'not valid')
+        self.assertEqual(new_file.fullpath, None)
+        self.assertEqual(new_file.text, '')
+        self.assertEqual(new_file.raw_lines, [])
+
+        new_file.text = text
+        self.assertEqual(new_file.product, 'nextnano3')
+        self.assertEqual(new_file.fullpath, None)
+        self.assertEqual(new_file.text, text)
+        self.assertEqual(new_file.lines, file.lines)
+        self.assertEqual(new_file.variables['MAYUS'].name, 'MAYUS')
+        self.assertEqual(new_file.variables['MAYUS'].value, 'TEXT')
+        self.assertEqual(new_file.variables['MAYUS'].comment, '')
+        self.assertEqual(new_file.variables['MAYUS'].text, '%MAYUS = TEXT')
+        self.assertRaises(ValueError, new_file.save)
+        self.assertEqual(new_file.save(file.fullpath, overwrite=False),
+                         os.path.join(folder_nn3, 'only_variables_0.in'))
+        os.remove(new_file.fullpath)
+
 class Test_negf(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_negf, 'example.xml')
@@ -231,3 +284,7 @@ class Test_negf(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+    file = os.path.join(folder_nnp,'only_variables.in')
+    fi = InputFile(file)
+    text = fi.text
