@@ -1,0 +1,14 @@
+# AVS/Express field file
+#
+ndim = 2
+dim1 = 50
+dim2 = 401
+nspace = 2
+veclen = 1
+data = double
+field = rectilinear
+label = Density of States (Source) [1/eV/nm]
+
+variable 1 file=DOS_Lead_Source_position_resolved.avs.dat filetype=binary skip=0 offset=0 stride=1
+coord 1 file=DOS_Lead_Source_position_resolved.avs.coord filetype=ascii skip=0 offset=0 stride=1
+coord 2 file=DOS_Lead_Source_position_resolved.avs.coord filetype=ascii skip=50 offset=0 stride=1
