@@ -219,6 +219,124 @@ class AvsAscii(Output):
         return coords
 
 
+class VtrAscii(Output):
+    def __init__(self, fullpath):
+        super().__init__(fullpath)
+        self.load()
+
+    @property
+    def vtr(self):
+        filename = self.filename + '.vtr'
+        return os.path.join(self.folder, filename)
+
+    def load(self):
+        self.load_raw_metadata()
+        self.load_metadata()
+        self.load_variables()
+        self.load_coords()
+
+    def load_raw_metadata(self):
+        info = []
+        with open(self.fld, 'r') as f:
+            for line in f:
+                line = line.replace('\n', '')
+                line = line.strip()
+                try:
+                    float(line)
+                    break
+                except:
+                    if line == '':
+                        continue
+                    if line[0] != '#':
+                        info.append(line)
+        return info
+
+    def load_metadata(self):
+        info = self.load_raw_metadata()
+        key_int = ['ndim', 'dim1', 'dim2', 'dim3', 'nspace', 'veclen']
+        key_str = ['data', 'field']
+        metadata = {}
+        metadata['labels'] = []
+        metadata['units'] = []
+        metadata['variables'] = []
+        metadata['coords'] = []
+        metadata['dims'] = []
+        for line in info:
+            key, value = line.split(maxsplit=1)
+            if value[0] == '=':
+                value = value.replace('=', '')
+                value = value.strip()
+                if key in key_int:
+                    value = int(value)
+                    metadata[key] = value
+                elif key == 'label':
+                    labels = value.split()
+                    for label in labels:
+                        if '[' in label:
+                            label, unit = label.split('[')
+                            unit = unit.split(']')[0]
+                        else:
+                            label = label
+                            unit = ''
+                        metadata['labels'].append(label)
+                        metadata['units'].append(unit)
+                else:
+                    value = str(value)
+                    metadata[key] = value
+
+                if key[:3] == 'dim':
+                    metadata['dims'].append(metadata[key])
+
+            else:
+                if key == 'variable':
+                    vm = values_metadata(line)
+                    vm['file'] = os.path.join(self.folder, vm['file'])
+                    vm['size'] = np.prod(metadata['dims'])
+                    metadata['variables'].append(vm)
+                elif key == 'coord':
+                    vm = values_metadata(line)
+                    vm['file'] = os.path.join(self.folder, vm['file'])
+                    num = vm['num']
+                    vm['size'] = metadata[f'dim{num}']
+                    metadata['coords'].append(vm)
+
+        self.metadata = metadata
+        return metadata
+
+    def load_variables(self):
+        meta = self.metadata
+        variables = DictList()
+        for vmeta, label, unit in zip(meta['variables'], meta['labels'], meta['units']):
+            values = load_values(file=vmeta['file'],
+                                 filetype=vmeta['filetype'],
+                                 skip=vmeta['skip'],
+                                 offset=vmeta['offset'],
+                                 stride=vmeta['stride'],
+                                 size=vmeta['size'])
+            values = reshape_values(values, *meta['dims'])
+            var = Variable(name=label, value=values, unit=unit, metadata=vmeta)
+            variables[var.name] = var
+        self.variables = variables
+        return variables
+
+    def load_coords(self):
+        meta = self.metadata
+        coords = DictList()
+        for vmeta in meta['coords']:
+            values = load_values(file=vmeta['file'],
+                                 filetype=vmeta['filetype'],
+                                 skip=vmeta['skip'],
+                                 offset=vmeta['offset'],
+                                 stride=vmeta['stride'],
+                                 size=vmeta['size'])
+            ax = coord_axis(vmeta['num'])
+            unit = 'nm'
+            var = Coord(name=ax, value=values, unit=unit, dim=vmeta['num'] - 1, metadata=vmeta)
+            coords[var.name] = var
+        self.coords = coords
+        return coords
+
+
 def coord_axis(dim):
     dim = str(dim)
     axes = {'1': 'x', '2': 'y', '3': 'z'}
@@ -261,3 +379,85 @@ def reshape_values(values, *dims):
     shape = tuple([dim for dim in dims])
     values = np.reshape(values, shape)
     return np.transpose(values)
+	
+def load_vtr(path: str):
+    """
+    Loads colormap saved as VTR file. \n
+    Typically energy resolved carrier or current density. \n
+    Returns X, Y, Z as numpy arrays.
+    """
+    fp = open(path,'r')
+    lines = fp.readlines()
+
+    beg = []
+    end = []
+
+    # Rea
+    for i in range(len(lines)):
+        cur_beg_ind = lines[i].find('<DataArray')
+        if cur_beg_ind != -1:
+         #   print('found begin in line:',i)
+            beg.append((i,cur_beg_ind))
+    
+        cur_end_ind = lines[i].find('</DataArray>')
+        if cur_end_ind != -1:
+          #  print('found end in line:', i)
+            end.append((i,cur_end_ind))
+            
+    X=[]
+    for i in range(beg[0][0]+1,end[0][0]+1):
+      #  print("Importing X")
+        if i != end[0][0]:
+            X_temp = lines[i].replace('\n','').split('\t')
+            X_temp = list(map(float,X_temp))
+            X = X + X_temp
+            
+        if i == end[0][0]:
+            last = lines[i].split('\t')
+            del last[-1]
+            X = X + list(map(float,last))
+            
+
+            
+    X = np.asarray(X)
+    
+    Y=[]
+    for i in range(beg[1][0]+1,end[1][0]+1):
+        if i != end[1][0]:
+            Y_temp = lines[i].replace('\n','').split('\t')
+            Y_temp = list(map(float,Y_temp))
+            Y = Y + Y_temp
+            
+        if i == end[1][0]:
+            last = lines[i].split('\t')
+            del last[-1]
+            Y = Y + list(map(float,last))
+            
+
+            
+    Y = np.asarray(Y)
+    
+    Z=[]
+    for i in range(beg[3][0]+1,end[3][0]+1):
+     #  print("Z: ", i)
+        if i != end[3][0]:
+            Z_temp = lines[i].replace('\n','').split('\t')
+            Z_temp = list(map(float,Z_temp))
+            Z = Z + Z_temp
+            
+        if i == end[3][0]:
+            last = lines[i].split('\t')
+            del last[-1]
+            Z = Z + list(map(float,last))
+            
+    Z = np.asarray(Z)
+    Z = np.reshape(Z,(len(Y),len(X)))
+    
+    return X, Y, Z
+	
+def get_vtr(folder, filename):
+    cp = os.path.join(folder,filename)
+    dX, dY, dZ = load_vtr(cp)
+    return dX, dY, dZ
+
+

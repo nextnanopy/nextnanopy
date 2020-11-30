@@ -1,6 +1,6 @@
 import numpy as np
 from nextnanopy.utils.mycollections import DictList
-from nextnanopy.outputs import Output, AvsAscii, DataFileTemplate
+from nextnanopy.outputs import Output, AvsAscii, VtrAscii, DataFileTemplate
 from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_variable, InputVariable_nnp
 from nextnanopy.utils.datasets import Variable, Coord
 
@@ -13,6 +13,8 @@ class DataFile(DataFileTemplate):
     def get_loader(self):
         if self.extension in ['.v', '.fld', '.coord']:
             loader = AvsAscii
+        elif self.extension == '.vtr':
+            loader = VtrAscii
         elif self.extension == '.txt':
             loader = self._find_txt_loader()
         elif self.extension == '.dat':
