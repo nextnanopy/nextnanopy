@@ -45,6 +45,7 @@ my_input_file_no_extension_nnp = r'Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig2Fig3_
 my_input_file_no_extension_nn3 = r'Jogai_AlGaNGaN_FET_JAP2003_noGaNcap_Fig2Fig3_1D_nn3'
 my_input_file_no_extension_nnNEGF = r'THz_QCL_GaAs_AlGaAs_Fathololoumi_OptExpress2012_10K-FAST'
 my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB'
+my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB_test'
 
 #===========================
 if(software=="nextnano++"):
@@ -100,19 +101,53 @@ if(plotL):
 #++++++++++++++++++++++++++++++++++++++++++++++
 #===========================
   if(software=="nextnano++"):
-      file = os.path.join(folder,input_file_name_variable+r'\2mV'+'\Conduction_BandEdge.dat')
+      print(f"nextnano++ not implemented!")
   elif(software=="nextnano3"):
-      file = os.path.join(folder,input_file_name_variable+r'\2mV'+'\Conduction_BandEdge.dat')
+      print(f"nextnano3 not implemented!")
   elif(software=="nextnano.NEGF"):
-      folder_results = input_file_name_variable+r'\2mV'
-      file = os.path.join(folder,folder_results+'\Conduction_BandEdge.dat')
+
+      folder_results = input_file_name_variable
+      print(f"output folder_results:")
+      print(folder_results)
+
+      folder_total = os.path.join(folder,folder_results)
+      print(f"output folder_total:")
+      print(folder_total)
+
+      folder_bias = folder_results+r'\2mV'
+      print(f"output folder_bias:")
+      print(folder_bias)
+
+      folder_total_bias = os.path.join(folder,folder_bias)
+      print(f"output folder_total_bias:")
+      print(folder_total_bias)
+
+      file_cb = folder_total_bias+r'\Conduction_BandEdge.dat'
   elif(software=="nextnano.MSB"):
-      folder_results = input_file_name_variable+r'\BarrierThickness=2\Source=0V, Drain=0V'
-      file = os.path.join(folder,folder_results+r'\BandProfile'+r'\BandEdge_conduction.dat') 
+
+      folder_results = input_file_name_variable+r'\BarrierThickness=2'
+      print(f"output folder_results:")
+      print(folder_results)
+
+      folder_total = os.path.join(folder,folder_results)
+      print(f"output folder_total:")
+      print(folder_total)
+
+      folder_bias = folder_results+r'\Source=0V, Drain=0V'
+      print(f"output folder_bias:")
+      print(folder_bias)
+
+      folder_total_bias = os.path.join(folder,folder_bias)
+      print(f"output folder_total_bias:")
+      print(folder_total_bias)
+
+      file_cb = folder_total_bias+r'\BandProfile'+r'\BandEdge_conduction.dat'
+#===========================
+# Conduction band edge
 #===========================
   print(f"Read in file:")
-  print(file)
-  df = nn.DataFile(file,software)
+  print(file_cb)
+  df = nn.DataFile(file_cb,software)
 
   fig, ax = plt.subplots(1)
   ax.plot(df.coords['Position'].value,df.variables['Conduction Band Edge'].value,label='Conduction Band Edge')
@@ -122,7 +157,7 @@ if(plotL):
   ax.legend()
   fig.tight_layout()
 # plt.show()
-  fig.savefig(file+'.jpg')
+  fig.savefig(file_cb+'.jpg')
 
   if(software=="nextnano++"):
       file_LDOS = ''
@@ -142,7 +177,7 @@ if(plotL):
       file_Density = 'CarrierDensity_energy_resolved.vtr'
       file_Current = 'CurrentDensity_energy_resolved.vtr'
 
-  folder = os.path.join(folder,folder_results)
+  folder2Dplots = os.path.join(folder,folder_bias)
   for i in range(3):
       if(i == 0):
           if(software=="nextnano.MSB"): subfolder = 'DOS'
@@ -157,19 +192,21 @@ if(plotL):
           label = 'Current density j(x,E)'
           file = file_Current
 
-      vtr_folder = os.path.join(folder,subfolder)
+      vtr_folder = os.path.join(folder2Dplots,subfolder)
       vtr_file = os.path.join(vtr_folder,file)
       dff = nn.DataFile(vtr_file,product=software)
       cX = dff.coords['x'].value
       cY = dff.coords['y'].value
-      cZ = dff.variables['energy'].value
+      cZ = dff.variables[0].value
       fD, a2D1 = plt.subplots()
       im1 = a2D1.pcolormesh(cX, cY, cZ, cmap='gnuplot')
       a2D1.plot(df.coords[0].value,df.variables[0].value,label='Conduction Band Edge',
               color='white', linestyle='-')
       a2D1.set_title(label)  
-      print(f'Saving file: ',vtr_file+'.jpg')
-      fD.savefig(vtr_file+'.jpg')
+      filename = vtr_file+'.jpg'
+      print(f'Saving file: ',filename)
+      fD.savefig(filename)
+
     
 print(f'=====================================')  
 print(f'Done nextnanopy.')  
