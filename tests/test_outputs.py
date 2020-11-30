@@ -231,6 +231,43 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['dims'], [19, 19, 9])
         self.assertEqual(df.metadata['field'], 'rectilinear')
 
+    def test_avsCBR(self):
+        df = outputs.DataFile(join(folder_nn3, 'LocalDOS_sg1_deg1_Lead1.fld'), product='nextnano3')
+        self.assertEqual(len(df.coords.keys()), 2)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+        self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 51)
+        self.assertEqual(df.coords['x'].dim, 0)
+        self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 101)
+        self.assertEqual(df.coords['y'].dim, 1)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].name, 'LocalDOS_sg1_deg1_Lead1')
+        self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].unit, 'nm^-1eV^-1')
+        self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].value.shape, (51, 101))
+        self.assertEqual(df.metadata['ndim'], 2)
+        self.assertEqual(df.metadata['dims'], [51, 101])
+        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+ #   def test_vtrCBR(self):
+  #      df = outputs.DataFile(join(folder_nn3, 'LocalDOS_sg1_deg1_Lead1.vtr'), product='nextnano3')
+        # self.assertEqual(len(df.coords.keys()), 2)
+        # self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+        # self.assertEqual(df.coords['x'].unit, 'nm')
+        # self.assertEqual(df.coords['x'].value.size, 51)
+        # self.assertEqual(df.coords['x'].dim, 0)
+        # self.assertEqual(df.coords['y'].unit, 'nm')
+        # self.assertEqual(df.coords['y'].value.size, 101)
+        # self.assertEqual(df.coords['y'].dim, 1)
+        # self.assertEqual(len(df.variables.keys()), 1)
+        # self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].name, 'LocalDOS_sg1_deg1_Lead1')
+        # self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].unit, 'nm^-1eV^-1')
+        # self.assertEqual(df.variables['LocalDOS_sg1_deg1_Lead1'].value.shape, (51, 101))
+        # self.assertEqual(df.metadata['ndim'], 2)
+        # self.assertEqual(df.metadata['dims'], [51, 101])
+        # self.assertEqual(df.metadata['field'], 'rectilinear')
+
+
 ##    def test_vtr(self):
   ##      df = outputs.DataFile(join(folder_nn3, '2Dcb1_sg1_deg1_psi_ev001.vtr'), product='nextnano3')
 ##        self.assertEqual(len(df.coords.keys()), 2)
