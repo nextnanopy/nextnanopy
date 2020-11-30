@@ -5,7 +5,7 @@ import sys,os
 import matplotlib.pyplot as plt
 
 import config_nextnano     # This should be your default configuration.
-#import working.config_nextnano_temp # This could be a modified configuration file.
+#import config_nextnano_temp # This could be a modified configuration file.
 
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
@@ -15,28 +15,24 @@ import config_nextnano     # This should be your default configuration.
 #================================
 # Specify software product here!
 #================================
-#software = 'nextnano++'
-software = 'nextnano3'
+software = 'nextnano++'
+#software = 'nextnano3'
 #software = 'nextnano.NEGF'
 #software = 'nextnano.MSB'
 #===========================
 
-folder_examples_nnp    = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano++ sample files'
-folder_examples_nn3    = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano3 sample files'
+folder_examples_nnp = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano++ sample files'
+folder_examples_nn3 = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano3 sample files'
 folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_06_22\nextnano.NEGF sample files'
-folder_examples_nnMSB  = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
+folder_examples_nnMSB = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
 
-#++++++++++++++++++++++++++++++++++++++++++++++
-# These lines have to be adjusted by the user.  
-#++++++++++++++++++++++++++++++++++++++++++++++
-#folder_examples_nn3 = r'N:\users\nextnano\nextnano GmbH - Tutorials\Tutorials\2D The CBR method (Transmission)'
 #===========================
 if(software=="nextnano++"):
-  # subfolder = ''
-    subfolder = r'\Quantum Mechanics examples'
+    subfolder = ''
+  # subfolder = r'\Quantum Mechanics examples'
 elif(software=="nextnano3"):
-  # subfolder = ''
-    subfolder = r'\Quantum Mechanics examples'
+    subfolder = ''
+  # subfolder = r'\Quantum Mechanics examples'
 elif(software=="nextnano.NEGF"):
     subfolder = ''
 elif(software=="nextnano.MSB"):
@@ -70,12 +66,10 @@ mkdir_if_not_exist(folder_output_python)
 #--------------------------------------------------------
 # Specify input file without file extension '.in'/.'xml'
 #--------------------------------------------------------
-#my_input_file_no_extension_nnp = r'Jogai_AlGaNGaN_FET_JAP2003_GaNcap_Fig6Fig5_1D_nnp'
-#my_input_file_no_extension_nn3 = r'Jogai_AlGaNGaN_FET_JAP2003_GaNcap_Fig6Fig5_1D_nn3'
-#my_input_file_no_extension_nn3 = r'2D_CBR_MamaluySabathilJAP2003_AharonovBohm'
-#my_input_file_no_extension_nn3 = r'2D_CBR_square'
-my_input_file_no_extension_nnp = r'Transmission_Double_Barrier_1D_nnp'
-my_input_file_no_extension_nn3 = r'Transmission_Double_Barrier_1D_nn3'
+my_input_file_no_extension_nnp = r'Jogai_AlGaNGaN_FET_JAP2003_GaNcap_Fig6Fig5_1D_nnp'
+my_input_file_no_extension_nn3 = r'Jogai_AlGaNGaN_FET_JAP2003_GaNcap_Fig6Fig5_1D_nn3'
+#my_input_file_no_extension_nnp = r'Transmission_Double_Barrier_1D_nnp'
+#my_input_file_no_extension_nn3 = r'Transmission_Double_Barrier_1D_nn3'
 my_input_file_no_extension_nnNEGF = r'THz_QCL_GaAs_AlGaAs_Fathololoumi_OptExpress2012_10K-FAST'
 my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB'
 
@@ -116,16 +110,13 @@ for var in input_file.variables.values():
     print(f'{var.text}') # --> better method to preview
 
 #SweepVariable = 'ThicknessAlGaN'
-#SweepVariable = 'ThicknessGaNcap'
-SweepVariable = 'Barrier_Width'
+SweepVariable = 'ThicknessGaNcap'
 
 comment_original = input_file.variables[SweepVariable].comment
 #ListOfValues = ["10.0"]
 #ListOfValues = ["10.0", "15.0", "20.0"]
 #ListOfValues = ["1","2","3","4","5","7","9","11","12","13","14","15","17","20","25","30"]
-#ListOfValues = ["1","3","7","12","20","30"]
-ListOfValues = ["2.0", "4.0", "10.0"]
-
+ListOfValues = ["1","3","7","12","20","30"]
 dfV=[]
 df_cbV=[]
 SweepVariableStringV=[]
@@ -156,7 +147,7 @@ for x in ListOfValues:
   input_file.execute() # Put line into comment if you only want to to post-processing of results
   print(f'=====================================')  
 
-  #plotL = bool(0) # false
+# plotL = bool(0) # false
   plotL = bool(1) # true
 
   if(plotL):
@@ -171,91 +162,36 @@ for x in ListOfValues:
 #++++++++++++++++++++++++++++++++++++++++++++++
 #===========================
     if(software=="nextnano++"):
-        file    = os.path.join(folder_output,input_file_name_variable+r'\bias_000_000'+r'\transmission_cbr_Gamma1.dat') 
-        file_cb = os.path.join(folder_output,input_file_name_variable+r'\bias_000_000'+r'\bandedge_Gamma.dat') 
+        file = os.path.join(folder_output,input_file_name_variable+r'\bias_000_000'+r'\bandedges.dat') 
+        my_input_file_no_extension = my_input_file_no_extension_nnp
     elif(software=="nextnano3"):
-        file    = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\Transmission_cb_sg1_deg1.dat') 
-      # file    = os.path.join(folder_output,input_file_name_variable+r'\band_structure'+r'\BandEdges_A000.dat') 
-        file_cb = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\cb_Gamma.dat') 
+        file = os.path.join(folder_output,input_file_name_variable+r'\band_structure'+r'\BandEdges.dat') 
 #===========================
-    df    = nn.DataFile(file,product=software)
+    df = nn.DataFile(file,product=software)
     dfV.append(df)
 
-    df_cb = nn.DataFile(file_cb,product=software)
-    df_cbV.append(df_cb)
-
-    print(f"List of coordinates in the current datafile: {df.coords}")
-    print(f"List of variables in the current datafile: {df.variables}")
-#   print(f"{df.coords['position'].unit}")
-
     fig, ax = plt.subplots(1)
-    ax.plot(df.variables[0].value,df.variables[1].value,label=SweepVariableString)
+#++++++++++++++++++++++++++++++++++++++++++++++
+# These lines have to be adjusted by the user.  
+#++++++++++++++++++++++++++++++++++++++++++++++
+#===========================
+    if(software=="nextnano++"):
+        ax.plot(df.coords['x'].value,df.variables['Gamma'].value,label='Gamma')
+        ax.plot(df.coords['x'].value,df.variables['electron_Fermi_level'].value, label='FermiLevel_el')
 
-#   ax.plot(df.coords['position'].value,df.variables['T_1_2'].value,label='Transmission')
-#   ax.plot(df.variables['energy'].value,df.variables['T_1_2'].value,label='Transmission')
-#   ax.plot(df.coords['position'].value,df.variables['FermiLevel_el'].value, label='FermiLevel_el')
-#   ax.plot(df.coords['energy'].value,df.variables['Gamma_bandedge'].value,label='Gamma')
+        ax.set_xlabel(f"{df.coords['x'].name} {df.coords['x'].unit}")
+        ax.set_ylabel(f"Energy {df.variables['Gamma'].unit}")
+    elif(software=="nextnano3"):
+        ax.plot(df.coords['position'].value,df.variables['Gamma_bandedge'].value,label='Gamma')
+        ax.plot(df.coords['position'].value,df.variables['FermiLevel_el'].value, label='FermiLevel_el')
 
-  #  ax.set_xlabel(f"{df.coords['position'].name} {df.coords['position'].unit}")
-  #  ax.set_ylabel(f"Energy {df.variables['T_1_2'].unit}")
-
-    ax.set_xlabel(f"{df.variables[0].name} ({df.variables[0].unit})")
-    ax.set_ylabel(f"{df.variables[1].name} ({df.variables[1].unit})")
-    ax.set_title('Transmission')
+        ax.set_xlabel(f"{df.coords['position'].name} {df.coords['position'].unit}")
+        ax.set_ylabel(f"Energy {df.variables['Gamma_bandedge'].unit}")
     ax.legend()
     fig.tight_layout()
   # plt.show()
     fig.savefig(file+'.jpg')
-
-#++++++++++++++++++++++++++++++++++++++++++++++
-# These lines have to be adjusted by the user.  
-# 2D plot
-#++++++++++++++++++++++++++++++++++++++++++++++
-    if(software=="nextnano3"):
-     #  file = os.path.join(folder_output,input_file_name_variable+r'\Schroedinger_1band'+r'\2Dcb1_qc1_sg1_deg1_psi_squared_ev001.fld') 
-        file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.fld') 
-      # file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.vtr') 
-        datafile_2d = nn.DataFile(file,product=software)
-        print(f"List of variables in the current datafile: {datafile_2d.variables}")
-    
-        x=datafile_2d.coords['x']
-        y=datafile_2d.coords['y']
-      # z=datafile_2d.variables['psi_squared']
-        z=datafile_2d.variables[0]
-
-        print(f"List of coordinates in the current datafile: {df.coords}")
-        print(f"List of variables in the current datafile: {df.variables}")
-        fig, ax = plt.subplots(1)
-        pcolor = ax.pcolormesh(x.value,y.value,z.value.T)
-        cbar = fig.colorbar(pcolor)
-        cbar.set_label(f"{z.name} ({z.unit})")
-        ax.plot(df_cb.coords[0].value,df_cb.variables[0].value,label=SweepVariableString,
-                color='white', linestyle='-')
-
-     #   ax.plot(df_cb.coords['position'].value,df_cb.variables[1].value,color='yellow')
-    #    for i in range(2,len(ws)):
-    #        ax.plot(df_cb.coords['position'].value,ws[i],color='yellow')
-    
-        ax.set_xlabel(f"{x.name} ({x.unit})")
-        ax.set_ylabel(f"{y.name} ({y.unit})")
-        ax.set_title('Local density of states')
-        fig.tight_layout()
-      # plt.show()
-        fig.savefig(file+'.jpg')
-
-    fig, ax = plt.subplots(1)
-
-for i,j in zip(dfV,SweepVariableStringV):
-    ax.plot(i.variables[0].value,i.variables[1].value,label=j)
-
-ax.set_xlabel(f"{df.variables[0].name} ({df.variables[0].unit})")
-ax.set_ylabel(f"{df.variables[1].name} ({df.variables[1].unit})")
-ax.set_title('Transmission')
-ax.legend()
-fig.tight_layout()
-#plt.show()
-fig.savefig(os.path.join(folder_output_python,'Transmission'+'_'+SweepVariable+software_short+'.jpg'))
-
+  
 print(f'=====================================')  
 print(f'Done nextnanopy.')  
 print(f'=====================================')  
