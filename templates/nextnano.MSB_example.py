@@ -2,7 +2,6 @@ import nextnanopy as nn
 import sys,os
 #import numpy as np
 import matplotlib.pyplot as plt
-from nextnanopy.outputs import get_vtr
 
 import config_nextnano
 # config file is stored in C:\Users\<User>\.nextnanopy-config
@@ -35,7 +34,9 @@ elif(software=="nextnano.MSB"):
     folder_examples = folder_examples_nnMSB # nextnano.MSB
 #===========================
 
-folder_output = r'C:\D\nextnanopython_test\output'
+folder_output = os.path.join(nn.config.get(software,'outputdirectory'),r'nextnanopy')
+#r'C:\D\nextnanopython_test\output'
+print(f"Python output folder: ",folder_output)
 
 #--------------------------------------------------------
 # Specify input file without file extension '.in'/.'xml'
@@ -111,7 +112,7 @@ if(plotL):
 #===========================
   print(f"Read in file:")
   print(file)
-  df = nn.DataFile(file)
+  df = nn.DataFile(file,software)
 
   fig, ax = plt.subplots(1)
   ax.plot(df.coords['Position'].value,df.variables['Conduction Band Edge'].value,label='Conduction Band Edge')
@@ -156,12 +157,20 @@ if(plotL):
           label = 'Current density j(x,E)'
           file = file_Current
 
-      cX, cY, cZ = get_vtr(os.path.join(folder,subfolder),file)
+      vtr_folder = os.path.join(folder,subfolder)
+      vtr_file = os.path.join(vtr_folder,file)
+      dff = nn.DataFile(vtr_file,product=software)
+      cX = dff.coords['x'].value
+      cY = dff.coords['y'].value
+      cZ = dff.variables['energy'].value
       fD, a2D1 = plt.subplots()
       im1 = a2D1.pcolormesh(cX, cY, cZ, cmap='gnuplot')
       a2D1.plot(df.coords[0].value,df.variables[0].value,label='Conduction Band Edge',
               color='white', linestyle='-')
       a2D1.set_title(label)  
+      print(f'Saving file: ',vtr_file+'.jpg')
+      fD.savefig(vtr_file+'.jpg')
+    
 print(f'=====================================')  
 print(f'Done nextnanopy.')  
 print(f'=====================================')  

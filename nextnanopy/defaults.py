@@ -29,7 +29,7 @@ def get_DataFile(product):
     elif product == 'nextnano.NEGF':
         from nextnanopy.negf.outputs import DataFile
     elif product == 'nextnano.MSB':
-        raise NotImplementedError('Loading datafile from nextnano.MSB is not implemented yet')
+        from nextnanopy.negf.outputs import DataFile
     else:
         raise ValueError(f'{product} is not valid')
     return DataFile

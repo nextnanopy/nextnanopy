@@ -6,6 +6,7 @@ import os
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
+folder_msb = os.path.join('tests', 'datafiles', 'nextnano.MSB')
 
 
 class TestOutputs_nnp(unittest.TestCase):
@@ -52,6 +53,48 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 2)
         self.assertEqual(df.metadata['dims'], [164, 79])
         self.assertEqual(df.metadata['field'], 'rectilinear')
+
+    def test_avs3D(self):
+        df = outputs.DataFile(join(folder_nnp, 'potential.fld'), product='nextnano++')
+        self.assertEqual(len(df.coords.keys()), 3)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y', 'z'])
+        self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 11)
+        self.assertEqual(df.coords['x'].dim, 0)
+        self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 11)
+        self.assertEqual(df.coords['y'].dim, 1)
+        self.assertEqual(df.coords['z'].unit, 'nm')
+        self.assertEqual(df.coords['z'].value.size, 76)
+        self.assertEqual(df.coords['z'].dim, 2)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['potential'].name, 'potential')
+        self.assertEqual(df.variables['potential'].unit, '')
+        self.assertEqual(df.variables['potential'].value.shape, (11, 11, 76))
+        self.assertEqual(df.metadata['ndim'], 3)
+        self.assertEqual(df.metadata['dims'], [11, 11, 76])
+        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+   # def test_vtr(self):
+   #    df = outputs.DataFile(join(folder_nnp, 'potential.vtr'), product='nextnano++')
+        
+        # 3D vtr function has to be added
+        
+#        self.assertEqual(len(df.coords.keys()), 2)
+#        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+#       self.assertEqual(df.coords['x'].unit, 'nm')
+#        self.assertEqual(df.coords['x'].value.size, 176)
+#        self.assertEqual(df.coords['x'].dim, 0)
+#       self.assertEqual(df.coords['y'].unit, 'nm')
+#        self.assertEqual(df.coords['y'].value.size, 82)
+#        self.assertEqual(df.coords['y'].dim, 1)
+#       self.assertEqual(len(df.variables.keys()), 6)
+#        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+#        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+#        self.assertEqual(df.variables['Gamma_bandedge'].value.shape, (258, 11))
+#        self.assertEqual(df.metadata['ndim'], 2)
+#        self.assertEqual(df.metadata['dims'], [258, 11])
+#        self.assertEqual(df.metadata['field'], 'rectilinear')
 
     def test_txt(self):
         df = outputs.DataFile(join(folder_nnp, 'variables_input.txt'), product='nextnano++')
@@ -116,6 +159,21 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
+    def test_avs1D(self):
+        df = outputs.DataFile(join(folder_nn3, 'cb_Gamma_avs.fld'), product='nextnano3')
+        self.assertEqual(len(df.coords.keys()), 1)
+        self.assertEqual(list(df.coords.keys()), ['x'])
+        self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 105)
+        self.assertEqual(df.coords['x'].dim, 0)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['cb_Gamma'].name, 'cb_Gamma')
+        self.assertEqual(df.variables['cb_Gamma'].unit, 'eV')
+        self.assertEqual(df.variables['cb_Gamma'].value.shape, (105,))
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dims'], [105])
+        self.assertEqual(df.metadata['field'], 'rectilinear')
+
     def test_avs(self):
         df = outputs.DataFile(join(folder_nn3, 'bandedges_2d.fld'), product='nextnano3')
         self.assertEqual(len(df.coords.keys()), 2)
@@ -133,6 +191,84 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 2)
         self.assertEqual(df.metadata['dims'], [258, 11])
         self.assertEqual(df.metadata['field'], 'rectilinear')
+
+    def test_avs2D(self):
+        df = outputs.DataFile(join(folder_nn3, '2Dcb1_sg1_deg1_psi_ev001.fld'), product='nextnano3')
+        self.assertEqual(len(df.coords.keys()), 2)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+        self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 61)
+        self.assertEqual(df.coords['x'].dim, 0)
+        self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 61)
+        self.assertEqual(df.coords['y'].dim, 1)
+        self.assertEqual(len(df.variables.keys()), 1)
+      # self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+      # self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+        self.assertEqual(df.variables[0].value.shape, (61, 61))
+        self.assertEqual(df.metadata['ndim'], 2)
+        self.assertEqual(df.metadata['dims'], [61, 61])
+        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+    def test_avs3D(self):
+        df = outputs.DataFile(join(folder_nn3, '3Dcb1_sg1_deg1_psi_squared_ev001.fld'), product='nextnano3')
+        self.assertEqual(len(df.coords.keys()), 3)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y', 'z'])
+        self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 19)
+        self.assertEqual(df.coords['x'].dim, 0)
+        self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 19)
+        self.assertEqual(df.coords['y'].dim, 1)
+        self.assertEqual(df.coords['z'].unit, 'nm')
+        self.assertEqual(df.coords['z'].value.size, 9)
+        self.assertEqual(df.coords['z'].dim, 2)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['psi_squared'].name, 'psi_squared')
+        self.assertEqual(df.variables['psi_squared'].unit, 'nm^-3')
+        self.assertEqual(df.variables[0].value.shape, (19, 19, 9))
+        self.assertEqual(df.metadata['ndim'], 3)
+        self.assertEqual(df.metadata['dims'], [19, 19, 9])
+        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+##    def test_vtr(self):
+  ##      df = outputs.DataFile(join(folder_nn3, '2Dcb1_sg1_deg1_psi_ev001.vtr'), product='nextnano3')
+##        self.assertEqual(len(df.coords.keys()), 2)
+  ##      self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+#       self.assertEqual(df.coords['x'].unit, 'nm')
+    ##    self.assertEqual(df.coords['x'].value.size, 61)
+      ##  self.assertEqual(df.coords['x'].dim, 0)
+#       self.assertEqual(df.coords['y'].unit, 'nm')
+##        self.assertEqual(df.coords['y'].value.size, 61)
+  ##      self.assertEqual(df.coords['y'].dim, 1)
+#       self.assertEqual(len(df.variables.keys()), 6)
+#        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+#        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+#        self.assertEqual(df.variables['Gamma_bandedge'].value.shape, (258, 11))
+#        self.assertEqual(df.metadata['ndim'], 2)
+#        self.assertEqual(df.metadata['dims'], [258, 11])
+#        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+   # def test_vtr(self):
+   #    df = outputs.DataFile(join(folder_nn3, '3Dcb1_sg1_deg1_psi_squared_ev001.vtr'), product='nextnano3')
+        
+        # 3D vtr function has to be added
+        
+#        self.assertEqual(len(df.coords.keys()), 2)
+#        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+#       self.assertEqual(df.coords['x'].unit, 'nm')
+#        self.assertEqual(df.coords['x'].value.size, 176)
+#        self.assertEqual(df.coords['x'].dim, 0)
+#       self.assertEqual(df.coords['y'].unit, 'nm')
+#        self.assertEqual(df.coords['y'].value.size, 82)
+#        self.assertEqual(df.coords['y'].dim, 1)
+#       self.assertEqual(len(df.variables.keys()), 6)
+#        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+#        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+#        self.assertEqual(df.variables['Gamma_bandedge'].value.shape, (258, 11))
+#        self.assertEqual(df.metadata['ndim'], 2)
+#        self.assertEqual(df.metadata['dims'], [258, 11])
+#        self.assertEqual(df.metadata['field'], 'rectilinear')
 
     def test_txt(self):
         df = outputs.DataFile(join(folder_nn3, 'variables_input.txt'), product='nextnano3')
@@ -187,11 +323,69 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
+    def test_vtr(self):
+        df = outputs.DataFile(join(folder_negf, 'CarrierDensity_energy_resolved.vtr'), product='nextnano.NEGF')
+        self.assertEqual(len(df.coords.keys()), 2)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+#       self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 176)
+        self.assertEqual(df.coords['x'].dim, 0)
+#       self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 82)
+        self.assertEqual(df.coords['y'].dim, 1)
+#       self.assertEqual(len(df.variables.keys()), 6)
+#        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+#        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+#        self.assertEqual(df.variables['Gamma_bandedge'].value.shape, (258, 11))
+#        self.assertEqual(df.metadata['ndim'], 2)
+#        self.assertEqual(df.metadata['dims'], [258, 11])
+#        self.assertEqual(df.metadata['field'], 'rectilinear')
+
     def test_rest(self):
         files = ['example.log', 'example.in', 'Material_Database.xml', 'Convergence.txt']
         for file in files:
             self.assertRaises(NotImplementedError, outputs.DataFile, join(folder_negf, file), 'nextnano.NEGF')
 
+class TestOutputs_msb(unittest.TestCase):
+
+    def test_dat(self):
+        df = outputs.DataFile(join(folder_msb, 'BandEdge_conduction.dat'), product='nextnano.MSB')
+        self.assertEqual(len(df.coords.keys()), 1)
+        self.assertEqual(df.coords['Position'].name, 'Position')
+        self.assertEqual(df.coords['Position'].unit, 'nm')
+        self.assertEqual(df.coords['Position'].value.size, 100)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['Conduction Band Edge'].name, 'Conduction Band Edge')
+        self.assertEqual(df.variables['Conduction Band Edge'].unit, 'eV')
+        self.assertEqual(df.variables['Conduction Band Edge'].value.size, 100)
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dkeys'], [0])
+
+    def test_vtr(self):
+        df = outputs.DataFile(join(folder_msb, 'DOS_Lead_Source_position_resolved.vtr'), product='nextnano.NEGF')
+        self.assertEqual(len(df.coords.keys()), 2)
+        self.assertEqual(list(df.coords.keys()), ['x', 'y'])
+#       self.assertEqual(df.coords['x'].unit, 'nm')
+        self.assertEqual(df.coords['x'].value.size, 50)
+        self.assertEqual(df.coords['x'].dim, 0)
+#       self.assertEqual(df.coords['y'].unit, 'nm')
+        self.assertEqual(df.coords['y'].value.size, 401)
+        self.assertEqual(df.coords['y'].dim, 1)
+#       self.assertEqual(len(df.variables.keys()), 6)
+#        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+#        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+#        self.assertEqual(df.variables['Gamma_bandedge'].value.shape, (258, 11))
+#        self.assertEqual(df.metadata['ndim'], 2)
+#        self.assertEqual(df.metadata['dims'], [258, 11])
+#        self.assertEqual(df.metadata['field'], 'rectilinear')
+
+##    AVS output files of the nextnano.MSB code that are in binary format cannot be plotted yet by nextnanopy.
+##    AVS output files of the nextnano.MSB code that are in ASCII format are written out incorrectly. Namely, .fld file assumes that data is not in .coord and .dat files.
+##    This must be fixed inside nextnano.MSB.
+##    def test_avs(self):
+##        df = outputs.DataFile(join(folder_msb, 'DOS_Lead_Source_position_resolved.avs.fld'), product='nextnano.MSB')
+    #     self.assertEqual(len(df.coords.keys()), 2)
+    # ...
 
 if __name__ == '__main__':
     unittest.main()

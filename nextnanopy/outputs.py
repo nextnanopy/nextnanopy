@@ -278,8 +278,7 @@ def reshape_values(values, *dims):
 	
 def load_vtr(path: str):
     """
-    Loads colormap saved as VTR file. \n
-    Typically energy resolved carrier or current density. \n
+    Loads VTR file. \n
     Returns X, Y, Z as numpy arrays.
     """
     fp = open(path,'r')
@@ -288,21 +287,17 @@ def load_vtr(path: str):
     beg = []
     end = []
 
-    # Rea
     for i in range(len(lines)):
         cur_beg_ind = lines[i].find('<DataArray')
         if cur_beg_ind != -1:
-         #   print('found begin in line:',i)
             beg.append((i,cur_beg_ind))
     
         cur_end_ind = lines[i].find('</DataArray>')
         if cur_end_ind != -1:
-          #  print('found end in line:', i)
             end.append((i,cur_end_ind))
             
     X=[]
     for i in range(beg[0][0]+1,end[0][0]+1):
-      #  print("Importing X")
         if i != end[0][0]:
             X_temp = lines[i].replace('\n','').split('\t')
             X_temp = list(map(float,X_temp))
@@ -335,7 +330,6 @@ def load_vtr(path: str):
     
     Z=[]
     for i in range(beg[3][0]+1,end[3][0]+1):
-     #  print("Z: ", i)
         if i != end[3][0]:
             Z_temp = lines[i].replace('\n','').split('\t')
             Z_temp = list(map(float,Z_temp))
@@ -351,9 +345,3 @@ def load_vtr(path: str):
     
     return X, Y, Z
 	
-def get_vtr(folder, filename):
-    cp = os.path.join(folder,filename)
-    dX, dY, dZ = load_vtr(cp)
-    return dX, dY, dZ
-
-
