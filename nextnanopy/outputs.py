@@ -227,10 +227,8 @@ class VtrAscii(Output):
     def load(self):
         x, y, z = load_vtr(self.fullpath)
         self.coords['x'] = Coord(name='x', value=x, unit=None, dim=0)
-        self.coords['y'] = Coord(name='y', value=y, unit='eV', dim=1)
-        self.variables['energy'] = Variable(name='energy', value=z, unit='eV')
-
-
+        self.coords['y'] = Coord(name='y', value=y, unit=None, dim=1)
+        self.variables[''] = Variable(name='', value=z, unit='')
 
 
 def coord_axis(dim):
@@ -299,8 +297,13 @@ def load_vtr(path: str):
     X=[]
     for i in range(beg[0][0]+1,end[0][0]+1):
         if i != end[0][0]:
-            X_temp = lines[i].replace('\n','').split('\t')
+
+            X_temp = lines[i].replace('\n','').split('\t') # Here, it seems a 'tab' separator is assumed to be present.
+         #  X_temp = lines[i].replace('\n','').split(' ')
+         #  print(f'X_temp = ',X_temp) 
+
             X_temp = list(map(float,X_temp))
+          # X_temp = list(np.array(X_temp,dtype=np.float64)) # Birner test
             X = X + X_temp
             
         if i == end[0][0]:
