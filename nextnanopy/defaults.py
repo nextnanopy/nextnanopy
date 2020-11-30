@@ -80,6 +80,23 @@ def input_file_type(fullpath):
         return 'not valid'
 
 
+def input_text_type(text):
+    from nextnanopy.nnp.defaults import is_nnp_input_text
+    from nextnanopy.nn3.defaults import is_nn3_input_text
+    from nextnanopy.negf.defaults import is_negf_input_text
+    from nextnanopy.msb.defaults import is_msb_input_text
+    if is_nn3_input_text(text):
+        return 'nextnano3'
+    elif is_nnp_input_text(text):
+        return 'nextnano++'
+    elif is_negf_input_text(text):
+        return 'nextnano.NEGF'
+    elif is_msb_input_text(text):
+        return 'nextnano.MSB'
+    else:
+        return 'not valid'
+
+
 def get_config_validators():
     config_validator = {product: _get_config_validator(product) for product in products}
     return config_validator

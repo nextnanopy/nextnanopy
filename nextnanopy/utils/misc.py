@@ -51,7 +51,7 @@ def find_unused_name(name, list_names, extension, max_idx=True):
     if extension not in name:
         name += extension
     only_name = get_file_prefix(name)
-    lnames = list(filter(lambda ln: extension in ln, list_names))
+    lnames = list(filter(lambda ln: extension in ln and only_name in ln, list_names))
     if len(lnames) == 0:
         max_idx = 0
     if max_idx:

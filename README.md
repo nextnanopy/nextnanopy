@@ -78,6 +78,16 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 ### Upcoming
 * Detailed documentation
 
+### Version 0.1.4 (Nov 29th, 2020)
+* Feature: create an empty input file and set the raw text with the attribute text.
+
+### Version 0.1.3 (Nov 28th, 2020)
+* Bug fix: find unused name when save input files
+* Feature: default label for Variables and Coords. The attribute label returns "name (unit)". 
+
+### Version 0.1.2 (Nov 20th, 2020)
+* Bug fix: Raw text of input variables without comment was generated incorrectly
+
 ### Version 0.1.1 (Nov 18th, 2020)
 * Bug fix: find the home path for OSX and Linux. 
 

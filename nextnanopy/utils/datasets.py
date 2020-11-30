@@ -1,12 +1,21 @@
 from copy import deepcopy
+import numpy as np
 
 
 class Data(object):
-    params = ['name', 'value']
+    params = ['name', 'value', 'unit', 'metadata'],
 
-    def __init__(self, name, value):
+    def __init__(self, name, value, unit=None, metadata={}, label_fmt=None, *args,
+                 **kwargs):
         self.name = str(name)
-        self.value = value
+        self.value = np.array(value)
+        if unit is None:
+            unit = 'a.u'
+        self.unit = str(unit)
+        if label_fmt is None:
+            label_fmt = lambda name, unit: f'{name} ({unit})'
+        self.label_fmt = label_fmt
+        self.metadata = metadata
 
     def parameters(self):
         dict_ = {}
@@ -16,6 +25,10 @@ class Data(object):
         dict_ = deepcopy(dict_)
         return dict_
 
+    @property
+    def label(self):
+        return self.label_fmt(self.name, self.unit)
+
     def __repr__(self):
         cname = self.__class__.__name__
         out = f'{cname}("{self.name}",...)'
@@ -23,16 +36,10 @@ class Data(object):
 
 
 class Variable(Data):
-    params = ['name', 'value', 'label', 'unit', 'metadata']
+    params = ['name', 'value', 'unit', 'metadata']
 
-    def __init__(self, name, value, label='', unit='', metadata={}):
-        self.name = str(name)
-        self.value = value
-        if label:
-            label = name
-        self.label = str(label)
-        self.unit = str(unit)
-        self.metadata = metadata
+    def __init__(self, name, value, unit=None, metadata={}, **kwargs):
+        super().__init__(name, value, unit, metadata, **kwargs)
 
     def get_value(self):
         value = deepcopy(self.value)
@@ -40,18 +47,12 @@ class Variable(Data):
 
 
 class Coord(Data):
-    params = ['name', 'value', 'label', 'unit', 'offset', 'dim', 'metadata']
+    params = ['name', 'value', 'unit', 'offset', 'dim', 'metadata']
 
-    def __init__(self, name, value, dim, label='', unit='', offset=0, metadata={}):
-        self.name = str(name)
-        self.value = value
+    def __init__(self, name, value, dim, unit=None, offset=0, metadata={}, **kwargs):
+        super().__init__(name, value, unit, metadata, **kwargs)
         self.dim = int(dim)
-        if label:
-            label = name
-        self.label = str(label)
-        self.unit = str(unit)
         self.offset = float(offset)
-        self.metadata = metadata
         self.valueo = self.get_value(use_offset=True)
 
     def get_value(self, use_offset=False):
@@ -62,18 +63,13 @@ class Coord(Data):
 
 
 class InputVariable(Data):
-    params = ['name', 'value', 'label', 'unit', 'comment', 'text', 'metadata']
+    params = ['name', 'value', 'unit', 'comment', 'metadata']
     var_char = ''
     com_char = ''
 
-    def __init__(self, name, value, label='', unit='', comment='', metadata={}):
-        self.name = str(name)
-        self.value = value
-        if label:
-            self.label = name
-        self.unit = unit
+    def __init__(self, name, value, unit='', comment='', metadata={}, **kwargs):
+        super().__init__(name, value, unit, metadata, **kwargs)
         self.comment = comment
-        self.metadata = metadata
 
     def get_value(self):
         value = deepcopy(self.value)
@@ -85,5 +81,3 @@ class InputVariable(Data):
         if self.comment:
             t = f'{t} {self.com_char} {self.comment}'
         return t
-
-

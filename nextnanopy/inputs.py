@@ -22,6 +22,13 @@ class InputFileTemplate(object):
     def text(self):
         return str(lines_to_text(*self.lines))
 
+    @text.setter
+    def text(self, text):
+        self.raw_lines = list(text_to_lines(text))
+        self.find_product()
+        self.validate()
+        self.load_variables()
+
     @property
     def lines(self):
         new_lines = list(self.raw_lines)
@@ -47,24 +54,26 @@ class InputFileTemplate(object):
     def configpath(self):
         return self.config.fullpath
 
+    def load(self, fullpath):
+        self.clear()
+        self.fullpath = fullpath
+        self.load_raw()
+        self.find_product()
+        self.validate()
+        self.load_variables()
+
     def find_product(self):
-        self.product = defaults.input_file_type(self.fullpath)
+        self.product = defaults.input_text_type(self.text)
         return self.product
 
     def validate(self):
         if self.product not in defaults.products:
             raise ValueError(f'Not valid input file')
 
-    def load(self, fullpath):
-        self.clear()
-        self.fullpath = fullpath
-        self.find_product()
-        self.validate()
-        self.load_raw()
-        self.load_variables()
-
     def save(self, fullpath=None, overwrite=False, automkdir=True):
         if fullpath is None:
+            if self.fullpath is None:
+                raise ValueError('Please, specify a fullpath')
             fullpath = self.fullpath
         self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
         return self.fullpath
@@ -108,4 +117,6 @@ class InputFile(InputFileTemplate):
 
     def load_variables(self):
         _InputFile = defaults.get_InputFile(self.product)
-        self.variables = _InputFile(self.fullpath).variables
+        file = _InputFile()
+        file.text = self.text
+        self.variables = file.variables

@@ -1,6 +1,6 @@
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_input_file, is_nnp_variable, InputVariable_nnp
+from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_input_text, is_nnp_variable, InputVariable_nnp
 
 
 class InputFile(InputFileTemplate):
@@ -16,5 +16,5 @@ class InputFile(InputFileTemplate):
         return self.variables
 
     def validate(self):
-        if not is_nnp_input_file(self.fullpath):
+        if not is_nnp_input_text(self.text):
             raise ValueError(f'Not valid nextnano++ input file')

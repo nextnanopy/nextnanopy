@@ -1,5 +1,5 @@
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.msb.defaults import is_msb_input_file
+from nextnanopy.msb.defaults import is_msb_input_text
 
 
 class InputFile(InputFileTemplate):
@@ -7,5 +7,5 @@ class InputFile(InputFileTemplate):
         pass
 
     def validate(self):
-        if not is_msb_input_file(self.fullpath):
+        if not is_msb_input_text(self.text):
             raise ValueError(f'Not valid nextnano.MSB input file')
