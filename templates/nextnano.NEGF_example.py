@@ -36,7 +36,9 @@ elif(software=="nextnano.MSB"):
     folder_examples = folder_examples_nnMSB # nextnano.MSB
 #===========================
 
-folder_output = r'C:\D\nextnanopython_test\output'
+folder_output = os.path.join(nn.config.get(software,'outputdirectory'),r'nextnanopy')
+#r'C:\D\nextnanopython_test\output'
+print(f"Python output folder: ",folder_output)
 
 #--------------------------------------------------------
 # Specify input file without file extension '.in'/.'xml'
