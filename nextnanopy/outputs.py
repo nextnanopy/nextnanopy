@@ -231,14 +231,18 @@ class Vtk(Output):
         self.load_variables()
 
     def load_coords(self):
-        self.coords['x'] = Coord(name='x', value=self.vtk.x, unit=None, dim=0)
-        self.coords['y'] = Coord(name='y', value=self.vtk.y, unit=None, dim=1)
-        self.coords['z'] = Coord(name='z', value=self.vtk.z, unit=None, dim=2)
+        for i, coord in enumerate(['x','y','z']):
+            if not hasattr(self.vtk, coord):
+                continue
+            value = getattr(self.vtk,coord)
+            if value.size == 1:
+                continue
+            self.coords[coord] = Coord(name=coord, value=value, unit=None, dim=i)
 
     def load_variables(self):
         for _name in self.vtk.array_names:
             name, unit = best_str_to_name_unit(_name, default_unit=None)
-            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions)
+            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions).squeeze()
             self.variables[name] = Variable(name=name, value=value, unit=unit)
 
 
