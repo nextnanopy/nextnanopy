@@ -3,8 +3,6 @@ import subprocess
 import queue
 import threading
 from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
-from nextnanopy.utils.formatting import _path, _bool
-from collections import OrderedDict
 from nextnanopy import defaults
 
 
@@ -82,9 +80,16 @@ def execute(
     cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
     cwd = os.getcwd()
     wdir = os.path.split(exe)[0]  # nn3 assumes wdir at one folder upper than the executable
-    print(wdir)
     os.chdir(wdir)
     process = send(cmd)
     start_log(process, logfile)
     os.chdir(cwd)
-    return process
+    info = {
+        'process': process,
+        'outputdirectory': outputdirectory,
+        'filename': filename,
+        'logfile': logfile,
+        'cmd': cmd,
+        'wdir': wdir,
+    }
+    return info

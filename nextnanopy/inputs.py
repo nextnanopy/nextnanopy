@@ -1,6 +1,7 @@
+import os
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
 from nextnanopy.utils.mycollections import DictList
-from nextnanopy.utils.misc import savetxt
+from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension
 from nextnanopy.commands import execute as cmd_execute
 from nextnanopy import defaults
 
@@ -17,6 +18,7 @@ class InputFileTemplate(object):
             self.config = defaults.NNConfig()
         else:
             self.config = defaults.NNConfig(configpath)
+        self.execute_info = {}
 
     @property
     def text(self):
@@ -54,6 +56,39 @@ class InputFileTemplate(object):
     def configpath(self):
         return self.config.fullpath
 
+    @property
+    def filename_only(self):
+        return get_filename(self.fullpath, ext=False)
+
+    @filename_only.setter
+    def filename_only(self, name):
+        ext = get_file_extension(self.fullpath)
+        self.filename = f'{name}{ext}'
+
+    @property
+    def filename(self):
+        return get_filename(self.fullpath, ext=True)
+
+    @filename.setter
+    def filename(self, name):
+        self.fullpath = os.path.join(self.folder_input, name)
+
+    @property
+    def folder_input(self):
+        return get_folder(self.fullpath)
+
+    @folder_input.setter
+    def folder_input(self, folder):
+        self.fullpath = os.path.join(folder, self.filename)
+
+    @property
+    def folder_output(self):
+        key = 'outputdirectory'
+        if key in self.execute_info.keys():
+            return self.execute_info[key]
+        else:
+            raise KeyError('Input file has not been executed yet')
+
     def load(self, fullpath):
         self.clear()
         self.fullpath = fullpath
@@ -82,8 +117,9 @@ class InputFileTemplate(object):
         cmd_kwargs = dict(self.default_command_args)
         cmd_kwargs.update(kwargs)
         cmd_kwargs['inputfile'] = self.fullpath
-        process = cmd_execute(**cmd_kwargs)
-        return process
+        info = cmd_execute(**cmd_kwargs)
+        self.execute_info = info
+        return info
 
     def clear(self):
         self.raw_lines = []
@@ -111,6 +147,37 @@ class InputFileTemplate(object):
         if comment is not None:
             var.comment = comment
         return var
+
+    def __getitem__(self, item):
+        return self.variables[item]
+
+    def __setitem__(self, item, value):
+        self.variables[item] = value
+
+    def __delitem__(self, item):
+        del self.variables[item]
+
+    def __repr__(self):
+        out = []
+        out.append(f'{self.__class__.__name__}')
+        out.append(f'fullpath: {self.fullpath}')
+        out.append(f'Input variables: {len(self.variables)} elements')
+        for key, var in self.variables.items():
+            out.append(f'\t{str(var)}')
+        out = '\n'.join(out)
+        return out
+
+    def __iter__(self):
+        self._iter_index = 0
+        return self
+
+    def __next__(self):
+        try:
+            result = self.variables.__getitem__(self._iter_index)
+        except (IndexError, KeyError):
+            raise StopIteration
+        self._iter_index += 1
+        return result
 
 
 class InputFile(InputFileTemplate):

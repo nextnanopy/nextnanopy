@@ -6,6 +6,7 @@ folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
 
+
 class Test_nnp(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_nnp, 'only_variables.in')
@@ -43,7 +44,7 @@ class Test_nnp(unittest.TestCase):
         self.assertRaises(FileNotFoundError, InputFile, fullpath)
 
     def test_get_variables(self):
-        fullpath = os.path.join(folder_nn3,  'only_variables.in')
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
         file = InputFile(fullpath)
 
         self.assertEqual(file.variables['float'], file.get_variable('float'))
@@ -95,7 +96,7 @@ class Test_nnp(unittest.TestCase):
         file = InputFile(fullpath)
         from nextnanopy import config
         for key, value in config.config['nextnano++'].items():
-            self.assertEqual(file.default_command_args[key],value)
+            self.assertEqual(file.default_command_args[key], value)
 
     def test_text(self):
         fullpath = os.path.join(folder_nnp, 'only_variables.in')
@@ -159,14 +160,14 @@ class Test_nn3(unittest.TestCase):
         self.assertRaises(FileNotFoundError, InputFile, fullpath)
 
     def test_get_variables(self):
-        fullpath = os.path.join(folder_nn3,  'only_variables.in')
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
         file = InputFile(fullpath)
 
         self.assertEqual(file.variables['float'], file.get_variable('float'))
         self.assertRaises(KeyError, file.get_variable, name='new_variable')
 
     def test_set_variables(self):
-        fullpath = os.path.join(folder_nn3,  'only_variables.in')
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
         file = InputFile(fullpath)
         file.set_variable('float', 1e-5, 'some comment')
 
@@ -210,15 +211,15 @@ class Test_nn3(unittest.TestCase):
         file = InputFile(fullpath)
         from nextnanopy import config
         for key, value in config.config['nextnano3'].items():
-            self.assertEqual(file.default_command_args[key],value)
+            self.assertEqual(file.default_command_args[key], value)
 
     def test_save(self):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
         file = InputFile(fullpath)
-        new_folder = os.path.join(folder_nn3,'temp')
+        new_folder = os.path.join(folder_nn3, 'temp')
         new_file = os.path.join(new_folder, 'example_copy.in')
         self.assertRaises(FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False)
-        self.assertEqual(file.save(new_file, overwrite=True, automkdir=True),new_file)
+        self.assertEqual(file.save(new_file, overwrite=True, automkdir=True), new_file)
         os.remove(file.fullpath)
         os.rmdir(new_folder)
 
@@ -248,6 +249,7 @@ class Test_nn3(unittest.TestCase):
                          os.path.join(folder_nn3, 'only_variables_0.in'))
         os.remove(new_file.fullpath)
 
+
 class Test_negf(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_negf, 'example.xml')
@@ -261,7 +263,7 @@ class Test_negf(unittest.TestCase):
         self.assertRaises(FileNotFoundError, InputFile, fullpath)
 
     def test_set_variables(self):
-        fullpath = os.path.join(folder_negf,  'example.xml')
+        fullpath = os.path.join(folder_negf, 'example.xml')
         file = InputFile(fullpath)
         self.assertRaises(KeyError, file.set_variable, name='new_variable')
 
@@ -279,12 +281,59 @@ class Test_negf(unittest.TestCase):
         file = InputFile(fullpath)
         from nextnanopy import config
         for key, value in config.config['nextnano.NEGF'].items():
-            self.assertEqual(file.default_command_args[key],value)
+            self.assertEqual(file.default_command_args[key], value)
+
+
+class TestInputFile(unittest.TestCase):
+
+    def test_access_by_index(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+        for key, value in file.variables.items():
+            self.assertEqual(file[key], value)
+
+    def test_for_loop(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+        for i, fi in enumerate(file):
+            self.assertEqual(file.variables[i], fi)
+
+    def test_fullpath(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+        self.assertEqual(file.fullpath, fullpath)
+        self.assertEqual(file.filename, 'only_variables.in')
+        self.assertEqual(file.filename_only, 'only_variables')
+        self.assertEqual(file.folder_input, folder_nnp)
+        self.assertEqual(file.execute_info, {})
+
+        file.filename = 'new_name.in'
+        self.assertEqual(file.filename, 'new_name.in')
+        self.assertEqual(file.filename_only, 'new_name')
+        self.assertEqual(file.fullpath, os.path.join(folder_nnp, 'new_name.in'))
+        self.assertEqual(file.folder_input, folder_nnp)
+
+        file.filename_only = 'another_filename'
+        self.assertEqual(file.filename, 'another_filename.in')
+        self.assertEqual(file.filename_only, 'another_filename')
+        self.assertEqual(file.fullpath, os.path.join(folder_nnp, 'another_filename.in'))
+        self.assertEqual(file.folder_input, folder_nnp)
+
+        npath = os.path.join('new','folder')
+        file.folder_input = npath
+        self.assertEqual(file.filename, 'another_filename.in')
+        self.assertEqual(file.filename_only, 'another_filename')
+        self.assertEqual(file.fullpath, os.path.join(npath, 'another_filename.in'))
+        self.assertEqual(file.folder_input, npath)
+
+        npath = os.path.join('random', 'path')
+        file.execute_info['outputdirectory'] = npath
+        self.assertEqual(file.folder_output, npath)
 
 
 if __name__ == '__main__':
     unittest.main()
 
-    file = os.path.join(folder_nnp,'only_variables.in')
+    file = os.path.join(folder_nnp, 'only_variables.in')
     fi = InputFile(file)
     text = fi.text

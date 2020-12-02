@@ -56,20 +56,46 @@ class Output(object):
     def get_variable(self, key):
         return self.variables[key]
 
-    def __getitem__(self, key):
-        return self.data[key]
+    def __getitem__(self, item):
+        return self.data[item]
+
+    def __setitem__(self, item, value):
+        if item in self.coords.keys():
+            self.coords[item] = value
+        if item in self.variables.keys():
+            self.variables[item] = value
+
+    def __delitem__(self, item):
+        if item in self.coords.keys():
+            del self.coords[item]
+        if item in self.variables.keys():
+            del self.variables[item]
 
     def __repr__(self):
         out = []
+        out.append(f'{self.__class__.__name__}')
         out.append(f'fullpath: {self.fullpath}')
-        out.append(f'Coordinates:')
+        out.append(f'Coordinates: {len(self.coords)} datasets')
         for key, coord in self.coords.items():
-            out.append(f'\tkey: {key} - unit: {coord.unit} - shape: {coord.value.shape} - dim: {coord.dim}')
-        out.append(f'Variables:')
+            out.append(f'\t{str(coord)}')
+        out.append(f'Variables: {len(self.variables)} datasets')
         for key, var in self.variables.items():
-            out.append(f'\tkey: {key} - unit: {var.unit} - shape: {var.value.shape}')
+            out.append(f'\t{str(var)}')
         out = '\n'.join(out)
         return out
+
+    def __iter__(self):
+        self._iter_index = 0
+        return self
+
+    def __next__(self):
+        try:
+            result = self.data.__getitem__(self._iter_index)
+        except (IndexError, KeyError):
+            raise StopIteration
+        self._iter_index += 1
+        return result
+
 
 class DataFileTemplate(Output):
     def __init__(self, fullpath, product=None):
@@ -252,10 +278,10 @@ class Vtk(Output):
         self.load_variables()
 
     def load_coords(self):
-        for i, coord in enumerate(['x','y','z']):
+        for i, coord in enumerate(['x', 'y', 'z']):
             if not hasattr(self.vtk, coord):
                 continue
-            value = getattr(self.vtk,coord)
+            value = getattr(self.vtk, coord)
             if value.size == 1:
                 continue
             self.coords[coord] = Coord(name=coord, value=value, unit=None, dim=i)

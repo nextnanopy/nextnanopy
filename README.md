@@ -78,6 +78,31 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 ### Upcoming
 * Detailed documentation
 
+### Version 0.1.6 (Dec 2nd, 2020)
+* Feature: [DataFile] access with index to coordinates and to variables
+```python
+df = nextnanopy.DataFile(...)
+df['x'] # same as df.coords['x']
+df['Gamma'] # same as df.variables['Gamma']
+```
+* Feature: [DataFile] is loopable as well as .coords and .variables
+* Feature: [InputFile] access with index to input variables
+```python
+df = nextnanopy.InputFile(...)
+df['xmax'] # same as df.variables['xmax']
+```
+* Feature: [InputFile] is loopable as well as .coords and .variables
+* Feature: [InputFile] extra attributes
+```python
+df = nextnanopy.InputFile(...)
+df.folder_output # returns the output folder if it was executed, otherwise it raises an error
+df.filename # settable
+df.filename_only # settable
+df.folder_input # settable
+```
+* Feature: user-friendly information for DataFile, InputFile, Variable, Coord and InputVariable.
+* Bug fix: .vtr dataset reshape method
+
 ### Version 0.1.5 (Dec 2nd, 2020)
 * Feature: support .vtr data files
 * Feature: if unit is not found, default value is 'a.u'

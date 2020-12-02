@@ -422,5 +422,28 @@ class TestOutputs_msb(unittest.TestCase):
         self.assertEqual(df.metadata, {})
 
 
+class TestOutput(unittest.TestCase):
+
+    def test_data(self):
+        df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
+        self.assertEqual(len(df.data), len(df.coords) + len(df.variables))
+        for key, value in df.coords.items():
+            self.assertEqual(df.data[key], value)
+        for key, value in df.variables.items():
+            self.assertEqual(df.data[key], value)
+
+    def test_access_by_index(self):
+        df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
+        for key, value in df.coords.items():
+            self.assertEqual(df[key], value)
+        for key, value in df.variables.items():
+            self.assertEqual(df[key], value)
+
+    def test_for_loop(self):
+        df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
+        for i, dfi in enumerate(df):
+            self.assertEqual(df.data[i], dfi)
+
+
 if __name__ == '__main__':
     unittest.main()

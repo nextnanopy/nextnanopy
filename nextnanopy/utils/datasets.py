@@ -3,6 +3,7 @@ import numpy as np
 
 default_unit = 'a.u'
 
+
 class Data(object):
     params = ['name', 'value', 'unit', 'metadata'],
 
@@ -32,8 +33,11 @@ class Data(object):
 
     def __repr__(self):
         cname = self.__class__.__name__
-        out = f'{cname}("{self.name}",...)'
+        out = f'{cname} - {str(self)}'
         return out
+
+    def __str__(self):
+        return f'name: {self.name}'
 
 
 class Variable(Data):
@@ -46,6 +50,9 @@ class Variable(Data):
         value = deepcopy(self.value)
         return value
 
+    def __str__(self):
+        return f'name: {self.name} - unit: {self.unit} - shape: {self.value.shape}'
+
 
 class Coord(Data):
     params = ['name', 'value', 'unit', 'offset', 'dim', 'metadata']
@@ -53,7 +60,7 @@ class Coord(Data):
     def __init__(self, name, value, dim, unit=None, offset=0, metadata={}, **kwargs):
         super().__init__(name, value, unit, metadata, **kwargs)
         self.dim = int(dim)
-        self.offset = float(offset)
+        self.offset = np.array(offset)
         self.valueo = self.get_value(use_offset=True)
 
     def get_value(self, use_offset=False):
@@ -61,6 +68,9 @@ class Coord(Data):
         if use_offset:
             value += self.offset
         return value
+
+    def __str__(self):
+        return f'name: {self.name} - unit: {self.unit} - shape: {self.value.shape} - dim: {self.dim}'
 
 
 class InputVariable(Data):
@@ -82,3 +92,6 @@ class InputVariable(Data):
         if self.comment:
             t = f'{t} {self.com_char} {self.comment}'
         return t
+
+    def __str__(self):
+        return self.text

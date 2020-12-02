@@ -15,8 +15,24 @@ class DictList(OrderedDict):
         item = super().__getitem__(key)
         return item
 
+    def __repr__(self):
+        return self.__str__()
+
     def __str__(self):
-        out = super().__str__()
-        args = [f"({idx},'{key}',{value})" for idx, key, value in zip(self._idxs.keys(), self.keys(), self.values())]
+        cname = self.__class__.__name__
+        args = [f"(index: {idx} - key: '{key}' - {value})" for idx, key, value in
+                zip(self._idxs.keys(), self.keys(), self.values())]
         args = ',\n'.join(args)
-        return f"{out.split('[')[0]}[\n{args}\n]{out.split(']')[-1]}"
+        return f"{cname}([\n{args}\n])"
+
+    def __iter__(self):
+        self._iter_index = 0
+        return self
+
+    def __next__(self):
+        try:
+            result = self.__getitem__(self._iter_index)
+        except (IndexError, KeyError):
+            raise StopIteration
+        self._iter_index += 1
+        return result
