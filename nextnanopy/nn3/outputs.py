@@ -1,8 +1,9 @@
 import numpy as np
 from nextnanopy.utils.mycollections import DictList
-from nextnanopy.outputs import Output, AvsAscii, VtrAscii, DataFileTemplate
+from nextnanopy.outputs import Output, AvsAscii, Vtk, DataFileTemplate
 from nextnanopy.nn3.defaults import parse_nn3_variable, is_nn3_variable, InputVariable_nn3
 from nextnanopy.utils.datasets import Variable, Coord
+from nextnanopy.utils.formatting import best_str_to_name_unit
 
 
 class DataFile(DataFileTemplate):
@@ -14,7 +15,7 @@ class DataFile(DataFileTemplate):
         if self.extension in ['.v', '.fld', '.coord']:
             loader = AvsAscii
         elif self.extension == '.vtr':
-            loader = VtrAscii
+            loader = Vtk
         elif self.extension == '.txt':
             loader = self._find_txt_loader()
         elif self.extension == '.dat':
@@ -94,12 +95,7 @@ class Dat(Output):
         ndim = 0
         dkeys = []
         for i, column in enumerate(header):
-            if '[' in column:
-                key, unit = column.split('[')
-                unit = unit.replace(']', '')
-            else:
-                key = column
-                unit = ''
+            key, unit = best_str_to_name_unit(column, default_unit=None)
             metadata[i] = {'name': key, 'unit': unit}
             if key.lower() in ['x', 'y', 'z', 'position']:
                 ndim += 1

@@ -4,8 +4,10 @@ import numpy as np
 
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
-
+from nextnanopy.utils.formatting import best_str_to_name_unit
 from nextnanopy import defaults
+
+import pyvista as pv
 
 
 def load_message(method):
@@ -65,6 +67,8 @@ class DataFileTemplate(Output):
         self.metadata.update(datafile.metadata)
         self.coords.update(datafile.coords)
         self.variables.update(datafile.variables)
+        if hasattr(datafile, 'vtk'):
+            self.vtk = datafile.vtk
 
     def get_loader(self):
         pass
@@ -87,7 +91,9 @@ class DataFile(DataFileTemplate):
         from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
         from nextnanopy.nn3.outputs import DataFile as DataFile_nn3
         from nextnanopy.negf.outputs import DataFile as DataFile_negf
-        Dats = [DataFile_nn3, DataFile_nnp, DataFile_negf]
+        from nextnanopy.msb.outputs import DataFile as DataFile_msb
+
+        Dats = [DataFile_nn3, DataFile_nnp, DataFile_negf, DataFile_msb]
         for Dati in Dats:
             try:
                 df = Dati(self.fullpath)
@@ -154,12 +160,7 @@ class AvsAscii(Output):
                 elif key == 'label':
                     labels = value.split()
                     for label in labels:
-                        if '[' in label:
-                            label, unit = label.split('[')
-                            unit = unit.split(']')[0]
-                        else:
-                            label = label
-                            unit = ''
+                        label, unit = best_str_to_name_unit(label, default_unit=None)
                         metadata['labels'].append(label)
                         metadata['units'].append(unit)
                 else:
@@ -219,16 +220,26 @@ class AvsAscii(Output):
         return coords
 
 
-class VtrAscii(Output):
+class Vtk(Output):
     def __init__(self, fullpath):
         super().__init__(fullpath)
         self.load()
 
     def load(self):
-        x, y, z = load_vtr(self.fullpath)
-        self.coords['x'] = Coord(name='x', value=x, unit=None, dim=0)
-        self.coords['y'] = Coord(name='y', value=y, unit=None, dim=1)
-        self.variables[''] = Variable(name='', value=z, unit='')
+        self.vtk = pv.read(self.fullpath)
+        self.load_coords()
+        self.load_variables()
+
+    def load_coords(self):
+        self.coords['x'] = Coord(name='x', value=self.vtk.x, unit=None, dim=0)
+        self.coords['y'] = Coord(name='y', value=self.vtk.y, unit=None, dim=1)
+        self.coords['z'] = Coord(name='z', value=self.vtk.z, unit=None, dim=2)
+
+    def load_variables(self):
+        for _name in self.vtk.array_names:
+            name, unit = best_str_to_name_unit(_name, default_unit=None)
+            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions)
+            self.variables[name] = Variable(name=name, value=value, unit=unit)
 
 
 def coord_axis(dim):
@@ -273,78 +284,3 @@ def reshape_values(values, *dims):
     shape = tuple([dim for dim in dims])
     values = np.reshape(values, shape)
     return np.transpose(values)
-	
-def load_vtr(path: str):
-    """
-    Loads VTR file. \n
-    Returns X, Y, Z as numpy arrays.
-    """
-    fp = open(path,'r')
-    lines = fp.readlines()
-
-    beg = []
-    end = []
-
-    for i in range(len(lines)):
-        cur_beg_ind = lines[i].find('<DataArray')
-        if cur_beg_ind != -1:
-            beg.append((i,cur_beg_ind))
-    
-        cur_end_ind = lines[i].find('</DataArray>')
-        if cur_end_ind != -1:
-            end.append((i,cur_end_ind))
-            
-    X=[]
-    for i in range(beg[0][0]+1,end[0][0]+1):
-        if i != end[0][0]:
-
-            X_temp = lines[i].replace('\n','').split('\t') # Here, it seems a 'tab' separator is assumed to be present.
-         #  X_temp = lines[i].replace('\n','').split(' ')
-         #  print(f'X_temp = ',X_temp) 
-
-            X_temp = list(map(float,X_temp))
-          # X_temp = list(np.array(X_temp,dtype=np.float64)) # Birner test
-            X = X + X_temp
-            
-        if i == end[0][0]:
-            last = lines[i].split('\t')
-            del last[-1]
-            X = X + list(map(float,last))
-            
-
-            
-    X = np.asarray(X)
-    
-    Y=[]
-    for i in range(beg[1][0]+1,end[1][0]+1):
-        if i != end[1][0]:
-            Y_temp = lines[i].replace('\n','').split('\t')
-            Y_temp = list(map(float,Y_temp))
-            Y = Y + Y_temp
-            
-        if i == end[1][0]:
-            last = lines[i].split('\t')
-            del last[-1]
-            Y = Y + list(map(float,last))
-            
-
-            
-    Y = np.asarray(Y)
-    
-    Z=[]
-    for i in range(beg[3][0]+1,end[3][0]+1):
-        if i != end[3][0]:
-            Z_temp = lines[i].replace('\n','').split('\t')
-            Z_temp = list(map(float,Z_temp))
-            Z = Z + Z_temp
-            
-        if i == end[3][0]:
-            last = lines[i].split('\t')
-            del last[-1]
-            Z = Z + list(map(float,last))
-            
-    Z = np.asarray(Z)
-    Z = np.reshape(Z,(len(Y),len(X)))
-    
-    return X, Y, Z
-	

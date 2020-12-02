@@ -15,11 +15,12 @@ extras_require = {k: '>='.join(v[0:2]) for k, v in extras.items()}
 
 install_requires = [
     'numpy>=1.18',
+    'pyvista>=0.27',
 ]
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.5a1",
+    version="0.1.5",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',

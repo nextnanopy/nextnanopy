@@ -128,3 +128,69 @@ def _bool(_in):
         return True
     else:
         return bool(_in)
+
+
+def split_by_pattern(_str, init, end):
+    _str = str(_str)
+    _l = []
+
+    if init not in _str and end not in _str:
+        return _l
+
+    find_init = True
+    str_old = str(_str)
+    while True:
+        if init not in str_old or end not in str_old:
+            break
+        if find_init:
+            if init in str_old:
+                find_init = False
+        else:
+            if end in str_old:
+                idx_end = str_old.find(end) + 1
+                _l.append(str_old[0:idx_end])
+                str_old = str_old[idx_end:]
+                find_init = True
+    return _l
+
+
+def str_to_name_unit(_str, init='[', end=']', default_unit=None, add_rest_to_name=False):
+    if init in _str and end in _str:
+        splitted = _str.split(init)
+        name = splitted[0]
+        rest = splitted[1]
+        tail = rest.split(end)
+        unit, rest = tail[0], tail[1:]
+        name = name.strip()
+        unit = unit.strip()
+        if add_rest_to_name:
+            name += ''.join(rest)
+            name = name.strip()
+    else:
+        name = str(_str).strip()
+        unit = default_unit
+    return name, unit
+
+
+def str_to_name_unit_with_rest(_str, init, end, default_unit=None):
+    """
+    For the weird definition like 'psi[eV]_real' and 'psi[eV]_imag'
+    """
+    name, unit = str_to_name_unit(_str, init, end, default_unit, add_rest_to_name=True)
+    return name, unit
+
+
+def best_str_to_name_unit(_str, default_unit=None):
+    _str_copy = str(_str)
+    unit_patterns = [
+        ['[', ']'],
+        ['(', ')'],
+    ]
+    name = str(_str).strip()
+    unit = default_unit
+    for pattern in unit_patterns:
+        init, end = pattern
+        if init in _str and end in _str:
+            name, unit = str_to_name_unit_with_rest(_str, init=init, end=end, default_unit=None)
+            break
+    return name, unit

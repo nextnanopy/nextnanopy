@@ -1,6 +1,7 @@
 from copy import deepcopy
 import numpy as np
 
+default_unit = 'a.u'
 
 class Data(object):
     params = ['name', 'value', 'unit', 'metadata'],
@@ -9,8 +10,8 @@ class Data(object):
                  **kwargs):
         self.name = str(name)
         self.value = np.array(value)
-        if unit is None:
-            unit = 'a.u'
+        if unit is None or unit == '':
+            unit = default_unit
         self.unit = str(unit)
         if label_fmt is None:
             label_fmt = lambda name, unit: f'{name} ({unit})'

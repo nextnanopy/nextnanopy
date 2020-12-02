@@ -78,6 +78,11 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 ### Upcoming
 * Detailed documentation
 
+### Version 0.1.5 (Dec 2nd, 2020)
+* Feature: support .vtr data files
+* Feature: if unit is not found, default value is 'a.u'
+* Bug fix: better methods to find correctly name and unit from data file headers
+
 ### Version 0.1.4 (Nov 29th, 2020)
 * Feature: create an empty input file and set the raw text with the attribute text.
 
