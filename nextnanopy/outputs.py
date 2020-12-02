@@ -39,6 +39,13 @@ class Output(object):
     def extension(self):
         return os.path.splitext(self.fullpath)[-1]
 
+    @property
+    def data(self):
+        dl = DictList()
+        dl.update(self.coords)
+        dl.update(self.variables)
+        return dl
+
     @load_message
     def load(self):
         pass
@@ -49,6 +56,20 @@ class Output(object):
     def get_variable(self, key):
         return self.variables[key]
 
+    def __getitem__(self, key):
+        return self.data[key]
+
+    def __repr__(self):
+        out = []
+        out.append(f'fullpath: {self.fullpath}')
+        out.append(f'Coordinates:')
+        for key, coord in self.coords.items():
+            out.append(f'\tkey: {key} - unit: {coord.unit} - shape: {coord.value.shape} - dim: {coord.dim}')
+        out.append(f'Variables:')
+        for key, var in self.variables.items():
+            out.append(f'\tkey: {key} - unit: {var.unit} - shape: {var.value.shape}')
+        out = '\n'.join(out)
+        return out
 
 class DataFileTemplate(Output):
     def __init__(self, fullpath, product=None):
@@ -242,7 +263,7 @@ class Vtk(Output):
     def load_variables(self):
         for _name in self.vtk.array_names:
             name, unit = best_str_to_name_unit(_name, default_unit=None)
-            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions).squeeze()
+            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions, order='F').squeeze()
             self.variables[name] = Variable(name=name, value=value, unit=unit)
 
 
