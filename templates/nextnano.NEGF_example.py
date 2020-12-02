@@ -4,7 +4,8 @@ import sys,os
 import matplotlib.pyplot as plt
 import nextnanopy.negf.outputs as nnnegf
 
-import config_nextnano
+import config_nextnano     # This should be your default configuration.
+#import config_nextnano_temp # This could be a modified configuration file.
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,9 +36,14 @@ elif(software=="nextnano.MSB"):
     folder_examples = folder_examples_nnMSB # nextnano.MSB
 #===========================
 
-folder_output = os.path.join(nn.config.get(software,'outputdirectory'),r'nextnanopy')
+#================================================================
+# Define output folders. If they do not exist, they are created.
+#================================================================
+folder_output = nn.config.get(software,'outputdirectory')
+folder_output_python = os.path.join(folder_output,r'nextnanopy')
 #r'C:\D\nextnanopython_test\output'
-print(f"Python output folder: ",folder_output)
+print(f"Output folder:        ",folder_output)
+print(f"Output folder python: ",folder_output_python)
 
 #--------------------------------------------------------
 # Specify input file without file extension '.in'/.'xml'
@@ -73,16 +79,26 @@ input_file = nn.InputFile(input_file_name)
 
 input_file_name_variable = my_input_file_no_extension
 
-my_input_file_new = os.path.join(folder_output,input_file_name_variable+FileExtension)
+folder_total = os.path.join(folder_output,input_file_name_variable)
+print(f"output folder_total:")
+print(folder_total)
+
+my_input_file_python = os.path.join(folder_output_python,input_file_name_variable+FileExtension)
+my_input_file_new    = os.path.join(folder_total,input_file_name_variable+FileExtension)
 print(f"input file:")
 print(my_input_file_new)
 
+input_file.save(my_input_file_python,overwrite=True,automkdir=True)
 input_file.save(my_input_file_new,overwrite=True,automkdir=True)
+
 print(f'')  
 print(f'=====================================')  
 ####################################
-#input_file.execute()
-####################################
+  ############################
+  # Execute nextnano software
+  ############################
+#input_file.execute() # Put line into comment if you only want to to post-processing of results
+print(f'=====================================')  
 
 #plotL = bool(0) # false
 plotL = bool(1) # true
@@ -90,7 +106,8 @@ plotL = bool(1) # true
 if(plotL):
   
   print(f'=====================================')  
-  print(f'Now generate plots...')  
+  print(f'Now generate plots in output folder')  
+  print(folder_output)  
   print(f'=====================================')  
 
   folder = nn.config.config[software]['outputdirectory']
@@ -159,6 +176,14 @@ if(plotL):
 # plt.show()
   fig.savefig(file_cb+'.jpg')
 
+
+  if(software=="nextnano.MSB"):
+     extension2Dfile = '.vtr'
+   # extension2Dfile = '.avs.fld'
+  else:
+     extension2Dfile = '.vtr'
+   # extension2Dfile = '.fld'
+      
   if(software=="nextnano++"):
       file_LDOS = ''
       file_Density = ''
@@ -169,13 +194,13 @@ if(plotL):
       file_Current = ''
   elif(software=="nextnano.NEGF"):
       subfolder = '2D_plots'
-      file_LDOS = 'DOS_energy_resolved.vtr'
-      file_Density = 'CarrierDensity_energy_resolved.vtr'
-      file_Current = 'CurrentDensity_energy_resolved.vtr'
+      file_LDOS = 'DOS_energy_resolved'+extension2Dfile
+      file_Density = 'CarrierDensity_energy_resolved'+extension2Dfile
+      file_Current = 'CurrentDensity_energy_resolved'+extension2Dfile
   elif(software=="nextnano.MSB"):
-      file_LDOS = 'DOS_position_resolved.vtr'
-      file_Density = 'CarrierDensity_energy_resolved.vtr'
-      file_Current = 'CurrentDensity_energy_resolved.vtr'
+      file_LDOS = 'DOS_position_resolved'+extension2Dfile
+      file_Density = 'CarrierDensity_energy_resolved'+extension2Dfile
+      file_Current = 'CurrentDensity_energy_resolved'+extension2Dfile
 
   folder2Dplots = os.path.join(folder,folder_bias)
   for i in range(3):
@@ -192,18 +217,21 @@ if(plotL):
           label = 'Current density j(x,E)'
           file = file_Current
 
-      vtr_folder = os.path.join(folder2Dplots,subfolder)
-      vtr_file = os.path.join(vtr_folder,file)
-      dff = nn.DataFile(vtr_file,product=software)
-      cX = dff.coords['x'].value
-      cY = dff.coords['y'].value
-      cZ = dff.variables[0].value
+      folder2D = os.path.join(folder2Dplots,subfolder)
+      file2D = os.path.join(folder2D,file)
+      print(f"Plotting file: ",file2D)
+      dff = nn.DataFile(file2D,product=software)
+      print(f"List of coordinates in the current datafile: {dff.coords}")
+      print(f"List of variables in the current datafile: {dff.variables}")
+      cX = dff.coords['x']
+      cY = dff.coords['y']
+      cZ = dff.variables[0]
       fD, a2D1 = plt.subplots()
-      im1 = a2D1.pcolormesh(cX, cY, cZ, cmap='gnuplot')
+      im1 = a2D1.pcolormesh(cX.value, cY.value, cZ.value.T, cmap='gnuplot')
       a2D1.plot(df.coords[0].value,df.variables[0].value,label='Conduction Band Edge',
               color='white', linestyle='-')
       a2D1.set_title(label)  
-      filename = vtr_file+'.jpg'
+      filename = file2D+'.jpg'
       print(f'Saving file: ',filename)
       fD.savefig(filename)
 
@@ -227,12 +255,12 @@ if(plotL):
       aws.set_ylim(0.025,0.2)   
       aws.set(xlabel='z (nm)',ylabel='Energy (eV)')
 
-      filename = folder_total+r'\psi_squared.jpg'
+      filename = folder_total_bias+r'\psi_squared.jpg'
       print(f'Saving file: ',filename)
       fws.savefig(filename)
 
   if(software=="nextnano.NEGF"):
-      # IV curve
+       # IV curve
       print(f'folder_results =', folder_total)  
       iv = nnnegf.get_iv(folder_total)
       f,a = plt.subplots()

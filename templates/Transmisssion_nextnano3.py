@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 
 import config_nextnano     # This should be your default configuration.
 #import config_nextnano_temp # This could be a modified configuration file.
-
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -23,7 +22,7 @@ software = 'nextnano3'
 
 folder_examples_nnp    = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano++ sample files'
 folder_examples_nn3    = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano3 sample files'
-folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_06_22\nextnano.NEGF sample files'
+folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_11_16\nextnano.NEGF sample files'
 folder_examples_nnMSB  = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
 
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -181,11 +180,21 @@ for x in ListOfValues:
     df    = nn.DataFile(file,product=software)
     dfV.append(df)
 
+    #===========================
+    # Conduction band edge
+    #===========================
+    print(f"Read in file:")
+    print(file_cb)
     df_cb = nn.DataFile(file_cb,product=software)
     df_cbV.append(df_cb)
 
+    print(f"current datafile: ",file)
     print(f"List of coordinates in the current datafile: {df.coords}")
     print(f"List of variables in the current datafile: {df.variables}")
+
+    print(f"current datafile: ",file_cb)
+    print(f"List of coordinates in the current datafile: {df_cb.coords}")
+    print(f"List of variables in the current datafile: {df_cb.variables}")
 #   print(f"{df.coords['position'].unit}")
 
     fig, ax = plt.subplots(1)
@@ -214,8 +223,10 @@ for x in ListOfValues:
     if(software=="nextnano3"):
      #  file = os.path.join(folder_output,input_file_name_variable+r'\Schroedinger_1band'+r'\2Dcb1_qc1_sg1_deg1_psi_squared_ev001.fld') 
         file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.fld') 
-      # file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.vtr') 
+     #  file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.vtr')
         datafile_2d = nn.DataFile(file,product=software)
+        print(f"current datafile: ",file)
+        print(f"List of coordinates in the current datafile: {datafile_2d.coords}")
         print(f"List of variables in the current datafile: {datafile_2d.variables}")
     
         x=datafile_2d.coords['x']
@@ -223,8 +234,6 @@ for x in ListOfValues:
       # z=datafile_2d.variables['psi_squared']
         z=datafile_2d.variables[0]
 
-        print(f"List of coordinates in the current datafile: {df.coords}")
-        print(f"List of variables in the current datafile: {df.variables}")
         fig, ax = plt.subplots(1)
         pcolor = ax.pcolormesh(x.value,y.value,z.value.T)
         cbar = fig.colorbar(pcolor)
@@ -243,7 +252,7 @@ for x in ListOfValues:
       # plt.show()
         fig.savefig(file+'.jpg')
 
-    fig, ax = plt.subplots(1)
+fig, ax = plt.subplots(1)
 
 for i,j in zip(dfV,SweepVariableStringV):
     ax.plot(i.variables[0].value,i.variables[1].value,label=j)
