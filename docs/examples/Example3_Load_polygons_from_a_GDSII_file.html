@@ -14260,14 +14260,14 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Example-3---Load-polygons-from-a-GDSII-file">Example 3 - Load polygons from a GDSII file<a class="anchor-link" href="#Example-3---Load-polygons-from-a-GDSII-file">&#182;</a></h1><h2 id="About-this-example:-load-polygons-from-a-GDSII-file">About this example: load polygons from a GDSII file<a class="anchor-link" href="#About-this-example:-load-polygons-from-a-GDSII-file">&#182;</a></h2><p>This example is aimed for users who are familiar with GDSII files.</p>
-<p>Citing from <a href="https://en.wikipedia.org/wiki/GDSII">wikipedia</a>:</p>
+<p>Citing from <a href="https://en.wikipedia.org/wiki/GDSII">Wikipedia</a>:</p>
 <blockquote><p>GDSII stream format, common acronym GDSII, is a database file format which is the de facto industry standard for data exchange of integrated circuit or IC layout artwork. It is a binary file format representing planar geometric shapes, text labels, and other information about the layout in hierarchical form. The data can be used to reconstruct all or part of the artwork to be used in sharing layouts, transferring artwork between different tools, or creating photomasks.</p>
 </blockquote>
 <p>For example, for an experimentalist who designs and fabricates the sample in a clean room facility, it is common to work with GDSII files.</p>
 <p>Here, the goal is to translate the polygons defined in a GDSII file to a shape which nextnano can understand.</p>
 <p>The simplest example is that the GDSII file contains a simple square (in 2D) and you want to translate it into a cube (3D) in nextnano.</p>
 <p>Especially for people who work with gated structures like 2DEG in GaAs heterostructures, the geometry of the gates are directly related to the physics behind. Moreover, these gated devices become more and more complicated in terms of the gate geometries.</p>
-<p>If the user has to translate these geometries manually, it will take for ever without mentioning the potential human error. Therefore, we started to develop a feature which can load the polygons from a GDSII file and then, the user can easily generate a desired nextnano shape.</p>
+<p>If the user has to translate these geometries manually, it will take forever without mentioning the potential human error. Therefore, we started to develop a feature which can load the polygons from a GDSII file and then, the user can easily generate a desired nextnano shape.</p>
 <p>For the moment, this feature has only few functionalities and it is limited by nextnano++ shapes. However, the idea is to expand it in the future.</p>
 <h2 id="Requirements">Requirements<a class="anchor-link" href="#Requirements">&#182;</a></h2><p>You need to install <a href="https://matplotlib.org/">matplotlib</a>, <a href="https://gdspy.readthedocs.io/en/stable/">gdspy</a>, <a href="https://shapely.readthedocs.io/en/stable/">Shapely</a>.</p>
 <p>We recommend to use the anaconda prompt to install these packages:</p>
@@ -14285,7 +14285,7 @@ conda install Shapely</code></pre>
 <li>x and y coordinates of the vertexes: <code>my_gds.polygons_xy</code> or <code>my_gds.xy</code> (transposed array)</li>
 <li>labels: user-defined labels for each polygons</li>
 </ul>
-<p>It has also a easy method to plot the polygons:</p>
+<p>It has also an easy method to plot the polygons:</p>
 <div class="highlight"><pre><span></span><span class="n">my_gds</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 <p>You can generate the raw text of the shape for an input file by some defined method. For example, to get a polygonal_prism shape of 20 nm in the z direction, you can do:</p>

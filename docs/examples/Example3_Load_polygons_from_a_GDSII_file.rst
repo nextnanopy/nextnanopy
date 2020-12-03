@@ -6,7 +6,7 @@ About this example: load polygons from a GDSII file
 
 This example is aimed for users who are familiar with GDSII files.
 
-Citing from `wikipedia <https://en.wikipedia.org/wiki/GDSII>`__:
+Citing from `Wikipedia <https://en.wikipedia.org/wiki/GDSII>`__:
 
    GDSII stream format, common acronym GDSII, is a database file format
    which is the de facto industry standard for data exchange of
@@ -71,7 +71,7 @@ via ``my_gds.nb_polygons`` - x and y coordinates of the vertexes:
 ``my_gds.polygons_xy`` or ``my_gds.xy`` (transposed array) - labels:
 user-defined labels for each polygons
 
-It has also a easy method to plot the polygons:
+It has also an easy method to plot the polygons:
 
 .. code:: python
 
