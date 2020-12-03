@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Welcome to nextnanopy !
+# # Example 1 - Execute an input file
 # 
 # ## About this example: load and execute an input file
 # 
@@ -27,6 +27,7 @@
 
 import nextnanopy as nn
 my_input = nn.InputFile(r'E:\junliang.wang\datafiles\nextnano++\example.in')
+print(my_input)
 
 
 # ## What information does it contain?
@@ -48,7 +49,7 @@ print(my_input.fullpath)
 # In[3]:
 
 
-print(my_input.text)
+my_input.preview()
 
 
 # ## Input variables
@@ -60,7 +61,6 @@ print(my_input.text)
 # - name (str)
 # - value (undefined)
 # - unit (str, optional)
-# - label (str, optional)
 # - comment (str, optional)
 # - metadata (dict, optional)
 # - text (str): raw text in the input file for a given variable
@@ -78,7 +78,8 @@ print(f"List of variables: {my_input.variables}")
 # ```python
 # my_input.get_variable(name) # method 1 (recommended)
 # my_input.variables[name] # method 2 (recommended)
-# my_input.variables[index] # method 3
+# my_input[name] # method 3 (recommended)
+# my_input.variables[index] # method 4
 # ```
 
 # ### Let's have a quick look of the variables in this file
@@ -86,7 +87,7 @@ print(f"List of variables: {my_input.variables}")
 # In[5]:
 
 
-for key, var in my_input.variables.items():
+for var in my_input.variables:
     print(var.text)
 
 
@@ -177,19 +178,36 @@ help(my_input.save)
 # Note that if you have modified one or more variables, you must save the file before execution. 
 # 
 # The ```execute``` method without any arguments, it will use the configuration stored in ```my_input.config```. As explained in Example 0, it will automatically detect the nextnano product (nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB) and will load the corresponding configuration parameters prior execution.
-# 
-# The optional arguments are:
-# 
-# - exe: path to nextnano executable
-# - license: path to nextnano license file
-# - database: path to nextnano database file
-# - outputdirectory: path to output folder
-# - Other optional arguments depending of the nextnano product
 
 # In[9]:
 
 
+help(my_input.execute)
+
+
+# In[10]:
+
+
 my_input.execute()
+
+
+# ## Get information after executing the file
+# 
+# The output folder after executing the file is stored at:
+# ```python
+# my_input.folder_output
+# ```
+# 
+# You can access to all the relevant information from the execution like the log file location, the command line arguments, etc, via:
+# ```python
+# my_input.execute_info
+# ```
+# 
+
+# In[11]:
+
+
+my_input.folder_output
 
 
 # ## Sweep an input variable
@@ -201,6 +219,15 @@ my_input.execute()
 #     my_input.set_variable('BIAS',value=value)
 #     my_input.save() # remember that by default, overwrite is False.
 #     my_input.execute() 
+# ```
+
+# ## Change filename and input folder
+# 
+# If you want to change the current filename or the current input folder, you can do the following:
+# ```python
+# my_input.filename = 'new_file.in'
+# my_input.filename_only = 'new_file' # it will use the original file extension
+# my_input.folder_input = 'new_folder'
 # ```
 
 # Please, contact python@nextnano.com for any issue with this example.

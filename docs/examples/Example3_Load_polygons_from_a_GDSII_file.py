@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Welcome to nextnanopy !
+# # Example 3 - Load polygons from a GDSII file
 # 
 # ## About this example: load polygons from a GDSII file
 # 
@@ -120,13 +120,11 @@ my_gds.show()
 # ## Get raw text of a polygonal_prism for the input file
 # 
 # The polygon from the GDSII file is a 2D geometry, but a polygonal_prism is a 3D object. So the user has to define the coordinates for the z direction via the arguments ```zi``` and ```zf``` in the method ```.get_polygonal_prism```
-
-# In[5]:
-
-
-list_of_shapes = my_gds.get_polygonal_prisms(zi=0,zf=20) # initial and final z coordinates are needed for this method
-for shape in list_of_shapes:
-    print(shape.text)
-
+# 
+# ```python
+# list_of_shapes = my_gds.get_polygonal_prisms(zi=0,zf=20) # initial and final z coordinates are needed for this method
+# for shape in list_of_shapes:
+#     print(shape.text)
+# ```
 
 # Please, contact python@nextnano.com for any issue with this example.

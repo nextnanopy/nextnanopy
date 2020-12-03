@@ -5,6 +5,7 @@ import numpy as np
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.formatting import best_str_to_name_unit
+from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension
 from nextnanopy import defaults
 
 import pyvista as pv
@@ -20,6 +21,7 @@ def load_message(method):
 
 
 class Output(object):
+
     def __init__(self, fullpath):
         self.fullpath = fullpath
         self.metadata = {}
@@ -31,9 +33,12 @@ class Output(object):
         return os.path.split(self.fullpath)[0]
 
     @property
+    def filename_only(self):
+        return get_filename(self.fullpath, ext=False)
+
+    @property
     def filename(self):
-        name = os.path.split(self.fullpath)[-1]
-        return os.path.splitext(name)[0]
+        return get_filename(self.fullpath, ext=True)
 
     @property
     def extension(self):
@@ -98,6 +103,60 @@ class Output(object):
 
 
 class DataFileTemplate(Output):
+    """
+        This class stores the data from any kind of nextnano data files with the
+        same structure.
+        The stored data contains coordinates (.coords) and dependent variables (.variables).
+        Each coordinate or variable would contain attributes like name, unit and value.
+        For more information, see their specific documentation.
+
+        The initialization of the class will execute the load method.
+
+        ...
+
+        Parameters
+        ----------
+        fullpath : str
+            path to the file.
+
+
+        Attributes
+        ----------
+        fullpath : str
+            path to the file (default: None)
+        coords : DictList
+            Coord objects (default: DictList())
+        variables : DictList
+            Variable objects (default: DictList())
+        data : DictList
+            coords and variables together
+        metadata : dict
+            extra information
+        filename : str
+            name with the file extension
+        filename_only :
+            name without the file extension
+        extension : str
+            file extension
+        folder : str
+            folder of the fullpath
+        product : str
+            flag about nextnano product to help to find the best loading routine
+
+
+        Methods
+        -------
+        load(fullpath)
+            load a data file
+
+        get_coord(name)
+            equivalent to self.coords[name]
+
+        get_variable(name)
+            equivalent to self.variables[name]
+
+    """
+
     def __init__(self, fullpath, product=None):
         super().__init__(fullpath)
         self.product = product
@@ -105,12 +164,24 @@ class DataFileTemplate(Output):
 
     @load_message
     def load(self):
+        """
+        Find the loader and update the stored information with the loaded data
+        """
         loader = self.get_loader()
         df = loader(self.fullpath)
         self.update_with_datafile(df)
         del df
 
     def update_with_datafile(self, datafile):
+        """
+        Copy .metadata, .coords and .variables of the specified datafile
+        Copy other attributes like .vtk if there is any.
+
+        Parameters
+        ----------
+        datafile : nextnano.outputs.DataFileTemplate object
+        """
+
         self.metadata.update(datafile.metadata)
         self.coords.update(datafile.coords)
         self.variables.update(datafile.variables)
@@ -161,7 +232,7 @@ class AvsAscii(Output):
 
     @property
     def fld(self):
-        filename = self.filename + '.fld'
+        filename = self.filename_only + '.fld'
         return os.path.join(self.folder, filename)
 
     def load(self):

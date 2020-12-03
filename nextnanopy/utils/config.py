@@ -3,6 +3,66 @@ from copy import deepcopy
 
 
 class Config(object):
+    """
+        This class stores and manipulates a configuration file.
+
+        The initialization of the class will execute the load method.
+
+        ...
+
+        Parameters
+        ----------
+        fullpath : str
+            path to the file.
+        validators : dict
+            dict where the keys are the name of the sections and the values
+            are another dict.
+            In the latter dict, the keys are the name of the options and the values
+            are methods to convert the raw information (e.g: int)
+
+        Attributes
+        ----------
+
+        fullpath : str
+            path to the file
+        config : dict
+            validated values of each option of each section
+        configparser : configparser.ConfigParser object
+            ConfigParser object with raw values (str format) of each option of each section
+        validators : dict
+            dict of validator methods for each section and option (default is {})
+        sections : list
+            list of the section names
+
+        Methods
+        -------
+        preview()
+            print the text of the file.
+
+        load()
+            load the file located at .fullpath
+
+        save(fullpath=None)
+            save the current configuration into a file. (default is None)
+            If it is None, it will use the current .fullpath
+
+        get_options(section)
+            get the list of option names of a given section
+
+        config_to_configparser()
+            copy the information in .config to .configparser
+
+        set(section, option, value)
+            change the value of a given option of a section in .config
+            it applies the validator if there is any
+
+        get(section, option)
+            return the value of a given option of a section in .config
+
+        add_section(section)
+            create a new section in the configuration
+
+    """
     def __init__(self, fullpath, validators={}):
         self.configparser = configparser.ConfigParser()
         self.validators = validators
@@ -35,7 +95,6 @@ class Config(object):
     def sections(self):
         return self.config.keys()
 
-    @property
     def preview(self):
         for sec in self.sections:
             print('[%s]' % (sec))
@@ -47,9 +106,9 @@ class Config(object):
         options = self.config[section]
         return options
 
-    def save(self, fullpath=''):
+    def save(self, fullpath=None):
         self.config_to_configparser()
-        if not fullpath:
+        if fullpath is None:
             fullpath = self.fullpath
         else:
             self.fullpath = fullpath

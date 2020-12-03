@@ -2,6 +2,25 @@ from collections import OrderedDict
 
 
 class DictList(OrderedDict):
+    """
+        This is a customized collections.OrderedDict
+        It is a mixture between a dictionary and a list because it allows to
+        access the values via keys or integer indexes.
+        Common usage:
+            d = DictList(a=3, b='t')
+            d[0] = 3
+            d['a'] = 3
+
+        It has all the methods and attributes from a dictionary like .keys(), .values(), .items()
+
+        Moreover, it supports iterations like a list:
+        for value in d:
+            print(value)
+        >>> 3
+        >>> 't'
+
+
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

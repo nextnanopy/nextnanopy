@@ -25,14 +25,14 @@ class DataFile(DataFileTemplate):
         return loader
 
     def _find_txt_loader(self):
-        if self.filename in ['variables_input', 'variables_database']:
+        if self.filename_only in ['variables_input', 'variables_database']:
             loader = InputVariables
-        elif self.filename == 'materials':
+        elif self.filename_only == 'materials':
             NotImplementedError(f'Loading materials.txt is not implemented yet')
-        elif self.filename == 'total_charges':
+        elif self.filename_only == 'total_charges':
             NotImplementedError(f'Loading total_charges.txt is not implemented yet')
         else:
-            raise NotImplementedError(f'Datafile {self.filename}.txt is not valid')
+            raise NotImplementedError(f'Datafile {self.filename_only}.txt is not valid')
         return loader
 
 

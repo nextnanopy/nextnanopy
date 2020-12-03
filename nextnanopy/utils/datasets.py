@@ -5,6 +5,41 @@ default_unit = 'a.u'
 
 
 class Data(object):
+    """
+    This class stores any kind of information from nextnano files (input files, data files).
+    This is a template class for datasets like Variables, Coords, InputVariables, etc.
+
+    ...
+
+    Parameters
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str, optional
+        unit of the value (default is None)
+    metadata : dict, optional
+        extra information (default is {})
+    label_fmt : method, optional
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+
+    Attributes
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str
+        unit of the value (default is None)
+    metadata : dict
+        extra information (default is {})
+    label_fmt : method
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+    """
+
     params = ['name', 'value', 'unit', 'metadata'],
 
     def __init__(self, name, value, unit=None, metadata={}, label_fmt=None, *args,
@@ -41,6 +76,46 @@ class Data(object):
 
 
 class Variable(Data):
+    """
+    This class stores independent variables from data files.
+
+    ...
+
+    Parameters
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str, optional
+        unit of the value (default is None)
+    metadata : dict, optional
+        extra information (default is {})
+    label_fmt : method, optional
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+
+    Attributes
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str
+        unit of the value (default is None)
+    metadata : dict
+        extra information (default is {})
+    label_fmt : method
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+
+
+    Methods
+    ----------
+    get_value()
+        return a copy of the value
+
+    """
     params = ['name', 'value', 'unit', 'metadata']
 
     def __init__(self, name, value, unit=None, metadata={}, **kwargs):
@@ -55,6 +130,57 @@ class Variable(Data):
 
 
 class Coord(Data):
+    """
+    This class stores the coordinates from data files.
+
+    ...
+
+    Parameters
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    dim : int
+        dim for the Variable.value
+        For example, for a dataset of (100, 2) and a coordinate x of 100 pts, dim = 0
+    unit : str, optional
+        unit of the value (default is None)
+    offset : not defined, optional
+        offset to be added to value (default is 0)
+    metadata : dict, optional
+        extra information (default is {})
+    label_fmt : method, optional
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+
+    Attributes
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    dim : int
+        dim for the Variable.value
+        For example, for a dataset of (100, 2) and a coordinate x of 100 pts, dim = 0
+    unit : str
+        unit of the value (default is None)
+    offset : not defined
+        offset to be added to value (default is 0)
+    metadata : dict
+        extra information (default is {})
+    label_fmt : method
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+    valueo : not defined
+        value with offset
+
+    Methods
+    ----------
+    get_value(use_offset=False)
+        return a copy of the value with or without the offset
+    """
+
     params = ['name', 'value', 'unit', 'offset', 'dim', 'metadata']
 
     def __init__(self, name, value, dim, unit=None, offset=0, metadata={}, **kwargs):
@@ -74,6 +200,52 @@ class Coord(Data):
 
 
 class InputVariable(Data):
+    """
+    Template class for the input variables. For each nextnano product, it will be specified
+    the variable character (e.g $ for nextnano++) and the comment character (e.g # for nextnano++).
+
+    ...
+
+    Parameters
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str, optional
+        unit of the value (default is '')
+    comment : str, optional
+        (default is '')
+    metadata : dict, optional
+        extra information (default is {})
+    label_fmt : method, optional
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+
+    Attributes
+    ----------
+    name : str
+        name of the dataset
+    value : not defined
+        stored value
+    unit : str
+        unit of the value (default is '')
+    comment : str
+        (default is '')
+    metadata : dict
+        extra information (default is {})
+    label_fmt : method
+        formatting label with label_fmt(name, unit) (default is None)
+        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+    text : str
+        return the raw text for the input file
+
+    Methods
+    ----------
+    get_value(use)
+        return a copy of the value
+    """
+
     params = ['name', 'value', 'unit', 'comment', 'metadata']
     var_char = ''
     com_char = ''

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Welcome to nextnanopy !
+# # Example 0: Set up the configuration
+# 
 # 
 # ## About this example: nextnano configuration
 # 

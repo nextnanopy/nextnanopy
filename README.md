@@ -35,6 +35,7 @@ Make sure to download the latest version with python 3.8.
 
 * [Python](https://www.python.org/) (tested with 3.8)
 * [Numpy](http://numpy.scipy.org/)
+* [PyVista](https://www.pyvista.org/) (For loading VTK files)
 * [Gdspy](https://gdspy.readthedocs.io/) (optional: to import gds files)
 * [Shapely](https://shapely.readthedocs.io/) (optional: to manipulate polygons from gds files)
 * [Matplotlib](https://matplotlib.org/) (optional: to visualize imported polygons)
@@ -48,6 +49,10 @@ Simply open anaconda prompt and type:
 
 ```sh
 pip install nextnanopy
+```
+or if you want to upgrade:
+```sh
+pip install --upgrade nextnanopy
 ```
 
 #### Option 2: from the source code
@@ -75,8 +80,9 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 
 ## History of changes
 
-### Upcoming
-* Detailed documentation
+### Version 0.1.7 (Dec 3rd, 2020)
+* docstring for inputs.py, outputs.py, config.py, mycollections.py, datasets.py
+* Updated examples in docs/examples/
 
 ### Version 0.1.6 (Dec 2nd, 2020)
 * Feature: [DataFile] access with index to coordinates and to variables
