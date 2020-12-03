@@ -93,7 +93,7 @@ polygonal_prism (3D)
     import nextnanopy as nn
     from nextnanopy.nnp.shapes import GdsPolygons
     
-    my_gds = GdsPolygons(r'E:\junliang.wang\gds\example2.gds')
+    my_gds = GdsPolygons(r'..\..\tests\gds\example2.gds')
 
 Let’s have a look of the polygons
 ---------------------------------

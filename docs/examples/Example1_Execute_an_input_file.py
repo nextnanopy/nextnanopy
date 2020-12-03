@@ -26,7 +26,7 @@
 
 
 import nextnanopy as nn
-my_input = nn.InputFile(r'E:\junliang.wang\datafiles\nextnano++\example.in')
+my_input = nn.InputFile(r'..\..\tests\datafiles\nextnano++\example.in')
 print(my_input)
 
 

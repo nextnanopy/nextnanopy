@@ -274,7 +274,7 @@ parameters.
 
 .. code:: ipython3
 
-    my_input = nn.InputFile(r'E:\junliang.wang\datafiles\nextnano++\example.in')
+    my_input = nn.InputFile(r'..\..\tests\datafiles\nextnano++\example.in')
     my_input.config
 
 

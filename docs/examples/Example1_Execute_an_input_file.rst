@@ -30,14 +30,14 @@ for nextnano.NEGF nor nextnano.MSB yet.
 .. code:: ipython3
 
     import nextnanopy as nn
-    my_input = nn.InputFile(r'E:\junliang.wang\datafiles\nextnano++\example.in')
+    my_input = nn.InputFile(r'..\..\tests\datafiles\nextnano++\example.in')
     print(my_input)
 
 
 .. parsed-literal::
 
     InputFile
-    fullpath: E:\junliang.wang\datafiles\nextnano++\example.in
+    fullpath: ..\..\tests\datafiles\nextnano++\example.in
     Input variables: 8 elements
     	$BIAS = 0.0 # Gate voltage(V)
     	$ALLOY = 0.3 # Al content of AlGaAs layer
@@ -66,7 +66,7 @@ What information does it contain?
 
 .. parsed-literal::
 
-    E:\\junliang.wang\\datafiles\\nextnano++\\example.in
+    ..\\..\\tests\\datafiles\\nextnano++\\example.in
     
 
 .. code:: ipython3

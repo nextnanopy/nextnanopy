@@ -51,7 +51,7 @@
 
 import nextnanopy as nn
 
-datafile_1d = nn.DataFile(r'E:\junliang.wang\datafiles\nextnano++\bandedges_1d.dat',product='nextnano++')
+datafile_1d = nn.DataFile(r'..\..\tests\datafiles\nextnano++\bandedges_1d.dat',product='nextnano++')
 print(datafile_1d)
 
 
@@ -195,7 +195,7 @@ fig.tight_layout()
 # In[9]:
 
 
-datafile_2d = nn.DataFile(r'E:\junliang.wang\datafiles\nextnano++\bandedges_2d.fld',product='nextnano++')
+datafile_2d = nn.DataFile(r'..\..\tests\datafiles\nextnano++\bandedges_2d.fld',product='nextnano++')
 
 
 # ## Now there will be two coordinates: x and y
