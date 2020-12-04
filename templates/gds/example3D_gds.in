@@ -1,0 +1,97 @@
+global{ 
+   simulate3D{}
+   
+   crystal_zb{
+      x_hkl = [1, 0, 0]
+      y_hkl = [0, 1, 0]
+   }
+
+   substrate{
+      name = "GaAs"
+   }
+
+   temperature = 1.0
+
+}
+
+grid{
+   xgrid{
+      line{ pos = -1000.0 spacing = 15.0 }
+      line{ pos = 1000.0 spacing = 15.0 }
+   }
+   ygrid{
+      line{ pos = -1000.0 spacing = 15.0 }
+      line{ pos = 1000.0 spacing = 15.0 }
+   }
+   zgrid{
+      line{ pos = -10.0 spacing = 10.0 }
+      line{ pos = 100.0 spacing = 50.0 }
+      line{ pos = 300.0 spacing = 10.0 }
+   }
+}
+
+structure{
+   output_region_index{ boxes = no }
+   output_material_index{ boxes = no }
+   output_alloy_composition{ boxes = no }
+
+   region{
+      everywhere{
+      }
+      binary{
+         name = "GaAs"
+      }
+   }
+   region{
+      cuboid{
+         x = [-1000.0, 1000.0]
+         y = [-1000.0, 1000.0]
+         z = [-10.0, 300.0]
+      }
+      contact { name = dummy }
+      binary{
+         name = "GaAs"
+      }
+   }
+
+   # -- GATES-REGION --
+}
+
+classical{
+   Gamma{}
+   HH{}
+ # LH{}
+ # SO{}
+   output_bandedges{ 
+    profiles = "Gamma"
+    averaged = yes }
+}
+
+contacts{
+   fermi{ name = "dummy" bias = 0}
+    # -- GATES-CONTACT --
+}
+
+poisson{
+ # output_potential{}
+}
+
+output{
+   format2D = AvsAscii_one_file
+   format3D = AvsAscii_one_file
+   section1D{                                # ouput a 1D section of the simulation area (1D slice)
+      name = "line_along_z"                  # name of section enters file name
+      x = 500.0                              # at x = 500 nm
+      y = 300.0                              # at y = 300 nm 
+   }
+
+   section2D{                                # ouput a 2D section of the simulation area (2D slice)
+      name = "rectangle_z_40"                # name of section enters file name
+      z = 40.0                               # at z = 40 nm 
+   }
+
+}
+
+run{
+ # solve_poisson{}
+}
