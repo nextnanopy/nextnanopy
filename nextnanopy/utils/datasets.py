@@ -1,7 +1,7 @@
 from copy import deepcopy
 import numpy as np
 
-default_unit = 'a.u'
+default_unit = 'a.u.'
 
 
 class Data(object):

@@ -1,7 +1,7 @@
 ! Test input file with only variables
    ! some comments
 
-%float = 0.0        ! float number (a.u)
+%float = 0.0        ! float number (a.u.)
 %int = 0     ! int number (random = 3)
 %str = "test" ! first comments # second comment
 %reference = $int - 1

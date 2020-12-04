@@ -17,7 +17,7 @@ class Test_nnp(unittest.TestCase):
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables['float'].name, 'float')
         self.assertEqual(file.variables['float'].value, float(0.0))
-        self.assertEqual(file.variables['float'].comment, 'float number (a.u)')
+        self.assertEqual(file.variables['float'].comment, 'float number (a.u.)')
 
         self.assertEqual(file.variables['int'].name, 'int')
         self.assertEqual(file.variables['int'].value, int(0))
@@ -135,7 +135,7 @@ class Test_nn3(unittest.TestCase):
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables['float'].name, 'float')
         self.assertEqual(file.variables['float'].value, float(0.0))
-        self.assertEqual(file.variables['float'].comment, 'float number (a.u)')
+        self.assertEqual(file.variables['float'].comment, 'float number (a.u.)')
 
         self.assertEqual(file.variables['int'].name, 'int')
         self.assertEqual(file.variables['int'].value, int(0))
