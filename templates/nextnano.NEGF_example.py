@@ -4,7 +4,7 @@ import sys,os
 import matplotlib.pyplot as plt
 import nextnanopy.negf.outputs as nnnegf
 
-import config_nextnano     # This should be your default configuration.
+#import config_nextnano     # This should be your default configuration.
 #import config_nextnano_temp # This could be a modified configuration file.
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
@@ -97,7 +97,7 @@ print(f'=====================================')
   ############################
   # Execute nextnano software
   ############################
-#input_file.execute() # Put line into comment if you only want to to post-processing of results
+input_file.execute() # Put line into comment if you only want to to post-processing of results
 print(f'=====================================')  
 
 #plotL = bool(0) # false
