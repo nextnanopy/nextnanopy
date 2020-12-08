@@ -94,8 +94,6 @@ class GdsPolygonsRaw(object):
             ax.set_prop_cycle(cycler('color', colors))
         ax.set_xlabel(f'x {self.unit}')
         ax.set_ylabel(f'y {self.unit}')
-        ax.figure.tight_layout()
-        plt.show()
         return ax
 
     def show_all(self, ax=None, cmap='nipy_spectral', fill_kw={}):
@@ -127,7 +125,6 @@ class GdsPolygonsRaw(object):
             ax = self.show_onebyone(ax, cmap, fill_kw)
         else:
             ax = self.show_all(ax, cmap, fill_kw)
-        ax.figure.tight_layout()
         return ax
 
     def show_slices(self, ax=None, fill_kw={}):
@@ -136,7 +133,6 @@ class GdsPolygonsRaw(object):
             for pol in spol.slices:
                 x, y = pol.boundary.xy
                 ax.fill(x, y, **fill_kw)
-        ax.figure.tight_layout()
         return ax
 
 
@@ -303,15 +299,11 @@ class SlicedPolygon(shapely.geometry.Polygon):
         return x, y
 
     def show_slices(self, ax=None, fill_kw={}):
-        plt.ion()
         if not ax:
             fig, ax = plt.subplots(1)
         ax.set_xlabel(f'x')
         ax.set_ylabel(f'y')
-        ax.figure.tight_layout()
-        plt.show()
         for pol in self.slices:
             x, y = pol.boundary.xy
             ax.fill(x, y, **fill_kw)
-        ax.figure.tight_layout()
         return ax
