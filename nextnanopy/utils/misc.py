@@ -50,21 +50,21 @@ def find_unused_name(name, list_names, extension, max_idx=True):
         extension = f'.{extension}'
     if extension not in name:
         name += extension
-    only_name = get_file_prefix(name)
-    lnames = list(filter(lambda ln: extension in ln and only_name in ln, list_names))
+    prefix = get_file_prefix(name)
+    lnames = list(filter(lambda ln: extension in ln and prefix in ln, list_names))
+
     if len(lnames) == 0:
         max_idx = 0
     if max_idx:
         idxs = [get_file_idx(name) for name in lnames]
         idxs.sort()
         max_idx = idxs[-1]
-        idx = max_idx + 1
-        unused_name = f'{only_name}_{max_idx + 1}{extension}'
+        unused_name = f'{prefix}_{max_idx + 1}{extension}'
     else:
         idx = 0
-        unused_name = f'{only_name}_{idx}{extension}'
+        unused_name = f'{prefix}_{idx}{extension}'
         while unused_name in list_names:
-            unused_name = f'{only_name}_{idx}{extension}'
+            unused_name = f'{prefix}_{idx}{extension}'
             idx += 1
     return unused_name
 
@@ -88,14 +88,12 @@ def savetxt(fullpath, text, overwrite=False, automkdir=True):
     print('Done!')
     return fullpath
 
-
 def get_file_prefix(file):
     prefix, ext = os.path.splitext(file)
     idx = get_file_idx(prefix)
     if idx > -1:
-        prefix = prefix.split(f'_{idx}')[0]
+        prefix = '_'.join(prefix.split('_')[0:-1])
     return prefix
-
 
 def get_file_idx(file):
     prefix, ext = os.path.splitext(file)

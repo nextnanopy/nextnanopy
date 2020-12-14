@@ -79,6 +79,9 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 
 ## History of changes
 
+### Version 0.1.8 (Dec 14th, 2020)
+* Buf fix: find unused name when saving input file
+
 ### Version 0.1.7 (Dec 3rd, 2020)
 * docstring for inputs.py, outputs.py, config.py, mycollections.py, datasets.py
 * Updated examples in docs/examples/
