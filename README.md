@@ -79,6 +79,10 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 
 ## History of changes
 
+### Version 0.1.9 (Dec 14th, 2020)
+* Feature: InputFile.execute has now show_log (True or False) to turn on/off the log. Note: the log file is always saved. 
+* Removed default messages when saving an input file
+
 ### Version 0.1.8 (Dec 14th, 2020)
 * Buf fix: find unused name when saving input file
 

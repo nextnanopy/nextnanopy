@@ -5,6 +5,12 @@ from nextnanopy.utils.config import Config
 products = ['nextnano++', 'nextnano3', 'nextnano.NEGF', 'nextnano.MSB']
 default_folder = str(Path.home())
 config_default_path = os.path.join(default_folder, '.nextnanopy-config')
+messages = {
+    'load_input': [None, None],
+    'save_input': [None, None],
+    'execute_input': [None, None],
+    'load_output': [None, None],
+}
 
 
 def get_InputFile(product):

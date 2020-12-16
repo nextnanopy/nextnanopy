@@ -20,7 +20,7 @@ install_requires = [
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.8",
+    version="0.1.9",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',

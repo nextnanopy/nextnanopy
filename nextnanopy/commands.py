@@ -39,23 +39,24 @@ def read_output(pipe, funcs):
     pipe.close()
 
 
-def write_output(get, filepath):
+def write_output(get, filepath, show=True):
     f = open(filepath, 'w', newline='')
     for line in iter(get, None):
         line = str(line, 'utf-8', errors='ignore')
-        sys.stdout.write(line)
+        if show:
+            sys.stdout.write(line)
         f.write(line)
     f.close()
 
 
-def start_log(process, filepath):
+def start_log(process, filepath, show=True):
     q = queue.Queue()
     out, err = [], []
     tout = threading.Thread(
         target=read_output, args=(process.stdout, [q.put, out.append]))
     terr = threading.Thread(
         target=read_output, args=(process.stderr, [q.put, err.append]))
-    twrite = threading.Thread(target=write_output, args=(q.get, filepath))
+    twrite = threading.Thread(target=write_output, args=(q.get, filepath, show))
     for t in (tout, terr, twrite):
         t.daemon = False
         t.start()
@@ -71,6 +72,7 @@ def execute(
         license,
         database,
         outputdirectory,
+        show_log=True,
         **kwargs,
 ):
     filename = get_filename(inputfile, ext=False)
@@ -82,7 +84,7 @@ def execute(
     wdir = os.path.split(exe)[0]  # nn3 assumes wdir at one folder upper than the executable
     os.chdir(wdir)
     process = send(cmd)
-    start_log(process, logfile)
+    start_log(process, logfile, show_log)
     os.chdir(cwd)
     info = {
         'process': process,

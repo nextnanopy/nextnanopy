@@ -1,9 +1,16 @@
 import os
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
 from nextnanopy.utils.mycollections import DictList
-from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension
+from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator
 from nextnanopy.commands import execute as cmd_execute
 from nextnanopy import defaults
+
+_msgs = defaults.messages['load_input']
+load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+_msgs = defaults.messages['save_input']
+save_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+_msgs = defaults.messages['execute_input']
+execute_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 class InputFileTemplate(object):
@@ -170,6 +177,7 @@ class InputFileTemplate(object):
             else:
                 print(f'{line}')
 
+    @load_message
     def load(self, fullpath):
         """
         The steps are the following:
@@ -199,6 +207,7 @@ class InputFileTemplate(object):
         if self.product not in defaults.products:
             raise ValueError(f'Not valid input file')
 
+    @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True):
         """
         Save the current information into a file.
@@ -222,6 +231,7 @@ class InputFileTemplate(object):
         self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
         return self.fullpath
 
+    @execute_message
     def execute(self, **kwargs):
         """
         Execute the input file located at .fullpath

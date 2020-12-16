@@ -5,19 +5,13 @@ import numpy as np
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.formatting import best_str_to_name_unit
-from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension
+from nextnanopy.utils.misc import get_filename, message_decorator
 from nextnanopy import defaults
 
 import pyvista as pv
 
-
-def load_message(method):
-    def f(*args, **kwargs):
-        # print('Loading...')
-        result = method(*args, **kwargs)
-        # print('Done!')
-
-    return f
+_msgs = defaults.messages['load_output']
+load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 class Output(object):

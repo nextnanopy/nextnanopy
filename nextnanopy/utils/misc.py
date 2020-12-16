@@ -83,10 +83,9 @@ def savetxt(fullpath, text, overwrite=False, automkdir=True):
         mkdir_if_not_exist(get_folder(fullpath))
     fullpath = find_unused_in_folder(fullpath, overwrite)
     with open(fullpath, 'w+') as file:
-        print(f'Saving {fullpath}...')
         file.write(text)
-    print('Done!')
     return fullpath
+
 
 def get_file_prefix(file):
     prefix, ext = os.path.splitext(file)
@@ -94,6 +93,7 @@ def get_file_prefix(file):
     if idx > -1:
         prefix = '_'.join(prefix.split('_')[0:-1])
     return prefix
+
 
 def get_file_idx(file):
     prefix, ext = os.path.splitext(file)
@@ -105,3 +105,24 @@ def get_file_idx(file):
         except:
             pass
     return idx
+
+
+def message_decorator(method, init_msg=None, end_msg=None):
+    def f(*args, **kwargs):
+        show_message(init_msg)
+        result = method(*args, **kwargs)
+        show_message(end_msg)
+        return result
+
+    return f
+
+
+def show_message(msg):
+    if msg is None:
+        return
+    if type(msg) == str:
+        print(msg)
+    elif callable(msg):
+        msg()
+    else:
+        pass
