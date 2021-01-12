@@ -1,4 +1,5 @@
 import nextnanopy as nn
+from nextnanopy.utils.misc import mkdir_if_not_exist
 import sys,os
 #import numpy as np
 import matplotlib.pyplot as plt
@@ -20,8 +21,8 @@ software = 'nextnano.NEGF'
 #software = 'nextnano.MSB'
 #===========================
 
-folder_examples_nnp = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano++ sample files'
-folder_examples_nn3 = r'C:\Program Files\nextnano\2020_10_16\Sample files\nextnano3 sample files'
+folder_examples_nnp = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano++ sample files'
+folder_examples_nn3 = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano3 sample files'
 folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_11_16\nextnano.NEGF sample files'
 folder_examples_nnMSB = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
 
@@ -56,12 +57,16 @@ my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB
 #===========================
 if(software=="nextnano++"):
     my_input_file_no_extension = my_input_file_no_extension_nnp
+    software_short = software_short_nnp
 elif(software=="nextnano3"):
     my_input_file_no_extension = my_input_file_no_extension_nn3
+    software_short = software_short_nn3
 elif(software=="nextnano.NEGF"):
     my_input_file_no_extension = my_input_file_no_extension_nnNEGF
+    software_short = software_short_nnNEGF
 elif(software=="nextnano.MSB"):
     my_input_file_no_extension = my_input_file_no_extension_nnMSB
+    software_short = software_short_nnMSB
 #===========================
 
 if(software=="nextnano.NEGF" or software=="nextnano.MSB"):
@@ -93,7 +98,6 @@ input_file.save(my_input_file_new,overwrite=True,automkdir=True)
 
 print(f'')  
 print(f'=====================================')  
-####################################
   ############################
   # Execute nextnano software
   ############################
