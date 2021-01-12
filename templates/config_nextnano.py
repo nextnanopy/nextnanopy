@@ -18,7 +18,7 @@ path_nextnano_output = r"C:\Users\stefan.birner.NEXTNANO\Documents\nextnano\Outp
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Here, you have to specify your nextnano installation folder.
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-path_nextnano        = r"C:\Program Files\nextnano\2020_10_16"                         # installation folder of nextnano++ and nextnano3 software
+path_nextnano        = r"C:\Program Files\nextnano\2020_12_09"                         # installation folder of nextnano++ and nextnano3 software
 path_nextnano_NEGF   = r"C:\D\nextnano.NEGF\nextnanoNEGF_2020_11_16"                   # installation folder of nextnano.NEGF software
 path_nextnano_MSB    = r"D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20"  # installation folder of nextnano.MSB software
 
