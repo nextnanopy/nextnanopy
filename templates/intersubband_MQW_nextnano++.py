@@ -8,14 +8,19 @@ import config_nextnano     # This should be your default configuration.
 #import config_nextnano_temp # This could be a modified configuration file.
 #config file is stored in C:\Users\<User>\.nextnanopy-config
 
+#FigFormat = '.pdf'
+#FigFormat = '.svg'
+FigFormat = '.jpg'
+#FigFormat = '.png'
+
 #++++++++++++++++++++++++++++++++++++++++++++++
 # These lines have to be adjusted by the user.  
 #++++++++++++++++++++++++++++++++++++++++++++++
 #================================
 # Specify software product here!
 #================================
-#software = 'nextnano++'
-software = 'nextnano3'
+software = 'nextnano++'
+#software = 'nextnano3'
 #software = 'nextnano.NEGF'
 #software = 'nextnano.MSB'
 #===========================
@@ -288,11 +293,6 @@ for nn_file in range(6):
         print(file_psi)
         df_psi = nn.DataFile(file_psi,product=software)
     
-        print(f"Read in file:")
-        print(file_abs)
-        df_abs = nn.DataFile(file_abs,product=software)
-        df_absV.append(df_abs)
-
         print(f"current datafile: ",file_cb)
         print(f"List of coordinates in the current datafile: {df_cb.coords}")
         print(f"List of variables in the current datafile: {df_cb.variables}")
@@ -300,10 +300,6 @@ for nn_file in range(6):
         print(f"current datafile: ",file_psi)
         print(f"List of coordinates in the current datafile: {df_psi.coords}")
         print(f"List of variables in the current datafile: {df_psi.variables}")
-    
-        print(f"current datafile: ",file_abs)
-        print(f"List of coordinates in the current datafile: {df_abs.coords}")
-        print(f"List of variables in the current datafile: {df_abs.variables}")
     
 
         fig_psi, ax_psi = plt.subplots(1)
@@ -440,86 +436,6 @@ for nn_file in range(6):
         file_docu.write("\n")
 
 
-      # sys.exit()
-    
-    #++++++++++++++++++++++++++++++++++++++++++++++
-    # These lines have to be adjusted by the user.  
-    # 2D plot
-    #++++++++++++++++++++++++++++++++++++++++++++++
-        if(software=="nextnano3"):
-            if sg_kp == 'sg':
-               file = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_position_resolved_intraband_cb1_sg1_deg1.vtr') 
-            elif sg_kp == 'kp':
-               file = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_position_resolved_intraband_cb1_kp8.vtr') 
-         #  file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.vtr')
-            datafile_2d = nn.DataFile(file,product=software)
-            print(f"current datafile: ",file)
-            print(f"List of coordinates in the current datafile: {datafile_2d.coords}")
-            print(f"List of variables in the current datafile: {datafile_2d.variables}")
-        
-            x=datafile_2d.coords['x']
-            y=datafile_2d.coords['y']
-          # z=datafile_2d.variables['psi_squared']
-            z=datafile_2d.variables[0]
-    
-            fig_abs2D, ax_abs2D = plt.subplots(1)
-###CHECK:   ax_abs2D.plot(df_cb.coords['position'].value,df_cb.variables[0].value,label=SweepVariableString,
-###CHECK:       color='white', linestyle='-')
-            pcolor = ax_abs2D.pcolormesh(x.value,y.value,z.value.T)
-            cbar = fig_abs2D.colorbar(pcolor)
-            cbar.set_label(f"{z.name} ({z.unit})")
-    
-         #   ax.plot(df_cb.coords['position'].value,df_cb.variables[1].value,color='yellow')
-        #    for i in range(2,len(ws)):
-        #        ax.plot(df_cb.coords['position'].value,ws[i],color='yellow')
-        
-            ax_abs2D.set_xlabel(f"{df_psi.coords['position'].name} ({df_psi.coords['position'].unit})")
-            ax_abs2D.set_ylabel(f"photon energy ({df_abs.variables['photon_energy'].unit})")
-            ax_abs2D.set_title('Absorption of '+NameOfStructure)
-            fig_abs2D.tight_layout()
-          # plt.show()
-            filename_abs2D = 'absorption2D'+'_'+NameOfStructureFile+'_'+sg_kp+software_short+'.jpg'
-            fig_abs2D.savefig(os.path.join(folder_python_output,filename_abs2D))
-
-            file_docu.write(r".. figure:: "+image_path+filename_abs2D+"\n")
-            file_docu.write(r"   :alt: "+NameOfStructureFile+"\n")
-            file_docu.write(r"   :align: center"+"\n")
-            file_docu.write("\n")
-            file_docu.write(r"   Calculated position resolved absorption :math:`\alpha(x,E)` of "+Caption+"\n")
-            file_docu.write("\n")
-            file_docu.write("\n")
-
-        if ( nn_file == 1 or nn_file == 3 or nn_file == 5 ):
-
-           fig_abs, ax_abs = plt.subplots(1)
-           ax_abs.plot(df_absV[nn_file-1].variables['photon_energy'].value,df_absV[nn_file-1].variables['absorption'].value,label=SweepVariableString) # sg
-           ax_abs.plot(df_absV[nn_file  ].variables['photon_energy'].value,df_absV[nn_file  ].variables['absorption'].value,label=SweepVariableString) # kp
-    
-       #   ax.plot(df.coords['position'].value,df.variables['T_1_2'].value,label='Transmission')
-       #   ax.plot(df.variables['energy'].value,df.variables['T_1_2'].value,label='Transmission')
-       #   ax.plot(df.coords['position'].value,df.variables['FermiLevel_el'].value, label='FermiLevel_el')
-       #   ax.plot(df.coords['energy'].value,df.variables['Gamma_bandedge'].value,label='Gamma')
-    
-         #  ax.set_xlabel(f"{df.coords['position'].name} {df.coords['position'].unit}")
-         #  ax.set_ylabel(f"Energy {df.variables['T_1_2'].unit}")
-    
-           ax_abs.set_xlabel(f"photon energy ({df_abs.variables['photon_energy'].unit})")
-           ax_abs.set_ylabel(f"{df_abs.variables['absorption'].name} ({df_abs.variables['absorption'].unit})")
-           ax_abs.set_title('Absorption of '+NameOfStructure)
-           ax_abs.legend(['single-band','k.p'])
-           fig_abs.tight_layout()
-         # plt.show()
-           filename_abs = 'absorption'+'_'+NameOfStructureFile+software_short+'.jpg'
-           fig_abs.savefig(os.path.join(folder_python_output,filename_abs))
-    
-
-           file_docu.write(r".. figure:: "+image_path+filename_abs+"\n")
-           file_docu.write(r"   :alt: "+NameOfStructureFile+"\n")
-           file_docu.write(r"   :align: center"+"\n")
-           file_docu.write("\n")
-           file_docu.write(r"   Calculated absorption :math:`\alpha(E)` of "+Caption+"\n")
-           file_docu.write("\n")
-           file_docu.write("\n")
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Close reStructured Text file (.rst) for documentation

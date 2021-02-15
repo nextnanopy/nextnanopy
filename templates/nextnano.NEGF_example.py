@@ -9,6 +9,11 @@ import nextnanopy.negf.outputs as nnnegf
 #import config_nextnano_temp # This could be a modified configuration file.
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
+#FigFormat = '.pdf'
+FigFormat = '.svg'
+#FigFormat = '.jpg'
+#FigFormat = '.png'
+
 #++++++++++++++++++++++++++++++++++++++++++++++
 # These lines have to be adjusted by the user.  
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -25,6 +30,22 @@ folder_examples_nnp = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextna
 folder_examples_nn3 = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano3 sample files'
 folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_11_16\nextnano.NEGF sample files'
 folder_examples_nnMSB = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
+
+software_short_nnp    = '_nnp'
+software_short_nn3    = '_nn3'
+software_short_nnNEGF = '_nnNEGF'
+software_short_nnMSB  = '_nnMSB'
+
+#===========================
+if(software=="nextnano++"):
+    software_short = software_short_nnp
+elif(software=="nextnano3"):
+    software_short = software_short_nn3
+elif(software=="nextnano.NEGF"):
+    software_short = software_short_nnNEGF
+elif(software=="nextnano.MSB"):
+    software_short = software_short_nnMSB
+#===========================
 
 #===========================
 if(software=="nextnano++"):
@@ -57,16 +78,12 @@ my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB
 #===========================
 if(software=="nextnano++"):
     my_input_file_no_extension = my_input_file_no_extension_nnp
-    software_short = software_short_nnp
 elif(software=="nextnano3"):
     my_input_file_no_extension = my_input_file_no_extension_nn3
-    software_short = software_short_nn3
 elif(software=="nextnano.NEGF"):
     my_input_file_no_extension = my_input_file_no_extension_nnNEGF
-    software_short = software_short_nnNEGF
 elif(software=="nextnano.MSB"):
     my_input_file_no_extension = my_input_file_no_extension_nnMSB
-    software_short = software_short_nnMSB
 #===========================
 
 if(software=="nextnano.NEGF" or software=="nextnano.MSB"):

@@ -10,6 +10,11 @@ from scipy.constants import hbar,Boltzmann,elementary_charge,electron_mass
 import config_nextnano_temp # This could be a modified configuration file.
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
+#FigFormat = '.pdf'
+#FigFormat = '.svg'
+FigFormat = '.jpg'
+#FigFormat = '.png'
+
 #++++++++++++++++++++++++++++++++++++++++++++++
 # These lines have to be adjusted by the user.  
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -48,6 +53,17 @@ software_short_nnp    = '_nnp'
 software_short_nn3    = '_nn3'
 software_short_nnNEGF = '_nnNEGF'
 software_short_nnMSB  = '_nnMSB'
+
+#===========================
+if(software=="nextnano++"):
+    software_short = software_short_nnp
+elif(software=="nextnano3"):
+    software_short = software_short_nn3
+elif(software=="nextnano.NEGF"):
+    software_short = software_short_nnNEGF
+elif(software=="nextnano.MSB"):
+    software_short = software_short_nnMSB
+#===========================
 
 #===========================
 if(software=="nextnano++"):
@@ -131,16 +147,12 @@ for nn_file in range(1):
     #===========================
     if(software=="nextnano++"):
         my_input_file_no_extension = my_input_file_no_extension_nnp
-        software_short = software_short_nnp
     elif(software=="nextnano3"):
         my_input_file_no_extension = my_input_file_no_extension_nn3
-        software_short = software_short_nn3
     elif(software=="nextnano.NEGF"):
         my_input_file_no_extension = my_input_file_no_extension_nnNEGF
-        software_short = software_short_nnNEGF
     elif(software=="nextnano.MSB"):
         my_input_file_no_extension = my_input_file_no_extension_nnMSB
-        software_short = software_short_nnMSB
     #===========================
     
     if(software=="nextnano.NEGF" or software=="nextnano.MSB"):

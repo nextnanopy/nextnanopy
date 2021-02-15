@@ -8,6 +8,11 @@ import matplotlib.pyplot as plt
 #import config_nextnano_temp # This could be a modified configuration file.
 # config file is stored in C:\Users\<User>\.nextnanopy-config
 
+#FigFormat = '.pdf'
+FigFormat = '.svg'
+#FigFormat = '.jpg'
+#FigFormat = '.png'
+
 #++++++++++++++++++++++++++++++++++++++++++++++
 # These lines have to be adjusted by the user.  
 #++++++++++++++++++++++++++++++++++++++++++++++
@@ -45,6 +50,17 @@ software_short_nnMSB  = '_nnMSB'
 
 #===========================
 if(software=="nextnano++"):
+    software_short = software_short_nnp
+elif(software=="nextnano3"):
+    software_short = software_short_nn3
+elif(software=="nextnano.NEGF"):
+    software_short = software_short_nnNEGF
+elif(software=="nextnano.MSB"):
+    software_short = software_short_nnMSB
+#===========================
+
+#===========================
+if(software=="nextnano++"):
     folder_examples = folder_examples_nnp + subfolder   # nextnano++
 elif(software=="nextnano3"):
     folder_examples = folder_examples_nn3 + subfolder   # nextnano3
@@ -75,16 +91,12 @@ my_input_file_no_extension_nnMSB = r'1D_Transmission_DoubleBarrier_CBR_paper_MSB
 #===========================
 if(software=="nextnano++"):
     my_input_file_no_extension = my_input_file_no_extension_nnp
-    software_short = software_short_nnp
 elif(software=="nextnano3"):
     my_input_file_no_extension = my_input_file_no_extension_nn3
-    software_short = software_short_nn3
 elif(software=="nextnano.NEGF"):
     my_input_file_no_extension = my_input_file_no_extension_nnNEGF
-    software_short = software_short_nnNEGF
 elif(software=="nextnano.MSB"):
     my_input_file_no_extension = my_input_file_no_extension_nnMSB
-    software_short = software_short_nnMSB
 #===========================
 
 if(software=="nextnano.NEGF" or software=="nextnano.MSB"):

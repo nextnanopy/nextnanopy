@@ -4,9 +4,14 @@ import sys,os
 #import numpy as np
 import matplotlib.pyplot as plt
 
-import config_nextnano     # This should be your default configuration.
-#import config_nextnano_temp # This could be a modified configuration file.
+#import config_nextnano     # This should be your default configuration.
+import config_nextnano_temp # This could be a modified configuration file.
 #config file is stored in C:\Users\<User>\.nextnanopy-config
+
+#FigFormat = '.pdf'
+FigFormat = '.svg'
+#FigFormat = '.jpg'
+#FigFormat = '.png'
 
 #++++++++++++++++++++++++++++++++++++++++++++++
 # These lines have to be adjusted by the user.  
@@ -84,7 +89,7 @@ mkdir_if_not_exist(folder_python_output)
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Open reStructured Text file (.rst) for documentation
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++
-file_docu =  open(os.path.join(folder_python_output,'documentation'+software_short+'.rst'),"w+")
+file_docu =  open(os.path.join(folder_python_output,'documentation'+'.rst'),"w+")
 
 DocuInfo = "**Automatic documentation: Running simulations, generating figures and reStructured Text (*.rst) using nextnanopy**"
 
@@ -99,13 +104,13 @@ file_docu.write(DocuInfo+"\n")
 file_docu.write("\n")
 file_docu.write(r"The following documentation and figures were generated automatically using |nextnanopy|."+"\n")
 file_docu.write("\n")
-file_docu.write(r"The following Python script was used: ``intersubband_MQW_"+software+".py``"+"\n")
+file_docu.write(r"The following Python script was used: ``intersubband_MQW_nextnano3_kp.py``"+"\n")
 file_docu.write("\n")
 file_docu.write(r"----------------------"+"\n") # horizontal line
 file_docu.write("\n")
 
 file_docu.write("\n")
-file_docu.write(r"The following figures have been generated using the |"+software+"| software."+"\n")
+file_docu.write(r"The following figures have been generated using the |nextnano3| software."+"\n")
 # Note: The umlaut for Schrödinger is not written correctly!!!
 #file_docu.write(r"Self-consistent Schrödinger-Poisson calculations have been performed for three different structures."+"\n")
 file_docu.write(r"Self-consistent Schroedinger-Poisson calculations have been performed for three different structures."+"\n")
@@ -122,7 +127,7 @@ file_docu.write(r"In both cases the wave functions and the quantum density are c
 file_docu.write(r"The |k_dot_p| quantum density has been calculated taking into account the solution at different :math:`k_\parallel` vectors."+"\n")
 file_docu.write("\n")
 file_docu.write(r"The absorption has been calculated using a simple model assuming a parabolic energy dispersion."+"\n")
-file_docu.write(r"The dipole moment :math:`z_{ij}=<i|z|j>` has been evaluated only at :math:`k_\parallel =0`. "+"\n")
+file_docu.write(r"The dipole moment :math:`x_{ij}=<i|x|j>` has been evaluated only at :math:`k_\parallel =0`. "+"\n")
 file_docu.write(r"The subband density is used to calculate the absorption."+"\n")
 file_docu.write(r"For the |k_dot_p| calculation, the density was calculated taking into account a nonparabolic energy dispersion, i.e. including all relevant :math:`k_\parallel` vectors."+"\n")
 file_docu.write("\n")
@@ -130,7 +135,7 @@ file_docu.write("\n")
 
 df_absV=[]
 
-for nn_file in range(6):
+for nn_file in range(3):
 
     print (nn_file)
 
@@ -148,25 +153,23 @@ for nn_file in range(6):
     
 
     if nn_file == 0:    
-       my_input_file_no_extension_nn3 = r'1DSirtoriPRB1994_OneWell_sg_self-consistent_nn3'
+       my_input_file_no_extension_nn3 = r'1D_Ge_GeSi_QCSE_Lever2010_sg_nn3'
        my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_OneWell_sg_self-consistent_nnp'
        MQW = 1
        sg_kp = "sg"
     elif nn_file == 1:    
-       my_input_file_no_extension_nn3 = r'1DSirtoriPRB1994_OneWell_kp_self-consistent_nn3'
-     # my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_OneWell_kp_self-consistent_nnp'
-       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_OneWell_kp_quantum-only_nnp'
+       my_input_file_no_extension_nn3 = r'1D_Ge_GeSi_QCSE_Lever2010_6kp_nn3'
+       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_OneWell_kp_self-consistent_nnp'
        MQW = 1
-       sg_kp = "kp"
+       sg_kp = "sg_kp6"
     elif nn_file == 2:    
-       my_input_file_no_extension_nn3 = r'1DSirtoriPRB1994_TwoCoupledWells_sg_self-consistent_nn3'
+       my_input_file_no_extension_nn3 = r'1D_Ge_GeSi_QCSE_Lever2010_8kp_nn3'
        my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_TwoCoupledWells_sg_self-consistent_nnp'
-       MQW = 2
-       sg_kp = "sg"
+       MQW = 1
+       sg_kp = "kp8"
     elif nn_file == 3:    
        my_input_file_no_extension_nn3 = r'1DSirtoriPRB1994_TwoCoupledWells_kp_self-consistent_nn3'
-     # my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_TwoCoupledWells_kp_self-consistent_nnp'
-       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_TwoCoupledWells_kp_quantum-only_nnp'
+       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_TwoCoupledWells_kp_self-consistent_nnp'
        MQW = 2
        sg_kp = "kp"
     elif nn_file == 4:    
@@ -176,15 +179,16 @@ for nn_file in range(6):
        sg_kp = "sg"
     elif nn_file == 5:    
        my_input_file_no_extension_nn3 = r'1DSirtoriPRB1994_ThreeCoupledWells_kp_self-consistent_nn3'
-     # my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_ThreeCoupledWells_kp_self-consistent_nnp'
-       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_ThreeCoupledWells_kp_quantum-only_nnp'
+       my_input_file_no_extension_nnp = r'1DSirtoriPRB1994_ThreeCoupledWells_kp_self-consistent_nnp'
        MQW = 3
        sg_kp = "kp"
 
     if sg_kp == 'sg':
        type_of_calculation = " (single-band)"
-    elif sg_kp == 'kp':
-       type_of_calculation = " (k.p)"
+    elif sg_kp == 'sg_kp6':
+       type_of_calculation = " (single-band / 6-band k.p)"
+    elif sg_kp == 'kp8':
+       type_of_calculation = " (8-band k.p)"
 
     #===========================
     if(software=="nextnano++"):
@@ -209,8 +213,6 @@ for nn_file in range(6):
     print(f"starting nextnano...")
     input_file_name = os.path.join(folder_examples,my_input_file)
     input_file = nn.InputFile(input_file_name)
-    print(input_file)
-
    
     #++++++++++++++++++++++++++++++++++++++++++++++
     # These lines have to be adjusted by the user.  
@@ -262,19 +264,24 @@ for nn_file in range(6):
     #++++++++++++++++++++++++++++++++++++++++++++++
     #===========================
         if(software=="nextnano++"):
-            file_cb  = os.path.join(folder_output,input_file_name_variable+r'\bias_00000'+r'\bandedges.dat') 
-            if sg_kp == 'sg':
-               file_psi = os.path.join(folder_output,input_file_name_variable+r'\bias_00000'+r'\Quantum'+r'\wf_probabilities_shift_quantum_region_Gamma_0000.dat') 
-            elif sg_kp == 'kp':
-               file_psi = os.path.join(folder_output,input_file_name_variable+r'\bias_00000'+r'\Quantum'+r'\wf_probabilities_shift_quantum_region_kp8_0000.dat') 
+            file_cb  = os.path.join(folder_output,input_file_name_variable+r'\bias_000_000'+r'\bandedge_Gamma.dat') 
+            file_psi = os.path.join(folder_output,input_file_name_variable+r'\Schroedinger_1band'+r'\cb1_sg1_deg1_psi_squared_shift.dat') 
+            file_abs = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_intraband_cb1_sg1_deg1.dat') 
         elif(software=="nextnano3"):
-            file_cb  = os.path.join(folder_output,input_file_name_variable+r'\band_structure'+r'\BandEdges.dat') 
+            file_cb  = os.path.join(folder_output,input_file_name_variable+r'\Band_profile'+r'\BandEdges.dat') 
             if sg_kp == 'sg':
-               file_psi = os.path.join(folder_output,input_file_name_variable+r'\Schroedinger_1band'+r'\cb1_sg1_deg1_psi_squared_shift.dat') 
+               file_psi = os.path.join(folder_output,input_file_name_variable+r'\Quantum_sg'+r'\cb1_sg1_deg1_kSL001_psi_squared_shift.dat') 
+               file_psi_hh = os.path.join(folder_output,input_file_name_variable+r'\Quantum_sg'+r'\vb1_sg1_deg1_kSL001_psi_squared_shift.dat') 
+               file_psi_lh = os.path.join(folder_output,input_file_name_variable+r'\Quantum_sg'+r'\vb2_sg2_deg1_kSL001_psi_squared_shift.dat') 
                file_abs = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_intraband_cb1_sg1_deg1.dat') 
-            elif sg_kp == 'kp':
-               file_psi = os.path.join(folder_output,input_file_name_variable+r'\Schroedinger_kp'+r'\kp8_psi_squared_el_kpar001_1D_neu_shift.dat') 
-               file_abs = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_intraband_cb1_kp8.dat') 
+            elif sg_kp == 'sg_kp6':
+               file_psi = os.path.join(folder_output,input_file_name_variable+r'\Quantum_sg'+r'\cb1_sg1_deg1_kSL001_psi_squared_shift.dat') 
+               file_psi_h = os.path.join(folder_output,input_file_name_variable+r'\Quantum_kp'+r'\kp6_psi_squared_hl_kpar001_1D_per_shift.dat') 
+             #  file_abs = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_intraband_cb1_kp8.dat') 
+            elif sg_kp == 'kp8':
+               file_psi = os.path.join(folder_output,input_file_name_variable+r'\Quantum_kp'+r'\kp8_psi_squared_el_kpar001_1D_per_shift.dat') 
+               file_psi_h = os.path.join(folder_output,input_file_name_variable+r'\Quantum_kp'+r'\kp8_psi_squared_hl_kpar001_1D_per_shift.dat') 
+             #  file_abs = os.path.join(folder_output,input_file_name_variable+r'\optics'+r'\absorption_intraband_cb1_kp8.dat') 
     #===========================
     
         #===========================
@@ -284,9 +291,23 @@ for nn_file in range(6):
         print(file_cb)
         df_cb = nn.DataFile(file_cb,product=software)
 
+        # Electrons
         print(f"Read in file:")
         print(file_psi)
         df_psi = nn.DataFile(file_psi,product=software)
+
+        print(f"Read in file:")
+        if nn_file == 0:
+           print(file_psi_hh)
+           print(file_psi_lh)
+           df_psi_hh = nn.DataFile(file_psi_hh,product=software)
+           df_psi_lh = nn.DataFile(file_psi_lh,product=software)
+        elif nn_file == 1:
+           print(file_psi_h)
+           df_psi_h = nn.DataFile(file_psi_h,product=software)
+        elif nn_file == 2:
+           print(file_psi_h)
+           df_psi_h = nn.DataFile(file_psi_h,product=software)
     
         print(f"Read in file:")
         print(file_abs)
@@ -306,116 +327,84 @@ for nn_file in range(6):
         print(f"List of variables in the current datafile: {df_abs.variables}")
     
 
+        fig_band, ax_band = plt.subplots(1)
         fig_psi, ax_psi = plt.subplots(1)
 
-        if MQW == 1:
-           NameOfStructure = 'Quantum Well' + type_of_calculation 
-           NameOfStructureFile = 'OneWell' 
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['Gamma_bandedge'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['L_bandedge'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['X_bandedge_a'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['X_bandedge_b'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['FermiLevel_el'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['hh_bandedge'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['lh_bandedge'].value,label=SweepVariableString)
+        ax_band.plot(df_cb.coords['position'].value,df_cb.variables['so_bandedge'].value,label=SweepVariableString)
+
+        ax_band.legend(['$\Gamma$','$L$','$\Delta _a$','$\Delta _b$','$E_F$','$hh$','$lh$','$so$'])
+
+        ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['Gamma_bandedge'].value,label=SweepVariableString)
+        ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['L_bandedge'].value,label=SweepVariableString)
+        ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['FermiLevel_el'].value,label=SweepVariableString)
+        ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['hh_bandedge'].value,label=SweepVariableString)
+        ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['lh_bandedge'].value,label=SweepVariableString)
+
+        NameSiGe = r'9 nm Ge/Si$_{0.4}$Ge$_{0.6}$ QW'
+
+        if nn_file == 0:
+           NameOfStructure = NameSiGe + type_of_calculation 
+           NameOfStructureFile = 'sg' 
            Caption = 'a quantum well'
-           if(software=="nextnano++"):
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['Gamma'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['electron_Fermi_level'].value,label=SweepVariableString)
-           elif(software=="nextnano3"):
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['Gamma_bandedge'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['FermiLevel_el'].value,label=SweepVariableString)
-           if sg_kp == 'sg':
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_2^2$','$\psi_1^2$'])
-           elif sg_kp == 'kp':  
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_4^2$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
-        elif MQW == 2:
-           NameOfStructure = 'Two Coupled Quantum Wells' + type_of_calculation
-           NameOfStructureFile = 'TwoWells' 
-           Caption = 'two coupled quantum wells'
-           if(software=="nextnano++"):
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['Gamma'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['electron_Fermi_level'].value,label=SweepVariableString)
-           elif(software=="nextnano3"):
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['Gamma_bandedge'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['FermiLevel_el'].value,label=SweepVariableString)
-           if sg_kp == 'sg':
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
-           elif sg_kp == 'kp':
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_6'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_5'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_6'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_5'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_6^2$','$\psi_5^2$','$\psi_4^2$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
-        elif MQW == 3:
-           NameOfStructure = 'Three Coupled Quantum Wells' + type_of_calculation
-           NameOfStructureFile = 'ThreeWells' 
-           Caption = 'three coupled quantum wells'
-           if(software=="nextnano++"):
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['Gamma'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['x'].value,df_cb.variables['electron_Fermi_level'].value,label=SweepVariableString)
-           elif(software=="nextnano3"):
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['Gamma_bandedge'].value,label=SweepVariableString)
-              ax_psi.plot(df_cb.coords['position'].value,df_cb.variables['FermiLevel_el'].value,label=SweepVariableString)
-           if sg_kp == 'sg':
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
-           elif sg_kp == 'kp':
-              if(software=="nextnano++"):
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_6'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_5'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['x'].value,df_psi.variables['Psi^2_1'].value,label=SweepVariableString)
-              elif(software=="nextnano3"):
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_6'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_5'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_4'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
-                 ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
-              ax_psi.legend(['$E_c$','$E_F$','$\psi_6^2$','$\psi_5^2$','$\psi_4^2$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
+
+           ax_psi.plot(df_psi_hh.coords['position'].value,df_psi_hh.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_hh.coords['position'].value,df_psi_hh.variables['psi^2_2'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_hh.coords['position'].value,df_psi_hh.variables['psi^2_1'].value,label=SweepVariableString)
+#          ax_psi.plot(df_psi_lh.coords['position'].value,df_psi_lh.variables['psi^2_2'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_lh.coords['position'].value,df_psi_lh.variables['psi^2_1'].value,label=SweepVariableString)
+
+           ax_psi.legend(['$\Gamma$','$L$','$E_F$','$hh$','$lh$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
+
+        elif nn_file == 1:
+           NameOfStructure = NameSiGe + type_of_calculation
+           NameOfStructureFile = 'sg_kp6' 
+           Caption = 'a quantum well'
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_2'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
+
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_1'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_5'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_7'].value,label=SweepVariableString)
+
+           ax_psi.legend(['$\Gamma$','$L$','$E_F$','$hh$','$lh$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
+
+        elif nn_file == 2:
+           NameOfStructure = NameSiGe + type_of_calculation
+           NameOfStructureFile = 'kp8' 
+           Caption = 'a quantum well'
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_5'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi.coords['position'].value,df_psi.variables['psi^2_1'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_1'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_3'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_5'].value,label=SweepVariableString)
+           ax_psi.plot(df_psi_h.coords['position'].value,df_psi_h.variables['psi^2_7'].value,label=SweepVariableString)
+
+           ax_psi.legend(['$\Gamma$','$L$','$E_F$','$hh$','$lh$','$\psi_5^2$','$\psi_3^2$','$\psi_1^2$'])
+
+    #   ax_psi.legend(['$\Gamma$','$L$','$hh$','$lh$','$E_F$','$\psi_6^2$','$\psi_5^2$','$\psi_4^2$','$\psi_3^2$','$\psi_2^2$','$\psi_1^2$'])
     
+        ax_band.set_title(NameOfStructure)
+        ax_band.set_xlabel(f"{df_cb.coords['position'].name} ({df_cb.coords['position'].unit})")
+        ax_band.set_ylabel(f"energy ({df_cb.variables[0].unit})")
+        fig_band.tight_layout()
+        filename_cb = 'cb'+'_'+NameOfStructureFile+'_'+sg_kp+software_short+'.jpg'
+        fig_band.savefig(os.path.join(folder_python_output,filename_cb))
+
         ax_psi.set_title(NameOfStructure)
-        if(software=="nextnano++"):
-           ax_psi.set_xlabel(f"{df_psi.coords['x'].name} ({df_psi.coords['x'].unit})")
-        elif(software=="nextnano3"):
-           ax_psi.set_xlabel(f"{df_psi.coords['position'].name} ({df_psi.coords['position'].unit})")
+        ax_psi.set_xlabel(f"{df_psi.coords['position'].name} ({df_psi.coords['position'].unit})")
         ax_psi.set_ylabel(f"energy ({df_psi.variables[0].unit})")
         fig_psi.tight_layout()
       # plt.show()
@@ -462,34 +451,34 @@ for nn_file in range(6):
           # z=datafile_2d.variables['psi_squared']
             z=datafile_2d.variables[0]
     
-            fig_abs2D, ax_abs2D = plt.subplots(1)
+  #          fig_abs2D, ax_abs2D = plt.subplots(1)
 ###CHECK:   ax_abs2D.plot(df_cb.coords['position'].value,df_cb.variables[0].value,label=SweepVariableString,
 ###CHECK:       color='white', linestyle='-')
-            pcolor = ax_abs2D.pcolormesh(x.value,y.value,z.value.T)
-            cbar = fig_abs2D.colorbar(pcolor)
-            cbar.set_label(f"{z.name} ({z.unit})")
+  #          pcolor = ax_abs2D.pcolormesh(x.value,y.value,z.value.T)
+   #         cbar = fig_abs2D.colorbar(pcolor)
+      #      cbar.set_label(f"{z.name} ({z.unit})")
     
          #   ax.plot(df_cb.coords['position'].value,df_cb.variables[1].value,color='yellow')
         #    for i in range(2,len(ws)):
         #        ax.plot(df_cb.coords['position'].value,ws[i],color='yellow')
         
-            ax_abs2D.set_xlabel(f"{df_psi.coords['position'].name} ({df_psi.coords['position'].unit})")
-            ax_abs2D.set_ylabel(f"photon energy ({df_abs.variables['photon_energy'].unit})")
-            ax_abs2D.set_title('Absorption of '+NameOfStructure)
-            fig_abs2D.tight_layout()
+    #        ax_abs2D.set_xlabel(f"{df_psi.coords['position'].name} ({df_psi.coords['position'].unit})")
+     #       ax_abs2D.set_ylabel(f"photon energy ({df_abs.variables['photon_energy'].unit})")
+      #      ax_abs2D.set_title('Absorption of '+NameOfStructure)
+        #    fig_abs2D.tight_layout()
           # plt.show()
-            filename_abs2D = 'absorption2D'+'_'+NameOfStructureFile+'_'+sg_kp+software_short+'.jpg'
-            fig_abs2D.savefig(os.path.join(folder_python_output,filename_abs2D))
+        #    filename_abs2D = 'absorption2D'+'_'+NameOfStructureFile+'_'+sg_kp+software_short+'.jpg'
+       #     fig_abs2D.savefig(os.path.join(folder_python_output,filename_abs2D))
 
-            file_docu.write(r".. figure:: "+image_path+filename_abs2D+"\n")
-            file_docu.write(r"   :alt: "+NameOfStructureFile+"\n")
-            file_docu.write(r"   :align: center"+"\n")
-            file_docu.write("\n")
-            file_docu.write(r"   Calculated position resolved absorption :math:`\alpha(x,E)` of "+Caption+"\n")
-            file_docu.write("\n")
-            file_docu.write("\n")
+#            file_docu.write(r".. figure:: "+image_path+filename_abs2D+"\n")
+ #           file_docu.write(r"   :alt: "+NameOfStructureFile+"\n")
+  #          file_docu.write(r"   :align: center"+"\n")
+   #         file_docu.write("\n")
+    #        file_docu.write(r"   Calculated position resolved absorption :math:`\alpha(x,E)` of "+Caption+"\n")
+     #       file_docu.write("\n")
+      #      file_docu.write("\n")
 
-        if ( nn_file == 1 or nn_file == 3 or nn_file == 5 ):
+        if ( nn_file == 7 or nn_file == 8):
 
            fig_abs, ax_abs = plt.subplots(1)
            ax_abs.plot(df_absV[nn_file-1].variables['photon_energy'].value,df_absV[nn_file-1].variables['absorption'].value,label=SweepVariableString) # sg
@@ -507,7 +496,7 @@ for nn_file in range(6):
            ax_abs.set_ylabel(f"{df_abs.variables['absorption'].name} ({df_abs.variables['absorption'].unit})")
            ax_abs.set_title('Absorption of '+NameOfStructure)
            ax_abs.legend(['single-band','k.p'])
-           fig_abs.tight_layout()
+        #   fig_abs.tight_layout()
          # plt.show()
            filename_abs = 'absorption'+'_'+NameOfStructureFile+software_short+'.jpg'
            fig_abs.savefig(os.path.join(folder_python_output,filename_abs))
