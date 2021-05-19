@@ -1,12 +1,20 @@
 import os
 from nextnanopy.defaults import NNConfig
 import unittest
+import platform 
+
+system = platform.system()
 
 
 class Test_NNConfig(unittest.TestCase):
     def test_default_nn3(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        
+        if system == 'Windows':
+        
+        	default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        else:
+        	default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano3' in config.validators.keys())
@@ -21,7 +29,11 @@ class Test_NNConfig(unittest.TestCase):
 
     def test_default_nnp(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        if system == 'Windows':
+        
+        	default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        else:
+        	default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano++' in config.validators.keys())
@@ -36,7 +48,11 @@ class Test_NNConfig(unittest.TestCase):
 
     def test_default_negf(self):
         config = NNConfig()
-        default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        if system == 'Windows':
+        
+        	default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        else:
+        	default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano.NEGF' in config.validators.keys())
