@@ -1,3 +1,5 @@
+hello world
+
 # 1D sample for solving quantum-poisson
 
 #Begin NextnanoWizard parameter section
@@ -136,5 +138,5 @@ currents{
 run{
    solve_poisson{}
    solve_quantum{}
-   outer_iteration{} # solve coupled Schrödinger-Poisson equations
+   outer_iteration{} # solve coupled Schrodinger-Poisson equations
 }
