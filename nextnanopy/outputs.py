@@ -421,7 +421,7 @@ def load_values(file, filetype='ascii',datatype = 'double', skip=0, offset=0, st
             values = []
             iteration = struct.iter_unpack(datatypes[datatype],data)
             for i in iteration:
-                values.append(i)
+                values.append(i[0])
             
     else:
         raise ValueError('filetype is not recognized or implemented')
