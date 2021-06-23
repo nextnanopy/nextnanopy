@@ -237,14 +237,28 @@ class AvsAscii(Output):
 
     def load_raw_metadata(self):
         info = []
-        with open(self.fld, 'r') as f:
-            for line in f:
-                line = line.replace('\n', '')
-                line = line.strip()
-                try:
-                    float(line)
-                    break
-                except:
+        try:
+            with open(self.fld, 'r') as f:
+                for line in f:
+                    line = line.replace('\n', '')
+                    line = line.strip()
+                    try:
+                        float(line)
+                        break
+                    except:
+                        if line == '':
+                            continue
+                        if line[0] != '#':
+                            info.append(line)
+        except UnicodeDecodeError:
+            with open(self.fld,'rb') as f:
+                for line in f:
+                    try:
+                        line = line.decode('ascii')
+                    except:
+                        break
+                    line = line.replace('\n', '')
+                    line = line.strip()        
                     if line == '':
                         continue
                     if line[0] != '#':
