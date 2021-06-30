@@ -6,14 +6,14 @@ print(f'The nextnanopy config file is stored in: {nn.config.fullpath}')
 #++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your license folder
 #++++++++++++++++++++++++++++++++++++++++++++++++
-#path_license            = r"C:\Users\homer.simpson\Documents"
-path_license            = r"D:\nextnano Users\takuma.sato\nextnano\License"
+#path_license            = r"C:\Users\homer.simpson\Documents\nextnano\License"
+path_license            = 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your output directory
 #++++++++++++++++++++++++++++++++++++++++++++++++++
 #path_nextnano_output = r"C:\Users\homer.simpson\Documents\nextnano\Output"
-path_nextnano_output = r"D:\nextnano Users\takuma.sato\nextnano\Output"
+path_nextnano_output = 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your nextnano installation folder
