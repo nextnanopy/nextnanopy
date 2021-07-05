@@ -4,26 +4,28 @@ import nextnanopy as nn
 print(f'The nextnanopy config file is stored in: {nn.config.fullpath}')
 
 #++++++++++++++++++++++++++++++++++++++++++++++++
-# Here, you have to specify your home directory.
+# Specify your license folder
 #++++++++++++++++++++++++++++++++++++++++++++++++
-#path_user            = r"C:\Users\homer.simpson\Documents"
-path_user            = r"C:\Users\stefan.birner.NEXTNANO\Documents"
+#path_license            = r"C:\Users\homer.simpson\Documents\nextnano\License"
+path_license            = 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++
-# Here, you have to specify your output directory.
+# Specify your output directory
 #++++++++++++++++++++++++++++++++++++++++++++++++++
 #path_nextnano_output = r"C:\Users\homer.simpson\Documents\nextnano\Output"
-path_nextnano_output = r"C:\Users\stefan.birner.NEXTNANO\Documents\nextnano\Output"
+path_nextnano_output = 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Here, you have to specify your nextnano installation folder.
+# Specify your nextnano installation folder
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-path_nextnano        = r"C:\Program Files\nextnano\2020_12_09"                         # installation folder of nextnano++ and nextnano3 software
-path_nextnano_NEGF   = r"C:\D\nextnano.NEGF\nextnanoNEGF_2020_11_16"                   # installation folder of nextnano.NEGF software
-path_nextnano_MSB    = r"D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20"  # installation folder of nextnano.MSB software
+path_nextnano        = r"D:\nextnano\2021_05_10"                                       # nextnano++ and nextnano3 software
+path_nextnano_NEGF   = r"D:\nextnano\nextnanoNEGF_2020_11_16"                          # nextnano.NEGF software
+path_nextnano_MSB    = r"D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20"  # nextnano.MSB software
 
 nn.config.to_default() # initialize to default values
 
+
+# NO NEED TO CHANGE THE FOLLOWING -----------------------------
 #---------------------------
 # Location of output folder
 #---------------------------
@@ -35,10 +37,10 @@ nn.config.set('nextnano.MSB' ,'outputdirectory',path_nextnano_output)
 #---------------------------
 # Location of license files
 #---------------------------
-nn.config.set('nextnano++'   ,'license',os.path.join(path_user,r'nextnano\License\License_nnp.lic'))
-nn.config.set('nextnano3'    ,'license',os.path.join(path_user,r'nextnano\License\License_nnp.lic'))
-nn.config.set('nextnano.NEGF','license',os.path.join(path_user,r'nextnano\License\License_nnQCL.lic'))
-nn.config.set('nextnano.MSB' ,'license',os.path.join(path_user,r'nextnano\License\License_nnMSB.lic'))
+nn.config.set('nextnano++'   ,'license',os.path.join(path_license,r'License_nnp.lic'))
+nn.config.set('nextnano3'    ,'license',os.path.join(path_license,r'License_nnp.lic'))
+nn.config.set('nextnano.NEGF','license',os.path.join(path_license,r'License_nnQCL.lic'))
+nn.config.set('nextnano.MSB' ,'license',os.path.join(path_license,r'License_nnMSB.lic'))
 
 #----------------------------------------------------------
 # Location of nextnano++ files:    executable and database
@@ -66,4 +68,4 @@ nn.config.set('nextnano.MSB','database',os.path.join(path_nextnano_MSB,r'nextnan
 
 nn.config.save() # save permanently
 
-print(f"The nextnanopy config file has been updated and saved.")
+print("The nextnanopy config file has been updated and saved.")
