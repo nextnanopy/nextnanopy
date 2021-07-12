@@ -1,6 +1,7 @@
 import os
 from itertools import islice
 import numpy as np
+import struct
 
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
@@ -237,14 +238,28 @@ class AvsAscii(Output):
 
     def load_raw_metadata(self):
         info = []
-        with open(self.fld, 'r') as f:
-            for line in f:
-                line = line.replace('\n', '')
-                line = line.strip()
-                try:
-                    float(line)
-                    break
-                except:
+        try:
+            with open(self.fld, 'r') as f:
+                for line in f:
+                    line = line.replace('\n', '')
+                    line = line.strip()
+                    try:
+                        float(line)
+                        break
+                    except:
+                        if line == '':
+                            continue
+                        if line[0] != '#':
+                            info.append(line)
+        except UnicodeDecodeError:
+            with open(self.fld,'rb') as f:
+                for line in f:
+                    try:
+                        line = line.decode('ascii')
+                    except:
+                        break
+                    line = line.replace('\n', '')
+                    line = line.strip()        
                     if line == '':
                         continue
                     if line[0] != '#':
@@ -304,6 +319,7 @@ class AvsAscii(Output):
         for vmeta, label, unit in zip(meta['variables'], meta['labels'], meta['units']):
             values = load_values(file=vmeta['file'],
                                  filetype=vmeta['filetype'],
+                                 datatype = meta['data'],
                                  skip=vmeta['skip'],
                                  offset=vmeta['offset'],
                                  stride=vmeta['stride'],
@@ -320,6 +336,7 @@ class AvsAscii(Output):
         for vmeta in meta['coords']:
             values = load_values(file=vmeta['file'],
                                  filetype=vmeta['filetype'],
+                                 datatype = meta['data'],
                                  skip=vmeta['skip'],
                                  offset=vmeta['offset'],
                                  stride=vmeta['stride'],
@@ -386,12 +403,28 @@ def values_metadata(line):
     return metadata
 
 
-def load_values(file, filetype='ascii', skip=0, offset=0, stride=1, size=None):
+def load_values(file, filetype='ascii',datatype = 'double', skip=0, offset=0, stride=1, size=None):
     """ Return flat array of floating values """
-    stop = skip + size if size != None else None
-    with open(file, 'r') as f:
-        lines = islice(f, skip, stop, 1)
-        values = [line.replace('\n', '').strip().split()[offset] for line in lines]
+    if filetype == 'ascii':
+        
+        stop = skip + size if size != None else None
+        with open(file, 'r') as f:
+            lines = islice(f, skip, stop, 1)
+            values = [line.replace('\n', '').strip().split()[offset] for line in lines]
+    elif filetype == 'binary':
+        datatypes = {'double':'d'}
+        datatype_sizes = {'double':8}
+        datatype_size = datatype_sizes[datatype]
+        with open(file,'rb') as datafile:
+            datafile.seek(skip)
+            data = datafile.read(size*datatype_size)
+            values = []
+            iteration = struct.iter_unpack(datatypes[datatype],data)
+            for i in iteration:
+                values.append(i[0])
+            
+    else:
+        raise ValueError('filetype is not recognized or implemented')
     return np.array(values, dtype=float)
 
 
