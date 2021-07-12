@@ -6,19 +6,20 @@ print(f'The nextnanopy config file is stored in: {nn.config.fullpath}')
 #++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your license folder
 #++++++++++++++++++++++++++++++++++++++++++++++++
-#path_license            = r"C:\Users\homer.simpson\Documents\nextnano\License"
-path_license            = 
+#path_license            = r"C:\Users\homer.simpson\Documents\nextnano\License"        # example
+path_license            = r"E:\takuma.sato\License"
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++
-# Specify your output directory
+# Specify your output folder
 #++++++++++++++++++++++++++++++++++++++++++++++++++
-#path_nextnano_output = r"C:\Users\homer.simpson\Documents\nextnano\Output"
-path_nextnano_output = 
+#path_nextnano_output = r"C:\Users\homer.simpson\Documents\nextnano\Output"            # example
+path_nextnano_output = r"E:\takuma.sato\Output"
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your nextnano installation folder
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-path_nextnano        = r"D:\nextnano\2021_05_10"                                       # nextnano++ and nextnano3 software
+#path_nextnano       = r"C:\Program Files\nextnano\2021_07_08"                         # example
+path_nextnano        = r"E:\takuma.sato\nextnano installation\2021_07_08"              # nextnano++ and nextnano3 software
 path_nextnano_NEGF   = r"D:\nextnano\nextnanoNEGF_2020_11_16"                          # nextnano.NEGF software
 path_nextnano_MSB    = r"D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20"  # nextnano.MSB software
 
