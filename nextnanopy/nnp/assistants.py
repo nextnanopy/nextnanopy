@@ -308,14 +308,20 @@ class InputAssistant(object):
         return self.merge_blocks('impurities', *blocks)
 
     # - Contacts
-    def contacts_schottky(self, name, bias, barrier):
-        return self.equal_block('schottky', dict(name=name, bias=bias, barrier=barrier))
+    def contacts_schottky(self, name, bias, barrier,steps = 1):
+        if bias == []:
+            raise ValueError('bias could be a number or non-zero length list of numbers')
+        return self.equal_block('schottky', dict(name=name, bias=bias, barrier=barrier,steps = steps))
 
-    def contacts_fermi(self, name, bias):
-        return self.equal_block('fermi', dict(name=name, bias=bias))
+    def contacts_fermi(self, name, bias,steps = 1):
+        if bias == []:
+            raise ValueError('bias could be a number or non-zero length list of numbers')
+        return self.equal_block('fermi', dict(name=name, bias=bias,steps = steps))
 
-    def contacts_ohmic(self, name, bias, shift=0):
-        return self.equal_block('ohmic', dict(name, bias, shift))
+    def contacts_ohmic(self, name, bias, shift=0,steps = 1):
+        if bias == []:
+            raise ValueError('bias could be a number or non-zero length list of numbers')
+        return self.equal_block('ohmic', dict(name=name, bias=bias, shift = shift,steps = steps))
 
     def contacts_block(self, *blocks):
         return self.merge_blocks('contacts', *blocks)
