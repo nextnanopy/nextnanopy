@@ -408,7 +408,7 @@ class Sweep(InputFile):
         iteration_combinations = list(itertools.product(*self.var_sweep.values()))
         filename_path, filename_extension = os.path.splitext(self.fullpath)
         for combination in iteration_combinations:
-            filename_end = ''
+            filename_end = '__'
             inputfile = InputFile(fullpath = self.fullpath, configpath = self.configpath)
             for var_name, var_value in zip(self.var_sweep.keys(), combination):
                 inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
