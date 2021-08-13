@@ -422,6 +422,8 @@ class Sweep(InputFile):
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for inputfile in self.input_files:
             inputfile.execute(outputdirectory = output_directory)
+            if delete_input_files:
+                inputfile.remove()
 
     def mk_dir(self):
         vars = ''
