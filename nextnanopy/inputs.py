@@ -269,6 +269,9 @@ class InputFileTemplate(object):
         self.variables = DictList()
         self.fullpath = None
 
+    def remove(self):
+        os.remove(self.fullpath)
+
     def load_raw(self):
         with open(self.fullpath, 'r') as f:
             text = f.read()
@@ -365,7 +368,7 @@ class InputFile(InputFileTemplate):
 
 class Sweep(InputFile):
     """
-        This class give a user possibility to run multiple simulations(sweep) over defined variables in the input file.
+        This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
 
         Parameters
         -------------------
@@ -413,7 +416,7 @@ class Sweep(InputFile):
             inputfile.save(filename_path + filename_end + filename_extension)
             self.input_files.append(inputfile)
 
-    def execute_sweep(self):
+    def execute_sweep(self, delete_input_files = False):
         output_directory = self.sweep_output_directory
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
