@@ -43,6 +43,7 @@ def get_path_files(path):
 def mkdir_if_not_exist(path):
     from pathlib import Path
     Path(path).mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def find_unused_name(name, list_names, extension, max_idx=True):
