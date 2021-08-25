@@ -6,6 +6,8 @@ from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator, mkdir_even_if_exists, mkdir_if_not_exist
 from nextnanopy.commands import execute as cmd_execute
 from nextnanopy import defaults
+from collections.abc import Iterable
+
 
 _msgs = defaults.messages['load_input']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
@@ -396,6 +398,9 @@ class Sweep(InputFile):
             self.var_sweep = variables_to_sweep
         else:
             raise ValueError('Defined variables are not variables of input file')
+        for value in self.var_sweep.values():
+            if not isinstance(value, Iterable):
+                raise TypeError('Values of variables_to_sweep should be iterable objects')
         self.sweep_output_directory = None
         self.input_files = []
 
