@@ -2,6 +2,19 @@ import unittest
 import os
 from nextnanopy.inputs import InputFile, Sweep
 
+
+def delete_files(start,directory = os.getcwd(),exceptions =None):
+    for fname in os.listdir(directory):
+        if fname.startswith(start):
+            if exceptions:
+                if fname in exceptions:
+                    continue
+                else:
+                    os.remove(os.path.join(directory, fname))
+            else:
+                os.remove(os.path.join(directory, fname))
+
+
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
@@ -331,7 +344,6 @@ class TestInputFile(unittest.TestCase):
         self.assertEqual(file.folder_output, npath)
 
 class TestSweep(unittest.TestCase):
-
     def test_init(self):
         self.assertRaises(TypeError, Sweep)
         sweep = Sweep({})
@@ -359,12 +371,79 @@ class TestSweep(unittest.TestCase):
         self.assertEqual(sweep.fullpath, fullpath)
         self.assertEqual(sweep.var_sweep['float'],[1,2,5])
 
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+
     def test_nnp_mkdir(self):
         fullpath = os.path.join(folder_nnp, 'only_variables.in')
         sweep = Sweep({},fullpath = fullpath)
         sweep.config.set('nextnano++','outputdirectory',r'tests//outputs')
-        self.assertEqual(os.path.join(sweep.mk_dir(overwrite=True)), r'tests//outputs\only_variables_sweep')
+        self.assertEqual(os.path.normpath(os.path.join(sweep.mk_dir(overwrite=True))), os.path.normpath(r'tests//outputs\only_variables_sweep'))
+        self.assertTrue(os.path.isdir(r'tests//outputs\only_variables_sweep'))
+
         self.addCleanup(os.rmdir,r'tests//outputs\only_variables_sweep')
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+
+    def test_nnp_save(self):
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        sweep = Sweep({'float': [1, 2], 'str': ['test1', 'test2']}, fullpath)
+        sweep.save_sweep()
+
+        files_with_names = [file for file in os.listdir(folder_nnp) if 'only_variables' in file]
+        self.assertEqual(len(files_with_names), 5)
+        self.assertTrue(os.path.isfile(os.path.join(folder_nnp, 'only_variables__float_2_str_test1_.in')))
+
+
+
+
+    #nn3 section
+    def test_nn3_init(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        self.assertRaises(ValueError, Sweep, {'Name': 'some_name'}, fullpath)
+
+        sweep = Sweep({},fullpath)
+        self.assertEqual(sweep.fullpath, fullpath)
+        self.assertEqual(sweep.var_sweep, {})
+        self.assertFalse(sweep.input_files)
+        self.assertFalse(sweep.sweep_output_directory)
+
+
+        self.assertRaises(ValueError, Sweep, {'float':1})
+        self.assertRaises(TypeError, Sweep, {'float': 1}, fullpath)
+
+        sweep = Sweep({'float': [1,2,5]}, fullpath)
+        self.assertEqual(sweep.fullpath, fullpath)
+        self.assertEqual(sweep.var_sweep['float'],[1,2,5])
+
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nn3, exceptions=['only_variables.in'])
+
+    def test_nn3_mkdir(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        sweep = Sweep({},fullpath = fullpath)
+        sweep.config.set('nextnano3','outputdirectory',r'tests//outputs')
+        self.assertEqual(os.path.normpath(os.path.join(sweep.mk_dir(overwrite=True))), os.path.normpath(r'tests//outputs\only_variables_sweep'))
+        self.assertTrue(os.path.isdir(r'tests//outputs\only_variables_sweep'))
+
+        self.addCleanup(os.rmdir,r'tests//outputs\only_variables_sweep')
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+
+    def test_nn3_save(self):
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nn3, exceptions=['only_variables.in'])
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        sweep = Sweep({'float': [1, 2], 'str': ['test1', 'test2']}, fullpath)
+        sweep.save_sweep()
+
+        files_with_names = [file for file in os.listdir(folder_nn3) if 'only_variables' in file]
+        self.assertEqual(len(files_with_names), 5)
+        self.assertTrue(os.path.isfile(os.path.join(folder_nn3, 'only_variables__float_2_str_test1_.in')))
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        if os.path.isdir(r'tests//outputs\only_variables_sweep'):
+            os.rmdir(r'tests//outputs\only_variables_sweep')
+        delete_files('only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+        delete_files('only_variables', directory=folder_nn3, exceptions=['only_variables.in'])
 
 
 
