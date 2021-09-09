@@ -404,13 +404,16 @@ class Sweep(InputFile):
         self.sweep_output_directory = None
         self.input_files = []
 
-    def save_sweep(self):
+    def save_sweep(self, delete_old_files = True):
+        if delete_old_files == True:
+            for inputfile in self.input_files:
+                inputfile.remove()
+        self.input_files = []
         self.create_input_files()
 
     def prepare_output(self, overwrite = False):
         self.sweep_output_directory = self.mk_dir(overwrite=overwrite)
         self.create_info()
-        print(self.sweep_output_directory)
 
     def create_input_files(self):
         iteration_combinations = list(itertools.product(*self.var_sweep.values()))
@@ -423,6 +426,7 @@ class Sweep(InputFile):
                 filename_end += '{}_{}_'.format(var_name, var_value)
             inputfile.save(filename_path + filename_end + filename_extension)
             self.input_files.append(inputfile)
+
 
     def execute_sweep(self, delete_input_files = False, overwrite = False):
         self.prepare_output(overwrite)
