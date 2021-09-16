@@ -62,7 +62,7 @@ new_input.save(overwrite=True)
 new_input.execute()
 
 # Quick plot
-bias_folder = os.path.join(new_input.folder_output, 'bias_000_000_000')
+bias_folder = os.path.join(new_input.folder_output, 'bias_00000')# use 'bias_000_000_000' instead for older versions
 bandedge = os.path.join(bias_folder, 'bandedges_2d_rectangle_z_40.fld')
 df = nn.DataFile(bandedge, product='nextnano++')
 x, y, z = df['x'], df['y'], df['Gamma']

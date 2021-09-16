@@ -1,9 +1,13 @@
 import os
+import warnings
+import itertools
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
 from nextnanopy.utils.mycollections import DictList
-from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator
+from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator, mkdir_even_if_exists, mkdir_if_not_exist
 from nextnanopy.commands import execute as cmd_execute
 from nextnanopy import defaults
+from collections.abc import Iterable
+
 
 _msgs = defaults.messages['load_input']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
@@ -267,6 +271,9 @@ class InputFileTemplate(object):
         self.variables = DictList()
         self.fullpath = None
 
+    def remove(self):
+        os.remove(self.fullpath)
+
     def load_raw(self):
         with open(self.fullpath, 'r') as f:
             text = f.read()
@@ -360,3 +367,90 @@ class InputFile(InputFileTemplate):
         file = _InputFile()
         file.text = self.text
         self.variables = file.variables
+
+class Sweep(InputFile):
+    """
+        This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
+
+        Parameters
+        -------------------
+        variables_to_sweep: dict
+            Dict of variables to sweep in the form of {name1:values1,name2:values2...}
+            values should be an iterable object (ideally list)
+        fullpath: str
+            defined as for InputFile
+        configpath: str
+            defined as for input files
+
+
+        Methods
+        --------
+        save_sweep()
+            creates an output folder
+            creates input files for all combinations of sweep variables
+        execute_sweep():
+            execute created input files and saves information to output folder
+
+    """
+    def __init__(self,variables_to_sweep,fullpath=None, configpath=None):
+        super().__init__(fullpath, configpath)
+        if set(variables_to_sweep.keys()).issubset(self.variables.keys()):
+            self.var_sweep = variables_to_sweep
+        else:
+            raise ValueError('Defined variables are not variables of input file')
+        for value in self.var_sweep.values():
+            if not isinstance(value, Iterable):
+                raise TypeError('Values of variables_to_sweep should be iterable objects')
+        self.sweep_output_directory = None
+        self.input_files = []
+
+    def save_sweep(self):
+        self.create_input_files()
+
+    def prepare_output(self, overwrite = False):
+        self.sweep_output_directory = self.mk_dir(overwrite=overwrite)
+        self.create_info()
+        print(self.sweep_output_directory)
+
+    def create_input_files(self):
+        iteration_combinations = list(itertools.product(*self.var_sweep.values()))
+        filename_path, filename_extension = os.path.splitext(self.fullpath)
+        for combination in iteration_combinations:
+            filename_end = '__'
+            inputfile = InputFile(fullpath = self.fullpath, configpath = self.configpath)
+            for var_name, var_value in zip(self.var_sweep.keys(), combination):
+                inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
+                filename_end += '{}_{}_'.format(var_name, var_value)
+            inputfile.save(filename_path + filename_end + filename_extension)
+            self.input_files.append(inputfile)
+
+    def execute_sweep(self, delete_input_files = False, overwrite = False):
+        self.prepare_output(overwrite)
+        output_directory = self.sweep_output_directory
+        if not self.input_files:
+            warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
+        for inputfile in self.input_files:
+            inputfile.execute(outputdirectory = output_directory)
+            if delete_input_files:
+                inputfile.remove()
+
+    def mk_dir(self,overwrite = False):
+        vars = ''
+        for i in self.var_sweep.keys():
+            vars+=('__'+i)
+        name_of_file = self.filename_only
+        output_directory = self.config.get(section = self.product,option = 'outputdirectory')
+        name = (name_of_file+'_sweep'+vars)
+        if overwrite:
+            directory = mkdir_if_not_exist(os.path.join(output_directory,name))
+        else:
+            directory = mkdir_even_if_exists(output_directory,name)
+        return directory
+
+    def create_info(self):
+        file_location = os.path.join(self.sweep_output_directory,'sweep_info.txt')
+        with open(file_location,'w') as file:
+            file.write("Input file: '{}' \n".format(self.fullpath))
+            file.write("Sweep variables: \n")
+            for i in self.var_sweep:
+                file.write("{} = {} \n".format(i,self.var_sweep[i]))

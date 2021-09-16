@@ -43,6 +43,7 @@ def get_path_files(path):
 def mkdir_if_not_exist(path):
     from pathlib import Path
     Path(path).mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def find_unused_name(name, list_names, extension, max_idx=True):
@@ -126,3 +127,23 @@ def show_message(msg):
         msg()
     else:
         pass
+
+def mkdir_even_if_exists(path,name):
+    """creates a directory ubder path with a given name. If exists, adds integer number to directory name.
+    returns directory full path"""
+    directory = os.path.join(path,name)
+    if os.path.exists(directory):
+        i = 0
+        while True:
+            directory_numbered = directory +str(i)
+            if os.path.exists(directory_numbered):
+                i+=1
+            elif i>2147483646:
+                raise StopIteration('too many folders with the same name')
+            else:
+                os.makedirs(directory_numbered)
+                directory = directory_numbered
+                break
+    else:
+        os.makedirs(directory)
+    return directory
