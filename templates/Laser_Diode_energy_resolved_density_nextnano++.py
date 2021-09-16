@@ -192,6 +192,7 @@ for i in ListOfValues:
     #===========================
     file_hole = os.path.join(folder_output,my_input_file_no_extension+r'\bias_'+i+r'\hole_density_vs_energy.fld') 
     #  file = os.path.join(folder_output,input_file_name_variable+r'\Results'+r'\LocalDOS_sg1_deg1.vtr')
+    # Caution! Specify "format2D=AvsAscii_one_file" in the input file. Otherwise this line causes error due to the binary data reading.
     datafile_2d = nn.DataFile(file_hole,product=software)
     
     x=datafile_2d.coords['x']
