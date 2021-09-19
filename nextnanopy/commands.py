@@ -76,6 +76,7 @@ def execute(
         **kwargs,
 ):
     filename = get_filename(inputfile, ext=False)
+    inputfile = os.path.abspath(inputfile)
     outputdirectory = os.path.join(outputdirectory, filename)
     mkdir_if_not_exist(outputdirectory)
     logfile = os.path.join(outputdirectory, f'{filename}.log')
