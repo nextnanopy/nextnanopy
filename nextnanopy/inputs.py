@@ -372,7 +372,8 @@ class Sweep(InputFile):
     """
         This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
 
-        Parameters
+
+        Parameters:
         -------------------
         variables_to_sweep: dict
             Dict of variables to sweep in the form of {name1:values1,name2:values2...}
@@ -383,7 +384,7 @@ class Sweep(InputFile):
             defined as for input files
 
 
-        Methods
+        Methods:
         --------
         save_sweep()
             creates an output folder
@@ -424,7 +425,7 @@ class Sweep(InputFile):
             for var_name, var_value in zip(self.var_sweep.keys(), combination):
                 inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
                 filename_end += '{}_{}_'.format(var_name, var_value)
-            inputfile.save(filename_path + filename_end + filename_extension)
+            inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
             self.input_files.append(inputfile)
 
 
