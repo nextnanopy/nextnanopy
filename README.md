@@ -79,6 +79,10 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 
 ## History of changes
 
+### Version 0.1.10 (Oct 06th, 2021)
+* Feature: Added new class Sweep allowing to create automatic sweeps over few variables 
+
+
 ### Version 0.1.9 (Dec 16th, 2020)
 * Feature: InputFile.execute has now show_log (True or False) to turn on/off the log. Note: the log file is always saved. 
 * Removed default messages when saving an input file
