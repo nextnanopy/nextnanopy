@@ -14,6 +14,135 @@ import pyvista as pv
 _msgs = defaults.messages['load_output']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
+class DataFolder(object):
+    """
+        This class stores information about output directory.
+        The stored data contains files (.files) and folders (.folders)
+        Navigation between folders could be done in 3 ways:
+            1. DataFolder.folders['folder_name']
+            2. DataFolder.go_to('subfolder1', 'subfolder2', 'subfolder3')
+            3. DataFolder.subfolder1.subfolder2.subfolder3
+        For each method see details below.
+
+        The initialization of the class will execute load and create_navigation methods.
+
+
+        Parameters:
+        ----------------
+        fullpath: str
+            path to a file
+
+
+
+        Attributes:
+        ----------------
+        fullpath: str
+        path to a file
+
+        folders: DictList
+            subfolders of the DataFolder,
+            keys: str
+                names of subfolders
+            values: DataFolder
+                DataFolder objects of subfolders
+
+        files: list
+            paths to files in folder
+
+
+        Methods:
+        --------------
+        load():
+            load a DataFolder
+
+        create_navigation:
+            creates attributes for navigation like DataFolder.subfolder1.subfolder2.subfolder3
+            if name of subfolder corresponds to existed attribute of DataFolder class, attribute will not be created!
+            if name of subfolder constis spaces, dots or specials charecters, attribute will be created, but navigation
+            to whis subfolder will not work  - attribute error.
+
+        find(template, deep = False):
+            searches for a files which names contain template.
+            template shoud be string.
+            if deep = True, searches in subfolders as well.
+
+            return: list of files
+
+        go_to(*args):
+            goes to the location
+            DataFolder_path\\arg1\\arg2\\arg3...
+
+            if location is a file:
+                return filepath
+            if location is a folder:
+                return DataFolder(location)
+
+        filenames()
+            return filenames of files in folder
+        """
+    def __init__(self, fullpath):
+        if not os.path.isdir(fullpath):
+            raise ValueError(f"{fullpath} is not a directory")
+        self.fullpath = fullpath
+        self.files = []
+        self.folders = DictList()
+        self.load()
+        self.create_navigation()
+
+    def load(self):
+        list_of_nodes = os.listdir(self.fullpath)
+        for node in list_of_nodes:
+            node_path = os.path.join(self.fullpath, node)
+            if os.path.isdir(node_path):
+                new_folder = DataFolder(node_path)
+                self.folders[node] = new_folder
+            else:
+                self.files.append(node_path)
+
+    def create_navigation(self):
+        check_list = dir(self)
+        for key, folder in self.folders.items():
+            if key in check_list:
+                warnings.warn(f"foldername '{key}' is not availabel for attribute navigation."
+                              " Please, use DataFolder.go_to()")
+            else:
+                setattr(self, key, folder)
+
+    def find(self, template, deep=False):
+        list_of_files = [file for file in self.files if template in os.path.basename(file)]
+        if not deep:
+            return list_of_files
+        if not self.folders:
+            return list_of_files
+        else:
+            for folder in self.folders:
+                list_of_files += folder.find(template=template, deep=deep)
+            return list_of_files
+
+    def go_to(self, *args):
+        path = os.path.join(self.fullpath, *args)
+        if os.path.isdir(path):
+            data = DataFolder(path)
+        elif os.path.isfile(path):
+            data = path
+        else:
+            raise ValueError(f'No such file or directory {path}')
+        return data
+
+    def filenames(self):
+        return [os.path.basename(file) for file in self.files]
+
+    def __repr__(self):
+        out = list()
+        out.append(f'{self.__class__.__name__}')
+        out.append(f'fullpath: {self.fullpath}')
+        out.append(f'Folders: {len(self.folders)}')
+        for key in self.folders.keys():
+            out.append(key)
+        out.append('Files:')
+        out.append(str(self.filenames()))
+        out = '\n'.join(out)
+        return out
 
 class Output(object):
 

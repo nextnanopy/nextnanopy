@@ -444,6 +444,152 @@ class TestOutput(unittest.TestCase):
         for i, dfi in enumerate(df):
             self.assertEqual(df.data[i], dfi)
 
+class TestDataFolder(unittest.TestCase):
+    def test_init(self):
+        dummy_folder = os.path.join('tests','dummy')
+        self.assertRaises(ValueError, outputs.DataFolder, dummy_folder)
+
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertTrue('datafiles' in datafolder.folders)
+        self.assertTrue(os.path.join(tests_folder, 'test_mycollections.py') in datafolder.files)
+        self.assertTrue(os.path.join(tests_folder, 'test_outputs.py') in datafolder.files)
+        self.assertFalse('NotExistedFile.py' in datafolder.files)
+        self.assertFalse(os.path.join(tests_folder,'NotExistedFile.py') in datafolder.files)
+
+        datafolder  = outputs.DataFolder(folder_nnp)
+
+        self.assertFalse(datafolder.folders)
+        self.assertTrue(datafolder.files)
+
+        self.assertEqual(len(datafolder.files),17)
+        self.assertTrue(os.path.join(folder_nnp,'bandedges_2d_old.fld') in datafolder.files)
+
+
+    def test_navigation(self):
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertTrue('configs' in datafolder.__dict__)
+        self.assertIsInstance(datafolder.configs, outputs.DataFolder)
+        self.assertIsInstance(datafolder.datafiles.nextnano3, outputs.DataFolder)
+        self.assertIsInstance(datafolder.datafiles.folders['nextnano++'], outputs.DataFolder)
+        nnp_folder = datafolder.datafiles.folders['nextnano++']
+        self.assertTrue(os.path.samefile(nnp_folder.fullpath, folder_nnp))
+        self.assertTrue(os.path.join(folder_nnp,'bandedges_2d_old.fld') in nnp_folder.files)
+
+
+    def test_filenamess(self):
+
+        datafolder  = outputs.DataFolder(folder_nnp)
+        self.assertIn('only_variables.in',datafolder.filenames())
+        self.assertNotIn('only_variables_0.in',datafolder.filenames())
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'),datafolder.filenames())
+        self.assertEqual(len(datafolder.filenames()), 17)
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+
+        self.assertIn('test_all.py',datafolder.filenames())
+        self.assertIn('test_outputs.py',datafolder.filenames())
+
+        self.assertNotIn('only_variables.in',datafolder.filenames())
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'),datafolder.filenames())
+
+    def test_find(self):
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+
+        self.assertEqual(len(datafolder.find('')),12)
+
+        self.assertIn(os.path.join(tests_folder,'__init__.py'),datafolder.find(''))
+        self.assertIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find(''))
+
+
+        self.assertNotIn(os.path.join(folder_nnp,'only_variables.in'),datafolder.find(''))
+        self.assertNotIn('only_variables.in',datafolder.find(''))
+
+
+
+        self.assertNotIn(os.path.join(tests_folder, '__init__.py'), datafolder.find('test'))
+        self.assertIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test'))
+
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('test'))
+        self.assertNotIn('only_variables.in', datafolder.find('test'))
+        self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test_i'))
+        self.assertEqual(len(datafolder.find('.vtr')), 0)
+
+        datafolder = outputs.DataFolder(folder_nnp)
+        self.assertNotIn(os.path.join(tests_folder, '__init__.py'), datafolder.find('tests'))
+        self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('tests'))
+
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('tests'))
+        self.assertIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('only'))
+        self.assertEqual(len(datafolder.find('bandedges')), 7)
+        self.assertNotIn('only_variables.in', datafolder.find('abls'))
+        self.assertEqual(len(datafolder.find('.vtr')),2)
+
+
+
+        #deep
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertIn(os.path.join(tests_folder, '__init__.py'), datafolder.find('',deep = True))
+        self.assertIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('',deep = True))
+        self.assertIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('',deep = True))
+        self.assertNotIn('only_variables.in', datafolder.find('',deep = True))
+
+        self.assertNotIn(os.path.join(tests_folder, '__init__.py'), datafolder.find('test', deep = True))
+        self.assertIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test', deep = True))
+
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('test', deep = True))
+        self.assertIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('only', deep=True))
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('nextnano', deep=True))
+        self.assertNotIn('only_variables.in', datafolder.find('only'))
+        self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test_i', deep = True))
+        self.assertNotEqual(len(datafolder.find('.vtr', deep = True)), 0)
+
+
+        datafolder = outputs.DataFolder(folder_nnp)
+
+        self.assertNotIn(os.path.join(tests_folder, '__init__.py'), datafolder.find('', deep=True))
+        self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('', deep=True))
+        self.assertIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('', deep=True))
+        self.assertNotIn('only_variables.in', datafolder.find('', deep=True))
+
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('test', deep=True))
+        self.assertIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('only', deep=True))
+        self.assertNotIn(os.path.join(folder_nnp, 'only_variables.in'), datafolder.find('nextnano', deep=True))
+        self.assertNotIn('only_variables.in', datafolder.find('only'))
+        self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test_i', deep=True))
+        self.assertNotEqual(len(datafolder.find('.vtr', deep=True)), 0)
+        self.assertEqual(len(datafolder.find('bandedges', deep = True)), 7)
+
+
+    def test_go_to(self):
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertIsInstance(datafolder.go_to('datafiles'),outputs.DataFolder)
+        self.assertIsInstance(datafolder.go_to('__init__.py'), str)
+        self.assertTrue(os.path.samefile(datafolder.go_to('__init__.py'),os.path.join(tests_folder,'__init__.py')))
+        self.assertFalse(os.path.samefile(datafolder.go_to('__init__.py'), os.path.join(tests_folder)))
+
+        datafolder_nnp = datafolder.go_to('datafiles','nextnano++')
+
+        self.assertTrue(os.path.samefile(datafolder_nnp.fullpath,folder_nnp))
+        self.assertEqual(len(datafolder_nnp.files), 17)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
