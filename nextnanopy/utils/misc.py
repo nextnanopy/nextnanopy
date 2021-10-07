@@ -36,6 +36,8 @@ def get_folder(fullpath):
 
 
 def get_path_files(path):
+    if path == '':
+        path = '.'
     files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
     return files
 
@@ -71,7 +73,9 @@ def find_unused_name(name, list_names, extension, max_idx=True):
 
 
 def find_unused_in_folder(fullpath, overwrite=False):
-    folder, name = os.path.split(fullpath)
+    #folder, name = os.path.split(fullpath)
+    name = os.path.basename(fullpath)
+    folder = os.path.dirname(fullpath)
     ext = get_file_extension(name)
     cwd_files = get_path_files(folder)
     if not overwrite:
