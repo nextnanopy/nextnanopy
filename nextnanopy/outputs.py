@@ -2,6 +2,7 @@ import os
 from itertools import islice
 import numpy as np
 import struct
+import warnings
 
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
@@ -118,6 +119,17 @@ class DataFolder(object):
             for folder in self.folders:
                 list_of_files += folder.find(template=template, deep=deep)
             return list_of_files
+
+
+    def file(self, filename):
+        matched_files = self.find(template = filename, deep = False)
+        if not matched_files:
+            raise ValueError(f'No file with filename {filename} in directory {self.fullpath}')
+        elif len(matched_files) == 1:
+            return matched_files[0]
+        else:
+            warnings.warn(f"More than one file match '{filename}' name match in directory {self.fullpath}. First match returned.")
+            return matched_files[0]
 
     def go_to(self, *args):
         path = os.path.join(self.fullpath, *args)

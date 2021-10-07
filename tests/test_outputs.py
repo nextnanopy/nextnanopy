@@ -1,4 +1,6 @@
 import unittest
+import warnings
+
 import nextnanopy.outputs as outputs
 from nextnanopy.utils.datasets import default_unit
 from os.path import join
@@ -575,6 +577,18 @@ class TestDataFolder(unittest.TestCase):
 
         self.assertTrue(os.path.samefile(datafolder_nnp.fullpath,folder_nnp))
         self.assertEqual(len(datafolder_nnp.files), 17)
+
+    def test_file(self):
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertRaises(ValueError, datafolder.file, 'hello_world')
+
+        self.assertEqual(datafolder.datafiles.folders['nextnano++'].file('bandedges.vtr'),os.path.join(folder_nnp,'bandedges.vtr'))
+
+        self.assertRaises(ValueError,datafolder.datafiles.folders['nextnano++'].file, 'bandedgesxxxx.vtr')
+        warnings.filterwarnings('ignore', 'More than one file match')
+        self.assertTrue(datafolder.datafiles.folders['nextnano++'].file('bandedges'))
+        warnings.filterwarnings('default')
 
 
 
