@@ -137,6 +137,32 @@ class Test_nnp(unittest.TestCase):
                          os.path.join(folder_nnp, 'only_variables_0.in'))
         os.remove(new_file.fullpath)
 
+    def test_set_and_save(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+        file.set_variable(name =  'float', value = 0.4)
+        self.assertAlmostEqual(file.variables['float'].value, 0.4)
+
+        self.addCleanup(os.remove,os.path.join(folder_nnp,'only_variables_0.in'))
+        file.save()
+        self.assertTrue(os.path.isfile(os.path.join(folder_nnp,'only_variables_0.in')))
+
+
+    def test_same_dir_saving(self):
+        current_directory = os.getcwd()
+        self.addCleanup(os.chdir,current_directory)
+
+        nnp_datafile_dir = os.path.join(folder_nnp)
+        os.chdir(nnp_datafile_dir)
+
+        path = 'only_variables.in'
+        file = InputFile(path)
+        file.set_variable(name='float', value=0.3333)
+        self.assertAlmostEqual(file.variables['float'].value, 0.3333)
+        self.addCleanup(delete_files,'only_variables', directory='.', exceptions=['only_variables.in'])
+        file.save()
+        self.assertTrue(os.path.isfile('only_variables_0.in'))
+
 
 class Test_nn3(unittest.TestCase):
     def test_load(self):
@@ -262,6 +288,30 @@ class Test_nn3(unittest.TestCase):
                          os.path.join(folder_nn3, 'only_variables_0.in'))
         os.remove(new_file.fullpath)
 
+    def test_set_and_save(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        file = InputFile(fullpath)
+        file.set_variable(name =  'float', value = 0.4)
+        self.assertAlmostEqual(file.variables['float'].value, 0.4)
+
+        self.addCleanup(os.remove,os.path.join(folder_nn3,'only_variables_0.in'))
+        file.save()
+        self.assertTrue(os.path.isfile(os.path.join(folder_nn3,'only_variables_0.in')))
+
+    def test_same_dir(self):
+        current_directory = os.getcwd()
+        self.addCleanup(os.chdir,current_directory)
+
+        nn3_datafile_dir = os.path.join(folder_nn3)
+        os.chdir(nn3_datafile_dir)
+
+        path = 'only_variables.in'
+        file = InputFile(path)
+        file.set_variable(name='float', value=0.3333)
+        self.assertAlmostEqual(file.variables['float'].value, 0.3333)
+        self.addCleanup(delete_files,'only_variables', directory='.', exceptions=['only_variables.in'])
+        file.save()
+        self.assertTrue(os.path.isfile('only_variables_0.in'))
 
 class Test_negf(unittest.TestCase):
     def test_load(self):
@@ -295,6 +345,7 @@ class Test_negf(unittest.TestCase):
         from nextnanopy import config
         for key, value in config.config['nextnano.NEGF'].items():
             self.assertEqual(file.default_command_args[key], value)
+
 
 
 class TestInputFile(unittest.TestCase):
