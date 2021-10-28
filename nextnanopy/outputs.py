@@ -14,6 +14,20 @@ import pyvista as pv
 
 _msgs = defaults.messages['load_output']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+def displayname(data):
+    """
+    Parameters
+    ----------
+    data: DataFolder or filepath
+    Returns
+    -------
+    str
+    formatting filenames and folder names in datafolder to display DataFolder in tree structure
+    """
+    if isinstance(data, DataFolder):
+        return os.path.basename(data.fullpath)+r'/'
+    else:
+        return  os.path.basename(data)
 
 class DataFolder(object):
     """
@@ -155,6 +169,34 @@ class DataFolder(object):
         out.append(str(self.filenames()))
         out = '\n'.join(out)
         return out
+
+
+    def make_tree(self, level = 0, result = None, with_files = True, deep = True):
+        if not result:
+            result = []
+        result.insert(level,level*'    '+ displayname(self))
+        if with_files:
+            for file in reversed(self.files):
+                result.insert(level+1,(level+1)*'    '+displayname(file))
+        level = level + 1
+        for i in reversed(range(len(self.folders))):
+            folder = self.folders[i]
+            if deep:
+                result = folder.make_tree(level, result = result, with_files = with_files)
+            else:
+                result.insert(level, level * '    ' + displayname(folder))
+        return result
+
+
+    def show_tree(self, with_files = True, deep = True):
+        tree_list = self.make_tree(with_files = with_files, deep = deep)
+        print('\n'.join(tree_list))
+
+
+
+
+
+
 
 class Output(object):
 
