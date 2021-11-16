@@ -62,6 +62,28 @@ def get_target_value(input_file,target_filepath,target_variable,target_number = 
 
 
 def simple_optimize(input_file, sweep_dict, target_filepath, target_variable, target_number, goal = 'min', optimal_target_value = None, post_func = lambda x: x):
+    """
+    The function that run sweeps of input file over the given variables space
+    and finds optimum value of target value (target value is part of the result of simulation)
+    Parameters
+    ----------
+    input_file: str, input_file to execute
+    sweep_dict: dict with keys: variabels names
+                          values: list of variables values
+    target_filepath: filepath to target value in output directory
+    target_variable: target variable name
+    target_number: the index number of the target value. If target_number = "all", the target is then list of values
+    goal: str
+            options: 'min' to minimize the target
+                      'max' to maximize the target
+                       'optimal' find the closest to optimal_target_value
+    optimal_target_value
+    post_func: if specifide post_func(target) will be optimize instead of target
+
+    Returns
+    -------
+
+    """
     best_value_initial_dict = {'min': np.inf, 'max': -np.inf, 'optimal':0}
     var_names = sweep_dict.keys()
     var_values = sweep_dict.values()
