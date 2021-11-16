@@ -1,5 +1,5 @@
 import os
-
+import numpy as np
 
 def is_file(fullpath):
     filename = os.path.split(fullpath)[-1]
@@ -151,3 +151,9 @@ def mkdir_even_if_exists(path,name):
     else:
         os.makedirs(directory)
     return directory
+
+
+def combinations(*args):
+    n = len(args)
+    array_of_combinations = np.array(np.meshgrid(*args)).T.reshape(-1,n)
+    return array_of_combinations
