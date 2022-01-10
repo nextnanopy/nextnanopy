@@ -17,7 +17,7 @@ class TestCommands(unittest.TestCase):
         inputfile = os.path.join(folder_nnp, 'example.in')
         exe = os.path.join('nextnano++', 'bin 64bit', 'nextnano++_Intel_64bit.exe')
         runmode = '--resume'
-        no_file_options = '--autosave --log'
+        no_file_options = '--autosave --logfile'
         license = os.path.join(r'nextnanopy\License', 'License_nnp.lic')
         database = os.path.join('nextnano++', 'Syntax', 'database_nnp.in')
         outputdirectory = r'tests\datafiles'
