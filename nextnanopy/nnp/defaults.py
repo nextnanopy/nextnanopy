@@ -37,11 +37,13 @@ def command_nnp(
 ):
     kwargs = OrderedDict(
         exe=[_path(exe), ''],
+        runmode=[kwargs['runmode'], ''] if 'runmode' in kwargs else ['', ''],
         license=['--license', _path(license)],
         database=['--database', _path(database)],
         threads=['--threads', threads],
         outputdirectory=['--outputdirectory', _path(outputdirectory)],
         noautooutdir=['--noautooutdir', ''],
+        no_file_options=[kwargs['no_file_options'], ''] if 'no_file_options' in kwargs else ['', ''],
         inputfile=[_path(inputfile), ''],
     )
     return generate_command(kwargs.values())
