@@ -79,6 +79,13 @@ Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](m
 
 ## History of changes
 
+
+### Version 0.1.11 (Jan 10th, 2022)
+* Feature: DataFile.plot() - make a preview plot. Graph for 1-dimensional data and a coplormap for 2-dimensional data.
+* Feature: New class DataFolder. Designed to simplify navigation in output directory.
+* Beta feature: postprocess.simple_optimize. Runs simulation over given variables space and optimizes the desired output value.
+
+
 ### Version 0.1.10 (Oct 06th, 2021)
 * Feature: Added new class Sweep allowing to create automatic sweeps over few variables 
 
