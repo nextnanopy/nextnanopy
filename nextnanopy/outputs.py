@@ -12,6 +12,7 @@ from nextnanopy import defaults
 
 import pyvista as pv
 
+
 _msgs = defaults.messages['load_output']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 def displayname(data):
@@ -401,6 +402,71 @@ class DataFile(DataFileTemplate):
                 pass
         loader = Dati
         return loader
+
+    def plot(self, legend = False, y_axis_name = '', subplots = False):
+        import matplotlib.pyplot as plt
+        if len(self.coords) == 0:
+            fig, ax = plt.subplots()
+            if len(self.variables)>1:
+                plot_coord =self.variables[0]
+                #plot_var = self.variables[1:]
+                #for var in plot_var:
+                for i in range(1, len(self.variables)-1):
+                    var = self.variables[i]
+                    ax.plot(plot_coord.value, var.value, label=var.name)
+                ax.set_xlabel(f'{plot_coord.name}[{plot_coord.unit}]')
+            else:
+                for var in self.variables:
+                    ax.plot(var.value, label=var.name)
+            ax.set_ylabel(f'{y_axis_name}[{var.unit}]')
+        elif len(self.coords) == 1:
+            fig, ax = plt.subplots()
+            x_coord = self.coords[0]
+            x_label_name = x_coord.name
+            x_label_unit = x_coord.unit
+            x_value = x_coord.value
+            ax.set_xlabel(f'{x_label_name}[{x_label_unit}]')
+            for var in self.variables:
+                ax.plot(x_value, var.value, label = var.name)
+            ax.set_ylabel(f'{y_axis_name}[{var.unit}]')
+            if legend:
+                plt.legend()
+        elif len(self.coords) == 2:
+            x = self.coords[0]
+            y = self.coords[1]
+            number_of_var = len(self.variables)
+            if number_of_var <2:
+                fig, ax = plt.subplots()
+                ax.set_xlabel(f'{x.name}[{x.unit}]')
+                ax.set_ylabel(f'{y.name}[{y.unit}]')
+                var = self.variables[0]
+                im = ax.pcolormesh(x.value, y.value, var.value, shading='auto', label=f'{var.name}[{var.unit}]')
+                ax.set_title(f'{var.name}[{var.unit}]')
+                fig.colorbar(im, ax = ax)
+            else:
+                if subplots:
+                    fig, ax = plt.subplots(len(self.variables))
+                    for i in range(len(self.variables)):
+                        var = self.variables[i]
+                        im = ax[i].pcolormesh(x.value, y.value, var.value, shading='auto', label=f'{var.name}[{var.unit}]')
+                        ax[i].set_xlabel(f'{x.name}[{x.unit}]')
+                        ax[i].set_ylabel(f'{y.name}[{y.unit}]')
+                        ax[i].set_title(f'{var.name}[{var.unit}]')
+                        fig.colorbar(im, ax=ax[i])
+                else:
+                    for i in range(len(self.variables)):
+                        fig, ax = plt.subplots()
+                        var = self.variables[i]
+                        im = ax.pcolormesh(x.value, y.value, var.value, shading='auto', label=f'{var.name}[{var.unit}]')
+                        ax.set_xlabel(f'{x.name}[{x.unit}]')
+                        ax.set_ylabel(f'{y.name}[{y.unit}]')
+                        ax.set_title(f'{var.name}[{var.unit}]')
+                        fig.colorbar(im, ax=ax)
+        else:
+            raise NotImplementedError('Preview plot feature is implemented only for datafiles with 2 or less coordinates')
+        return fig,ax
+
+
 
 
 class AvsAscii(Output):

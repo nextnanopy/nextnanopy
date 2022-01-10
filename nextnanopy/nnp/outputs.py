@@ -94,12 +94,18 @@ class Dat(Output):
         header = header.split()
         ndim = 0
         dkeys = []
+
+        FirstVarIsCoordFlag = True
         for i, column in enumerate(header):
             key, unit = best_str_to_name_unit(column, default_unit=None)
             metadata[i] = {'name': key, 'unit': unit}
             if key.lower() in ['x', 'y', 'z', 'position']:
-                ndim += 1
-                dkeys.append(i)
+               ndim += 1
+               dkeys.append(i)
+            # if FirstVarIsCoordFlag:
+            #     ndim += 1
+            #     dkeys.append(i)
+            #     FirstVarIsCoordFlag = False #use this to change behaviour of recognition of coords and variables
         metadata['ndim'] = ndim
         metadata['dkeys'] = dkeys
         self.metadata.update(metadata)
