@@ -16,13 +16,15 @@ class TestCommands(unittest.TestCase):
         self.maxDiff = None
         inputfile = os.path.join(folder_nnp, 'example.in')
         exe = os.path.join('nextnano++', 'bin 64bit', 'nextnano++_Intel_64bit.exe')
+        runmode = '--resume'
+        no_file_options = '--autosave --log'
         license = os.path.join(r'nextnanopy\License', 'License_nnp.lic')
         database = os.path.join('nextnano++', 'Syntax', 'database_nnp.in')
         outputdirectory = r'tests\datafiles'
         threads = 4
-        cmd = f'"{exe}" --license "{license}" --database "{database}" --threads {threads} --outputdirectory "{outputdirectory}" --noautooutdir "{inputfile}"'
-        kwargs = dict(inputfile=inputfile, exe=exe, license=license, database=database, outputdirectory=outputdirectory,
-                      threads=threads)
+        cmd = f'"{exe}" {runmode} --license "{license}" --database "{database}" --threads {threads} --outputdirectory "{outputdirectory}" --noautooutdir {no_file_options} "{inputfile}"'
+        kwargs = dict(inputfile=inputfile, runmode=runmode, exe=exe, license=license, database=database, outputdirectory=outputdirectory,
+                      threads=threads, no_file_options=no_file_options)
         from nextnanopy.nnp.defaults import command_nnp
         self.assertEqual(command_nnp(**kwargs), cmd)
         self.assertEqual(commands.command(**kwargs), cmd)
