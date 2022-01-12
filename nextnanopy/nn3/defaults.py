@@ -48,10 +48,10 @@ def command_nn3(
         outputdirectory,
         threads=0,
         debuglevel=0,
-        #dubuglevel=-1,
+        #dubuglevel=-1,             # pending change
         cancel=-1,
         softkill=-1,
-        #system='default',
+        #system='default',          # pending change
         **kwargs,
 ):
     kwargs = OrderedDict(
@@ -64,7 +64,7 @@ def command_nn3(
         debuglevel=['-debuglevel', debuglevel],
         cancel=['-cancel', cancel],
         softkill=['-softkill', softkill],
-        #system=['-system', system],
+        #system=['-system', system],        # pending change
         no_file_options=[kwargs['no_file_options'], ''] if 'no_file_options' in kwargs else ['', ''],
     )
     return generate_command(kwargs.values())
