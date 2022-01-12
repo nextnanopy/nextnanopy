@@ -27,8 +27,8 @@ software = 'nextnano3'
 #software = 'nextnano.MSB'
 #===========================
 
-folder_examples_nnp    = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano++ sample files'
-folder_examples_nn3    = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano3 sample files'
+folder_examples_nnp    = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano++ sample files'
+folder_examples_nn3    = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano3 sample files'
 folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_11_16\nextnano.NEGF sample files'
 folder_examples_nnMSB  = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
 
@@ -83,7 +83,7 @@ home_directory = r'C:\Users\stefan.birner.NEXTNANO\Documents\nextnano'
 folder_output        = nn.config.config[software]['outputdirectory']
 folder_python_input  = os.path.join(home_directory,r'nextnanopy\input')
 folder_python_output = os.path.join(home_directory,r'nextnanopy\output')
-folder_examples = folder_python_input
+#folder_examples = folder_python_input
 
 mkdir_if_not_exist(folder_output)
 mkdir_if_not_exist(folder_python_output)

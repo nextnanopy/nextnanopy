@@ -25,8 +25,8 @@ software = 'nextnano3'
 #software = 'nextnano.MSB'
 #===========================
 
-folder_examples_nnp = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano++ sample files'
-folder_examples_nn3 = r'C:\Program Files\nextnano\2020_12_09\Sample files\nextnano3 sample files'
+folder_examples_nnp = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano++ sample files'
+folder_examples_nn3 = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano3 sample files'
 folder_examples_nnNEGF = r'D:\nextnano.NEGF\nextnanoNEGF_2020_11_16\nextnano.NEGF sample files'
 folder_examples_nnMSB = r'D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20\nextnano.MSB sample files'
 
@@ -174,7 +174,7 @@ for x in ListOfValues:
 #++++++++++++++++++++++++++++++++++++++++++++++
 #===========================
     if(software=="nextnano++"):
-        file = os.path.join(folder_output,input_file_name_variable+r'\bias_000_000'+r'\bandedges.dat') 
+        file = os.path.join(folder_output,input_file_name_variable+r'\bias_00000'+r'\bandedges.dat') 
         my_input_file_no_extension = my_input_file_no_extension_nnp
     elif(software=="nextnano3"):
         file = os.path.join(folder_output,input_file_name_variable+r'\band_structure'+r'\BandEdges.dat') 

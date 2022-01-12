@@ -19,7 +19,8 @@ FigFormat = '.jpg'
 # Specify input file folder  
 #++++++++++++++++++++++++++++++++++++++++++++++
 # nextnano++ examples
-input_folder = r'C:\Program Files\nextnano\2021_09_03\Sample files\nextnano++ sample files'
+#input_folder = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano++ sample files'
+input_folder = r'C:\Program Files\nextnano\2021_12_12\Sample files\nextnano++ sample files\Quantum Mechanics examples'
 # nextnano3 examples
 # input_folder = r'C:\Program Files\nextnano\2021_09_03\Sample files\nextnano3 sample files\Quantum Mechanics examples'
 # nextnano.NEGF examples
