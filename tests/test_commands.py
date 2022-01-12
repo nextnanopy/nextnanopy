@@ -40,9 +40,10 @@ class TestCommands(unittest.TestCase):
         debuglevel = 0
         cancel = -1
         softkill = -1
-        cmd = f'"{exe}" -license "{license}" -inputfile "{inputfile}" -database "{database}" -threads {threads} -outputdirectory "{outputdirectory}" -debuglevel {debuglevel} -cancel {cancel} -softkill {softkill}'
+        no_file_options = '-log -parse'
+        cmd = f'"{exe}" -license "{license}" -inputfile "{inputfile}" -database "{database}" -threads {threads} -outputdirectory "{outputdirectory}" -debuglevel {debuglevel} -cancel {cancel} -softkill {softkill} {no_file_options}'
         kwargs = dict(inputfile=inputfile, exe=exe, license=license, database=database, outputdirectory=outputdirectory,
-                      threads=threads, debuglevel=debuglevel, cancel=cancel, softkill=softkill)
+                      threads=threads, debuglevel=debuglevel, cancel=cancel, softkill=softkill, no_file_options=no_file_options)
         from nextnanopy.nn3.defaults import command_nn3
         self.assertEqual(command_nn3(**kwargs), cmd)
         self.assertEqual(commands.command(**kwargs), cmd)
