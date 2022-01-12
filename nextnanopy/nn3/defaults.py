@@ -32,6 +32,14 @@ config_default = {
 }
 
 
+"""
+The option 'system' should be implemented once we convince that everyone uses the later version of nn3 than 2021_12_24.
+Also the default value of debuglevel should be a negative integer. (i.e. ignore the flag)
+We only need to comment out the 3 corresponding lines.
+
+About the difference of '-...' and '--...', '--license' will also work and should be the new default.
+For backwards compatibility, we keep '-license' for the moment.
+"""
 def command_nn3(
         inputfile,
         exe,
@@ -40,8 +48,10 @@ def command_nn3(
         outputdirectory,
         threads=0,
         debuglevel=0,
+        #dubuglevel=-1,
         cancel=-1,
         softkill=-1,
+        #system='default',
         **kwargs,
 ):
     kwargs = OrderedDict(
@@ -54,6 +64,8 @@ def command_nn3(
         debuglevel=['-debuglevel', debuglevel],
         cancel=['-cancel', cancel],
         softkill=['-softkill', softkill],
+        #system=['-system', system],
+        no_file_options=[kwargs['no_file_options'], ''] if 'no_file_options' in kwargs else ['', ''],
     )
     return generate_command(kwargs.values())
 
