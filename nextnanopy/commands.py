@@ -5,6 +5,7 @@ import threading
 from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
 from nextnanopy import defaults
 
+from nextnanopy.utils.formatting import generate_command
 
 def command(
         inputfile,
@@ -96,3 +97,32 @@ def execute(
         'wdir': wdir,
     }
     return info
+
+def run_script(script, kwargs = None, show_log = True):
+    """
+    The function runs a python script with given arguments. Output is stored in the file script_name.log
+    Parameters
+    ----------
+    script: str
+        path to the python script
+    kwargs: dict
+        optional parameters, {keyword:argument,keyword:argument}
+        for a keyword without argument leave argument as an empty string ''
+
+        EXAMPLE: {'-o': 'my_output_folder','-p':''} will be converted to '-o my_output_folder -p'
+    show_log - bool
+        show the log in console ouput, default is True
+
+    Returns
+    -------
+    process: subprocess.POPEN
+    """
+    args = [[sys.executable, script]]
+    if kwargs:
+        for key in kwargs.keys():
+            args.append([key,kwargs[key]])
+    cmd = generate_command(args)
+    process = send(cmd)
+    logfile = os.path.join(os.getcwd(),f'{os.path.basename(script)}.log')
+    start_log(process, logfile, show_log)
+    return process
