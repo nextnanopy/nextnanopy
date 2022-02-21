@@ -499,7 +499,6 @@ class TestDataFolder(unittest.TestCase):
     def test_find(self):
         tests_folder = 'tests'
         datafolder = outputs.DataFolder(tests_folder)
-
         self.assertEqual(len(datafolder.find('')),12)
 
         self.assertIn(os.path.join(tests_folder,'__init__.py'),datafolder.find(''))

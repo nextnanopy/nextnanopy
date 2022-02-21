@@ -7,6 +7,7 @@ from nextnanopy.nn3 import defaults as nn3_defaults
 from nextnanopy.negf import defaults as negf_defaults
 from nextnanopy.msb import defaults as msb_defaults
 
+
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
