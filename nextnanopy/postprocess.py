@@ -6,6 +6,8 @@ import numpy as np
 from scipy.optimize import minimize as sp_minimize
 from scipy.optimize import fsolve
 
+elementary_charge = 1.60217662e-19
+
 def minimization_function(variables_values, inputfile, variables_names, target_filepath, target_variable, number =0, overwrite = True):
     for varvalue, varname in zip(variables_values, variables_names):
         inputfile.set_variable(name = varname, value = varvalue)
@@ -114,3 +116,104 @@ def simple_optimize(input_file, sweep_dict, target_filepath, target_variable, ta
         else:
             raise NotImplementedError
     return optimal_combination, best_value
+
+def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = False, net_charge_sign = -1):
+    """
+    Calculates CV charateristic based on integrated_density_electron.dat and integrated_density_hole.dat files in ouput_directory
+    Parameters
+    ----------
+    output_directory_path: str
+    bias1:  str, name of the first reference bias, optional
+    bias2: str, name of the second reference bias, optional
+    total: calculate in all regions together (sum of all regions) (for now only False is valid, otherwise return NotImplementedError)
+
+    Returns
+    -------
+    capacitance: numpy array with capacitance
+    voltage: numpy array with voltages
+    """
+
+    dfolder = DataFolder(output_directory_path)
+
+    dfile_hole  = DataFile(dfolder.file('integrated_density_hole.dat'))
+    dfile_electron = DataFile(dfolder.file('integrated_density_electron.dat'))
+
+    bias_hole_set = set([var.name for var in dfile_hole.variables if var.name.endswith('_bias')])
+    bias_electron_set = set([var.name for var in dfile_electron.variables if var.name.endswith('_bias')])
+
+    common_biases_list = list(bias_hole_set.intersection(bias_electron_set))
+
+    """
+    Here parameter voltage is found.
+    if both bias1 and bias2 are present in holes and electrones file, voltage = bias2-bias1
+    
+    bias 2 is ignored if bias1 is None
+    
+    if bias1 is present in common_biases_list, voltage = bias1
+    
+    if bias1 = bias2 = None, voltage = first common bias
+    """
+    if not common_biases_list:
+        return ValueError('There is no common biases in integrated_density_hole.dat file and integrated_density_electron.dat file')
+
+    if bias1:
+        if bias1 not in common_biases_list:
+            return ValueError('Specified reference bias1 is not commmon bias for holes and electrons')
+
+        if bias2:
+            if bias2 not in common_biases_list:
+                return ValueError('Specified reference bias2 is not commmon bias for holes and electrons')
+            else:
+                voltage = dfile_hole.variables[bias2].value - dfile_hole.variables[bias1].value
+        else:
+            voltage = dfile_hole.variables[bias1].value
+
+    else:
+        bias = common_biases_list[0]
+        voltage = dfile_hole.variables[bias].value
+
+    regions_hole_set = set([var.name for var in dfile_hole.variables if not var.name.endswith('_bias')])
+    regions_electron_set = set([var.name for var in dfile_electron.variables if not var.name.endswith('_bias')])
+
+
+
+    common_regions_list = list(regions_hole_set.intersection(regions_electron_set))
+
+    if not common_regions_list:
+        return TypeError('integrated_density does not have common regions for holes and electrons')
+
+    #voltage = voltage[:-1]
+
+    num_bias_points = len(voltage)
+
+    regions = []
+
+    for region in common_regions_list:
+        integrated_density_hole = dfile_hole[region].value
+        integrated_density_electron = dfile_electron[region].value
+        total_charge = net_charge_sign * elementary_charge * 1e6 * (integrated_density_hole-integrated_density_electron)
+        c_list = []
+        regions.append(c_list)
+
+        for i in range(len(voltage)-1):
+            voltage_val = voltage[i]
+            voltage_val_next = voltage[i+1]
+            charge_val = total_charge[i]
+            charge_val_next = total_charge[i+1]
+
+            if abs(voltage_val_next - voltage_val) < 1e-15:
+                c_list.append(0)
+            else:
+                c_val = (charge_val_next-charge_val)/(voltage_val_next-voltage_val)
+                c_list.append(c_val)
+
+    voltage = voltage[:-1]
+
+    return voltage, regions
+
+
+
+
+
+
+
