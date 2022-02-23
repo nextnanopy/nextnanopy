@@ -1,0 +1,38 @@
+# This workflow will install Python dependencies, run tests on multiple machines and multiple python versions
+
+
+name: python test multiplatform
+
+on:
+  push:
+    branches: [ CI-test ]
+  pull_request:
+    branches: [ CI-test ]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up all python versions
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: pip install numpy pyvista gdspy shapely matplotlib cycler
+    
+    - name: Test with unittest
+      run: python -m unittest tests/test_all.py
