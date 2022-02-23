@@ -70,3 +70,10 @@ def is_negf_input_text(text):
 
 class InputVariable_NEGF(InputVariable):
     var_char = fmt['var_char']
+
+    @property
+    def text(self):
+        t = f'{self.var_char}{self.name} = {self.value} {self.unit}'
+        if self.comment:
+            t = f'{t} Comment: {self.comment}'
+        return t
