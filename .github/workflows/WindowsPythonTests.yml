@@ -5,9 +5,9 @@ name: python test Windows
 
 on:
   push:
-    branches: [ CI-test ]
+    branches: [ master ]
   pull_request:
-    branches: [ CI-test ]
+    branches: [ master ]
   workflow_dispatch:
     inputs:
       logLevel:
