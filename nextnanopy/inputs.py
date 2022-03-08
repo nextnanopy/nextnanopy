@@ -117,6 +117,10 @@ class InputFileTemplate(object):
         self.load_variables()
 
     @property
+    def raw_text(self):
+        return str(lines_to_text(*self.raw_lines))
+
+    @property
     def lines(self):
         new_lines = list(self.raw_lines)
         for ivar in self.variables.values():
@@ -357,6 +361,7 @@ class InputFileTemplate(object):
 
 
 class InputFile(InputFileTemplate):
+    # def __new__(cls, fullpath=None, configpath=None):
 
     def load_variables(self):
         """

@@ -8,9 +8,13 @@ class InputFile(InputFileTemplate):
     def load_variables(self):
         root = ET.fromstring(self.text)
         varsection = root.find('Variables')
+        variables = DictList()
+        if not varsection:
+            self.variables = variables
+            return self.variables
         vars = varsection.findall('Constant')
 
-        variables = DictList()
+
         for var in vars:
             name_element = var.find('Name')
             name = parse_negf_variable_name(name_element.text)
