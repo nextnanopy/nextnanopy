@@ -7,5 +7,5 @@ class InputFile(InputFileTemplate):
         pass
 
     def validate(self):
-        if not is_msb_input_text(self.text):
+        if not is_msb_input_text(self.raw_text):
             raise ValueError(f'Not valid nextnano.MSB input file')

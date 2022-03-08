@@ -208,7 +208,7 @@ class InputFileTemplate(object):
         self.load_variables()
 
     def find_product(self):
-        self.product = defaults.input_text_type(self.text)
+        self.product = defaults.input_text_type(self.raw_text)
         return self.product
 
     def validate(self):

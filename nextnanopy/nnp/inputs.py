@@ -16,5 +16,5 @@ class InputFile(InputFileTemplate):
         return self.variables
 
     def validate(self):
-        if not is_nnp_input_text(self.text):
+        if not is_nnp_input_text(self.raw_text):
             raise ValueError(f'Not valid nextnano++ input file')

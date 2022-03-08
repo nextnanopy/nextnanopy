@@ -33,5 +33,5 @@ class InputFile(InputFileTemplate):
 
 
     def validate(self):
-        if not is_negf_input_text(self.text):
+        if not is_negf_input_text(self.raw_text):
             raise ValueError(f'Not valid nextnano.NEGF input file')
