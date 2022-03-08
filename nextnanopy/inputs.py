@@ -213,7 +213,8 @@ class InputFileTemplate(object):
 
     def validate(self):
         if self.product not in defaults.products:
-            raise ValueError(f'Not valid input file')
+            self.product = 'Not valid'
+            #raise ValueError(f'Not valid input file')
 
     @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True):
@@ -372,6 +373,28 @@ class InputFile(InputFileTemplate):
         file = _InputFile()
         file.text = self.text
         self.variables = file.variables
+
+    @property
+    def lines(self):
+        # """
+        # Convenient method to find the best loading method for each nextnano product.
+        # self.variables will be updated
+        # """
+        try:
+            _InputFile = defaults.get_InputFile(self.product)
+        except ValueError:
+            _InputFile = InputFileTemplate
+
+
+        file = _InputFile()
+        #file.product = self.product
+        #file.text = self.raw_text
+        #file.variables = self.variables
+        #print(file.product)
+        #print(type(file))
+        file.variables = self.variables
+        file.raw_lines = self.raw_lines
+        return file.lines
 
 class Sweep(InputFile):
     """

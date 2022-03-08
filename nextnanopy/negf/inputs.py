@@ -28,6 +28,23 @@ class InputFile(InputFileTemplate):
         self.variables = variables
         return self.variables
 
+    @property
+    def lines(self):
+        root = ET.fromstring(self.raw_text)
+        varsection = root.find('Variables')
+        variables = self.variables
+        if varsection:
+            vars = varsection.findall('Constant')
+            for var_element in vars:
+                for variable in variables:
+                    if var_element.find('Name').text ==  '$'+variable.name:
+                        var_element.find('Value').text = str(variable.value)
+
+        xmlstr = ET.tostring(root, encoding='unicode', method='xml')
+        lines_result = xmlstr.splitlines()
+        return lines_result
+
+
 
 
 
