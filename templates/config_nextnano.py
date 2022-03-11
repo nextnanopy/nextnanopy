@@ -16,10 +16,8 @@ path_nextnano_output = r"C:\Users\homer.simpson\Documents\nextnano\Output"
 #++++++++++++++++++++++++++++++++++++++++++++++++++
 # Specify your nextnano installation folder
 #++++++++++++++++++++++++++++++++++++++++++++++++++
-path_nextnano       = r"C:\Program Files\nextnano\2021_07_08"                          # nextnano++ and nextnano3 software            
-path_nextnano_NEGF   = r"D:\nextnano\nextnanoNEGF_2020_11_16"                          # nextnano.NEGF software
-path_nextnano_MSB    = r"D:\nextnano.MSB\nextnano.MSB_2017_12_20\nextnano\2017_12_20"  # nextnano.MSB software
-
+path_nextnano        = r"C:\Program Files\nextnano\2021_07_08"            # nextnano++ and nextnano3 software            
+path_nextnano_NEGF   = r"D:\nextnano\nextnanoNEGF_2020_11_16"            # nextnano.NEGF software
 
 
 # NO NEED TO CHANGE THE FOLLOWING -----------------------------
@@ -39,7 +37,6 @@ nn.config.set('nextnano.MSB' ,'outputdirectory',path_nextnano_output)
 nn.config.set('nextnano++'   ,'license',os.path.join(path_license,r'License_nnp.lic'))
 nn.config.set('nextnano3'    ,'license',os.path.join(path_license,r'License_nnp.lic'))
 nn.config.set('nextnano.NEGF','license',os.path.join(path_license,r'License_nnQCL.lic'))
-nn.config.set('nextnano.MSB' ,'license',os.path.join(path_license,r'License_nnMSB.lic'))
 
 #----------------------------------------------------------
 # Location of nextnano++ files:    executable and database
@@ -60,10 +57,9 @@ nn.config.set('nextnano.NEGF','exe'     ,os.path.join(path_nextnano_NEGF,r'nextn
 nn.config.set('nextnano.NEGF','database',os.path.join(path_nextnano_NEGF,r'nextnano.NEGF\Material_Database.xml'))
 
 #----------------------------------------------------------
-# Location of nextnano.MSB files:  executable and database
+# Location of nextnano.MSB files: database
 #----------------------------------------------------------
-nn.config.set('nextnano.MSB','exe'     ,os.path.join(path_nextnano_MSB,r'nextnano.MSB\x64\nextnano.MSB.exe'))
-nn.config.set('nextnano.MSB','database',os.path.join(path_nextnano_MSB,r'nextnano.MSB\Materials.xml'))
+nn.config.set('nextnano.MSB','database',os.path.join(path_nextnano,r'nextnano.MSB\Materials.xml'))
 
 nn.config.save() # save permanently
 
