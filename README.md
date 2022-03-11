@@ -16,65 +16,25 @@ Currently, nextnanopy has basic features for [nextnano products](https://www.nex
 
 In future releases, we would like to implement:
 
-* **Common post-processing methods**: Like loading and plotting together bandedges, eigenenergies and eigenlevels, colormap of potential landscape with GDS polygons on top, etc.
-* **Improved support for specific nextnano.NEGF and nextnano.MSB datafiles**
+* **Common post-processing methods**: Like loading and plotting together bandedges, eigenenergies and eigenvalues, colormap of potential landscape with GDS polygons on top, etc.
 * **User-friendly input file creation/modification**: The idea is to load any input file and it would detect all the different blocks so the user can easily modify parameters like 'boundary conditions' or 'region material'. Similarly, it should be user-friendly to create any input file from scratch via Python.
 * **Feedback loops**: A routine that allows the user to optimize any figure of merit of a device with a given set of input variables. The user can set a post-processing routine to get the figure of merit from the simulated data and later, a new set of input variables will be generated and executed. This feedback loop will repeat until a set of conditions are satisfied.
-* **Improve documentation**: We will add an extensive documentation in the website as well as in the source code.
 * **Guidelines for contributors**: Set of rules if you want to contribute to the project.
  
 ## Installation
 
-### Requirements
-
-You need a working Python 3.8 installation to be able to use nextnanopy. We highly recommend installing [Anaconda](https://www.anaconda.com/), which takes care of installing Python and managing packages. 
-Make sure to download the latest version with Python 3.8.
-
-### Dependencies:
-
-* [Python](https://www.python.org/) (tested with 3.8)
-* [NumPy](http://numpy.scipy.org/)
-* [PyVista](https://www.pyvista.org/) (For loading VTK files)
-* [Gdspy](https://gdspy.readthedocs.io/) (optional: to import gds files)
-* [Shapely](https://shapely.readthedocs.io/) (optional: to manipulate polygons from gds files)
-* [Matplotlib](https://matplotlib.org/) (optional: to visualize imported polygons)
-* [Cycler](https://pypi.org/project/Cycler/) (optional: to visualize imported polygons)
-
-### Linux / OS X / Windows
-
-#### Option 1: Using [pip](https://docs.python.org/3/installing/)
-
-Simply open Anaconda prompt and type:
-
-```sh
-pip install nextnanopy
-```
-or if you want to upgrade:
-```sh
-pip install --upgrade nextnanopy
-```
-
-#### Option 2: From the source code
-
-1. Download the source from [github](https://github.com/nextnanopy/nextnanopy)
-2. Open Anaconda prompt
-3. Go to the directory of the nextnanopy project
-4. Build/install by typing:
-
-```sh
-python setup.py install
-```
-
-For more information, please see the documents in docs/ folder.
+Nextnanopy can be installed on Linux / OS X / Windows. 
+For details, please refer to docs/How to install nextnanopy.pdf.
 
 ## Documentation
 
-Currently, the complete documentation is not available yet. However, there are few examples located in templates/ and docs/examples that will help you to start playing with nextnanopy.
+Basic features are documented in docs/examples.
+Python scripts in templates/ will help you to start playing with nextnanopy.
 
 
 ## Support
 
-Do you want to help nextnanopy? Please, send an email to [python@nextnano.com](mailto:python@nextnano.com). 
+Do you want to help nextnanopy? Please send an email to [python@nextnano.com](mailto:python@nextnano.com). 
 
 
 ## History of changes
