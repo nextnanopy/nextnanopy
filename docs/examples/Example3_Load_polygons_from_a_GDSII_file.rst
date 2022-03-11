@@ -4,7 +4,7 @@ Example 3 - Load polygons from a GDSII file
 About this example: load polygons from a GDSII file
 ---------------------------------------------------
 
-This example is aimed for users who are familiar with GDSII files.
+This example is aimed at users who are familiar with GDSII files.
 
 Citing from `Wikipedia <https://en.wikipedia.org/wiki/GDSII>`__:
 
@@ -31,10 +31,10 @@ heterostructures, the geometry of the gates are directly related to the
 physics behind. Moreover, these gated devices become more and more
 complicated in terms of the gate geometries.
 
-If the user has to translate these geometries manually, it will take for
-ever without mentioning the potential human error. Therefore, we started
-to develop a feature which can load the polygons from a GDSII file and
-then, the user can easily generate a desired nextnano shape.
+If the user has to translate these geometries manually, it will take
+forever without mentioning the potential human error. Therefore, we
+started to develop a feature which can load the polygons from a GDSII
+file and then, the user can easily generate a desired nextnano shape.
 
 For the moment, this feature has only few functionalities and it is
 limited by nextnano++ shapes. However, the idea is to expand it in the
@@ -95,7 +95,7 @@ polygonal_prism (3D)
     
     my_gds = GdsPolygons(r'..\..\tests\gds\example2.gds')
 
-Let’s have a look of the polygons
+Let’s have a look at the polygons
 ---------------------------------
 
 .. code:: ipython3
@@ -132,8 +132,8 @@ Let’s have a look of the polygons
 
 
 
-How to access to the vertexes coordinates
------------------------------------------
+How to access the vertexes coordinates
+--------------------------------------
 
 This information is stored in:
 
@@ -141,7 +141,7 @@ This information is stored in:
 
    x,y = my_gds.xy
 
-For example, the x and y for the second vertex of the first polygon is
+For example, the x and y for the second vertex of the first polygon are
 ``x[0][1]`` and ``y[0][1]``.
 
 .. code:: ipython3
@@ -209,4 +209,4 @@ direction via the arguments ``zi`` and ``zf`` in the method
    for shape in list_of_shapes:
        print(shape.text)
 
-Please, contact python@nextnano.com for any issue with this example.
+Please contact python@nextnano.com for any issues with this document.
