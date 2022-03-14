@@ -6,7 +6,8 @@ import xml.etree.ElementTree as ET
 
 class InputFile(InputFileTemplate):
     def load_variables(self):
-        parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
+        #parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True)) #Does not supported in python3.7
+        parser = ET.XMLParser()
         root = ET.fromstring(self.text, parser = parser)
         varsection = root.find('Variables')
         variables = DictList()
