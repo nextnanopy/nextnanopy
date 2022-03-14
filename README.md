@@ -39,6 +39,8 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.12 (Mar 14th, 2022)
+* added support of input variables for nextnanoNEGF. Note: after save all non-xml data (i.e. comments) is not preserved.
 
 ### Version 0.1.11 (Jan 10th, 2022)
 * Feature: DataFile.plot() - make a preview plot. Graph for 1-dimensional data and a coplormap for 2-dimensional data.
