@@ -66,7 +66,7 @@ class Test_nnp(unittest.TestCase):
     def test_set_variables(self):
         fullpath = os.path.join(folder_nnp, 'only_variables.in')
         file = InputFile(fullpath)
-        file.set_variable('float', 1e-5, 'some comment')
+        file.set_variable('float', 1e-5, 'some comment', 'some unit')#unit is not visible in nn++
 
         self.assertEqual(file.variables['float'].name, 'float')
         self.assertEqual(file.variables['float'].value, 1e-5)
@@ -316,18 +316,56 @@ class Test_nn3(unittest.TestCase):
 class Test_negf(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_negf, 'example.xml')
-
         file = InputFile(fullpath)
+
         self.assertEqual(file.product, 'nextnano.NEGF')
 
-        self.assertEqual(len(file.variables.keys()), 0)
+        self.assertEqual(len(file.variables.keys()), 4)
+
+        self.assertEqual(file.variables['variable1'].name, 'variable1')
+        self.assertEqual(file.variables['variable1'].value, float(0.24))
+        self.assertEqual(file.variables['variable1'].comment, 'Some comment')
+        self.assertEqual(file.variables['variable1'].unit, 'a.u.')
+
+        self.assertEqual(file.variables['variable2'].name, 'variable2')
+        self.assertEqual(file.variables['variable2'].value, int(0))
+        self.assertEqual(file.variables['variable2'].comment, 'Another comment')
+        self.assertEqual(file.variables['variable2'].unit, 'meV')
+
+        self.assertEqual(file.variables['text_var'].name, 'text_var')
+        self.assertEqual(file.variables['text_var'].value, 'some text')
+
+        self.assertEqual(file.variables['ref_var'].value, '$(1-variable1)')
+
+
+
 
         fullpath = os.path.join(folder_negf, 'virtual_file.xml')
         self.assertRaises(FileNotFoundError, InputFile, fullpath)
+    def test_get_variables(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
+
+        self.assertEqual(file.variables['variable1'], file.get_variable('variable1'))
+
+        self.assertRaises(KeyError, file.get_variable, name='new_variable')
 
     def test_set_variables(self):
         fullpath = os.path.join(folder_negf, 'example.xml')
         file = InputFile(fullpath)
+
+        file.set_variable('variable1', 0.137, 'test comment', 'test unit^2')
+        self.assertEqual(file.variables['variable1'].value, float(0.137))
+        self.assertEqual(file.variables['variable1'].comment, 'test comment')
+        self.assertEqual(file.variables['variable1'].unit, 'test unit^2')
+        #self.assertEqual(file.lines[19], '<Name Comment="Some comment">$variable1</Name>')
+
+        file.set_variable('text_var', 'string variable test')
+        self.assertEqual(file.variables['text_var'].value, 'string variable test')
+
+        file.set_variable('ref_var', '$variable1 - 0.1')
+        self.assertEqual(file.variables['ref_var'].value, '$variable1 - 0.1')
+
         self.assertRaises(KeyError, file.set_variable, name='new_variable')
 
     def test_fullpath(self):
@@ -346,8 +384,26 @@ class Test_negf(unittest.TestCase):
         for key, value in config.config['nextnano.NEGF'].items():
             self.assertEqual(file.default_command_args[key], value)
 
+    def test_save(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
 
+        new_folder = os.path.join(folder_negf, 'temp')
+        new_file = os.path.join(new_folder, 'example_copy.in')
+        self.assertRaises(FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False)
+        self.assertEqual(file.save(new_file, overwrite=True, automkdir=True), new_file)
+        os.remove(file.fullpath)
+        os.rmdir(new_folder)
 
+    def test_set_and_save(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
+        file.set_variable(name =  'variable1', value = 0.4)
+        self.assertAlmostEqual(file.variables['variable1'].value, 0.4)
+
+        self.addCleanup(os.remove,os.path.join(folder_negf,'example_0.xml'))
+        file.save()
+        self.assertTrue(os.path.isfile(os.path.join(folder_negf,'example_0.xml')))
 class TestInputFile(unittest.TestCase):
 
     def test_access_by_index(self):

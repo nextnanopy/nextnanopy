@@ -15,6 +15,24 @@
     </Content>
   </Header>
 
+    <Variables> <!--Declaration of variables used in the Input-file.-->
+    <Constant>
+      <Name Comment="Some comment">$variable1</Name>
+      <Value Unit="">0.24</Value>
+    </Constant>
+    <Constant>
+      <Name Comment="Another comment">$variable2</Name>
+      <Value Unit="meV">0</Value>
+    </Constant>
+    <Constant>
+      <Name Comment="variable with text">$text_var</Name>
+      <Value Unit="">some text</Value>
+    </Constant>
+    <Constant>
+      <Name Comment="variable with reference">$ref_var</Name>
+      <Value Unit="">$(1-variable1)</Value>
+    </Constant>
+  </Variables>
   
   <SweepParameters>
     <SweepType>Voltage</SweepType> <!-- SweepType: "Voltage" or "Temperature" -->

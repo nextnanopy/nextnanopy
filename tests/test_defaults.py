@@ -51,7 +51,7 @@ class TestFormatting(unittest.TestCase):
         self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
         self.assertTrue(negf_defaults.is_negf_input_file(fullpath))
         self.assertEqual(defaults.input_file_type(fullpath), 'nextnano.NEGF')
-        self.assertEqual(defaults.get_fmt('nextnano.NEGF')['var_char'], 'NOT DEFINED')
+        self.assertEqual(defaults.get_fmt('nextnano.NEGF')['var_char'], '$')
         self.assertEqual(defaults.get_fmt('nextnano.NEGF')['com_char'], '<!--')
         self.assertEqual(defaults.get_fmt('nextnano.NEGF')['input_pattern'], '<Simulation')
 

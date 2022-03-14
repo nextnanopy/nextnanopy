@@ -117,6 +117,10 @@ class InputFileTemplate(object):
         self.load_variables()
 
     @property
+    def raw_text(self):
+        return str(lines_to_text(*self.raw_lines))
+
+    @property
     def lines(self):
         new_lines = list(self.raw_lines)
         for ivar in self.variables.values():
@@ -204,12 +208,13 @@ class InputFileTemplate(object):
         self.load_variables()
 
     def find_product(self):
-        self.product = defaults.input_text_type(self.text)
+        self.product = defaults.input_text_type(self.raw_text)
         return self.product
 
     def validate(self):
         if self.product not in defaults.products:
-            raise ValueError(f'Not valid input file')
+            self.product = 'Not valid'
+            #raise ValueError(f'Not valid input file')
 
     @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True):
@@ -301,7 +306,7 @@ class InputFileTemplate(object):
             raise KeyError(f'{name} is not a valid variable.')
         return self.variables[name]
 
-    def set_variable(self, name, value=None, comment=None):
+    def set_variable(self, name, value=None, comment=None, unit = None):
         """
         Change the value and/or the comment of self.variable[name]
 
@@ -315,6 +320,9 @@ class InputFileTemplate(object):
         comment : not defined, optional
             Equivalent to self.variables[name].comment = comment (default is None)
             If it is None, it won't change it
+        unit : not defined, optional
+            Equivalent to self.variables[name].unit = unit (default is None)
+            If it is None, it won't change it
         """
 
         var = self.get_variable(name)
@@ -322,6 +330,8 @@ class InputFileTemplate(object):
             var.value = value
         if comment is not None:
             var.comment = comment
+        if unit is not None:
+            var.unit  = unit
         return var
 
     def __getitem__(self, item):
@@ -357,6 +367,7 @@ class InputFileTemplate(object):
 
 
 class InputFile(InputFileTemplate):
+    # def __new__(cls, fullpath=None, configpath=None):
 
     def load_variables(self):
         """
@@ -367,6 +378,28 @@ class InputFile(InputFileTemplate):
         file = _InputFile()
         file.text = self.text
         self.variables = file.variables
+
+    @property
+    def lines(self):
+        # """
+        # Convenient method to find the best loading method for each nextnano product.
+        # self.variables will be updated
+        # """
+        try:
+            _InputFile = defaults.get_InputFile(self.product)
+        except ValueError:
+            _InputFile = InputFileTemplate
+
+
+        file = _InputFile()
+        #file.product = self.product
+        #file.text = self.raw_text
+        #file.variables = self.variables
+        #print(file.product)
+        #print(type(file))
+        file.variables = self.variables
+        file.raw_lines = self.raw_lines
+        return file.lines
 
 class Sweep(InputFile):
     """
