@@ -306,7 +306,7 @@ class InputFileTemplate(object):
             raise KeyError(f'{name} is not a valid variable.')
         return self.variables[name]
 
-    def set_variable(self, name, value=None, comment=None):
+    def set_variable(self, name, value=None, comment=None, unit = None):
         """
         Change the value and/or the comment of self.variable[name]
 
@@ -320,6 +320,9 @@ class InputFileTemplate(object):
         comment : not defined, optional
             Equivalent to self.variables[name].comment = comment (default is None)
             If it is None, it won't change it
+        unit : not defined, optional
+            Equivalent to self.variables[name].unit = unit (default is None)
+            If it is None, it won't change it
         """
 
         var = self.get_variable(name)
@@ -327,6 +330,8 @@ class InputFileTemplate(object):
             var.value = value
         if comment is not None:
             var.comment = comment
+        if unit is not None:
+            var.unit  = unit
         return var
 
     def __getitem__(self, item):
