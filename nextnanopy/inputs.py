@@ -1,4 +1,4 @@
-import os
+import os,sys
 import warnings
 import itertools
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
@@ -286,23 +286,45 @@ class InputFileTemplate(object):
             with open(log, 'r') as file:
                 for line in file:
                     if 'Exiting iteration and terminating simulation' in line or 'Program was terminated using a soft kill' in line or 'Terminating immediately' in line:
-                        raise RuntimeError(f'Simulation got terminated! Check the log:\n{log}')
+                        print(f'\nSimulation got terminated! Check the log:\n{log}')
+                        pause = True
+                        break
                     elif 'Maximum number of iterations exceeded' in line:
-                        raise RuntimeError(f'Simulation did not converge! Check the log:\n{log}')
+                        print(f'\nSimulation did not converge! Check the log:\n{log}')
+                        pause = True
+                        break
         elif software == 'nextnano++':
             with open(log, 'r') as file:
                 for line in file:
                     if 'Terminating program' in line:
-                        raise RuntimeError(f'Simulation got terminated! Check the log:\n{log}')
+                        print(f'\nSimulation got terminated! Check the log:\n{log}')
+                        pause = True
+                        break
                     elif 'Maximum number of iterations exceeded' in line:
-                        raise RuntimeError(f'Simulation did not converge! Check the log:\n{log}')
+                        print(f'\nSimulation did not converge! Check the log:\n{log}')
+                        pause = True
+                        break
         elif software == 'nextnano.NEGF':   # nextnano.NEGF reports convergence at every voltage and temperature sweep.
             with open(log, 'r') as file:
                 for line in file:
                     if 'Simulation has NOT CONVERGED' in line:
-                        raise RuntimeError(f'Simulation diverged! Check the log:\n{log}')
+                        print(f'\nSimulation has diverged! Check the log:\n{log}')
+                        pause = True
+                        break
                     elif 'Simulation has partially converged' in line:
-                        print(f'\nWARNING: Simulation did not fully converge!\n')
+                        print(f'\nWARNING: Simulation did not fully converge!')
+                        pause = True
+                        break
+        while pause:
+            answer = input('Do you nevertheless want to continue? [y/n]: ')
+            if answer == 'y': 
+                pause = False
+                return
+            if answer == 'n': 
+                pause = False
+                print('Nextnanopy terminated.\n')
+                sys.exit()
+
 
     def detect_software(self):
         inputfile = self.fullpath

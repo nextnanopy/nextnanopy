@@ -1,0 +1,670 @@
+#***************************************************************************!
+#                                                                           !
+# ICL_MidIR_Vurgaftman2011.in                                               !
+# ------------------------------------------------------------              !
+#                                                                           !
+# This is an input file for the nextnano++ software to calculate            !
+# wavefunctions and charge densities in an interband cascade laser (ICL).   !
+#                                                                           !
+# Reference:                                                                !
+#                                                                           !
+#   [Vurgaftman_ICL_NatureComm2011]                                         !
+#   Rebalancing of internally generated carriers for mid-infrared interband cascade lasers with very low power consumption
+#   I. Vurgaftman, W.W. Bewley, C.L. Canedy, C.S. Kim, M. Kim, C.D. Merritt, J. Abell, J.R. Lindle, J.R. Meyer
+#   Nature Communications 2, 585 (2011)
+#   doi:10.1038/ncomms1595
+#                                                                           !
+# For help on the individual keywords please go to                          !
+# https://www.nextnano.com/manual/nextnanoplus/input_file/index.html        !
+#                                                                           !
+# This file is protected by applicable copyright laws. You may use it       !
+# within your research or work group, but you are not allowed to give       !
+# copies to other people without explicit permission.                       !
+#                                                                           !
+# Documentation: https://www.nextnano.com/nextnanoplus                      !
+# Support:       support@nextnano.com                                       !
+#                                                                           !
+# (c) nextnano, Stefan Birner, Takuma Sato                                  !
+#                                                                           !
+#***************************************************************************!
+
+$DebugLevel = 2 # output additional debug information (DoNotShowInUserInterface)
+$UseLawaetzParameters = 0 # Use k.p parameters of P. Lawaetz (1) or those of I. Vurgaftman (0)
+$Temperature = 300 # temperature (DisplayUnit:K) (ListOfValues:5,30,100,140,250,300)(HighlightInUserInterface)
+$GridSpacing = 1 # grid spacing # A grid spacing of 0.1 nm is necessary to resolve the actual layer thicknesses. (unit cell of GaAs: 0.565)  (DisplayUnit:nm)
+
+# quantum{} setting
+$SingleBand = 0 # 1-band effective mass model for conduction and valence bands
+$kp_6band = 0 # 6-band k.p model for valence band and 1-band effective mass model for conduction band
+$kp_8band = 1 # 8-band k.p model for conduction and valence bands
+$NumberOfEigenvalues_electrons = 20 # number of electron eigenvalues to be calculated (ListOfValues:16,20)
+$NumberOfEigenvalues_holes = 20 # number of hole eigenvalues to be calculated (ListOfValues:20,25)
+$num_kPoints = 2  # number of k points (ListOfValues:5,7,10,15)
+$k_RelSize = 0.1 # size of k space relative to the whole Brillouin zone (ListOfValues:0.05,0.10,0.20)
+$Force_k0_subspace = no    # yes (approximation) speeds up simulation, but decreases the accuracy in density and affects convergence.
+
+# materials
+$Material_substrate = "GaSb" # material used for substrate
+$Material_well = "InAs" # material used for quantum wells
+$Material_barrier = "AlSb" # material used for barriers
+$Material_well_GaSb = "GaSb" # material used for quantum wells
+$Material_barrier_GaInSb = "Ga(x)In(1-x)Sb" # ternary material used for barriers
+$AlloyContent_barrier = 0.65 # alloy content of barrier material, x = 0.65, Ga(x)In(1-x)Sb
+
+
+# layer thickness in (nm)
+$Layer_1 = 2.5 # AlSb
+$Layer_2 = 1.7 # InAs
+$Layer_3 = 3.0 # GaInSb
+$Layer_4 = 1.4 # InAs
+$Layer_5 = 1.0 # AlSb
+$Layer_6 = 3.0 # GaSb
+$Layer_7 = 1.0 # AlSb
+$Layer_8 = 4.5 # GaSb
+$Layer_9 = 2.5 # AlSb
+$Layer_10 = 4.2 # InAs
+$Layer_11 = 1.2 # AlSb
+$Layer_12 = 3.2 # InAs
+$Layer_13 = 1.2 # AlSb
+$Layer_14 = 2.5 # InAs
+$Layer_15 = 1.2 # AlSb
+$Layer_16 = 2.0 # InAs
+$Layer_17 = 1.2 # AlSb
+$Layer_18 = 1.7 # InAs
+$Layer_19 = 1.2 # AlSb
+$Layer_20 = 1.7 # InAs
+
+$Num_periods = 2 # number of ICL periods to be simulated (ListOfValues:1,2,3)(HighlightInUserInterface)
+
+
+#--- doping ------------------------------------------------------------------------------------------------
+# Note that the doping concentration applies to different wells in the experiment of [Vurgaftman_ICL_NatureComm2011].
+# See Table 1 for more details.
+$ModerateDoping = 0 # moderately low-doped injector QWs (1/0) (Fig. 3a)
+$HeavyDoping = 1 # heavily doped injector QWs        (1/0) (Fig. 3b)
+$NoDoping = (1-$ModerateDoping)*(1-$HeavyDoping)
+
+#IF $NoDoping        $DopingConcentration =  0.0     # undoped                                      (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#IF $ModerateDoping  $DopingConcentration =  4.0e17  # Sample 1,2,3:  doping concentration of wells (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#                    $DopingConcentration =  2.5e18  # Sample 4:      doping concentration of wells (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#IF $HeavyDoping     $DopingConcentration =  5.0e18  # Sample 5,6,7:  doping concentration of wells (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#                    $DopingConcentration =  7.0e18  # Sample 8:      doping concentration of wells (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#                    $DopingConcentration =  2.0e19  # Sample 9:      doping concentration of wells (DisplayUnit:cm^-3) (HighlightInUserInterface)
+#-----------------------------------------------------------------------------------------------------------
+
+
+
+# --- bias sweep setting -----------------------------------------------------------------------------------
+$ElectricField = -7000000.0 # 10^5 V/m = 1 kV/cm (DisplayUnit:V/m)(ListOfValues:-70.0e5,-75.0e5,-80.0e5) (HighlightInUserInterface)
+$BIASSWEEP = 0 # compute single (0) or multiple (1) bias steps (DoNotShowInUserInterface)
+$BIASSTART = -0.5 # for $BIASSWEEP = 1, first value of left gate bias (DisplayUnit:V)(DoNotShowInUserInterface)
+$BIASEND = 0.0 # for $BIASSWEEP = 1, last value of left gate bias  (DisplayUnit:V)(DoNotShowInUserInterface)
+$BIASSTEPS = 10 # for $BIASSWEEP = 1, number of bias steps (DoNotShowInUserInterface)
+
+
+
+# --- derived parameters -----------------------------------------------------------------------------------
+$UseVurgaftmanParameters = 1 - $UseLawaetzParameters # (DoNotShowInUserInterface)
+$NOSWEEP = 1-$BIASSWEEP # (DoNotShowInUserInterface)
+$NumberOfEigenstates_for_output = $NumberOfEigenvalues_electrons + $NumberOfEigenvalues_holes # (DoNotShowInUserInterface)
+
+$LENGTH_OF_PERIOD = $Layer_1 + $Layer_2 + $Layer_3 + $Layer_4 + $Layer_5 + $Layer_6 + $Layer_7 + $Layer_8 + $Layer_9 + $Layer_10 + $Layer_11 + $Layer_12 + $Layer_13 + $Layer_14 + $Layer_15 + $Layer_16 + $Layer_17 + $Layer_18 + $Layer_19 + $Layer_20 # length of period (corresponds to shift in array_x)  (DisplayUnit:nm)(DoNotShowInUserInterface)
+
+# grid position
+$Layer_10_left = 0.0 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_10_right = $Layer_10_left  + $Layer_10 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_11_right = $Layer_10_right + $Layer_11 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_12_right = $Layer_11_right + $Layer_12 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_13_right = $Layer_12_right + $Layer_13 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_14_right = $Layer_13_right + $Layer_14 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_15_right = $Layer_14_right + $Layer_15 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_16_right = $Layer_15_right + $Layer_16 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_17_right = $Layer_16_right + $Layer_17 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_18_right = $Layer_17_right + $Layer_18 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_19_right = $Layer_18_right + $Layer_19 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_20_right = $Layer_19_right + $Layer_20 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+
+$Layer_1_right = $Layer_20_right   + $Layer_1 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_2_right = $Layer_1_right  + $Layer_2 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_3_right = $Layer_2_right  + $Layer_3 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_4_right = $Layer_3_right  + $Layer_4 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_5_right = $Layer_4_right  + $Layer_5 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_6_right = $Layer_5_right  + $Layer_6 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_7_right = $Layer_6_right  + $Layer_7 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_8_right = $Layer_7_right  + $Layer_8 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_9_right = $Layer_8_right  + $Layer_9 # (DisplayUnit:nm)  (DoNotShowInUserInterface)
+$Layer_last_right = $Num_periods * $LENGTH_OF_PERIOD # (DisplayUnit:nm)  (DoNotShowInUserInterface) subtracted Layer_1
+
+$DeviceLength = $Layer_last_right # (DisplayUnit:nm) (DoNotShowInUserInterface)
+$BIAS = - $ElectricField * $DeviceLength * 1e-9 # used when $BIASSWEEP = 0 (DisplayUnit:V)(DoNotShowInUserInterface)
+$QR_min = $Layer_18_right # minimum coordinate of quantum region (DisplayUnit:nm) (DoNotShowInUserInterface)
+$QR_max = $Layer_18_right + $LENGTH_OF_PERIOD + $Layer_19 # maximum coordinate of quantum region (DisplayUnit:nm) (DoNotShowInUserInterface)
+#-----------------------------------------------------------------------------------------------------------
+
+
+global{ 
+   simulate1D{}
+   
+   temperature  = $Temperature
+
+   temperature_dependent_bandgap = yes
+   temperature_dependent_lattice = yes
+
+   substrate{ name = $Material_substrate }
+
+   crystal_zb{ x_hkl = [1, 0, 0]
+               y_hkl = [0, 1, 0] }
+
+   periodic{
+#     x = yes
+      x = no
+   }
+}
+
+
+grid{
+   xgrid{
+      line{ pos = -0-$GridSpacing             spacing = $GridSpacing}
+      line{ pos =  $DeviceLength+$GridSpacing spacing = $GridSpacing}
+   }
+}
+
+
+contacts{
+   charge_neutral{
+      name = "leftgate"
+      bias = 0.0
+   }
+   
+   charge_neutral{
+      name = "rightgate"
+      bias = $BIAS
+   }
+
+   fermi_electron{
+	name = "FermiElectron_i-1"
+	bias = 0.0
+   }
+
+   fermi_hole{
+	name = "FermiHole_i"
+	bias = 0.5 * $BIAS
+   }
+
+   fermi_electron{
+	name = "FermiElectron_i"
+	bias = 0.5 * $BIAS
+   }
+
+   fermi_hole{
+	name = "FermiHole_iplus1"
+	bias = $BIAS
+   }
+}
+
+structure{
+   output_region_index{ boxes = yes }
+#   output_material_index{ boxes = yes }
+   output_alloy_composition{ boxes = yes }
+#   output_contact_index{ boxes = yes }
+   output_impurities{ boxes = yes }
+
+   region{
+      everywhere{}
+      binary{ name = $Material_well }
+   }
+
+#--- ICL structure ------------------------------------
+   region{
+      line{ x = [ $Layer_20_right  ,   $Layer_1_right] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   
+   region{
+      line{ x = [ $Layer_2_right ,   $Layer_3_right ] }   
+      ternary_constant{ name = $Material_barrier_GaInSb alloy_x = $AlloyContent_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   
+   region{
+      line{ x = [ $Layer_4_right ,   $Layer_5_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   
+   region{
+      line{ x = [ $Layer_5_right ,   $Layer_6_right ] }   
+      binary{ name = $Material_well_GaSb }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   
+   region{
+      line{ x = [ $Layer_6_right ,   $Layer_7_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   region{
+      line{ x = [ $Layer_7_right ,   $Layer_8_right ] }   
+      binary{ name = $Material_well_GaSb }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   
+   region{
+      line{ x = [ $Layer_8_right ,   $Layer_9_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   # doped InAs quantum well
+   
+   region{
+      line{ x = [ $Layer_10_left ,   $Layer_10_right ] }   
+      doping{ constant{ name = "fully-ionized" conc = $DopingConcentration } }
+     array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   region{
+      line{ x = [ $Layer_10_right ,   $Layer_11_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   # doped InAs quantum well
+   !IF($ModerateDoping)					   
+   region{
+      line{ x = [ $Layer_11_right ,   $Layer_12_right ] }   
+      doping{ constant{ name = "fully-ionized" conc = $DopingConcentration } }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   !ENDIF
+
+   region{
+      line{ x = [ $Layer_12_right ,   $Layer_13_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   # doped InAs quantum well
+   region{
+      line{ x = [ $Layer_13_right ,   $Layer_14_right ] }   
+      doping{ constant{ name = "fully-ionized" conc = $DopingConcentration } }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   region{
+      line{ x = [ $Layer_14_right ,   $Layer_15_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   # doped InAs quantum well
+   region{
+      line{ x = [ $Layer_15_right ,   $Layer_16_right ] }   
+      doping{ constant{ name = "fully-ionized" conc = $DopingConcentration } }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   region{
+      line{ x = [ $Layer_16_right ,   $Layer_17_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   # doped InAs quantum well
+   !IF($HeavyDoping)
+   region{
+      line{ x = [ $Layer_17_right ,   $Layer_18_right ] }   
+      doping{ constant{ name = "fully-ionized" conc = $DopingConcentration } }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+   !ENDIF
+
+   region{
+      line{ x = [ $Layer_18_right ,   $Layer_19_right ] }   
+      binary{ name = $Material_barrier }
+      array_x{
+          max                  = $Num_periods - 1
+          shift                = $LENGTH_OF_PERIOD
+      }
+   }
+
+   #--- contacts ---------------------------------------------
+   region{
+      line{ x = [0.0-$GridSpacing, 0.0] }
+      contact{ name = "leftgate" }
+    }
+
+   region{
+      line{ x = [$DeviceLength, $DeviceLength+$GridSpacing] }
+      contact{ name = "rightgate" }
+   }
+
+   #--- quasi-Fermi levels ------------------------------------
+   region{
+      line{ x = [$Layer_3_right, $Layer_4_right] }
+	contact{ name = "FermiElectron_i-1" }
+   }
+
+   region{
+      line{ x = [$Layer_1_right, $Layer_2_right] }
+	contact{ name = "FermiHole_i" }
+   }
+
+   region{
+      line{ x = [$Layer_8_right, $Layer_9_right] }
+	contact{ name = "FermiHole_i" }
+   }
+
+   region{
+      line{ x = [$Layer_10_left + $LENGTH_OF_PERIOD, $Layer_10_right + $LENGTH_OF_PERIOD] }
+	contact{ name = "FermiElectron_i" }
+   }
+
+   region{
+      line{ x = [$Layer_3_right + $LENGTH_OF_PERIOD, $Layer_4_right + $LENGTH_OF_PERIOD] }
+	contact{ name = "FermiElectron_i" }
+   }
+
+   region{
+      line{ x = [$Layer_1_right + $LENGTH_OF_PERIOD, $Layer_2_right + $LENGTH_OF_PERIOD] }
+	contact{ name = "FermiHole_iplus1" }
+   }
+
+   region{
+      line{ x = [$QR_min, $QR_max]}
+      integrate{
+         electron_density{}
+         hole_density{}
+      }
+   }
+}
+
+impurities{
+   donor{    name = "fully-ionized"   energy = -100000   degeneracy = 2 }
+}
+
+classical{
+   Gamma{}
+   HH{}
+   LH{}
+   SO{}
+
+   output_bandedges{ averaged = no }
+   output_bandgap{ averaged = no }
+   output_carrier_densities{}
+   output_ionized_dopant_densities{}
+ #  output_intrinsic_density{}
+}
+
+
+poisson{
+   debuglevel = $DebugLevel
+   output_potential{}
+   output_electric_field{}
+   newton_solver{
+      gradient_shift = 1e-6
+   }
+}
+
+quantum{
+#   allow_overlapping_regions = yes
+
+   region{
+      name = "QR"
+      x = [$QR_min, $QR_max]
+      boundary{ x = dirichlet }
+      no_density = no
+      output_wavefunctions{ 
+         max_num      = $NumberOfEigenstates_for_output
+         all_k_points = yes
+         scale        = 1.0
+         energy_shift = shifted
+         include_eigenvalues_in_shifted_files = no
+      }
+      output_subband_densities{
+         max_num = $NumberOfEigenstates_for_output
+         in_one_file = yes      
+      }
+
+!IF($SingleBand)
+      Gamma{ num_ev = $NumberOfEigenvalues_electrons }
+      HH{    num_ev = $NumberOfEigenvalues_holes }
+      LH{    num_ev = $NumberOfEigenvalues_holes }
+
+      intraband_matrix_elements{
+         Gamma{}
+         HH{}
+      }
+
+      dipole_moment_matrix_elements{
+         Gamma{}
+         HH{}
+      }
+
+      transition_energies{
+         Gamma_Gamma{}
+         HH_HH{}
+         HH_Gamma{}
+      }
+!ENDIF
+
+!IF($kp_6band)
+      Gamma{ num_ev = $NumberOfEigenvalues_electrons }
+      kp_6band{ num_ev = $NumberOfEigenvalues_holes       lapack{} }
+!ENDIF
+
+!IF($kp_8band)
+      kp_8band{ 
+         num_electrons = $NumberOfEigenvalues_electrons
+         num_holes     = $NumberOfEigenvalues_holes
+
+         # solver
+         lapack{}   
+         shift_window = 0
+         kp_parameters{ 
+#            use_Luttinger_parameters = yes 
+#            from_6band_parameters = yes
+#            approximate_kappa = yes 
+            evaluate_S = yes 
+            rescale_S_to = 1.0
+         } 
+
+         # kp8 density settings
+         full_band_density = no
+         shift_min_CB = 0.0
+         shift_max_VB = 0.0
+         tunneling = yes
+         classify_kspace = 3
+         threshold_classification = 0.5  # if conduction band contribution to spinor composition exceeds this threshold, the state is added to electron density.
+         k_integration{
+            relative_size = $k_RelSize
+            num_points    = $num_kPoints
+            force_k0_subspace = $Force_k0_subspace
+         }
+      } 
+
+      intraband_matrix_elements{
+         KP8{}
+      }
+      dipole_moment_matrix_elements{ 
+         KP8{}
+      }
+      transition_energies{
+         KP8{}
+      }
+!ENDIF
+   }
+}
+
+strain{
+   pseudomorphic_strain{}
+   output_strain_tensor{
+      simulation_system = yes
+      boxes             = yes
+   }
+#   output_hydrostatic_strain{ boxes = yes }
+#   output_lattice_constants{ boxes = yes }
+#   output_elastic_constants{ boxes = yes }
+}
+
+output{
+   material_parameters{
+      kp_parameters{}
+   }
+}
+
+run{
+   strain{}
+   poisson{}  
+#   quantum{}
+   quantum_poisson{ 
+      iterations = 2 # default: 30
+      residual = 1e6  # default: 1e5 
+	alpha_potential = 0.3
+   }
+}
+
+
+database{
+   #-------------------------------------------
+   # InAs
+   #-------------------------------------------
+   binary_zb{
+      name = InAs
+      dielectric_consts{ static_a  = 15.15 }
+      kp_6_bands{
+#IF $UseVurgaftmanParameters       gamma1 = 20.0   gamma2 = 8.5   gamma3 = 9.2            # Vurgaftman1
+#IF $UseLawaetzParameters          gamma1 = 19.67  gamma2 = 8.37  gamma3 = 9.29           # P. Lawaetz, PRB 4, 3460 (1971)
+                                   kappa = 7.68                                           # Kiselev, PRB 64, 125303 (2001) + P. Lawaetz, PRB 4, 3460 (1971)       
+      }                    
+    kp_8_bands{
+#IF $UseLawaetzParameters          E_P = 22.2                                             # P. Lawaetz, PRB 4, 3460 (1971)
+#IF $UseVurgaftmanParameters       E_P = 21.5                                             # Vurgaftman1
+    }
+   }
+
+   #-------------------------------------------
+   # GaSb
+   #-------------------------------------------
+   binary_zb{
+      name = GaSb
+    # dielectric_consts{ static_a  = 15.15 } # InAs
+      dielectric_consts{ static_a  = 15.69 }
+      kp_6_bands{
+#IF $UseVurgaftmanParameters       gamma1 = 13.4   gamma2 = 4.7   gamma3 = 6.0            # Vurgaftman1
+#IF $UseLawaetzParameters          gamma1 = 11.80  gamma2 = 4.03  gamma3 = 5.26           # P. Lawaetz, PRB 4, 3460 (1971)
+                                   kappa = 3.18                                           # P. Lawaetz, PRB 4, 3460 (1971)             
+      }                    
+    kp_8_bands{
+#IF $UseLawaetzParameters          E_P = 22.4                                             # P. Lawaetz, PRB 4, 3460 (1971)
+#IF $UseVurgaftmanParameters       E_P = 27.0                                             # Vurgaftman1
+    }
+   }
+
+   #-------------------------------------------
+   # AlSb
+   #-------------------------------------------
+   binary_zb{
+      name = AlSb
+    # dielectric_consts{ static_a  = 15.15 } # InAs
+      dielectric_consts{ static_a  = 12.04 }
+      kp_6_bands{
+#IF $UseVurgaftmanParameters       gamma1 = 5.18   gamma2 = 1.19   gamma3 = 1.97          # Vurgaftman1
+#IF $UseLawaetzParameters          gamma1 = 4.15   gamma2 = 1.01   gamma3 = 1.75          # P. Lawaetz, PRB 4, 3460 (1971)
+                                   kappa = 0.31                                           # P. Lawaetz, PRB 4, 3460 (1971)          
+      }                    
+    kp_8_bands{
+                                   E_P = 18.7                                             # Vurgaftman1 + P. Lawaetz, PRB 4, 3460 (1971)
+    }
+   }
+
+   #-------------------------------------------
+   # InSb
+   #-------------------------------------------
+   binary_zb{
+      name = InSb
+    # dielectric_consts{ static_a  = 15.15 } # InAs
+      dielectric_consts{ static_a  = 17.5 }
+      kp_6_bands{
+#IF $UseVurgaftmanParameters       gamma1 = 34.8   gamma2 = 15.5   gamma3 = 16.5          # Vurgaftman1
+#IF $UseLawaetzParameters          gamma1 = 35.08  gamma2 = 15.64  gamma3 = 16.91         # P. Lawaetz, PRB 4, 3460 (1971)
+      # kappa = 14.76                                          # P. Lawaetz, PRB 4, 3460 (1971) 
+        kappa = 15.6                                           # Landolt-B賴嗜stein           
+     }                    
+    kp_8_bands{
+#IF $UseLawaetzParameters          E_P = 23.1                                             # P. Lawaetz, PRB 4, 3460 (1971)
+#IF $UseVurgaftmanParameters       E_P = 23.3                                             # Vurgaftman1
+    }
+   }
+
+   #-------------------------------------------
+   # Ga(x)In(1-x)Sb
+   #-------------------------------------------
+   ternary_zb {
+      name       = "Ga(x)In(1-x)Sb"
+      conduction_bands{
+        Gamma{ mass    = 0.0092                                # Vurgaftman1
+               bandgap = 0.415 }                               # Vurgaftman1
+      }
+
+      valence_bands{
+        LH{ mass       = 0.011 }                               # Vurgaftman1: lh along [001]
+        delta_SO       = 0.1                                   # Vurgaftman1
+      }
+
+      kp_8_bands{
+        S = -13.68                                             # S = 2 * F = 2 * (-6.84) (Vurgaftman1)
+      } 
+}
+}
+
