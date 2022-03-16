@@ -7,14 +7,16 @@ Created on Wed Mar 16 10:56:11 2022
 
 import nextnanopy as nn
 import os
+import pathlib
+path = pathlib.Path(__file__).parent.resolve()
 
-inputPath = r'\input files\convergenceTest_nn3.in'
-# inputPath = 'convergenceTest_nnp.in'
-# inputPath = 'convergenceTest_negf.mxml'
+input_file = 'input files\convergenceTest_nn3.in'
+# input_file = 'input files\convergenceTest_nnp.in'
+# input_file = 'input files\convergenceTest_negf.xml'
 
-inputPath = os.path.abspath(inputPath)
-input_file = nn.InputFile(inputPath)
+inputPath = os.path.join(path, input_file)
+my_input = nn.InputFile(inputPath)
 
-input_file.execute(convergenceCheck=True)
+my_input.execute(convergenceCheck=True)
 
 print("I'm still running")

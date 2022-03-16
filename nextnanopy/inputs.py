@@ -276,76 +276,49 @@ class InputFileTemplate(object):
             self.check_convergence()
         return info
 
-    def check_convergence(self):
-        software = self.detect_software()
-        if software == 'nextnano.MSB':
+    def check_convergence(self): 
+        if self.product == 'nextnano.MSB':
             raise NotImplementedError('Convergence check has not yet implemented for nextnano.MSB!')
-        
+            
         log = self.execute_info['logfile']
-        if software == 'nextnano3':
-            with open(log, 'r') as file:
-                for line in file:
-                    if 'Exiting iteration and terminating simulation' in line or 'Program was terminated using a soft kill' in line or 'Terminating immediately' in line:
-                        print(f'\nSimulation got terminated! Check the log:\n{log}')
-                        pause = True
-                        break
-                    elif 'Maximum number of iterations exceeded' in line:
-                        print(f'\nSimulation did not converge! Check the log:\n{log}')
-                        pause = True
-                        break
-        elif software == 'nextnano++':
-            with open(log, 'r') as file:
-                for line in file:
-                    if 'Terminating program' in line:
-                        print(f'\nSimulation got terminated! Check the log:\n{log}')
-                        pause = True
-                        break
-                    elif 'Maximum number of iterations exceeded' in line:
-                        print(f'\nSimulation did not converge! Check the log:\n{log}')
-                        pause = True
-                        break
-        elif software == 'nextnano.NEGF':   # nextnano.NEGF reports convergence at every voltage and temperature sweep.
-            with open(log, 'r') as file:
-                for line in file:
-                    if 'Simulation has NOT CONVERGED' in line:
-                        print(f'\nSimulation has diverged! Check the log:\n{log}')
-                        pause = True
-                        break
-                    elif 'Simulation has partially converged' in line:
-                        print(f'\nWARNING: Simulation did not fully converge!')
-                        pause = True
-                        break
-        while pause:
-            answer = input('Do you nevertheless want to continue? [y/n]: ')
-            if answer == 'y': 
-                pause = False
-                return
-            if answer == 'n': 
-                pause = False
-                print('Nextnanopy terminated.\n')
-                sys.exit()
-
-
-    def detect_software(self):
-        inputfile = self.fullpath
-        with open(inputfile, 'r') as file:
-            for line in file:
-                if 'simulation-flow-control' in line:
-                    software = 'nextnano3'
-                    break
-                elif 'run{' in line:
-                    software = 'nextnano++'
-                    break
-                elif '<nextnano.NEGF' in line:
-                    software = 'nextnano.NEGF'
-                    break
-                elif '<nextnano.MSB' in line:
-                    software = 'nextnano.MSB'
-                    break
-        if not software:
-            raise SyntaxError(f'Software cannot be detected from the input file:\n{inputfile}')
+        try:
+            if self.product == 'nextnano3':
+                with open(log, 'r') as file:
+                    for line in file:
+                        if 'Exiting iteration and terminating simulation' in line or 'Program was terminated using a soft kill' in line or 'Terminating immediately' in line:
+                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
+                        elif 'Maximum number of iterations exceeded' in line:
+                            raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
+            elif self.product == 'nextnano++':
+                with open(log, 'r') as file:
+                    for line in file:
+                        if 'Terminating program' in line:
+                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
+                        elif 'Maximum number of iterations exceeded' in line:
+                            raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
+            elif self.product == 'nextnano.NEGF':   # nextnano.NEGF reports convergence at every voltage and temperature sweep.
+                with open(log, 'r') as file:
+                    for line in file:
+                        if 'Simulation has NOT CONVERGED' in line:
+                            raise RuntimeError(f'\nSimulation has diverged! Check the log:\n{log}')
+                        elif 'Simulation has partially converged' in line:
+                            raise RuntimeError(f'\nWARNING: Simulation did not fully converge.')
+        except FileNotFoundError:
+            print(f'Log file {log} not found!')
+        except RuntimeError as e:
+            print(e)
+            pause = True
+            while pause:
+                answer = input('Do you nevertheless want to continue? [y/n]: ')
+                if answer == 'y': 
+                    pause = False
+                    return
+                if answer == 'n': 
+                    pause = False
+                    print('Terminating nextnanopy...\n')
+                    sys.exit()
         else:
-            return software
+            return
 
     def clear(self):
         self.raw_lines = []
