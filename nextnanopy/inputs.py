@@ -310,13 +310,15 @@ class InputFileTemplate(object):
             pause = True
             while pause:
                 answer = input('Do you nevertheless want to continue? [y/n]: ')
-                if answer == 'y': 
+                if answer == 'y' or answer == 'yes': 
                     pause = False
                     return
-                if answer == 'n': 
+                elif answer == 'n' or answer == 'no': 
                     pause = False
-                    print('Terminating nextnanopy...\n')
-                    sys.exit()
+                    raise RuntimeError('Nextnanopy terminated.')
+                else: 
+                    print('Invalid input.')
+                    continue
         else:
             return
 
