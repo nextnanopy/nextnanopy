@@ -84,7 +84,11 @@ def execute(
     cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
     cwd = os.getcwd()
     wdir = os.path.split(exe)[0]  # nn3 assumes wdir at one folder upper than the executable
-    os.chdir(wdir)
+    try:
+        os.chdir(wdir)
+    except OSError:
+        print('Executable is not found!') 
+        os.exit()
     process = send(cmd)
     start_log(process, logfile, show_log)
     os.chdir(cwd)
