@@ -83,12 +83,16 @@ def execute(
     logfile = os.path.join(outputdirectory, f'{filename}.log')
     cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
     cwd = os.getcwd()
-    wdir = os.path.split(exe)[0]  # nn3 assumes wdir at one folder upper than the executable
+    wdir, executable = os.path.split(exe)  # nn3 assumes wdir at one folder upper than the executable
+    
+    # validate configuration of executable path
+    if executable == '':
+        raise FileNotFoundError(f'Executable path is empty! Check nextnanopy.config')
     try:
         os.chdir(wdir)
-    except OSError:
-        print('Executable is not found!') 
-        os.exit()
+    except (OSError, FileNotFoundError):
+        raise FileNotFoundError(f'Executable path is invalid: {exe}\nCheck nextnanopy.config')
+    
     process = send(cmd)
     start_log(process, logfile, show_log)
     os.chdir(cwd)
