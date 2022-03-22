@@ -1,6 +1,10 @@
-# -*- coding: utf-8 -*-
 """
-Created on Wed Mar 16 10:56:11 2022
+The option
+nextnanopy.InputFile().execute(convergenceCheck=True)
+checks if the simulation has converged. If not, nextnanopy warns you and ask if you want to continue to postprocessing.
+It is safe to set it to True, as non-converged results are not reliable.
+
+Sample input files under \input files do not converge. You can see how nextnanopy handles the non-convergence.
 
 @author: takuma.sato
 """

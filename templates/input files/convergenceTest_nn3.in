@@ -1,31 +1,3 @@
-!************************************************************************************!
-!                                                                                    !
-! 1DQCL_THz_MIT_Sandia_SemicScTech20_2005.in                                         !
-! ------------------------------------------                                         !
-!                                                                                    !
-! This input file is based on the structure given in:                                !
-! "Resonant-phonon-assisted THz quantum-cascade lasers with metal-metal waveguides"  !
-! Q. Hu, B.S. Williams, S. Kumar, H. Callebaut, S. Kohen, J.L. Reno                  !
-! Semicond. Sci. Technol. 20, S228 (2002)                                            !
-!                                                                                    !
-! It's part of the 1D quantum cascade laser tutorial, which can be found at:         !
-! http://www.nextnano.de/nextnano3/tutorial/1Dtutorial_QuantumCascadeLaser.htm       !
-!                                                                                    !
-! For help on the individual keywords please go to                                   !
-! http://www.nextnano.de/nextnano3/input_parser/keywords/keywords.htm                !
-!                                                                                    !
-! nextnano3 is       (c) 2000-2009 by Walter Schottky Institute                      !
-! This input file is (c) 2006-2009 by Stefan Birner                                  !
-! This file is protected by applicable copyright laws. You may use it                !
-! within your research or work group, but you are not allowed to give                !
-! copies to other people without explicit permission.                                !
-!                                                                                    !
-! Documentation: http://www.nextnano.de/nextnano3                                    !
-! Support:       support@nextnano.net                                                !
-!************************************************************************************!
-
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
 
 $simple-drift-models
 model-number = 1
@@ -48,81 +20,6 @@ $simulation-dimension                                                       !
  orientation = 0 0 1                                                        !
 $end_simulation-dimension                                                   !
 !---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-
-                                                      !
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! Note: 12.2 kV/cm corresponds to a bias of 64 mV/module.
-!       The length of a module (sequence of 4 QWs) is 52.4 nm.
-!       64 mV / 52.4 nm = 12.213740 kV/cm
-!---------------------------------------------------------------------------!
-
-                                                         !
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! Flow control is the possibility to control the actual computation.        !
-! Sometimes it is faster to first calculate the potential classically and   !
-! after that do the Schroedinger.                                           !
-! For kp solution it is almost impossible to calculate current because of   !
-! the amount of time needed. So a solution is to take a classical solution  !
-! first (scheme 4), save the data in output-raw-data and then take scheme 3 !
-! to read in data and solve kp.                                             !
-!                                                                           !
-! flow-scheme 1:  1. calculate nonlinear Poisson classically                !
-!                 2. calculate current classically                          !
-!                 3. calculate nonlinear Poisson as specified in input      !
-!                                                                           !
-! flow-scheme 2:                                                            !
-!                 1. calculate nonlinear Poisson as specified in input      !
-!                 2. calculate current as specified in input                !
-!                                                                           !
-! flow-scheme 3:                                                            !
-!                 1. read in potentials and Fermi levels                    !
-!                 2. calculate eigenfunctions as specified in input         !
-!                   (you have to specify the correct name of the directory) !
-! flow-scheme 4:                                                            !
-!                 1. calculate nonlinear Poisson classically                !
-!                 2. calculate current classically                          !
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! The domain type in 1D usually is 0 0 1 which means that the simulated     !
-! dimension is the 0 0 1 axis.                                              !
-! z-coordinates specify the size of the simulated region in [nm].           !
-! pseudomorphic-on specifies the substrate material and therefore           !
-! determines strain.                                                        !
-!---------------------------------------------------------------------------!
-
-
-               
-                
-
-               
-                
-
-               
-                
- 
-             
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! A cluster is a group of regions. Every region has to belong to a cluster  !
-! but a cluster can contain several regions. This is useful if you want to  !
-! construct more complicated objects of more regions which have the same    !
-! material.                                                                 !
-!---------------------------------------------------------------------------!
-
-                                                         !
-!---------------------------------------------------------------------------!
-
-!****** END REGIONS AND CLUSTER ********************************************!
-
 
 !****** MATERIALS AND ALLOY PROFILES ****************************************
 
@@ -156,86 +53,6 @@ $end_impurity-parameters                                                    !
 !---------------------------------------------------------------------------!
 
 !****** END DOPING AND IMPURITIES ******************************************!
-
-
-!****** QUANTUM ************************************************************!
-
-!---------------------------------------------------------------------------!
-! Including quantum models (1-band Schroedinger, multi-band kp)             !
-!                                                                           !
-! Classical electrostatics is fast but not very interesting. If you have    !
-! small structures where quantisation effects are no longer negligible then !
-! you might include either 1-band-Schroedinger equations or multi-band kp   !
-! into the simulation.                                                      !
-!                                                                           !
-! For a quick check if quantum mechanics does change anything,              !
-! 1-band-Schroedinger is certainly enough. But if you need a detailed       !
-! description of the valence band, kp is necessary.                         !
-!                                                                           !
-! Since kp takes some time, we could try to get kp results for a            !
-! non-equilibrium case in a two step approach:                              !
-! - First we could calculate the potentials and quasi-Fermi levels with     !
-!   1-band-Schroedinger and put out data in raw-data-out.                   !
-! - Then we could read in the quasi-Fermi levels and the potentials from    !
-!   raw-data and calculate kp eigenstates.                                  !
-!                                                                           !
-! Remarks for keyword $grid-specification:                                  !
-! A higher density of nodes in the QM region is a good idea because this    !
-! will determine the quality of the wavefunctions.                          !
-! You could also specify extra grid lines that act as the boundaries of     !
-! the quantum region. The quantum region should be larger than e.g. a well  !
-! but with homogeneous and dense gridlines.                                 !
-! In 1D you could specify the whole device as a quantum region.             !
-!                                                                           !
-! For quantum solutions, you have to define quantum regions and clusters on !
-! which certain quantum models are applied. The syntax of the quantum       !
-! regions and clusters is the same as for current and material regions.     !
-!                                                                           !
-! The model specifies the kind of equation that is solved in the certain    !
-! cluster.                                                                  !
-!                                                                           !
-! Example:                                                                  !
-! You could solve the 1-band Schroedinger equation for conduction band 2    !
-! and valence bands 1 2 3. For each band you could specify 10               !
-! eigenvalues in 'number-of-eigenvalues-per-band = 10 10 10'.               !
-!                                                                           !
-! Quantization axis is in simulation direction: e.g. 0 0 1                  !
-!                                                                           !
-! Separation model determines where to use classical and where to use       !
-! quantum mechanical density.                                               !
-! separation-model = 'eigenvalue' means that quantum mechanical density is  !
-! taken for all calculated eigenvalues.                                     !
-!                                                                           !
-! As boundary condition for the electrons we could take 'mixed' which means !
-! that two equations are solved, one with Neumann and one with Dirichlet.   !
-!---------------------------------------------------------------------------!
-
-
-!---------------------------------------------------------------------------!
-
-                                                        !
-!---------------------------------------------------------------------------! 
-
-!****** QUANTUM MODELS *****************************************************!
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-
-
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-
-
-
-
-
-
-!****** END QUANTUM MODELS *************************************************!
-
-
-
-!****** END QUANTUM ********************************************************!
 
 
 !****** OUTPUT *************************************************************!
@@ -321,21 +138,6 @@ $end_output-raw-data                                                        !
 !               _kpar001           Number of k_parallel = 1                 !
 !               _Kz001             Number of superlattice vector = 1        !
 !               _d, _n             Boundary conditions: Dirichlet, Neumann  !
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! This is the output for the band structure and the potential.              !
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! This is the output for the densities.                                     !
-!---------------------------------------------------------------------------!
-!---------------------------------------------------------------------------!
-
-!---------------------------------------------------------------------------!
-! This is the output for the strain.                                        !
 !---------------------------------------------------------------------------!
 !---------------------------------------------------------------------------!
 

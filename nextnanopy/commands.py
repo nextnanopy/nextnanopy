@@ -119,7 +119,7 @@ def run_script(script, kwargs = None, show_log = True):
 
         EXAMPLE: {'-o': 'my_output_folder','-p':''} will be converted to '-o my_output_folder -p'
     show_log - bool
-        show the log in console ouput, default is True
+        show the log in console output, default is True
 
     Returns
     -------

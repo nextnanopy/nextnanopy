@@ -5,37 +5,16 @@
     <Author>Thomas Grange</Author>
     <Content>
       This is an input file of the nextnano.NEGF code.	  
-	  Design: InGaAs-AlAs RTD, Wuerzburg
+	    Design: InGaAs-AlAs RTD
     </Content>
   </Header>
- <Variables> <!--Declaration of variables used in the input file -->
-
-    <Constant>
-      <Name Comment="antimonide content">$SbContent</Name>
-      <Value Unit="">0.24</Value>         
-    </Constant>
-    <Constant>
-      <Name Comment="voltage drop">$voltage_drop</Name>
-      <Value Unit="meV">0.0</Value>         
-    </Constant>
-    <Constant>
-      <Name Comment="electron density in left contact">$density_left</Name>
-      <Value Unit="cm^-3">1.0e18</Value>  
-    </Constant>
-    <Constant>
-      <Name Comment="electron density in right contact">$density_right</Name>
-      <Value Unit="cm^-3">1.0e18</Value>         
-    </Constant>
-	
-  </Variables>
  
     <SweepParameters>
     <SweepType>Voltage</SweepType> <!-- SweepType: "Voltage" or "Temperature" -->
    <!-- Min, Max and delta values in mV for "Voltage", or in K for "Temperature"-->
-    <Min>$voltage_drop</Min> 	<!-- first/min value -->
-    <Max>$voltage_drop</Max> 	<!-- last/max value -->
+    <Min>0.0</Min> 	<!-- first/min value -->
+    <Max>0.0</Max> 	<!-- last/max value -->
     <Delta>0</Delta> 	<!-- increment -->
-<!--<DeltaSmall>2</DeltaSmall>--> <!-- new feature: allows an inhomogeneous sweep. This small sweep is used to calculate the derivative needed for the capacitance calculation -->
   </SweepParameters>
 
   <Temperature unit="K">300</Temperature> <!-- Temperature of the lattice in Kelvin -->
@@ -90,7 +69,7 @@
 
     <Material>
       <Name>GaAs(x)Sb(1-x)</Name>
-      <Alloy_Composition>$(1.0 - SbContent)</Alloy_Composition>
+      <Alloy_Composition>1.0</Alloy_Composition>
       <Alias>well</Alias>
       <Effective_mass_from_kp_parameters>yes</Effective_mass_from_kp_parameters>
     </Material>
@@ -100,15 +79,15 @@
     
     <!-- Model nonparabolicity -->
     <NonParabolicity>yes</NonParabolicity>
-   <Number_of_bands>1</Number_of_bands>
+    <Number_of_bands>1</Number_of_bands>
     
     <UseConductionBandOffset>no</UseConductionBandOffset>
 
   </Materials>
   
 <Contacts>
-   <DensityLeft unit="cm^-3">$density_left</DensityLeft>
-   <DensityRight unit="cm^-3">$density_right</DensityRight>
+   <DensityLeft unit="cm^-3">1.0e18</DensityLeft>
+   <DensityRight unit="cm^-3">1.0e18</DensityRight>
    
    <MaterialLeft>well</MaterialLeft>
    <MaterialRight>well</MaterialRight>
