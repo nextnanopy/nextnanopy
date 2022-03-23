@@ -241,7 +241,7 @@ class InputFileTemplate(object):
         return self.fullpath
 
     @execute_message
-    def execute(self, convergenceCheck=False, **kwargs):
+    def execute(self, convergenceCheck = False, **kwargs):
         """
         Execute the input file located at .fullpath
         Individual kwargs can be passed like 'license' or 'database'
@@ -513,13 +513,13 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, convergenceCheck = False):
         self.prepare_output(overwrite)
         output_directory = self.sweep_output_directory
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for inputfile in self.input_files:
-            inputfile.execute(outputdirectory = output_directory)
+            inputfile.execute(convergenceCheck = convergenceCheck, outputdirectory = output_directory)
             if delete_input_files:
                 inputfile.remove()
 
