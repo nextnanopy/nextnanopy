@@ -15,6 +15,11 @@ class InputFile(InputFileTemplate):
         self.variables = variables
         return self.variables
 
+    def load_content(self):
+        parser = Parser()
+        parser.parse(self.raw_lines, mode='lines')
+        self.content = parser.result
+
     def validate(self):
         if not is_nnp_input_text(self.raw_text):
             raise ValueError(f'Not valid nextnano++ input file')
@@ -92,8 +97,11 @@ class Parser(object):
         self.lines = []
         self.result = Entry([])
 
-    def parse(self, string):
-        self.lines = string.split(sep = '\n')
+    def parse(self, input, mode = 'str'):
+        if mode == 'str':
+            self.lines = input.split(sep = '\n')
+        elif mode == 'lines':
+            self.lines = input
         self.delete_comments()
         self.replace_brackets()
         last_word = ''

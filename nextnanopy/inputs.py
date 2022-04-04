@@ -95,6 +95,7 @@ class InputFileTemplate(object):
     def __init__(self, fullpath=None, configpath=None):
         self.raw_lines = []
         self.variables = DictList()
+        self.content = None
         self.fullpath = fullpath
         self.product = 'not valid'
         if fullpath is not None:
@@ -206,6 +207,7 @@ class InputFileTemplate(object):
         self.find_product()
         self.validate()
         self.load_variables()
+        self.load_content()
 
     def find_product(self):
         self.product = defaults.input_text_type(self.raw_text)
@@ -339,6 +341,9 @@ class InputFileTemplate(object):
     def load_variables(self):
         pass
 
+    def load_content(self):
+        pass
+
     def get_variable(self, name):
         """
         Equivalent to self.variables[name]
@@ -430,12 +435,18 @@ class InputFile(InputFileTemplate):
         file.text = self.text
         self.variables = file.variables
 
+    def load_content(self):
+        _InputFile = defaults.get_InputFile(self.product)
+        file = _InputFile()
+        file.text = self.text
+        file.load_content()
+        self.content = file.content
+
     @property
     def lines(self):
-        # """
-        # Convenient method to find the best loading method for each nextnano product.
-        # self.variables will be updated
-        # """
+        """
+        update method to support NEGF input
+        """
         try:
             _InputFile = defaults.get_InputFile(self.product)
         except ValueError:
