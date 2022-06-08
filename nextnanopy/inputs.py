@@ -302,9 +302,12 @@ class InputFileTemplate(object):
                         if 'Simulation has NOT CONVERGED' in line:
                             raise RuntimeError(f'\nSimulation has diverged! Check the log:\n{log}')
                         elif 'Simulation has partially converged' in line:
-                            raise RuntimeError(f'\nWARNING: Simulation did not fully converge.')
+                            print(f'\nWARNING: check_convergence(): Simulation did not fully converge.')
+                        elif 'Terminating program!' in line:
+                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
         except FileNotFoundError:
             print(f'Log file {log} not found!')
+            raise
         except RuntimeError as e:
             print(e)
             pause = True
@@ -513,13 +516,13 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, convergenceCheck = False):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, convergenceCheck = False, show_log = True):
         self.prepare_output(overwrite)
         output_directory = self.sweep_output_directory
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for inputfile in self.input_files:
-            inputfile.execute(convergenceCheck = convergenceCheck, outputdirectory = output_directory)
+            inputfile.execute(convergenceCheck = convergenceCheck, outputdirectory = output_directory, show_log = show_log)
             if delete_input_files:
                 inputfile.remove()
 
