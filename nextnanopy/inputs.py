@@ -241,7 +241,7 @@ class InputFileTemplate(object):
         return self.fullpath
 
     @execute_message
-    def execute(self, convergenceCheck = False, **kwargs):
+    def execute(self, show_log = True, convergenceCheck = False, **kwargs):
         """
         Execute the input file located at .fullpath
         Individual kwargs can be passed like 'license' or 'database'
@@ -249,28 +249,32 @@ class InputFileTemplate(object):
 
         Parameters
         ----------
+        show_log : bool, optional
+            if False, suppress the simulation log
+            (default is True)
         convergenceCheck : bool, optional
             if True, check convergence of the simulation
             (default is False)
-        exe : str, optional
-            path to executable
-        license : str, optional
-            path to license file
-        database : str, optional
-            path to database file
-        outputdirectory : str, optional
-            path where to save the simulated data
 
-        Other parameters can be used depending on the nextnano product.
-        For example, 'threads' is accepted for nextnano++.
-        Please, see the documentation of the command line arguments for each nextnano product
-        in the website (https://www.nextnano.com/)
+        kwargs may contain:
+            exe : str, optional
+                path to executable
+            license : str, optional
+                path to license file
+            database : str, optional
+                path to database file
+            outputdirectory : str, optional
+                path where to save the simulated data
+        and other parameters depending on the nextnano product.
+        For example, 'threads' is accepted by nextnano++.
+        See the documentation of the command line arguments of each nextnano product
+        on the online Manual (https://www.nextnano.de/manual/).
         """
 
         cmd_kwargs = dict(self.default_command_args)
         cmd_kwargs.update(kwargs)
         cmd_kwargs['inputfile'] = self.fullpath
-        info = cmd_execute(**cmd_kwargs)
+        info = cmd_execute(show_log=show_log, **cmd_kwargs)
         self.execute_info = info
         if convergenceCheck:
             self.check_convergence()
@@ -296,6 +300,8 @@ class InputFileTemplate(object):
                             raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
                         elif 'Maximum number of iterations exceeded' in line:
                             raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
+                        elif 'Outdated numerics library (f95library) used' in line:
+                            raise RuntimeError(f'\nOutdated numerics library (f95library) used.')
             elif self.product == 'nextnano.NEGF':   # nextnano.NEGF reports convergence at every voltage and temperature sweep.
                 with open(log, 'r') as file:
                     for line in file:
@@ -516,13 +522,32 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, convergenceCheck = False, show_log = True):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False):
+        """
+        Execute created input files and saves information to output folder.
+
+        Parameters
+        ----------
+        delete_input_files : bool, optional
+            if True, input_files are deleted after execution. Default is False.
+        overwrite : bool, optional
+            if True, the output overwrites the old output data. If False, execution will create a new output folder
+            (with the unique name, created by adding an integer to the foldername). Default is False.
+        show_log : bool, optional
+            if True, the simulation log is displayed in the console, while False suppresses the log. Default is True.
+            Note that the log file is always saved in the output folders regardless of this option.
+        convergenceCheck : bool, optional
+            if True, nextnanopy scans the log file of the simulation performed and check whether the solution has converged. 
+            If it did not converge, nextnanopy warns you and ask if you want to proceed with postprocessing. 
+            Note that non-converged solutions are not reliable and further calculation and/or visualization from them do not make much sense. 
+            Default is False.
+        """
         self.prepare_output(overwrite)
         output_directory = self.sweep_output_directory
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for inputfile in self.input_files:
-            inputfile.execute(convergenceCheck = convergenceCheck, outputdirectory = output_directory, show_log = show_log)
+            inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
             if delete_input_files:
                 inputfile.remove()
 
