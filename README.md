@@ -24,7 +24,7 @@ In future releases, we would like to implement:
 ## Installation
 
 Nextnanopy can be installed on Linux / OS X / Windows. 
-For details, please refer to docs/How to install nextnanopy.pdf.
+For details, please refer to docs/How to install nextnanopy.md.
 
 ## Documentation
 
@@ -43,7 +43,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 * added support of input variables for nextnanoNEGF. Note: after save all non-xml data (i.e. comments) is not preserved.
 
 ### Version 0.1.11 (Jan 10th, 2022)
-* Feature: DataFile.plot() - make a preview plot. Graph for 1-dimensional data and a coplormap for 2-dimensional data.
+* Feature: DataFile.plot() - make a preview plot. Graph for 1-dimensional data and a colormap for 2-dimensional data.
 * Feature: New class DataFolder. Designed to simplify navigation in output directory.
 * Beta feature: postprocess.simple_optimize. Runs simulation over given variables space and optimizes the desired output value.
 
