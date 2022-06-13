@@ -28,16 +28,16 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['dkeys'], [0])
 
         df = outputs.DataFile(join(folder_nnp, 'wf_occupation_1d.dat'), product='nextnano++')
-        self.assertEqual(len(df.coords.keys()), 0)
-        self.assertEqual(len(df.variables.keys()), 2)
-        self.assertEqual(df.variables['no.'].name, 'no.')
-        self.assertEqual(df.variables['no.'].unit, default_unit)
-        self.assertEqual(df.variables['no.'].value.size, 10)
+        self.assertEqual(len(df.coords.keys()), 1)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.coords['no.'].name, 'no.')
+        self.assertEqual(df.coords['no.'].unit, default_unit)
+        self.assertEqual(df.coords['no.'].value.size, 10)
         self.assertEqual(df.variables['Occupation'].name, 'Occupation')
         self.assertEqual(df.variables['Occupation'].unit, 'electrons/cm^2')
         self.assertEqual(df.variables['Occupation'].value.size, 10)
-        self.assertEqual(df.metadata['ndim'], 0)
-        self.assertEqual(df.metadata['dkeys'], [])
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dkeys'], [0])
 
     def test_avs(self):
         df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
