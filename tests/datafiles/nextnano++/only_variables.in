@@ -12,3 +12,4 @@ $scientific =     1e-3
 # End
 
 global{ # nextnano++ input file pattern detection
+        }
