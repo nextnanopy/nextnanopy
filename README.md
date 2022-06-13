@@ -39,6 +39,10 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.13 (Jun 13th, 2022)
+* Default .dat loader of nextnanopy.DataFile was changed. Before x,y,z and position were coordinates, anything else recognized as variables. Now first column of the '.dat' file is recognized as coordinate, all other columns are variables.
+* Demo: parser of the whole input file for nextnano++. Raise error if file contains incorrect number and order of parentheses '{}'
+
 ### Version 0.1.12 (Mar 14th, 2022)
 * added support of input variables for nextnanoNEGF. Note: after save all non-xml data (i.e. comments) is not preserved.
 
