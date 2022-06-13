@@ -77,11 +77,13 @@ class Dat(Output):
             units.extend(empty)
         ndim = 0
         dkeys = []
+        FirstVarIsCoordFlag = True
         for i, (column, unit) in enumerate(zip(columns, units)):
             self.metadata[i] = {'name': column, 'unit': unit}
-            if column.lower() in ['x', 'y', 'z', 'position']:
+            if FirstVarIsCoordFlag:
                 ndim += 1
                 dkeys.append(i)
+                FirstVarIsCoordFlag = False
         self.metadata['ndim'] = ndim
         self.metadata['dkeys'] = dkeys
         return self.metadata
