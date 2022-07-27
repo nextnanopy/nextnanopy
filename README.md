@@ -38,6 +38,9 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 
 ## History of changes
+ 
+### Vesrion 0.1.14 (Jul 27th, 2022)
+* nextnanopy.Sweep.save_sweep has parameter round_decimal to limit round of digits in the folder names. Deafault round_decimal = 8
 
 ### Version 0.1.13 (Jun 13th, 2022)
 * Default .dat loader of nextnanopy.DataFile was changed. Before x,y,z and position were coordinates, anything else recognized as variables. Now first column of the '.dat' file is recognized as coordinate, all other columns are variables.
