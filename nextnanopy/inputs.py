@@ -509,18 +509,29 @@ class Sweep(InputFile):
         self.sweep_output_directory = None
         self.input_files = []
 
-    def save_sweep(self, delete_old_files = True):
+    def save_sweep(self, delete_old_files = True, round_decimal = 8):
+        """
+
+        Parameters
+        ----------
+        delete_old_files: if True, deletes files created in previous sweeps
+        round: number of digits to round in the output folder names
+
+        Returns
+        -------
+        None
+        """
         if delete_old_files == True:
             for inputfile in self.input_files:
                 inputfile.remove()
         self.input_files = []
-        self.create_input_files()
+        self.create_input_files(round_decimal)
 
     def prepare_output(self, overwrite = False):
         self.sweep_output_directory = self.mk_dir(overwrite=overwrite)
         self.create_info()
 
-    def create_input_files(self):
+    def create_input_files(self, round_decimal):
         iteration_combinations = list(itertools.product(*self.var_sweep.values()))
         filename_path, filename_extension = os.path.splitext(self.fullpath)
         for combination in iteration_combinations:
@@ -528,7 +539,11 @@ class Sweep(InputFile):
             inputfile = InputFile(fullpath = self.fullpath, configpath = self.configpath)
             for var_name, var_value in zip(self.var_sweep.keys(), combination):
                 inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
-                filename_end += '{}_{}_'.format(var_name, var_value)
+                if isinstance(var_value,str):
+                    var_value_string = var_value
+                else:
+                    var_value_string = round(var_value, round_decimal)
+                filename_end += '{}_{}_'.format(var_name, var_value_string)
             inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
             self.input_files.append(inputfile)
 
