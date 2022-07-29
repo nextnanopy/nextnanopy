@@ -1,4 +1,5 @@
 import os,sys
+import time
 import warnings
 import itertools
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
@@ -549,7 +550,7 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, parallel = False):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, parallel_limit = 1):
         """
         Execute created input files and saves information to output folder.
 
@@ -572,15 +573,35 @@ class Sweep(InputFile):
         """
         self.prepare_output(overwrite)
         output_directory = self.sweep_output_directory
+        simulations_info = []
+        polls = []
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for i, inputfile in enumerate(self.input_files):
-            #inputfile.__parallel__ = True
-            if not show_log:
-                print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-            inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
-            if delete_input_files:
-                inputfile.remove()
+            if parallel_limit>1:
+                while sum(x is None for x in polls)>= parallel_limit:
+                    time.sleep(0.5)
+                    polls = [simulation['process'].poll() for simulation in simulations_info]
+
+                inputfile.__parallel__ = True
+                if not show_log:
+                    print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
+                simulations_info.append(info)
+                polls = [simulation['process'].poll() for simulation in simulations_info]
+
+
+                if delete_input_files:
+                    inputfile.remove()
+            else:
+                if not show_log:
+                    print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
+                simulations_info.append(info)
+                polls = [simulation['process'].poll() for simulation in simulations_info]
+                if delete_input_files:
+                    inputfile.remove()
+
 
     def mk_dir(self,overwrite = False):
         vars = ''

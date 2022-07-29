@@ -52,7 +52,7 @@ def write_output(get, filepath, show=True):
 
 def start_log(process, filepath, show=True, parallel =False): #start log do not allows multiple execution at the same time. interesting
     #TODO fix log (not logging if parallel is True)
-    # TODO implement in sweep with limiting number of parallel
+    #TODO implement in sweep with limiting number of parallel
     q = queue.Queue()
     out, err = [], []
     tout = threading.Thread(
