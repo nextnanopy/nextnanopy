@@ -50,7 +50,9 @@ def write_output(get, filepath, show=True):
     f.close()
 
 
-def start_log(process, filepath, show=True):
+def start_log(process, filepath, show=True, parallel =False): #start log do not allows multiple execution at the same time. interesting
+    #TODO fix log (not logging if parallel is True)
+    # TODO implement in sweep with limiting number of parallel
     q = queue.Queue()
     out, err = [], []
     tout = threading.Thread(
@@ -60,11 +62,18 @@ def start_log(process, filepath, show=True):
     twrite = threading.Thread(target=write_output, args=(q.get, filepath, show))
     for t in (tout, terr, twrite):
         t.daemon = False
+
         t.start()
-    process.wait()
-    for t in (tout, terr):
-        t.join()
+
+
+    if parallel:
+        pass
+    else:
+        process.wait()
+        for t in (tout, terr):
+            t.join()
     q.put(None)
+
 
 
 def execute(
@@ -74,6 +83,7 @@ def execute(
         database,
         outputdirectory,
         show_log=True,
+        parallel = False,
         **kwargs,
 ):
     filename = get_filename(inputfile, ext=False)
@@ -94,7 +104,7 @@ def execute(
         raise FileNotFoundError(f'Executable path is invalid: {exe}\nCheck nextnanopy.config')
     
     process = send(cmd)
-    start_log(process, logfile, show_log)
+    start_log(process, logfile, show_log, parallel = parallel)
     os.chdir(cwd)
     info = {
         'process': process,

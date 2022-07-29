@@ -98,6 +98,7 @@ class InputFileTemplate(object):
         self.content = None
         self.fullpath = fullpath
         self.product = 'not valid'
+        self.__parallel__ = False
         if fullpath is not None:
             self.load(fullpath)
         if configpath is None:
@@ -276,7 +277,7 @@ class InputFileTemplate(object):
         cmd_kwargs = dict(self.default_command_args)
         cmd_kwargs.update(kwargs)
         cmd_kwargs['inputfile'] = self.fullpath
-        info = cmd_execute(show_log=show_log, **cmd_kwargs)
+        info = cmd_execute(show_log=show_log, parallel = self.__parallel__, **cmd_kwargs)
         self.execute_info = info
         if convergenceCheck:
             self.check_convergence()
@@ -548,7 +549,7 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, parallel = False):
         """
         Execute created input files and saves information to output folder.
 
@@ -574,6 +575,7 @@ class Sweep(InputFile):
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
         for i, inputfile in enumerate(self.input_files):
+            #inputfile.__parallel__ = True
             if not show_log:
                 print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
             inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
