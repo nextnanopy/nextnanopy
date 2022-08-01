@@ -601,6 +601,17 @@ class Sweep(InputFile):
                 polls = [simulation['process'].poll() for simulation in simulations_info]
                 if delete_input_files:
                     inputfile.remove()
+        all_finished = False
+        while not all_finished:
+            polls = [simulation['process'].poll() for simulation in simulations_info]
+            if None in polls:
+                time.sleep(0.5)
+                continue
+            else:
+                all_finished = True
+                for simulation in simulations_info:
+                    simulation['queue'].put(None)
+
 
 
     def mk_dir(self,overwrite = False):
