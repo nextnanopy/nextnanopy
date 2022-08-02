@@ -7,7 +7,7 @@ import warnings
 from nextnanopy.utils.datasets import Variable, Coord
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.formatting import best_str_to_name_unit
-from nextnanopy.utils.misc import get_filename, message_decorator
+from nextnanopy.utils.misc import get_filename, message_decorator, start_with_choice
 from nextnanopy import defaults
 
 import pyvista as pv
@@ -486,6 +486,7 @@ class AvsAscii(Output):
         self.load_coords()
 
     def load_raw_metadata(self):
+        possible_keys = ['ndim', 'dim', 'nspace', 'veclen','data', 'field', 'label', 'variable', 'coord']
         info = []
         try:
             with open(self.fld, 'r') as f:
@@ -498,7 +499,9 @@ class AvsAscii(Output):
                     except:
                         if line == '':
                             continue
-                        if line[0] != '#':
+                        # if line[0] != '#':
+                        #     info.append(line)
+                        if start_with_choice(line,*possible_keys):
                             info.append(line)
         except UnicodeDecodeError:
             with open(self.fld,'rb') as f:
@@ -511,7 +514,9 @@ class AvsAscii(Output):
                     line = line.strip()        
                     if line == '':
                         continue
-                    if line[0] != '#':
+                    # if line[0] != '#':
+                    #     info.append(line)
+                    if start_with_choice(line, *possible_keys):
                         info.append(line)
         return info
 

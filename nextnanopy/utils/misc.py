@@ -157,3 +157,9 @@ def combinations(*args):
     n = len(args)
     array_of_combinations = np.array(np.meshgrid(*args)).T.reshape(-1,n)
     return array_of_combinations
+
+def start_with_choice(line : str, *args : str):
+    for arg in args:
+        if line.startswith(args):
+            return True
+    return False
