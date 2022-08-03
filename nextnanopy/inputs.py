@@ -565,7 +565,7 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1, **kwargs):
         """
         Execute created input files and saves information to output folder.
 
@@ -585,6 +585,8 @@ class Sweep(InputFile):
             If it did not converge, nextnanopy warns you and ask if you want to proceed with postprocessing. 
             Note that non-converged solutions are not reliable and further calculation and/or visualization from them do not make much sense. 
             Default is False.
+        **kwargs:
+            see **kwargs of InputFile.execute()
         """
         self.prepare_output(overwrite)
         output_directory = self.sweep_output_directory
@@ -601,7 +603,7 @@ class Sweep(InputFile):
                 inputfile.__parallel__ = True
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode)
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode, **kwargs)
                 simulations_info.append(info)
                 polls = [simulation['process'].poll() for simulation in simulations_info]
 
