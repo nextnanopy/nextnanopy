@@ -1,7 +1,10 @@
 import os,sys
+import threading
 import time
 import warnings
 import itertools
+import queue
+import nextnanopy
 from nextnanopy.utils.formatting import text_to_lines, lines_to_text
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator, mkdir_even_if_exists, mkdir_if_not_exist
@@ -489,6 +492,34 @@ class InputFile(InputFileTemplate):
         file.raw_lines = self.raw_lines
         return file.lines
 
+class ExecutionQueue(threading.Thread):
+    #waiting_queue = queue.Queue()
+    #can be run in semi-parallel manner (threading)
+    def __init__(self, limit_parallel = 1, maxsize = 0):
+        super(ExecutionQueue, self).__init__()
+        self.waiting_queue = queue.Queue()#should be queue of InputFile objects
+        self.started = []#should be list of processes or execution_infos
+        self.finished = []#should be list of processes or execution_infos
+        self.logged = []
+
+
+    def all_done(self):
+        return not bool(not self.waiting_queue.empty() or self.started or self.finished)
+
+    def add(self,*input_files: InputFileTemplate):
+        for input_file in input_files:
+            self.waiting_queue.put(input_file)
+
+    def run(self):
+        while True:
+            time.sleep(0.05)
+            print(self.waiting_queue.get())
+            print(self.all_done())
+            if self.waiting_queue.empty():
+                print('Waiting queue is empty')
+                break
+
+
 class Sweep(InputFile):
     """
         This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
@@ -651,3 +682,21 @@ class Sweep(InputFile):
             file.write("Sweep variables: \n")
             for i in self.var_sweep:
                 file.write("{} = {} \n".format(i,self.var_sweep[i]))
+
+
+if __name__ == '__main__':
+    ex_q = ExecutionQueue()
+    ex_q.add(*[i for i in range(100)])
+    ex_q.start()
+
+
+    #ex_q.run()
+    print('hI')
+
+    time.sleep(0.33)
+    print('Oh, how are you?')
+    time.sleep(0.33)
+    print('still here?')
+
+    ex_q.join()
+    print('Execution queue is stopped')
