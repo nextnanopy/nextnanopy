@@ -1,0 +1,24 @@
+# AVS/Express field file
+#
+ndim = 2
+dim1 = 1292
+dim2 = 80
+nspace = 2
+veclen = 6
+data = double
+field = rectilinear
+label = Gamma[eV]
+label = HH[eV]
+label = LH[eV]
+label = SO[eV]
+label = electron_Fermi_level[eV]
+label = hole_Fermi_level[eV]
+
+variable 1 file=bandedges.avs.dat filetype=ascii skip=0 offset=0 stride=1
+variable 2 file=bandedges.avs.dat filetype=ascii skip=103360 offset=0 stride=1
+variable 3 file=bandedges.avs.dat filetype=ascii skip=206720 offset=0 stride=1
+variable 4 file=bandedges.avs.dat filetype=ascii skip=310080 offset=0 stride=1
+variable 5 file=bandedges.avs.dat filetype=ascii skip=413440 offset=0 stride=1
+variable 6 file=bandedges.avs.dat filetype=ascii skip=516800 offset=0 stride=1
+coord 1 file=bandedges.avs.coord filetype=ascii skip=0 offset=0 stride=1
+coord 2 file=bandedges.avs.coord filetype=ascii skip=1293 offset=0 stride=1

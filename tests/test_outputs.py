@@ -141,6 +141,16 @@ class TestOutputs_nnp(unittest.TestCase):
         for file in files:
             self.assertRaises(NotImplementedError, outputs.DataFile, join(folder_nnp, file), 'nextnano++')
 
+    def test_all_2D(self):
+        files = [r'AvsAscii\bandedges.avs.fld',r'AvsAscii_one_file\bandedges.fld',r'AvsBinary\bandedges.avs.fld',r'AvsBinary_one_file\bandedges.fld',r'VTKAscii\bandedges.vtr']
+        for file in files:
+            filepath = os.path.join(folder_nnp, file)
+            datafile = outputs.DataFile(filepath, product = 'nextnano++')
+            self.assertEqual(len(datafile.coords),2)
+            self.assertEqual(len(datafile.variables),6)
+
+    #TODO add tests for loading Origin like file
+
 
 class TestOutputs_nn3(unittest.TestCase):
 
@@ -336,6 +346,8 @@ class TestOutputs_nn3(unittest.TestCase):
             self.assertRaises(NotImplementedError, outputs.DataFile, join(folder_nnp, file), 'nextnano3')
 
 
+    # TODO add tests for loading binary (different binary + avs not one file)
+
 class TestOutputs_negf(unittest.TestCase):
 
     def test_dat(self):
@@ -461,7 +473,7 @@ class TestDataFolder(unittest.TestCase):
 
         datafolder  = outputs.DataFolder(folder_nnp)
 
-        self.assertFalse(datafolder.folders)
+        self.assertTrue(datafolder.folders)
         self.assertTrue(datafolder.files)
 
         self.assertEqual(len(datafolder.files),17)
@@ -561,7 +573,7 @@ class TestDataFolder(unittest.TestCase):
         self.assertNotIn('only_variables.in', datafolder.find('only'))
         self.assertNotIn(os.path.join(tests_folder, 'test_commands.py'), datafolder.find('test_i', deep=True))
         self.assertNotEqual(len(datafolder.find('.vtr', deep=True)), 0)
-        self.assertEqual(len(datafolder.find('bandedges', deep = True)), 7)
+        self.assertEqual(len(datafolder.find('bandedges', deep = True)), 17)
 
 
     def test_go_to(self):
