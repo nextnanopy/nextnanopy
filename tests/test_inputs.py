@@ -547,6 +547,7 @@ class TestSweep(unittest.TestCase):
         self.assertEqual(len(files_with_names), 5)
         self.assertTrue(os.path.isfile(os.path.join(folder_nn3, 'only_variables__float_2_str_test1_.in')))
 
+    #TODO test parallel sweeps with and without convergenceCheck
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()

@@ -14,13 +14,13 @@ import os
 import pathlib
 path = pathlib.Path(__file__).parent.resolve()
 
-input_file = 'input files\convergenceTest_nn3.in'
-# input_file = 'input files\convergenceTest_nnp.in'
+# input_file = 'input files\convergenceTest_nn3.in'
+input_file = 'input files\convergenceTest_nnp.in'
 # input_file = 'input files\convergenceTest_negf.xml'
 
 inputPath = os.path.join(path, input_file)
 my_input = nn.InputFile(inputPath)
 
-my_input.execute(convergenceCheck=True)
+my_input.execute(convergenceCheck=True, convergence_check_mode = 'pause')
 
 print("I'm still running")

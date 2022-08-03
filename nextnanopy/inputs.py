@@ -245,7 +245,7 @@ class InputFileTemplate(object):
         return self.fullpath
 
     @execute_message
-    def execute(self, show_log = True, convergenceCheck = False, **kwargs):
+    def execute(self, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause',**kwargs):
         """
         Execute the input file located at .fullpath
         Individual kwargs can be passed like 'license' or 'database'
@@ -259,7 +259,12 @@ class InputFileTemplate(object):
         convergenceCheck : bool, optional
             if True, check convergence of the simulation
             (default is False)
-
+        convergence_check_mode: string
+            works only for convergenceCheck = True
+            options:
+                'pause': asks user how to preceed of simulation did not converge
+                'terminate': terminate the script if the simulation did not converge
+                'continue': notify a user but continues execution of script
         kwargs may contain:
             exe : str, optional
                 path to executable
@@ -280,11 +285,11 @@ class InputFileTemplate(object):
         cmd_kwargs['inputfile'] = self.fullpath
         info = cmd_execute(show_log=show_log, parallel = self.__parallel__, **cmd_kwargs)
         self.execute_info = info
-        if convergenceCheck:
-            self.check_convergence()
+        if convergenceCheck:# and not self.__parallel__: - possible solution for later (delete comment if not)
+            self.check_convergence(mode= convergence_check_mode)
         return info
 
-    def check_convergence(self): 
+    def check_convergence(self, mode = 'pause'):
         if self.product == 'nextnano.MSB':
             raise NotImplementedError('Convergence check has not yet implemented for nextnano.MSB!')
             
@@ -317,21 +322,31 @@ class InputFileTemplate(object):
                             raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
         except FileNotFoundError:
             print(f'Log file {log} not found!')
-            raise
+            if mode != 'continue':
+                raise
+            else:
+                pass
         except RuntimeError as e:
             print(e)
-            pause = True
-            while pause:
-                answer = input('Do you nevertheless want to continue? [y/n]: ')
-                if answer == 'y' or answer == 'yes': 
-                    pause = False
-                    return
-                elif answer == 'n' or answer == 'no': 
-                    pause = False
-                    raise RuntimeError('Nextnanopy terminated.')
-                else: 
-                    print('Invalid input.')
-                    continue
+            if mode == 'pause':
+                pause = True
+                while pause:
+                    answer = input('Do you nevertheless want to continue? [y/n]: ')
+                    if answer == 'y' or answer == 'yes':
+                        pause = False
+                        return
+                    elif answer == 'n' or answer == 'no':
+                        pause = False
+                        raise RuntimeError('Nextnanopy terminated.')
+                    else:
+                        print('Invalid input.')
+                        continue
+            elif mode == 'terminate':
+                raise RuntimeError('Nextnanopy terminated.')
+            elif mode == 'continue':
+                return
+            else:
+                raise ValueError(f'Mode "{mode}" is not valid')
         else:
             return
 
@@ -550,7 +565,7 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, parallel_limit = 1):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1):
         """
         Execute created input files and saves information to output folder.
 
@@ -586,7 +601,7 @@ class Sweep(InputFile):
                 inputfile.__parallel__ = True
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode)
                 simulations_info.append(info)
                 polls = [simulation['process'].poll() for simulation in simulations_info]
 
@@ -596,7 +611,7 @@ class Sweep(InputFile):
             else:
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck)
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode)
                 simulations_info.append(info)
                 polls = [simulation['process'].poll() for simulation in simulations_info]
                 if delete_input_files:
