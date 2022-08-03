@@ -262,7 +262,7 @@ class InputFileTemplate(object):
         convergence_check_mode: string
             works only for convergenceCheck = True
             options:
-                'pause': asks user how to preceed of simulation did not converge
+                'pause': asks user how to proceed if simulation did not converge (default)
                 'terminate': terminate the script if the simulation did not converge
                 'continue': notify a user but continues execution of script
         kwargs may contain:
