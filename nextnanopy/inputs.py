@@ -493,30 +493,62 @@ class InputFile(InputFileTemplate):
         return file.lines
 
 class ExecutionQueue(threading.Thread):
-    #waiting_queue = queue.Queue()
-    #can be run in semi-parallel manner (threading)
-    def __init__(self, limit_parallel = 1, maxsize = 0):
+
+    def __init__(self, limit_parallel = 1, maxsize = 0, **execution_kwargs):
         super(ExecutionQueue, self).__init__()
         self.waiting_queue = queue.Queue()#should be queue of InputFile objects
-        self.started = []#should be list of processes or execution_infos
-        self.finished = []#should be list of processes or execution_infos
-        self.logged = []
-
+        self.started = []#should be list of execution_infos
+        self.finished = []#should be list of execution_infos
+        self.limit_parallel = limit_parallel
+        self.execution_kwargs = execution_kwargs
 
     def all_done(self):
-        return not bool(not self.waiting_queue.empty() or self.started or self.finished)
+        return not bool(not self.waiting_queue.empty() or self.started)
 
     def add(self,*input_files: InputFileTemplate):
         for input_file in input_files:
             self.waiting_queue.put(input_file)
 
+    def add_execution(self):
+        if (len(self.started) < self.limit_parallel) and not self.waiting_queue.empty():
+            input_f = self.waiting_queue.get()
+            if self.limit_parallel>1:
+                input_f.__parallel__ = True
+            info = input_f.execute(**self.execution_kwargs)
+            self.started.append(info)
+
+    def log_finished(self):
+        if self.limit_parallel>1:
+            i = 0
+            while i < len(self.started):
+                poll = self.started[i]['process'].poll()
+                if poll is None:
+
+                    i+=1
+                else:
+                    #TODO check once again del
+                    self.started[i]['process'].wait()
+                    self.started[i]['queue'].put(None)
+                    self.finished.append(self.started[i])
+                    del self.started[i]
+
+
+        else:
+            i = 0
+            while i < len(self.started):
+                poll = self.started[i]['process'].poll()
+                if poll is None:
+                    i+=1
+                else:
+                    self.finished.append(self.started[i])
+                    del self.started[i]
+
     def run(self):
         while True:
-            time.sleep(0.05)
-            print(self.waiting_queue.get())
-            print(self.all_done())
-            if self.waiting_queue.empty():
-                print('Waiting queue is empty')
+            self.add_execution()
+            self.log_finished()
+            if self.all_done():
+                print('Waiting queue is empty, all execution and logging are finished')
                 break
 
 
@@ -684,19 +716,5 @@ class Sweep(InputFile):
                 file.write("{} = {} \n".format(i,self.var_sweep[i]))
 
 
-if __name__ == '__main__':
-    ex_q = ExecutionQueue()
-    ex_q.add(*[i for i in range(100)])
-    ex_q.start()
 
 
-    #ex_q.run()
-    print('hI')
-
-    time.sleep(0.33)
-    print('Oh, how are you?')
-    time.sleep(0.33)
-    print('still here?')
-
-    ex_q.join()
-    print('Execution queue is stopped')
