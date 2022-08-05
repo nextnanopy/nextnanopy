@@ -288,7 +288,7 @@ class InputFileTemplate(object):
         cmd_kwargs['inputfile'] = self.fullpath
         info = cmd_execute(show_log=show_log, parallel = self.__parallel__, **cmd_kwargs)
         self.execute_info = info
-        if convergenceCheck:# and not self.__parallel__: - possible solution for later (delete comment if not)
+        if convergenceCheck and not self.__parallel__: #- possible solution for later (delete comment if not)
             self.check_convergence(mode= convergence_check_mode)
         return info
 
@@ -522,32 +522,37 @@ class ExecutionQueue(threading.Thread):
             if self.limit_parallel>1:
                 input_f.__parallel__ = True
             info = input_f.execute(**self.execution_kwargs)
-            self.started.append(info)
+            self.started.append((info,input_f))
 
     def log_finished(self):
         if self.limit_parallel>1:
             i = 0
             while i < len(self.started):
-                poll = self.started[i]['process'].poll()
+                poll = self.started[i][0]['process'].poll()
                 if poll is None:
-
                     i+=1
                 else:
                     #TODO check once again del
-                    self.started[i]['process'].wait()
-                    self.started[i]['queue'].put(None)
-                    self.finished.append(self.started[i])
+                    self.started[i][0]['process'].wait()
+                    self.started[i][0]['queue'].put(None)
+                    #TODO fix the behaviour at 'no' (script still running)
+                    if 'convergence_check_mode' in self.execution_kwargs:
+                        convergence_check_mode = self.execution_kwargs['convergence_check_mode']
+                    else:
+                        convergence_check_mode = 'pause'
+                    self.started[i][1].check_convergence(mode = convergence_check_mode)
+                    self.finished.append(self.started[i][0])
                     del self.started[i]
 
 
         else:
             i = 0
             while i < len(self.started):
-                poll = self.started[i]['process'].poll()
+                poll = self.started[i][0]['process'].poll()
                 if poll is None:
                     i+=1
                 else:
-                    self.finished.append(self.started[i])
+                    self.finished.append(self.started[i][0])
                     del self.started[i]
 
     def run(self):
