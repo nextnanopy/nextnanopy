@@ -493,21 +493,28 @@ class InputFile(InputFileTemplate):
         return file.lines
 
 class ExecutionQueue(threading.Thread):
+    """
 
-    def __init__(self, limit_parallel = 1, maxsize = 0, **execution_kwargs):
+    """
+    def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, **execution_kwargs):
         super(ExecutionQueue, self).__init__()
         self.waiting_queue = queue.Queue()#should be queue of InputFile objects
         self.started = []#should be list of execution_infos
         self.finished = []#should be list of execution_infos
         self.limit_parallel = limit_parallel
         self.execution_kwargs = execution_kwargs
-
+        self.stop_when_empty = terminate_empty
+        self.daemon = True
     def all_done(self):
         return not bool(not self.waiting_queue.empty() or self.started)
 
     def add(self,*input_files: InputFileTemplate):
         for input_file in input_files:
             self.waiting_queue.put(input_file)
+
+    def stop(self):
+        self.stop_when_empty = True
+
 
     def add_execution(self):
         if (len(self.started) < self.limit_parallel) and not self.waiting_queue.empty():
@@ -549,7 +556,13 @@ class ExecutionQueue(threading.Thread):
             self.log_finished()
             if self.all_done():
                 print('Waiting queue is empty, all execution and logging are finished')
-                break
+
+                if self.stop_when_empty:
+                    break
+                while self.all_done() and not self.stop_when_empty:
+                    time.sleep(0.1) #to ensure switch to main thread
+                    pass
+
 
 
 class Sweep(InputFile):
