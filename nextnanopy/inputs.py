@@ -670,40 +670,27 @@ class Sweep(InputFile):
         polls = []
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
-        for i, inputfile in enumerate(self.input_files):
-            if parallel_limit>1:
-                while sum(x is None for x in polls)>= parallel_limit:
-                    time.sleep(0.5)
-                    polls = [simulation['process'].poll() for simulation in simulations_info]
 
-                inputfile.__parallel__ = True
+        #TODO: delete if statement (use execution_queue for both cases)
+        #TODO: add "Executig simulations" to ExecutionQueue if not show_log
+        if parallel_limit>1:
+            execution_queue = ExecutionQueue(limit_parallel=parallel_limit, terminate_empty=True, outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode, **kwargs)
+            execution_queue.add(*self.input_files)
+            execution_queue.start()
+
+            execution_queue.join()
+            if delete_input_files:
+                inputfile.remove()
+        else:
+            for i, inputfile in enumerate(self.input_files):
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode, **kwargs)
-                simulations_info.append(info)
-                polls = [simulation['process'].poll() for simulation in simulations_info]
-
-
+                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
+                #simulations_info.append(info)#unnecessary, delete later
+                #polls = [simulation['process'].poll() for simulation in simulations_info]
                 if delete_input_files:
                     inputfile.remove()
-            else:
-                if not show_log:
-                    print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode)
-                simulations_info.append(info)
-                polls = [simulation['process'].poll() for simulation in simulations_info]
-                if delete_input_files:
-                    inputfile.remove()
-        all_finished = False
-        while not all_finished:
-            polls = [simulation['process'].poll() for simulation in simulations_info]
-            if None in polls:
-                time.sleep(0.5)
-                continue
-            else:
-                all_finished = True
-                for simulation in simulations_info:
-                    simulation['queue'].put(None)
+
 
 
 
