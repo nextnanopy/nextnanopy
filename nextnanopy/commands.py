@@ -28,9 +28,9 @@ def command(
     return cmd(**kwargs)
 
 
-def send(cmd):
+def send(cmd, cwd = os.getcwd()):
     PIPE = subprocess.PIPE
-    return subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True)
+    return subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True, cwd = cwd)
 
 
 def read_output(pipe, funcs):
@@ -41,13 +41,13 @@ def read_output(pipe, funcs):
 
 
 def write_output(get, filepath, show=True):
-    f = open(filepath, 'w', newline='')
-    for line in iter(get, None):
-        line = str(line, 'utf-8', errors='ignore')
-        if show:
-            sys.stdout.write(line)
-        f.write(line)
-    f.close()
+    with open(filepath, 'w', newline='') as f:
+        for line in iter(get, None):
+            line = str(line, 'utf-8', errors='ignore')
+            if show:
+                sys.stdout.write(line)
+            f.write(line)
+
 
 
 def start_log(process, filepath, show=True, parallel =False):
@@ -64,13 +64,13 @@ def start_log(process, filepath, show=True, parallel =False):
 
 
     if parallel:
-        return q
+        return q, tout, terr
     else:
         process.wait()
         for t in (tout, terr):
             t.join()
         q.put(None)
-        return q
+        return q, tout, terr
 
 
 
@@ -96,13 +96,12 @@ def execute(
     # validate configuration of executable path
     if executable == '':
         raise FileNotFoundError(f'Executable path is empty! Check nextnanopy.config')
-    try:
-        os.chdir(wdir)
-    except (OSError, FileNotFoundError):
+
+
+    if (not os.path.isfile(exe)) or (not os.path.isdir(wdir)):
         raise FileNotFoundError(f'Executable path is invalid: {exe}\nCheck nextnanopy.config')
-    
-    process = send(cmd)
-    queue = start_log(process, logfile, show_log, parallel = parallel)
+    process = send(cmd, cwd = wdir)
+    queue, tout, terr = start_log(process, logfile, show_log, parallel = parallel)
     os.chdir(cwd)
     info = {
         'process': process,
@@ -111,7 +110,9 @@ def execute(
         'logfile': logfile,
         'cmd': cmd,
         'wdir': wdir,
-        'queue': queue
+        'queue': queue,
+        'tout': tout,
+        'terr': terr,
     }
     return info
 
