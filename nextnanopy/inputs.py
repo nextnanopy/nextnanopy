@@ -496,15 +496,16 @@ class ExecutionQueue(threading.Thread):
     """
 
     """
-    def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, **execution_kwargs):
+    def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, convergenceCheck = False, **execution_kwargs):
         super(ExecutionQueue, self).__init__()
         self.waiting_queue = queue.Queue()#should be queue of InputFile objects
         self.started = []#should be list of execution_infos
         self.finished = []#should be list of execution_infos
         self.limit_parallel = limit_parallel
         self.execution_kwargs = execution_kwargs
+        self.convergenceCheck = convergenceCheck
         self.stop_when_empty = terminate_empty
-        self.daemon = True
+        self.daemon = False
     def all_done(self):
         return not bool(not self.waiting_queue.empty() or self.started)
 
@@ -534,13 +535,17 @@ class ExecutionQueue(threading.Thread):
                 else:
                     #TODO check once again del
                     self.started[i][0]['process'].wait()
+                    tout = self.started[i][0]['tout']
+                    terr = self.started[i][0]['terr']
+                    for t in (tout, terr):
+                        t.join()
                     self.started[i][0]['queue'].put(None)
-                    #TODO fix the behaviour at 'no' (script still running)
-                    if 'convergence_check_mode' in self.execution_kwargs:
-                        convergence_check_mode = self.execution_kwargs['convergence_check_mode']
-                    else:
-                        convergence_check_mode = 'pause'
-                    self.started[i][1].check_convergence(mode = convergence_check_mode)
+                    if self.convergenceCheck:
+                        if 'convergence_check_mode' in self.execution_kwargs:
+                            convergence_check_mode = self.execution_kwargs['convergence_check_mode']
+                        else:
+                            convergence_check_mode = 'pause'
+                        self.started[i][1].check_convergence(mode = convergence_check_mode)
                     self.finished.append(self.started[i][0])
                     del self.started[i]
 
