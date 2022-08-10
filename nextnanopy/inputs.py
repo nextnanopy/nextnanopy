@@ -494,6 +494,70 @@ class InputFile(InputFileTemplate):
 
 class ExecutionQueue(threading.Thread):
     """
+        This class take InputFiles and add them in the execution queue.
+        Depending on limit_parallel, InputFiles are executed in parallel or sequentially.
+
+
+        Parameters
+        ----------
+        limit_parallel: int
+            number of InputFiles to be executed in parallel (default: 1)
+        terminate_empty : bool
+            If True, terminates once all added files are executed and loogged.
+            If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
+            Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
+        convergenceCheck: bool
+            see convergenceCheck in InputFile
+
+        **execution_kwargs: parameters to be taken by InputFile.execute()
+
+
+
+
+        Attributes
+        ----------
+        waiting_queue: queue.Queeu
+            queue of InputFile objects to be executed
+        started: list
+            list of (simulation_info:dict, InputFile) currently executing
+
+        finished: list
+            list of simulation_infos for finished simulations
+
+        stop_when_empty: bool
+            see terminate_empty parameter
+        daemon: bool
+            see threading.Thread.daemon
+
+        Methods
+        ----------- for user
+        add(*input_files)
+            adds InputFiles to queue
+
+        start()
+            start the thread (i.e. execution)
+            see threading.Thread.start()
+
+        stop()
+            stop the thread (once all added files are executed)
+            only necessary if termanate_empty = True
+
+
+        -------internal (or for advanced users)
+        all_done()
+            return True if all execution and logging are finished
+
+        add_execution()
+            pop an InputFile from self.waiting_queue, execute and add to self.started
+
+        log_finished()
+            finish logging for finished execution in self.started
+
+        run()
+            commands to be run upon start():
+                pop simulation from queue and execute
+                log the simulation if some are finished from self.started
+            see threading.Thread.run()
 
     """
     def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, convergenceCheck = False, **execution_kwargs):
