@@ -503,7 +503,7 @@ class ExecutionQueue(threading.Thread):
         limit_parallel: int
             number of InputFiles to be executed in parallel (default: 1)
         terminate_empty : bool
-            If True, terminates once all added files are executed and loogged.
+            If True, terminates once all added files are executed and logged.
             If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
             Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
         convergenceCheck: bool
@@ -516,7 +516,7 @@ class ExecutionQueue(threading.Thread):
 
         Attributes
         ----------
-        waiting_queue: queue.Queeu
+        waiting_queue: queue.Queue
             queue of InputFile objects to be executed
         started: list
             list of (simulation_info:dict, InputFile) currently executing
@@ -586,6 +586,8 @@ class ExecutionQueue(threading.Thread):
             input_f = self.waiting_queue.get()
             if self.limit_parallel>1:
                 input_f.__parallel__ = True
+            if not self.execution_kwargs['show_log']:
+                print(f"\nRemaining simulations in the queue: ", self.waiting_queue.qsize())
             info = input_f.execute(**self.execution_kwargs)
             self.started.append((info,input_f))
 
@@ -629,7 +631,7 @@ class ExecutionQueue(threading.Thread):
             self.add_execution()
             self.log_finished()
             if self.all_done():
-                print('Waiting queue is empty, all execution and logging are finished')
+                print('\nWaiting queue is empty, all execution and logging are finished')
 
                 if self.stop_when_empty:
                     break
@@ -746,7 +748,6 @@ class Sweep(InputFile):
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
 
         #TODO: delete if statement (use execution_queue for both cases)
-        #TODO: add "Executig simulations" to ExecutionQueue if not show_log
         if parallel_limit>1:
             execution_queue = ExecutionQueue(limit_parallel=parallel_limit, terminate_empty=True, outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode, **kwargs)
             execution_queue.add(*self.input_files)
@@ -754,7 +755,8 @@ class Sweep(InputFile):
 
             execution_queue.join()
             if delete_input_files:
-                inputfile.remove()
+                for inputfile in self.input_files:
+                    inputfile.remove()
         else:
             for i, inputfile in enumerate(self.input_files):
                 if not show_log:
