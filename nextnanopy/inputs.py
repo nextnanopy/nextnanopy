@@ -586,7 +586,7 @@ class ExecutionQueue(threading.Thread):
             input_f = self.waiting_queue.get()
             if self.limit_parallel>1:
                 input_f.__parallel__ = True
-            if not self.execution_kwargs['show_log']:
+            if 'show_log' in self.execution_kwargs and not self.execution_kwargs['show_log']:
                 print(f"\nRemaining simulations in the queue: ", self.waiting_queue.qsize())
             info = input_f.execute(**self.execution_kwargs)
             self.started.append((info,input_f))
