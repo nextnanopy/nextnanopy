@@ -50,7 +50,7 @@ class Entry(object):
             text_lines = []
             for c in self.content:
                 text_lines.extend(content_to_lines(c.__str__()))
-        for i in range(len(text_lines)):
+        for i, _ in enumerate(text_lines):
             text_lines[i] = intend_level * self.intend_sign + text_lines[i]
 
         return text_lines
@@ -79,7 +79,7 @@ class Block(Entry):
             text_lines = []
             for c in self.content:
                 text_lines.extend(content_to_lines(c.__str__()))
-        for i in range(len(text_lines)):
+        for i, _ in enumerate(text_lines):
             text_lines[i] = intend_level * self.intend_sign + text_lines[i]
 
         text_lines.insert(0, self.name + '{')
@@ -155,14 +155,14 @@ class Parser(object):
 
 
     def delete_comments(self):
-        for i in range(len(self.lines)):
+        for i, _ in enumerate(self.lines):
             if self.lines[i].startswith('#'):
                 self.lines[i] = ''
             else:
                 self.lines[i] = self.lines[i].split(sep = '#')[0]
 
     def replace_brackets(self):
-        for i in range(len(self.lines)):
+        for i, _ in enumerate(self.lines):
             self.lines[i] = self.lines[i].replace('{', ' { ')
             self.lines[i] = self.lines[i].replace('}', ' } ')
             self.lines[i] = self.lines[i].replace('[', ' [ ')

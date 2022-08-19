@@ -446,17 +446,15 @@ class DataFile(DataFileTemplate):
             else:
                 if subplots:
                     fig, ax = plt.subplots(len(self.variables))
-                    for i in range(len(self.variables)):
-                        var = self.variables[i]
+                    for i, var in enumerate(self.variables):
                         im = ax[i].pcolormesh(x.value, y.value, var.value, shading='auto', label=f'{var.name}[{var.unit}]')
                         ax[i].set_xlabel(f'{x.name}[{x.unit}]')
                         ax[i].set_ylabel(f'{y.name}[{y.unit}]')
                         ax[i].set_title(f'{var.name}[{var.unit}]')
                         fig.colorbar(im, ax=ax[i])
                 else:
-                    for i in range(len(self.variables)):
+                    for i, var in enumerate(self.variables):
                         fig, ax = plt.subplots()
-                        var = self.variables[i]
                         im = ax.pcolormesh(x.value, y.value, var.value, shading='auto', label=f'{var.name}[{var.unit}]')
                         ax.set_xlabel(f'{x.name}[{x.unit}]')
                         ax.set_ylabel(f'{y.name}[{y.unit}]')

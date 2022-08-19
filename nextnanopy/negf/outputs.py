@@ -144,8 +144,7 @@ def get_WannierStark_norm(folder,scaling_factor = 1):
 
 def scale_wf(wf_input,factor):
     scaled = np.copy(wf_input)
-    for i in range(len(wf_input)):
-        cur = wf_input[i]
+    for i, cur  in enumerate(wf_input):
         mi = min(cur)
         ma = max(cur)
         scaled[i] = np.interp(cur,[mi,ma],[mi,factor*(ma-mi)+mi])
