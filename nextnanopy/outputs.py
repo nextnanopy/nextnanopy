@@ -370,6 +370,9 @@ class DataFileTemplate(Output):
     def get_loader(self):
         pass
 
+    def export(self, filename, format):
+        raise NotImplementedError('Exporters are not implemented yet')
+
 
 class DataFile(DataFileTemplate):
     def __init__(self, fullpath, product=None):

@@ -39,6 +39,9 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
+        #test creating the document
+        self.assertRaises(NotImplementedError, df.export, filename='TESTEXPORT.dat', format='dat')
+
     def test_avs(self):
         df = outputs.DataFile(join(folder_nnp, 'bandedges_2d.fld'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 2)
@@ -56,6 +59,9 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 2)
         self.assertEqual(df.metadata['dims'], [164, 79])
         self.assertEqual(df.metadata['field'], 'rectilinear')
+
+        # test creating the document
+        self.assertRaises(NotImplementedError, df.export, filename = 'TESTEXPORT2D.fld', format='AVSAscii')
 
     def test_avs3D(self):
         df = outputs.DataFile(join(folder_nnp, 'potential.fld'), product='nextnano++')
@@ -77,6 +83,9 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 3)
         self.assertEqual(df.metadata['dims'], [11, 11, 76])
         self.assertEqual(df.metadata['field'], 'rectilinear')
+
+        # test creating the document
+        self.assertRaises(NotImplementedError, df.export, filename = 'TESTEXPORT3D.fld', format='AVSAscii')
 
     def test_vtr_potential(self):
         df = outputs.DataFile(join(folder_nnp, 'potential.vtr'), product='nextnano++')
@@ -150,7 +159,7 @@ class TestOutputs_nnp(unittest.TestCase):
             self.assertEqual(len(datafile.variables),6)
 
     #TODO add tests for loading Origin like file
-
+    #TODO add tests for exporting binary data
 
 class TestOutputs_nn3(unittest.TestCase):
 
