@@ -37,6 +37,18 @@ def content_to_lines(content_to_transform):
             result.extend(c.__str__().split(sep='\n'))
         return result
 
+
+class Comment(object): #just to be able to check that entry is comment
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+        self.text.__repr__()
+
+    def __str__(self):
+        self.text.__str__()
+
+
 class Entry(object):
     def __init__(self, content, intend_sign = '    '):
         self.content = content
