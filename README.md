@@ -41,7 +41,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 
 ### Vesrion 0.1.15 (Aug 31st, 2022)
-* input files now can be execute in parallel throug nextnanopy.inputs.ExecutionQueue class
+* input files now can be executed in parallel throuhg nextnanopy.inputs.ExecutionQueue class
 * Sweep uses ExecutionQueue and executes several simulations in parallel if parallel_limit>1 in Sweep.execute_sweep(parallel_limit = n)
  
 ### Vesrion 0.1.14 (Jul 27th, 2022)
