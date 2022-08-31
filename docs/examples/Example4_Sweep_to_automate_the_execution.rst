@@ -27,7 +27,7 @@ variables in input file (see Example1).
 
     import nextnanopy as nn
     
-    path = r'E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files/sweep_example.in'
+    path = r'.\input_files/sweep_example.in'
     my_sweep = nn.Sweep({'ALLOY':[0.3,0.6], 'SIZE':[80,100]}, path)
     print(my_sweep)
 
@@ -35,7 +35,7 @@ variables in input file (see Example1).
 .. parsed-literal::
 
     Sweep
-    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files/sweep_example.in
+    fullpath: .\input_files/sweep_example.in
     Input variables: 8 elements
     	$BIAS = 0.0 # Gate voltage(V)
     	$ALLOY = 0.3 # Al content of AlGaAs layer
@@ -66,7 +66,7 @@ input file. One can access info about the input files via
 .. parsed-literal::
 
     [InputFile
-     fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files\sweep_example__ALLOY_0.3_SIZE_80_.in
+     fullpath: .\input_files\sweep_example__ALLOY_0.3_SIZE_80_.in
      Input variables: 8 elements
      	$BIAS = 0.0 # Gate voltage(V)
      	$ALLOY = 0.3 # THIS VARIABLE IS UNDER SWEEP
@@ -77,7 +77,7 @@ input file. One can access info about the input files via
      	$NUMEV = 10 # number of eigenvalues to be calculated
      	$BARRIER = 0.7 # height of left Schottky barrier (eV),
      InputFile
-     fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files\sweep_example__ALLOY_0.3_SIZE_100_.in
+     fullpath: .\input_files\sweep_example__ALLOY_0.3_SIZE_100_.in
      Input variables: 8 elements
      	$BIAS = 0.0 # Gate voltage(V)
      	$ALLOY = 0.3 # THIS VARIABLE IS UNDER SWEEP
@@ -88,7 +88,7 @@ input file. One can access info about the input files via
      	$NUMEV = 10 # number of eigenvalues to be calculated
      	$BARRIER = 0.7 # height of left Schottky barrier (eV),
      InputFile
-     fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files\sweep_example__ALLOY_0.6_SIZE_80_.in
+     fullpath: .\input_files\sweep_example__ALLOY_0.6_SIZE_80_.in
      Input variables: 8 elements
      	$BIAS = 0.0 # Gate voltage(V)
      	$ALLOY = 0.6 # THIS VARIABLE IS UNDER SWEEP
@@ -99,7 +99,7 @@ input file. One can access info about the input files via
      	$NUMEV = 10 # number of eigenvalues to be calculated
      	$BARRIER = 0.7 # height of left Schottky barrier (eV),
      InputFile
-     fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\input_files\sweep_example__ALLOY_0.6_SIZE_100_.in
+     fullpath: .\input_files\sweep_example__ALLOY_0.6_SIZE_100_.in
      Input variables: 8 elements
      	$BIAS = 0.0 # Gate voltage(V)
      	$ALLOY = 0.6 # THIS VARIABLE IS UNDER SWEEP
