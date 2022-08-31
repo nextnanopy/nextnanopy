@@ -119,6 +119,7 @@ quantum {
 
 poisson{
    output_potential{}
+   charge_neutral{}
 }
 
 
@@ -136,5 +137,5 @@ currents{
 run{
    solve_poisson{}
    solve_quantum{}
-   outer_iteration{} # solve coupled Schrödinger-Poisson equations
+   outer_iteration{} # solve coupled Schrï¿½dinger-Poisson equations
 }
