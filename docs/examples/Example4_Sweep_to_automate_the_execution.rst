@@ -168,6 +168,8 @@ mahcine default parallel_limit = 1
 \**kwags Any other parameter accepted by nextnanopy.InputFile.execute()
 e.g. exe, license, database, outputdirectory
 
+Example of the simulation in parallel (2 Input files at a time)
+
 .. code:: ipython3
 
     my_sweep.execute_sweep(delete_input_files = True, overwrite = True, show_log = False, convergenceCheck = True, parallel_limit = 2)
@@ -185,6 +187,27 @@ e.g. exe, license, database, outputdirectory
     Remaining simulations in the queue:  0
     
     Waiting queue is empty, all execution and logging are finished
+    
+
+Example of the simulation in sequence (if you want to run the sweep
+which was already executed, save it one more time)
+
+.. code:: ipython3
+
+    my_sweep.save_sweep(delete_old_files = False)
+    my_sweep.execute_sweep(delete_input_files = True, overwrite = True, show_log = False, convergenceCheck = True, parallel_limit = 1)
+
+
+.. parsed-literal::
+
+    
+    Executing simulations [1/4]...
+    
+    Executing simulations [2/4]...
+    
+    Executing simulations [3/4]...
+    
+    Executing simulations [4/4]...
     
 
 Please contact python@nextnano.com for any issues with this document.
