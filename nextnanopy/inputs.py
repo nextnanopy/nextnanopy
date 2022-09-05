@@ -752,8 +752,6 @@ class Sweep(InputFile):
             output_directory = self.config.get(section = self.product,option = 'outputdirectory')
         self.prepare_output(overwrite, output_directory)
         output_directory = self.sweep_output_directory
-        simulations_info = []
-        polls = []
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
             return
@@ -773,8 +771,6 @@ class Sweep(InputFile):
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
                 info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
-                #simulations_info.append(info)#unnecessary, delete later
-                #polls = [simulation['process'].poll() for simulation in simulations_info]
                 if delete_input_files:
                     inputfile.remove()
 
