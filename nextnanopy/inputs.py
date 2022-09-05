@@ -717,7 +717,7 @@ class Sweep(InputFile):
             self.input_files.append(inputfile)
 
 
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1, **kwargs):
+    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1, separate_sweep_dir = True, **kwargs):
         """
         Execute created input files and saves information to output folder.
 
@@ -750,8 +750,12 @@ class Sweep(InputFile):
             del kwargs['outputdirectory']
         except KeyError:
             output_directory = self.config.get(section = self.product,option = 'outputdirectory')
-        self.prepare_output(overwrite, output_directory)
-        output_directory = self.sweep_output_directory
+        if separate_sweep_dir:
+            self.prepare_output(overwrite, output_directory)
+            output_directory = self.sweep_output_directory
+        else:
+            self.sweep_output_directory = output_directory
+
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
             return
