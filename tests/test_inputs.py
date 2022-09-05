@@ -491,6 +491,16 @@ class TestSweep(unittest.TestCase):
         self.addCleanup(os.rmdir, os.path.join('tests', 'outputs', 'only_variables_sweep'))
         self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
 
+    def test_nnp_mkdir_specify(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        sweep = Sweep({}, fullpath=fullpath)
+        created_directory = os.path.join(sweep.mk_dir(overwrite=True, output_directory=r'tests//outputs'))
+        self.assertTrue(os.path.samefile(created_directory, os.path.join('tests', 'outputs', 'only_variables_sweep')))
+        self.assertTrue(os.path.isdir(os.path.join('tests', 'outputs', 'only_variables_sweep')))
+
+        self.addCleanup(os.rmdir, os.path.join('tests', 'outputs', 'only_variables_sweep'))
+        self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
+
     def test_nnp_save(self):
         self.addCleanup(delete_files, 'only_variables', directory=folder_nnp, exceptions=['only_variables.in'])
         fullpath = os.path.join(folder_nnp, 'only_variables.in')

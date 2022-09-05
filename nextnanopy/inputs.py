@@ -696,8 +696,8 @@ class Sweep(InputFile):
         self.input_files = []
         self.create_input_files(round_decimal)
 
-    def prepare_output(self, overwrite = False):
-        self.sweep_output_directory = self.mk_dir(overwrite=overwrite)
+    def prepare_output(self, overwrite = False, output_directory = None):
+        self.sweep_output_directory = self.mk_dir(overwrite=overwrite, output_directory = output_directory)
         self.create_info()
 
     def create_input_files(self, round_decimal):
@@ -745,12 +745,18 @@ class Sweep(InputFile):
         **kwargs:
             see **kwargs of InputFile.execute()
         """
-        self.prepare_output(overwrite)
+        try:
+            output_directory = kwargs['outputdirectory']
+            del kwargs['outputdirectory']
+        except KeyError:
+            output_directory = self.config.get(section = self.product,option = 'outputdirectory')
+        self.prepare_output(overwrite, output_directory)
         output_directory = self.sweep_output_directory
         simulations_info = []
         polls = []
         if not self.input_files:
             warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
+            return
 
         #TODO: delete if statement (use execution_queue for both cases)
         if parallel_limit>1:
@@ -775,12 +781,13 @@ class Sweep(InputFile):
 
 
 
-    def mk_dir(self,overwrite = False):
+    def mk_dir(self,overwrite = False, output_directory = None):
         vars = ''
         for i in self.var_sweep.keys():
             vars+=('__'+i)
         name_of_file = self.filename_only
-        output_directory = self.config.get(section = self.product,option = 'outputdirectory')
+        if not output_directory:
+            output_directory = self.config.get(section = self.product,option = 'outputdirectory')
         name = (name_of_file+'_sweep'+vars)
         if overwrite:
             directory = mkdir_if_not_exist(os.path.join(output_directory,name))
