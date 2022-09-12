@@ -20,7 +20,14 @@ class InputFile(InputFileTemplate):
         #parser.parse(self.raw_lines, mode='lines')
         #print(self.raw_lines)
         parser.parse(self.lines, mode = 'lines')
-        self.content = parser.result
+        result = parser.result
+        return result
+
+    @property
+    def content(self):
+        return self.load_content()
+
+
 
     def validate(self):
         if not is_nnp_input_text(self.raw_text):
@@ -76,6 +83,29 @@ class Entry(object):
         for line in self.lines:
             result += line + '\n'
         return result
+
+    @property
+    def dict_representation(self):
+        result = DictList()
+        for i, entry in enumerate(self.content):
+            if isinstance(entry, Block):
+                result[entry.name] = entry
+            else:
+                result[f'_entry_{i}'] = entry
+        return result
+
+    def __getitem__(self, item):
+        return self.dict_representation[item]
+
+    def __setitem__(self, item, val):
+        self.dict_representation[item] = val
+        #TODO modify content
+
+    def __delitem__(self, item):
+        del self.dict_representation[item]
+        # TODO modify content
+
+
 
 
 class Block(Entry):
