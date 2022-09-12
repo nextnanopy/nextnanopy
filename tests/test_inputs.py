@@ -164,6 +164,30 @@ class Test_nnp(unittest.TestCase):
         self.assertTrue(os.path.isfile('only_variables_0.in'))
 
 
+    ###content tests
+
+    def test_content_get(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+
+
+        self.assertIsNotNone(file.content)
+        self.assertEqual(file.content[0],'$float = 0.0 ')
+        self.assertEqual(file.content[-1].name, 'global')
+
+    def test_content_set(self):
+        fullpath = os.path.join(folder_nnp, 'only_variables.in')
+        file = InputFile(fullpath)
+
+
+        file.content[0] = '$DUMMY = 1'
+        self.assertEqual(file.content[0],'$DUMMY = 1')
+        file.content['_entry_0'] = 'DUMMY LINE'
+        self.assertEqual(file.content[0], 'DUMMY LINE')
+
+
+
+
 class Test_nn3(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
@@ -316,6 +340,15 @@ class Test_nn3(unittest.TestCase):
         file.save()
         self.assertTrue(os.path.isfile('only_variables_0.in'))
 
+
+    def test_content(self):
+        fullpath = os.path.join(folder_nn3, 'only_variables.in')
+        file = InputFile(fullpath)
+
+
+        self.assertIsNone(file.content)
+
+
 class Test_negf(unittest.TestCase):
     def test_load(self):
         fullpath = os.path.join(folder_negf, 'example.xml')
@@ -407,6 +440,16 @@ class Test_negf(unittest.TestCase):
         self.addCleanup(os.remove,os.path.join(folder_negf,'example_0.xml'))
         file.save()
         self.assertTrue(os.path.isfile(os.path.join(folder_negf,'example_0.xml')))
+
+
+    def test_content(self):
+        fullpath = os.path.join(folder_negf, 'example.xml')
+        file = InputFile(fullpath)
+
+
+        self.assertIsNone(file.content)
+
+
 class TestInputFile(unittest.TestCase):
 
     def test_access_by_index(self):
