@@ -36,6 +36,8 @@ class DictList(OrderedDict):
 
     def __getitem__(self, key):
         if isinstance(key, int):
+            if key < 0:
+                key = len(self) + key
             key = self._idxs[key]
         item = super().__getitem__(key)
         return item
