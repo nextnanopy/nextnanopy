@@ -22,6 +22,8 @@ def get_InputFile(product):
         from nextnanopy.negf.inputs import InputFile
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.inputs import InputFile
+    elif product == 'not valid':
+        from nextnanopy.inputs import InputFileTemplate as InputFile
     else:
         raise ValueError(f'{product} is not valid')
     return InputFile

@@ -115,12 +115,13 @@ class InputFileTemplate(object):
     def text(self):
         return str(lines_to_text(*self.lines))
 
-    @text.setter
-    def text(self, text):
-        self.raw_lines = list(text_to_lines(text))
-        self.find_product()
-        self.validate()
-        self.load_variables()
+    # @text.setter
+    # def text(self, text):
+    #     self.raw_lines = list(text_to_lines(text))
+    #     self.find_product()
+    #     self.validate()
+    #     self.load_variables()
+    #     self.load_content()
 
     @property
     def raw_text(self):
@@ -200,6 +201,7 @@ class InputFileTemplate(object):
             3. find the nextnano product (update .product)
             4. validate the input file
             5. load the input variables (update .variables)
+            6. load content (when applicable)
 
         Parameters
         ----------
@@ -451,46 +453,112 @@ class InputFileTemplate(object):
         return result
 
 
+# def decor(func):
+#     def inner(*args,**kwargs):
+#
+#         args = list(args)
+#         initial_object = args[0]
+#         if hasattr(initial_object, '_helper_input_file'):
+#             helper =  initial_object._helper_input_file
+#         else:
+#             func(*args,**kwargs)
+#             return
+#
+#         helper_func = getattr(helper, func.__name__)
+#
+#
+#         args = args[1:]
+#
+#
+#         # print(kwargs)
+#         #print('Start of decor message')
+#         helper_func(*args, **kwargs)
+#
+#         for key in helper.__dict__:
+#             setattr(initial_object, key, helper.__dict__[key])
+#         #print('End of decor message')
+#     return inner
+#
+# def class_decorator(cls):
+#     for attr_name in dir(cls):
+#         attr_value = getattr(cls, attr_name)
+#         if hasattr(attr_value, '__call__') and not attr_name.startswith('__') and attr_name !='load': # check if attr is a function
+#             setattr(cls, attr_name, decor(attr_value))
+#     return cls
+
+
+
+#@class_decorator
 class InputFile(InputFileTemplate):
-    # def __new__(cls, fullpath=None, configpath=None):
+    # def __init__(self,fullpath = None, configpath = None):
+    #
+    #     self.raw_lines = []
+    #     self.variables = DictList()
+    #     self.content = None
+    #     self.fullpath = fullpath
+    #     self.product = 'not valid'
+    #     self.__parallel__ = False
+    #     if fullpath is not None:
+    #         self.clear()
+    #         self.fullpath = fullpath
+    #         self.load_raw()
+    #         self.find_product()
+    #         self.validate()
+    #     if configpath is None:
+    #         self.config = defaults.NNConfig()
+    #     else:
+    #         self.config = defaults.NNConfig(configpath)
+    #     self.execute_info = {}
+    #
+    #
+    #     _helper_input_file_type = defaults.get_InputFile(self.product)
+    #     self._helper_input_file = _helper_input_file_type(fullpath = fullpath, configpath = configpath)
+    #
+    #     for key in self._helper_input_file.__dict__:
+    #         setattr(self, key, self._helper_input_file.__dict__[key])
 
-    def load_variables(self):
-        """
-        Convenient method to find the best loading method for each nextnano product.
-        self.variables will be updated
-        """
-        _InputFile = defaults.get_InputFile(self.product)
-        file = _InputFile()
-        file.text = self.text
-        self.variables = file.variables
+    def __new__(cls, fullpath=None, configpath=None, *args, **kwargs):
+        preInputFile = InputFileTemplate(fullpath,configpath)
+        _InputFileType = defaults.get_InputFile(preInputFile.product)
+        return _InputFileType(fullpath, configpath)
 
-    def load_content(self):
-        _InputFile = defaults.get_InputFile(self.product)
-        file = _InputFile()
-        file.text = self.text
-        file.load_content()
-        self.content = file.content
-
-    @property
-    def lines(self):
-        """
-        update method to support NEGF input
-        """
-        try:
-            _InputFile = defaults.get_InputFile(self.product)
-        except ValueError:
-            _InputFile = InputFileTemplate
-
-
-        file = _InputFile()
-        #file.product = self.product
-        #file.text = self.raw_text
-        #file.variables = self.variables
-        #print(file.product)
-        #print(type(file))
-        file.variables = self.variables
-        file.raw_lines = self.raw_lines
-        return file.lines
+    # def load_variables(self):
+    #     """
+    #     Convenient method to find the best loading method for each nextnano product.
+    #     self.variables will be updated
+    #     """
+    #     _InputFile = defaults.get_InputFile(self.product)
+    #     file = _InputFile()
+    #     file.text = self.text
+    #     self.variables = file.variables
+    #
+    # def load_content(self):
+    #     _InputFile = defaults.get_InputFile(self.product)
+    #     file = _InputFile()
+    #     file.text = self.text
+    #     file.load_content()
+    #     self.content = file.content
+    #
+    # @property
+    # def lines(self):
+    #     """
+    #     update method to support NEGF input
+    #     """
+    #     try:
+    #         _InputFile = defaults.get_InputFile(self.product)
+    #     except ValueError:
+    #         _InputFile = InputFileTemplate
+    #
+    #
+    #     file = _InputFile()
+    #     #file.product = self.product
+    #     #file.text = self.raw_text
+    #     #file.variables = self.variables
+    #     #print(file.product)
+    #     #print(type(file))
+    #     file.variables = self.variables
+    #     file.raw_lines = self.raw_lines
+    #     return file.lines
 
 class ExecutionQueue(threading.Thread):
     """
@@ -641,7 +709,7 @@ class ExecutionQueue(threading.Thread):
 
 
 
-class Sweep(InputFile):
+class Sweep(InputFileTemplate):
     """
         This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
 
@@ -667,8 +735,9 @@ class Sweep(InputFile):
 
     """
     def __init__(self,variables_to_sweep,fullpath=None, configpath=None):
+        testInputFile = InputFile(fullpath = fullpath, configpath = configpath)
         super().__init__(fullpath, configpath)
-        if set(variables_to_sweep.keys()).issubset(self.variables.keys()):
+        if set(variables_to_sweep.keys()).issubset(testInputFile.variables.keys()):
             self.var_sweep = variables_to_sweep
         else:
             raise ValueError('Defined variables are not variables of input file')
