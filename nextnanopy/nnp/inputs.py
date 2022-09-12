@@ -17,7 +17,9 @@ class InputFile(InputFileTemplate):
 
     def load_content(self):
         parser = Parser()
-        parser.parse(self.raw_lines, mode='lines')
+        #parser.parse(self.raw_lines, mode='lines')
+        #print(self.raw_lines)
+        parser.parse(self.lines, mode = 'lines')
         self.content = parser.result
 
     def validate(self):
