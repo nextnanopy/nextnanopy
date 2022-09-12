@@ -99,7 +99,7 @@ class InputFileTemplate(object):
     def __init__(self, fullpath=None, configpath=None):
         self.raw_lines = []
         self.variables = DictList()
-#        self.content = None
+        self.content = None
         self.fullpath = fullpath
         self.product = 'not valid'
         self.__parallel__ = False

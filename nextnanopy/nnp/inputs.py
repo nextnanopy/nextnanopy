@@ -20,12 +20,12 @@ class InputFile(InputFileTemplate):
         #parser.parse(self.raw_lines, mode='lines')
         #print(self.raw_lines)
         parser.parse(self.lines, mode = 'lines')
-        result = parser.result
-        return result
-
-    @property
-    def content(self):
-        return self.load_content()
+        # result = parser.result
+        # return result
+        self.content = parser.result
+    # @property
+    # def content(self):
+    #     return self.load_content()
 
 
 
@@ -98,12 +98,22 @@ class Entry(object):
         return self.dict_representation[item]
 
     def __setitem__(self, item, val):
+
         self.dict_representation[item] = val
-        #TODO modify content
+        if isinstance(item, int):
+            self.content[item] = val
+        else:
+            i = self.dict_representation.get_indx(item)
+            self.content[i] = val
 
     def __delitem__(self, item):
         del self.dict_representation[item]
-        # TODO modify content
+        if isinstance(item, int):
+            del self.content[item]
+        else:
+            i = self.dict_representation.get_indx(item)
+            del self.content[i]
+
 
 
 

@@ -28,6 +28,12 @@ class DictList(OrderedDict):
     def _idxs(self):
         return OrderedDict(enumerate(self.keys()))
 
+    def get_indx(self, key):
+        for i, _key in enumerate(self.keys()):
+            if _key == key:
+                return i
+        raise KeyError('No such key in the DictList')
+
     def __getitem__(self, key):
         if isinstance(key, int):
             key = self._idxs[key]
