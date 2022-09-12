@@ -1,6 +1,7 @@
 from nextnanopy.utils.mycollections import DictList
 from nextnanopy.inputs import InputFileTemplate
 from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_input_text, is_nnp_variable, InputVariable_nnp
+from nextnanopy.utils.misc import savetxt
 
 
 class InputFile(InputFileTemplate):
@@ -26,6 +27,18 @@ class InputFile(InputFileTemplate):
     # @property
     # def content(self):
     #     return self.load_content()
+
+    def save(self, fullpath=None, overwrite=False, automkdir=True, content = False):
+        if fullpath is None:
+            if self.fullpath is None:
+                raise ValueError('Please, specify a fullpath')
+            fullpath = self.fullpath
+        if content:
+            text = self.content.__str__()
+        else:
+            text = self.text
+        self.fullpath = savetxt(fullpath=fullpath, text=text, overwrite=overwrite, automkdir=automkdir)
+        return self.fullpath
 
 
 
