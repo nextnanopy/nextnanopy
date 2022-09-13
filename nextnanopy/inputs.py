@@ -747,7 +747,7 @@ class Sweep(InputFileTemplate):
         self.sweep_output_directory = None
         self.input_files = []
 
-    def save_sweep(self, delete_old_files = True, round_decimal = 8):
+    def save_sweep(self, delete_old_files = True, round_decimal = 8, integer_only_in_name = False):
         """
 
         Parameters
@@ -763,13 +763,13 @@ class Sweep(InputFileTemplate):
             for inputfile in self.input_files:
                 inputfile.remove()
         self.input_files = []
-        self.create_input_files(round_decimal)
+        self.create_input_files(round_decimal, integer_only_in_name = integer_only_in_name)
 
     def prepare_output(self, overwrite = False, output_directory = None):
         self.sweep_output_directory = self.mk_dir(overwrite=overwrite, output_directory = output_directory)
         self.create_info()
 
-    def create_input_files(self, round_decimal):
+    def create_input_files(self, round_decimal, integer_only_in_name = False):
         iteration_combinations = list(itertools.product(*self.var_sweep.values()))
         filename_path, filename_extension = os.path.splitext(self.fullpath)
         for combination in iteration_combinations:
@@ -782,7 +782,10 @@ class Sweep(InputFileTemplate):
                 else:
                     var_value_string = round(var_value, round_decimal)
                 filename_end += '{}_{}_'.format(var_name, var_value_string)
-            inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
+            if integer_only_in_name:
+                inputfile.save(overwrite = False)
+            else:
+                inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
             self.input_files.append(inputfile)
 
 
