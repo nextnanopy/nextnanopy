@@ -56,8 +56,6 @@ comment_original = input_file.variables[SweepVariable].comment
 
 SweepValues = [i*i for i in np.linspace(0.00, 1.00, 41)]
 
-#fixed_energy = 0.0092
-
 dfV=[]
 df_cbV=[]
 SweepVariableStringV=[]
