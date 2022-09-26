@@ -127,7 +127,7 @@ class Dat(Output):
         for i, values in enumerate(data):
             vm = meta[i]
             if i in meta['dkeys']:
-                values = np.unique(values)
+                #values = np.unique(values)
                 dims.append(values.size)
                 var = Coord(name=vm['name'], unit=vm['unit'], dim=i, value=values)
                 coords[var.name] = var
