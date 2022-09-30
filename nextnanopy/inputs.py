@@ -746,6 +746,8 @@ class Sweep(InputFileTemplate):
                 raise TypeError('Values of variables_to_sweep should be iterable objects')
         self.sweep_output_directory = None
         self.input_files = []
+        self.sweep_infodict = DictList()
+        self.sweep_output_infodict = DictList()
 
     def save_sweep(self, delete_old_files = True, round_decimal = 8, integer_only_in_name = False):
         """
@@ -786,7 +788,9 @@ class Sweep(InputFileTemplate):
                 inputfile.save(overwrite = False)
             else:
                 inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
+            variable_combination =  dict(zip(self.var_sweep.keys(), combination))
             self.input_files.append(inputfile)
+            self.sweep_infodict[inputfile.fullpath] = variable_combination
 
 
     def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1, separate_sweep_dir = True, **kwargs):
@@ -850,6 +854,10 @@ class Sweep(InputFileTemplate):
                 if delete_input_files:
                     inputfile.remove()
 
+        #part where the info is stored
+        for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values()):
+            self.sweep_output_infodict[inputfile.folder_output] = variable_combination
+        # TODO create files with info in output_directories
 
 
 
