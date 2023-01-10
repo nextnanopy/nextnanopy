@@ -127,10 +127,7 @@ if(plotL):
   folder = nn.config.config[software]['outputdirectory']
   print("output folder:")
   print(folder)
-#++++++++++++++++++++++++++++++++++++++++++++++
-# These lines have to be adjusted by the user.  
-#++++++++++++++++++++++++++++++++++++++++++++++
-#===========================
+
   if(software=="nextnano++"):
       print("nextnano++ not implemented!")
   elif(software=="nextnano3"):

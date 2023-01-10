@@ -133,7 +133,7 @@ def show_message(msg):
         pass
 
 def mkdir_even_if_exists(path,name):
-    """creates a directory ubder path with a given name. If exists, adds integer number to directory name.
+    """creates a directory under path with a given name. If exists, adds integer number to directory name.
     returns directory full path"""
     directory = os.path.join(path,name)
     if os.path.exists(directory):
