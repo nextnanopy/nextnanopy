@@ -20,7 +20,7 @@ import nextnanopy as nn
 from nextnanopy.utils.misc import mkdir_if_not_exist
 
 # shortcuts
-import base
+import shortcuts as s
 
 # timer
 import timeit
@@ -72,7 +72,7 @@ KaneParameter_fromOutput = True   # use nextnano database value for k.p Kane par
 
 # CalculateReducedMass_fromOutput = True   # calculate reduced mass from nextnano output
 CalculateReducedMass_fromOutput = False   # specify reduced mass by hand
-user_defined_mass_r = 0.18 * base.electron_mass                # m_r [kg] Duboz2019
+user_defined_mass_r = 0.18 * s.electron_mass                # m_r [kg] Duboz2019
 
 # highest valence band. Necesarry info for bandgap calculation, but does not make much difference in dipole matrix element
 highestVB = 'LH'
@@ -123,8 +123,8 @@ InputPath  = os.path.join(folder_path, filename)
 input_file = nn.InputFile(InputPath)
 
 # automatically detect the software
-software, FileExtension = base.detect_software_new(input_file)
-filename_no_extension = base.separateFileExtension(filename)[0]
+software, FileExtension = s.detect_software_new(input_file)
+filename_no_extension = s.separateFileExtension(filename)[0]
 
 # Define output folders based on .nextnanopy-config file. If they do not exist, they are created.
 folder_output = nn.config.get(software, 'outputdirectory')
@@ -208,9 +208,9 @@ I_list = list()
 # sweep subfolder paths
 sweep_subfolders = list()
 
-folder = base.getSweepOutputFolderPath(InputPath_temporary, software, SweepVariable)
+folder = s.getSweepOutputFolderPath(InputPath_temporary, software, SweepVariable)
 for input_file in my_sweep.input_files:
-    subfolder_path = base.get_output_subfolder_path(folder, input_file.fullpath)
+    subfolder_path = s.get_output_subfolder_path(folder, input_file.fullpath)
     sweep_subfolders.append(subfolder_path)
 
 # Read out simulation results and calculate tunnel current for each bias
@@ -221,7 +221,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     print('------------------------------------------\n')
 
     # extract values from simulation - electrostatic potential gradient
-    df_potential = base.getDataFile_in_folder('potential.dat', sweep_subfolder, software)
+    df_potential = s.getDataFile_in_folder('potential.dat', sweep_subfolder, software)
     x = df_potential.coords['x'].value      # this is the simulation grid
 
     if CalculateEffectiveField_fromOutput:
@@ -259,7 +259,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     print('No. of conduction band eigenvalues (without spin degeneracy) = ', num_ev_CB)
     print('No. of valence band eigenvalues (considering different spin states) = ', num_ev_VB)
 
-    df_amplitudeGamma = base.getDataFile_in_folder(['amplitudes_QuantumRegion', 'Gamma'], sweep_subfolder, software)
+    df_amplitudeGamma = s.getDataFile_in_folder(['amplitudes_QuantumRegion', 'Gamma'], sweep_subfolder, software)
     # x = df_amplitudeGamma.coords['x'].value  # numpy.array
     amplitude_Gamma = np.zeros((num_ev_CB, len(x)), dtype = np.float64)    # (CB eigenvalue index, position x). For effective mass model the amplitude is a real function.
     for i in range(num_ev_CB):
@@ -268,7 +268,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
     # extract values from simulation - valence band complex envelope functions
     if Run_KP6 or DoNotRunSimulation:
-        df_amplitudeVB = base.getDataFile_in_folder(['amplitudes_QuantumRegion', 'SXYZ'], sweep_subfolder, software)
+        df_amplitudeVB = s.getDataFile_in_folder(['amplitudes_QuantumRegion', 'SXYZ'], sweep_subfolder, software)
         amplitude_VB_x1 = np.zeros((num_ev_VB, len(x)), dtype = np.complex128)          # (VB eigenvalue index, position x). For k.p model the amplitude is a complex function.
         amplitude_VB_x2 = np.zeros((num_ev_VB, len(x)), dtype = np.complex128)          # In nn++, x, y, and z components refers to the simulation coordinates and not the crystal coordinates. Growth direction = x.
         for j in range(num_ev_VB):
@@ -276,7 +276,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
                 amplitude_VB_x1[j, pos] = complex(df_amplitudeVB.variables[f'Psi_{j+1}_x1_real'].value[pos], df_amplitudeVB.variables[f'Psi_{j+1}_x1_imag'].value[pos])   # envelope amplitude
                 amplitude_VB_x2[j, pos] = complex(df_amplitudeVB.variables[f'Psi_{j+1}_x2_real'].value[pos], df_amplitudeVB.variables[f'Psi_{j+1}_x2_imag'].value[pos])
     elif Run_SingleBand:
-        df_amplitudeVB = base.getDataFile_in_folder('amplitudes_QuantumRegion_SO', sweep_subfolder, software)
+        df_amplitudeVB = s.getDataFile_in_folder('amplitudes_QuantumRegion_SO', sweep_subfolder, software)
         amplitude_VB_SO = np.zeros((num_ev_VB, len(x)), dtype = np.float64)
         for j in range(num_ev_VB):
             for pos in range(len(x)):
@@ -287,32 +287,32 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
     # extract values from simulation - bandgap
     print('Extracting bandgap...')
-    df_bandgap = base.getDataFile_in_folder('bandgap.dat', sweep_subfolder, software)
-    bandgap_gamma = base.scale_eV_to_J * df_bandgap.variables['Bandgap_Gamma'].value
+    df_bandgap = s.getDataFile_in_folder('bandgap.dat', sweep_subfolder, software)
+    bandgap_gamma = s.scale_eV_to_J * df_bandgap.variables['Bandgap_Gamma'].value
 
 
 
     # extract values from simulation - crystal-field and spin-orbit splitting
     print('Reading in the position-dependent material parameters...')
-    df_splitting = base.getDataFile('spin_orbit_coupling_energies.dat', filename_kp8, software)
-    Crystal_splitting = base.scale_eV_to_J * df_splitting.variables['Delta_1'].value     # Delta_1 = Delta_crystal
-    SpinOrbit_splitting = base.scale_eV_to_J * df_splitting.variables['Delta_2'].value   # Delta_2 = Delta_parallel
+    df_splitting = s.getDataFile('spin_orbit_coupling_energies.dat', filename_kp8, software)
+    Crystal_splitting = s.scale_eV_to_J * df_splitting.variables['Delta_1'].value     # Delta_1 = Delta_crystal
+    SpinOrbit_splitting = s.scale_eV_to_J * df_splitting.variables['Delta_2'].value   # Delta_2 = Delta_parallel
 
     # convert from material grid to simulation grid
     x_material_grid = df_splitting.coords['x'].value   # material grid
-    Crystal_splitting_on_sim_grid   = base.convert_grid(Crystal_splitting, x_material_grid, x)
-    SpinOrbit_splitting_on_sim_grid = base.convert_grid(SpinOrbit_splitting, x_material_grid, x)
+    Crystal_splitting_on_sim_grid   = s.convert_grid(Crystal_splitting, x_material_grid, x)
+    SpinOrbit_splitting_on_sim_grid = s.convert_grid(SpinOrbit_splitting, x_material_grid, x)
 
     # obtain Kane parameter P_1
     if KaneParameter_fromOutput:
         # extract values from simulation - Kane parameter
-        df_kpParam = base.getDataFile(['kp_parameters', 'kp8'], filename_kp8, software)
-        Kane_P1 = base.scale_eV_to_J * base.scale_Angstrom_to_nm * df_kpParam.variables['P1'].value   # P_1 = along the c crystal axis. Units translated to [J nm]
-        Kane_P1_on_sim_grid = base.convert_grid(Kane_P1, x_material_grid, x)   # convert from material to simulation grid
+        df_kpParam = s.getDataFile(['kp_parameters', 'kp8'], filename_kp8, software)
+        Kane_P1 = s.scale_eV_to_J * s.scale_Angstrom_to_nm * df_kpParam.variables['P1'].value   # P_1 = along the c crystal axis. Units translated to [J nm]
+        Kane_P1_on_sim_grid = s.convert_grid(Kane_P1, x_material_grid, x)   # convert from material to simulation grid
     elif not user_defined_Kane_EP1:
         raise RuntimeError('Please specify Kane energy parameter [eV] or set KaneParameter_fromOutput = True.')
     else:
-        P1 = base.scale1ToNano * np.sqrt(base.hbar**2 * (base.scale_eV_to_J * user_defined_Kane_EP1) / 2 / base.electron_mass)   # user-defined Kane parameter. Units translated to [J nm]
+        P1 = s.scale1ToNano * np.sqrt(s.hbar**2 * (s.scale_eV_to_J * user_defined_Kane_EP1) / 2 / s.electron_mass)   # user-defined Kane parameter. Units translated to [J nm]
         Kane_P1_on_sim_grid = np.array([P1] * len(x))
 
 
@@ -373,8 +373,8 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         integrand2 = np.zeros((num_ev_CB, num_ev_VB, len(x_cut)), dtype = np.complex128)
         for i in range(num_ev_CB):
             for j in range(num_ev_VB):
-                integrand1[i, j, ] = dipole_moment_cut * np.conjugate(amplitude_VB_x1_cut[j, ]) * amplitude_Gamma_cut[i, ] * base.elementary_charge * PotentialGrad_cut
-                integrand2[i, j, ] = dipole_moment_cut * np.conjugate(amplitude_VB_x2_cut[j, ]) * amplitude_Gamma_cut[i, ] * base.elementary_charge * PotentialGrad_cut
+                integrand1[i, j, ] = dipole_moment_cut * np.conjugate(amplitude_VB_x1_cut[j, ]) * amplitude_Gamma_cut[i, ] * s.elementary_charge * PotentialGrad_cut
+                integrand2[i, j, ] = dipole_moment_cut * np.conjugate(amplitude_VB_x2_cut[j, ]) * amplitude_Gamma_cut[i, ] * s.elementary_charge * PotentialGrad_cut
 
         # integrate over position
         integral1 = simps(integrand1, x_cut)   # [J/nm] integrated over [nm] gives [J]
@@ -382,7 +382,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         print('Transition matrix (row, column): ', np.shape(integral1))
 
         # read in the spinor composition from nextnano output
-        df_spinor = base.getDataFile_in_folder(['spinor_composition', 'SXYZ'], sweep_subfolder, software)
+        df_spinor = s.getDataFile_in_folder(['spinor_composition', 'SXYZ'], sweep_subfolder, software)
         spinor_x1_squared = df_spinor.variables['x1'].value   # list of spinor x1 components squared for all eigenstates j
         spinor_x2_squared = df_spinor.variables['x2'].value   # list of spinor x2 components squared for all eigenstates j
 
@@ -398,7 +398,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         integrand = np.zeros((num_ev_CB, num_ev_VB, len(x_cut)), dtype = np.complex128)  # create a (num_ev_CB * num_ev_VB) matrix with position-dependent elements
         for i in range(num_ev_CB):
             for j in range(num_ev_VB):
-                integrand[i, j, ] = np.sqrt(beta_squared_cut) * dipole_moment_cut * amplitude_VB_SO_cut[j, ] * amplitude_Gamma_cut[i, ] * base.elementary_charge * PotentialGrad_cut
+                integrand[i, j, ] = np.sqrt(beta_squared_cut) * dipole_moment_cut * amplitude_VB_SO_cut[j, ] * amplitude_Gamma_cut[i, ] * s.elementary_charge * PotentialGrad_cut
 
         # integrate over position
         M = simps(integrand, x_cut)   # [J/nm] integrated over [nm] gives [J]
@@ -412,16 +412,16 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     if CalculateReducedMass_fromOutput:
         # extract values from simulation - mass
         print('Extracting masses and calculating reduced mass...')
-        df_mass = base.getDataFile_in_folder('charge_carrier_masses.dat', sweep_subfolder, software)
+        df_mass = s.getDataFile_in_folder('charge_carrier_masses.dat', sweep_subfolder, software)
         mass_CB = df_mass.variables['Gamma_mass_t'].value       # effective mass along in-plane direction [unit: m_0]
         mass_VB = df_mass.variables['SO_mass_t'].value          # we take SO effective mass as it contributes dominantly.
 
         # translate to the simulation grid
-        mass_CB_on_sim_grid = base.convert_grid(mass_CB, x_material_grid, x)
-        mass_VB_on_sim_grid = base.convert_grid(mass_VB, x_material_grid, x)
+        mass_CB_on_sim_grid = s.convert_grid(mass_CB, x_material_grid, x)
+        mass_VB_on_sim_grid = s.convert_grid(mass_VB, x_material_grid, x)
 
         # calculate reduced mass m_r
-        mass_r = base.electron_mass * mass_CB_on_sim_grid * mass_VB_on_sim_grid / (mass_CB_on_sim_grid + mass_VB_on_sim_grid)
+        mass_r = s.electron_mass * mass_CB_on_sim_grid * mass_VB_on_sim_grid / (mass_CB_on_sim_grid + mass_VB_on_sim_grid)
         mass_r_averaged = np.average(mass_r)   # average the reduced mass over the system ???
 
     elif not user_defined_mass_r:   # if the variable is empty
@@ -432,18 +432,18 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
 
     # calculate tunnel current for the transition j -> i
-    I_ij = base.scale1ToCenti**(-2) * base.elementary_charge * mass_r_averaged * M_absoluteSquared_spinsum / base.hbar**3   # [A/cm^2]
+    I_ij = s.scale1ToCenti**(-2) * s.elementary_charge * mass_r_averaged * M_absoluteSquared_spinsum / s.hbar**3   # [A/cm^2]
 
 
     # sum over possible transitions (energy levels)
     I = 0.
     num_possible_transitions = 0
-    df_ev_CB     = base.getDataFile_in_folder(['energy_spectrum', 'Gamma'], sweep_subfolder, software)
+    df_ev_CB     = s.getDataFile_in_folder(['energy_spectrum', 'Gamma'], sweep_subfolder, software)
 
     if Run_KP6 or DoNotRunSimulation:
-        df_ev_VB = base.getDataFile_in_folder(['energy_spectrum', 'kp6'], sweep_subfolder, software)
+        df_ev_VB = s.getDataFile_in_folder(['energy_spectrum', 'kp6'], sweep_subfolder, software)
     elif Run_SingleBand:
-        df_ev_VB = base.getDataFile_in_folder(['energy_spectrum', 'SO'], sweep_subfolder, software)
+        df_ev_VB = s.getDataFile_in_folder(['energy_spectrum', 'SO'], sweep_subfolder, software)
 
 
     for i in range(num_ev_CB):
@@ -477,10 +477,10 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
 
 
-# plot m_r in units of base.electron_mass
+# plot m_r in units of s.electron_mass
 if CalculateReducedMass_fromOutput:
     fig, ax = plt.subplots()
-    ax.plot(x, mass_r / base.electron_mass)
+    ax.plot(x, mass_r / s.electron_mass)
     ax.set_xlabel(f"{df_potential.coords['x'].label}")
     ax.set_ylabel('(m_0)')
     ax.set_title('Reduced mass')
@@ -488,11 +488,11 @@ if CalculateReducedMass_fromOutput:
 
 # plot material parameters & dipole moment (independent of bias)
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-ax1.plot(x, bandgap_gamma / base.scale_eV_to_J , label='bandgap c-hh [eV]')
-ax1.plot(x, Crystal_splitting_on_sim_grid / base.scale_eV_to_J, label='crystal splitting [eV]')
-ax1.plot(x, SpinOrbit_splitting_on_sim_grid / base.scale_eV_to_J, label='spin-orbit splitting [eV]')
+ax1.plot(x, bandgap_gamma / s.scale_eV_to_J , label='bandgap c-hh [eV]')
+ax1.plot(x, Crystal_splitting_on_sim_grid / s.scale_eV_to_J, label='crystal splitting [eV]')
+ax1.plot(x, SpinOrbit_splitting_on_sim_grid / s.scale_eV_to_J, label='spin-orbit splitting [eV]')
 if KaneParameter_fromOutput:
-    ax1.plot(x, Kane_P1_on_sim_grid / base.scale_eV_to_J, label='Kane parameter P1 [eV nm]')
+    ax1.plot(x, Kane_P1_on_sim_grid / s.scale_eV_to_J, label='Kane parameter P1 [eV nm]')
 ax1.set_xlabel(f"{df_potential.coords['x'].label}")
 ax1.set_title('Position-dependent material parameters')
 ax1.legend(bbox_to_anchor=(1,1), loc='upper left')
