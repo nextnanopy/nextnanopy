@@ -32,7 +32,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     
     - name: Install dependencies
-      run: pip install numpy pyvista gdspy shapely matplotlib cycler
+      run: pip install numpy pyvista gdspy shapely==1.7 matplotlib cycler
     
     - name: Test with unittest
       run: python -m unittest tests/test_all.py
