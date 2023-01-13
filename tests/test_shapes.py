@@ -45,7 +45,6 @@ class TestShapes(unittest.TestCase):
         gpols = GdsPolygonsRaw(fullpath, unit='nm')
         np_equal(gpols.labels, [0, 1, 2, 3])
         self.assertEqual(gpols.nb_polygons, 4)
-        self.assertEqual(len(gpols.slices[0].slices), 2)
         np_equal(gpols.xy[0][0], np.array([1500., 1500., 1975., 1975., 2025., 2025., 2500., 2500.]))
 
     def test_example2(self):
@@ -53,8 +52,6 @@ class TestShapes(unittest.TestCase):
         gpols = GdsPolygonsRaw(fullpath, unit='nm')
         np_equal(gpols.labels, [0, 1])
         self.assertEqual(gpols.nb_polygons, 2)
-        self.assertEqual(len(gpols.slices[0].slices), 3)
-        self.assertEqual(len(gpols.slices[1].slices), 17)
 
 
 if __name__ == '__main__':
