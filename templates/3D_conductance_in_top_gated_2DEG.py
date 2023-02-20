@@ -181,9 +181,9 @@ for k in range(number_of_bias):
     # simulating
     
     smatrix = kw.smatrix(fqpc, 0, in_leads = [0])
-    conductance.append(smatrix.conductance(1,0))
+    conductance.append(smatrix.transmission(1,0))
     if k == 26:
-        print("Conductance from lead 0 t0 lead 1: %5.4f {2 e^2/h} for Vgate = -1.11 V "  % smatrix.conductance(1,0))
+        print("Conductance from lead 0 t0 lead 1: %5.4f {2 e^2/h} for Vgate = -1.11 V "  % smatrix.transmission(1,0))
 
     
 # +++++ Plotting +++++ #
