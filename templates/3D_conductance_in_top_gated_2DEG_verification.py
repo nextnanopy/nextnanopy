@@ -172,5 +172,5 @@ bandedges_plot.savefig('Band structure of the lead 0 for -1.11 V.png')
 # simulating
 
 smatrix = kw.smatrix(fqpc, 0, in_leads = [0])
-print("Conductance from lead 0 t0 lead 1: %5.4f {2 e^2/h} for Vgate = -1.11 V "  % smatrix.conductance(1,0))
+print("Conductance from lead 0 t0 lead 1: %5.4f {2 e^2/h} for Vgate = -1.11 V "  % smatrix.transmission(1,0))
  
