@@ -157,7 +157,7 @@ for k in range(number_of_bias):
     # simulating
     
     smatrix = kw.smatrix(fqpc, 0, in_leads = [0])
-    conductance.append(smatrix.conductance(1,0))
+    conductance.append(smatrix.transmission(1,0))
      
 # +++++ Plotting +++++ #
 # ++++++++++++++++++++ #
