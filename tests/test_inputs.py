@@ -18,6 +18,7 @@ def delete_files(start,directory = os.getcwd(),exceptions =None):
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
+folder_negfpp = os.path.join('tests', 'datafiles', 'nextnano.NEGF++')
 
 
 class Test_nnp(unittest.TestCase):
@@ -449,6 +450,10 @@ class Test_negf(unittest.TestCase):
 
         self.assertIsNone(file.content)
 
+
+class Test_negfpp(unittest.TestCase):
+    # TODO: implement test for NEGF++ input file
+    pass
 
 class TestInputFile(unittest.TestCase):
 

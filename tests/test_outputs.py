@@ -493,6 +493,7 @@ class TestOutputs_negf(unittest.TestCase):
         for file in files:
             self.assertRaises(NotImplementedError, outputs.DataFile, join(folder_negf, file), 'nextnano.NEGF')
 
+# NEGF C# and NEGF C++ have identical outputs. Maybe no need to test.
 
 class TestOutputs_msb(unittest.TestCase):
 

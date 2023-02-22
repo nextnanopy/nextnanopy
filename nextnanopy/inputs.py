@@ -316,7 +316,7 @@ class InputFileTemplate(object):
                             raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
                         elif 'Outdated numerics library (f95library) used' in line:
                             raise RuntimeError(f'\nOutdated numerics library (f95library) used.')
-            elif self.product == 'nextnano.NEGF':   # nextnano.NEGF reports convergence at every voltage and temperature sweep.
+            elif self.product == 'nextnano.NEGF' or self.product == 'nextnano.NEGF++':   # NEGF reports convergence at every voltage and temperature sweep.
                 with open(log, 'r') as file:
                     for line in file:
                         if 'Simulation has NOT CONVERGED' in line:
