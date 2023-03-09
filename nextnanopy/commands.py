@@ -2,6 +2,7 @@ import sys, os
 import subprocess
 import queue
 import threading
+import warnings
 from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
 from nextnanopy import defaults
 
@@ -25,6 +26,12 @@ def command(
     kwargs.update(opt_kwargs)
     product = defaults.input_file_type(inputfile)
     cmd = defaults.get_command(product)
+
+    # warn if output path might be too long
+    tooLongPath     = (product in ['nextnano3', 'nextnano++']) and len(outputdirectory) + 80 > 260   # TODO: how long is the minimal path appended by nn3/nnp simulations?
+    tooLongPathNEGF = (product in ['nextnano.NEGF', 'nextnano.NEGF++']) and len(outputdirectory) + 80 > 260
+    if tooLongPath or tooLongPathNEGF:
+        warnings.warn('The output path might be too long on Windows 10 (maximum 260 characters). Consider abbreviating your input file name and/or sweep variables...')
     return cmd(**kwargs)
 
 
