@@ -135,12 +135,11 @@ def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = Fals
 
     dfolder = DataFolder(output_directory_path)
 
-    dfile_hole  = DataFile(dfolder.file('integrated_density_hole.dat'))
-    dfile_electron = DataFile(dfolder.file('integrated_density_electron.dat'))
+    dfile_hole  = DataFile(dfolder.file('integrated_density_hole.dat'), FirstVarIsCoordFlag=False, product = 'nextnano++')
+    dfile_electron = DataFile(dfolder.file('integrated_density_electron.dat'), FirstVarIsCoordFlag=False, product = 'nextnano++')
 
     bias_hole_set = set([var.name for var in dfile_hole.variables if var.name.endswith('_bias')])
     bias_electron_set = set([var.name for var in dfile_electron.variables if var.name.endswith('_bias')])
-
     common_biases_list = list(bias_hole_set.intersection(bias_electron_set))
 
     """
@@ -154,15 +153,15 @@ def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = Fals
     if bias1 = bias2 = None, voltage = first common bias
     """
     if not common_biases_list:
-        return ValueError('There is no common biases in integrated_density_hole.dat file and integrated_density_electron.dat file')
+        raise ValueError('There is no common biases in integrated_density_hole.dat file and integrated_density_electron.dat file')
 
     if bias1:
         if bias1 not in common_biases_list:
-            return ValueError('Specified reference bias1 is not commmon bias for holes and electrons')
+            raise ValueError('Specified reference bias1 is not commmon bias for holes and electrons')
 
         if bias2:
             if bias2 not in common_biases_list:
-                return ValueError('Specified reference bias2 is not commmon bias for holes and electrons')
+                raise ValueError('Specified reference bias2 is not commmon bias for holes and electrons')
             else:
                 voltage = dfile_hole.variables[bias2].value - dfile_hole.variables[bias1].value
         else:

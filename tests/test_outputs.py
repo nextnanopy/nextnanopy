@@ -39,6 +39,31 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
+        def test_dat_FirstVarFlag(self):
+            df = outputs.DataFile(join(folder_nnp, 'bandedges_1d.dat'), product='nextnano++', FirstVarIsCoordFlag = False)
+            self.assertEqual(len(df.coords.keys()), 0)
+            self.assertEqual(len(df.variables.keys()), 5)
+            self.assertEqual(df.variables['x'].name, 'x')
+            self.assertEqual(df.variables['x'].unit, 'nm')
+            self.assertEqual(df.variables['x'].value.size, 548)
+            self.assertEqual(df.variables['Gamma'].name, 'Gamma')
+            self.assertEqual(df.variables['Gamma'].unit, 'eV')
+            self.assertEqual(df.variables['Gamma'].value.size, 548)
+            self.assertEqual(df.metadata['ndim'], 1)
+            self.assertEqual(df.metadata['dkeys'], [0])
+
+            df = outputs.DataFile(join(folder_nnp, 'wf_occupation_1d.dat'), product='nextnano++', FirstVarIsCoordFlag = True)
+            self.assertEqual(len(df.coords.keys()), 1)
+            self.assertEqual(len(df.variables.keys()), 1)
+            self.assertEqual(df.coords['no.'].name, 'no.')
+            self.assertEqual(df.coords['no.'].unit, default_unit)
+            self.assertEqual(df.coords['no.'].value.size, 10)
+            self.assertEqual(df.variables['Occupation'].name, 'Occupation')
+            self.assertEqual(df.variables['Occupation'].unit, 'electrons/cm^2')
+            self.assertEqual(df.variables['Occupation'].value.size, 10)
+            self.assertEqual(df.metadata['ndim'], 1)
+            self.assertEqual(df.metadata['dkeys'], [0])
+
         #test creating the document
         self.assertRaises(NotImplementedError, df.export, filename='TESTEXPORT.dat', format='dat')
 
@@ -199,6 +224,32 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.variables['Gamma_bandedge'].value.size, 258)
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
+
+    def test_dat_FirstVarIsCoord(self):
+        df = outputs.DataFile(join(folder_nn3, 'bandedges_1d.dat'), product='nextnano3', FirstVarIsCoordFlag = False)
+        self.assertEqual(len(df.coords.keys()), 0)
+        self.assertEqual(len(df.variables.keys()), 7)
+        self.assertEqual(df.variables['position'].name, 'position')
+        self.assertEqual(df.variables['position'].unit, 'nm')
+        self.assertEqual(df.variables['position'].value.size, 258)
+        self.assertEqual(df.variables['Gamma_bandedge'].name, 'Gamma_bandedge')
+        self.assertEqual(df.variables['Gamma_bandedge'].unit, 'eV')
+        self.assertEqual(df.variables['Gamma_bandedge'].value.size, 258)
+        self.assertEqual(df.metadata['ndim'], 0)
+        self.assertEqual(df.metadata['dkeys'], [])
+
+        df = outputs.DataFile(join(folder_nn3, 'wf_shift_1d.dat'), product='nextnano3', FirstVarIsCoordFlag = True)
+        self.assertEqual(len(df.coords.keys()), 1)
+        self.assertEqual(len(df.variables.keys()), 10)
+        self.assertEqual(df.coords['position'].name, 'position')
+        self.assertEqual(df.coords['position'].unit, 'nm')
+        self.assertEqual(df.coords['position'].value.size, 121)
+        self.assertEqual(df.variables['psi^2_1'].name, 'psi^2_1')
+        self.assertEqual(df.variables['psi^2_1'].unit, default_unit)
+        self.assertEqual(df.variables['psi^2_1'].value.size, 121)
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dkeys'], [0])
+
 
     def test_avs1D(self):
         df = outputs.DataFile(join(folder_nn3, 'cb_Gamma_avs.fld'), product='nextnano3')
@@ -390,6 +441,37 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.metadata['ndim'], 1)
         self.assertEqual(df.metadata['dkeys'], [0])
 
+
+    def test_dat_FirstVarIsCoordFlag(self):
+        df = outputs.DataFile(join(folder_negf, 'ReducedRealSpaceModes.dat'), product='nextnano.NEGF', FirstVarIsCoordFlag = False)
+        self.assertEqual(len(df.coords.keys()), 0)
+        self.assertEqual(len(df.variables.keys()), 20)
+        self.assertEqual(df.variables['Position'].name, 'Position')
+        self.assertEqual(df.variables['Position'].unit, 'nm')
+        self.assertEqual(df.variables['Position'].value.size, 608)
+        self.assertEqual(df.variables['Conduction_BandEdge'], df.variables[1])
+        self.assertEqual(df.variables['Conduction_BandEdge'].name, 'Conduction_BandEdge')
+        self.assertEqual(df.variables['Conduction_BandEdge'].unit, 'eV')
+        self.assertEqual(df.variables['Conduction_BandEdge'].value.size, 608)
+        self.assertEqual(df.variables['Psi_1 (lev.1 per.0)'], df.variables[2])
+        self.assertEqual(df.variables['Psi_1 (lev.1 per.0)'].name, 'Psi_1 (lev.1 per.0)')
+        self.assertEqual(df.variables['Psi_1 (lev.1 per.0)'].unit, 'a.u.')
+        self.assertEqual(df.variables['Psi_1 (lev.1 per.0)'].value.size, 608)
+        self.assertEqual(df.metadata['ndim'], 0)
+        self.assertEqual(df.metadata['dkeys'], [])
+
+        df = outputs.DataFile(join(folder_negf, 'E_p (Kane energy).dat'), product='nextnano.NEGF', FirstVarIsCoordFlag=True)
+        self.assertEqual(df.coords['Position'], df.coords[0])
+        self.assertEqual(df.coords['Position'].name, 'Position')
+        self.assertEqual(df.coords['Position'].unit, 'nm')
+        self.assertEqual(df.coords['Position'].value.size, 203)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['E_p'].name, 'E_p')
+        self.assertEqual(df.variables['E_p'].unit, default_unit)
+        self.assertEqual(df.variables['E_p'].value.size, 203)
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dkeys'], [0])
+
     def test_vtr(self):
         df = outputs.DataFile(join(folder_negf, 'CarrierDensity_energy_resolved.vtr'), product='nextnano.NEGF')
         self.assertEqual(len(df.coords.keys()), 2)
@@ -416,6 +498,31 @@ class TestOutputs_msb(unittest.TestCase):
 
     def test_dat(self):
         df = outputs.DataFile(join(folder_msb, 'BandEdge_conduction.dat'), product='nextnano.MSB')
+        self.assertEqual(len(df.coords.keys()), 1)
+        self.assertEqual(df.coords['Position'].name, 'Position')
+        self.assertEqual(df.coords['Position'].unit, 'nm')
+        self.assertEqual(df.coords['Position'].value.size, 100)
+        self.assertEqual(len(df.variables.keys()), 1)
+        self.assertEqual(df.variables['Conduction Band Edge'].name, 'Conduction Band Edge')
+        self.assertEqual(df.variables['Conduction Band Edge'].unit, 'eV')
+        self.assertEqual(df.variables['Conduction Band Edge'].value.size, 100)
+        self.assertEqual(df.metadata['ndim'], 1)
+        self.assertEqual(df.metadata['dkeys'], [0])
+
+    def test_dat_FirstVarIsCoordFlag(self):
+        df = outputs.DataFile(join(folder_msb, 'BandEdge_conduction.dat'), product='nextnano.MSB', FirstVarIsCoordFlag = False)
+        self.assertEqual(len(df.coords.keys()), 0)
+        self.assertEqual(len(df.variables.keys()), 2)
+        self.assertEqual(df.variables['Position'].name, 'Position')
+        self.assertEqual(df.variables['Position'].unit, 'nm')
+        self.assertEqual(df.variables['Position'].value.size, 100)
+        self.assertEqual(df.variables['Conduction Band Edge'].name, 'Conduction Band Edge')
+        self.assertEqual(df.variables['Conduction Band Edge'].unit, 'eV')
+        self.assertEqual(df.variables['Conduction Band Edge'].value.size, 100)
+        self.assertEqual(df.metadata['ndim'], 0)
+        self.assertEqual(df.metadata['dkeys'], [])
+
+        df = outputs.DataFile(join(folder_msb, 'BandEdge_conduction.dat'), product='nextnano.MSB', FirstVarIsCoordFlag = True)
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords['Position'].name, 'Position')
         self.assertEqual(df.coords['Position'].unit, 'nm')

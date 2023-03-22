@@ -7,9 +7,9 @@ from nextnanopy.utils.formatting import best_str_to_name_unit
 
 
 class DataFile(DataFileTemplate):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath, product='nextnano++')
-        self.load()
+        self.load(**loader_kwargs)
 
     def get_loader(self):
         if self.extension in ['.v', '.fld', '.coord']:
@@ -37,7 +37,7 @@ class DataFile(DataFileTemplate):
 
 
 class InputVariables(Output):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath)
         self.load()
 
@@ -62,12 +62,12 @@ class InputVariables(Output):
 
 
 class Dat(Output):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, FirstVarIsCoordFlag=True):
         super().__init__(fullpath)
-        self.load()
+        self.load(FirstVarIsCoordFlag)
 
-    def load(self):
-        self.load_metadata()
+    def load(self, FirstVarIsCoordFlag):
+        self.load_metadata(FirstVarIsCoordFlag)
         self.load_data()
 
     def _get_headers(self):
@@ -81,7 +81,7 @@ class Dat(Output):
                     headers.append(line)
         return headers
 
-    def load_metadata(self):
+    def load_metadata(self, FirstVarIsCoordFlag):
         metadata = {}
         headers = self._get_headers()
         metadata['headers'] = headers
@@ -95,7 +95,7 @@ class Dat(Output):
         ndim = 0
         dkeys = []
 
-        FirstVarIsCoordFlag = True
+        # FirstVarIsCoordFlag = True
         for i, column in enumerate(header):
             key, unit = best_str_to_name_unit(column, default_unit=None)
             metadata[i] = {'name': key, 'unit': unit}

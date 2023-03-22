@@ -201,7 +201,7 @@ class DataFolder(object):
 
 class Output(object):
 
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         self.fullpath = fullpath
         self.metadata = {}
         self.coords = DictList()
@@ -336,18 +336,18 @@ class DataFileTemplate(Output):
 
     """
 
-    def __init__(self, fullpath, product=None):
+    def __init__(self, fullpath, product=None, **loader_kwargs):
         super().__init__(fullpath)
         self.product = product
-        self.load()
+        self.load(**loader_kwargs)
 
     @load_message
-    def load(self):
+    def load(self, **loader_kwargs):
         """
         Find the loader and update the stored information with the loaded data
         """
         loader = self.get_loader()
-        df = loader(self.fullpath)
+        df = loader(self.fullpath, **loader_kwargs)
         self.update_with_datafile(df)
         del df
 
@@ -361,9 +361,9 @@ class DataFileTemplate(Output):
         datafile : nextnano.outputs.DataFileTemplate object
         """
 
-        self.metadata.update(datafile.metadata)
-        self.coords.update(datafile.coords)
-        self.variables.update(datafile.variables)
+        self.metadata = datafile.metadata
+        self.coords = datafile.coords
+        self.variables = datafile.variables
         if hasattr(datafile, 'vtk'):
             self.vtk = datafile.vtk
 
@@ -375,8 +375,8 @@ class DataFileTemplate(Output):
 
 
 class DataFile(DataFileTemplate):
-    def __init__(self, fullpath, product=None):
-        super().__init__(fullpath, product=product)
+    def __init__(self, fullpath, product=None, **loader_kwargs):
+        super().__init__(fullpath, product=product, **loader_kwargs) # **loader_kwargs) #, FirstVarIsCoordFlag = False
 
     def get_loader(self):
         if self.product:
@@ -471,7 +471,7 @@ class DataFile(DataFileTemplate):
 
 
 class AvsAscii(Output):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath)
         self.load()
 
@@ -605,7 +605,7 @@ class AvsAscii(Output):
 
 
 class Vtk(Output):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath)
         self.load()
 

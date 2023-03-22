@@ -6,7 +6,7 @@ import re
 
 
 class DataFile(DataFileTemplate):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath, product='nextnano.MSB')
         self.load()
 
@@ -25,12 +25,12 @@ class DataFile(DataFileTemplate):
 
 
 class Dat(Output):
-    def __init__(self, fullpath):
+    def __init__(self, fullpath, **loader_kwargs):
         super().__init__(fullpath)
-        self.load()
+        self.load(**loader_kwargs)
 
-    def load(self):
-        self.load_metadata()
+    def load(self, **loader_kwargs):
+        self.load_metadata(**loader_kwargs)
         self.load_data()
 
     def _get_headers(self):
@@ -55,7 +55,7 @@ class Dat(Output):
                 break
         return arr.size
 
-    def load_metadata(self):
+    def load_metadata(self, FirstVarIsCoordFlag = True):
         headers = self._get_headers()
         self.metadata['headers'] = headers
         self.metadata['skip_rows'] = len(headers)
@@ -77,7 +77,7 @@ class Dat(Output):
             units.extend(empty)
         ndim = 0
         dkeys = []
-        FirstVarIsCoordFlag = True
+        # FirstVarIsCoordFlag = True
         for i, (column, unit) in enumerate(zip(columns, units)):
             self.metadata[i] = {'name': column, 'unit': unit}
             if FirstVarIsCoordFlag:
