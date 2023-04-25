@@ -33,8 +33,6 @@ jobs:
     
     - name: Install dependencies
       run: pip install numpy pyvista gdspy matplotlib cycler
-    - name: Install shapely
-      run: pip install shapely==1.8
 
     
     - name: Test with unittest
