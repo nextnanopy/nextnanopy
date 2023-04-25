@@ -818,6 +818,9 @@ class Sweep(InputFileTemplate):
             some nextnano solvers parallelize computations internally in threads (controlled by --threads in nextnanopy config). To avoid unexpected behaviour and
             not desirable decrease of simulation speed use the rule: parallel_limit*threads<= number of physical cores of the mahcine
             default 1
+        separate_sweep_dir: bool, optional
+            if True, creates separate directory to store subdirectories of the sweep simulation. If False, stores all directories without separate directory.
+            default True
         **kwargs:
             see **kwargs of InputFile.execute()
         """

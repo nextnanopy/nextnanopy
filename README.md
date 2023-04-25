@@ -39,6 +39,13 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Vesrion 0.1.16 (Apr 25th, 2023)
+* nextnanopy now supports python 3.10!
+* The execute_sweep function has been updated to include a new parameter, separate_sweep_dir, which allows the user to specify whether the output files should be saved in a separate directory or a common output directory.
+By default, execute_sweep will still create a separate output directory for each sweep. However, if the user sets separate_sweep_dir to False, the output files will be saved in a common output directory instead.
+* ListDict now supports negative indexes (in the same way as a normal python list)
+* nnpp assistant is updated
+* shapely is no longer necessary to import geometry from gdsii file
 
 ### Vesrion 0.1.15 (Aug 31st, 2022)
 * input files now can be executed in parallel throuhg nextnanopy.inputs.ExecutionQueue class

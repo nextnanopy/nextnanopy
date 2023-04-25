@@ -7,7 +7,6 @@ with open("README.md", "r") as fh:
 
 extras = {
     'gdspy': ('gdspy', '1.6', 'pip'),
-    'Shapely': ('Shapely', '1.7', 'conda'), #TODO drop it in next release
     'matplotlib': ('matplotlib', '3.2', 'conda'),
     'cycler': ('cycler', '0.10', 'conda'),
 }
@@ -20,7 +19,7 @@ install_requires = [
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.15",
+    version="0.1.16",
     author="nextnano GmbH",
     author_email="python@nextnano.com",
     license='BSD-3-Clause',
