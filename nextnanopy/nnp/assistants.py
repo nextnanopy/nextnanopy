@@ -270,6 +270,10 @@ class InputAssistant(object):
         cblock = self.equal_block('constant', dict(name=name, conc=conc))
         return self.merge_blocks('doping', cblock)
 
+    def region_doping_remove(self):
+        cblock = self.block('remove','')
+        return self.merge_blocks('doping', cblock)
+
     def region_integrate(self, label='', electron=False, hole=False, piezo=False, pyro=False, polarization=False):
         kwargs = {
             'electron_density': electron,
@@ -311,7 +315,10 @@ class InputAssistant(object):
     def contacts_schottky(self, name, bias, barrier,steps = 1):
         if bias == []:
             raise ValueError('bias could be a number or non-zero length list of numbers')
-        return self.equal_block('schottky', dict(name=name, bias=bias, barrier=barrier,steps = steps))
+        if steps == 1:
+            return self.equal_block('schottky', dict(name=name, bias=bias, barrier=barrier))
+        else:
+            return self.equal_block('schottky', dict(name=name, bias=bias, barrier=barrier,steps = steps))
 
     def contacts_fermi(self, name, bias,steps = 1):
         if bias == []:
@@ -447,6 +454,15 @@ class InputAssistant(object):
     def quantum_gamma(self, num_ev=100):
         content = self.equal('num_ev', num_ev)
         return self.block('Gamma', content)
+
+    def quantum_quantize_x(self):
+        return self.block('quantize_x', '')
+
+    def quantum_quantize_y(self):
+        return self.block('quantize_y', '')
+
+    def quantum_quantize_z(self):
+        return self.block('quantize_z', '')
 
     def quantum_block(self, *blocks):
         region = self.merge_blocks('region', *blocks)
