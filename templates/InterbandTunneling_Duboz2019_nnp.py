@@ -1,10 +1,19 @@
-# -*- coding: utf-8 -*-
 """
 Created: 2022/06/09
-Updated: 2022/06/10
+Updated: 2023/04/27
 
 This Python script computes interband tunneling current through a highly-doped nitride heterojunction.
-Please refer to the nextnano++ tutorial for the equations and approximations.
+[nextnano++ tutorial]
+https://www.nextnano.de/manual/nn_products/nextnanoplus/tutorials/tricks_and_hacks/1D_interband_tunneling_in_nitride_junction.html
+
+The usage of this script is explained in
+'InterbandTunneling_Duboz2019_doc.ipynb'.
+
+For the equations and approximations, please refer to the the documentation
+'InterbandTunneling_Duboz2019_formulation.pdf'.
+
+This scripts uses the shortcut methods in Chikuwaq/nextnanopy-wrapper:
+https://github.com/Chikuwaq/nextnanopy-wrapper
 
 @author: takuma.sato@nextnano.com
 """
@@ -20,9 +29,11 @@ import nextnanopy as nn
 from nextnanopy.utils.misc import mkdir_if_not_exist
 
 # shortcuts
-import shortcuts as s
+from nnShortcuts.common import CommonShortcuts
+s = CommonShortcuts()
+from nnHelpers import SweepHelper
 
-# timer
+# stopwatch
 import timeit
 start = timeit.default_timer()
 
@@ -35,7 +46,7 @@ start = timeit.default_timer()
 folder_path = r'D:\nextnano Users\takuma.sato\OneDrive - nextnano GmbH\Quantimony\Input files'
 
 # input file
-filename = r'InterbandTunneling_Duboz2019_nnp.in'
+filename = 'InterbandTunneling_Duboz2019_nnp.in'
 
 
 #================================================================
@@ -48,9 +59,9 @@ layer_thickness = 20   # thickness of p- and n-region [nm]
 
 # bias sweep
 SweepVariable = 'BIAS'
-Bias_start = -0.2   # specify (start value, end value, number of points)
-Bias_end   = -1.0
-Bias_points = 9
+sweep_ranges =  {
+    SweepVariable: ([-0.2, -1.0], 9)  # ([min, max], number of points)
+}
 
 # choose either 6-band k.p or single-band simulation for the valence band. You can also set both to False when you do not want to run simulation (only postprocessing with KP6 output data).
 Run_KP6 = True   # run 6-band k.p simulation
@@ -114,17 +125,13 @@ elif Run_SingleBand:
 RunKP8 = KaneParameter_fromOutput
 
 
-# generate list of bias values
-list_of_values = np.round(np.linspace(Bias_start, Bias_end, Bias_points), 2)   # round the bias values for input file & output folder names
-
-
 # load the input file
 InputPath  = os.path.join(folder_path, filename)
 input_file = nn.InputFile(InputPath)
 
 # automatically detect the software
 software, FileExtension = s.detect_software_new(input_file)
-filename_no_extension = s.separateFileExtension(filename)[0]
+filename_no_extension = s.separate_extension(filename)[0]
 
 # Define output folders based on .nextnanopy-config file. If they do not exist, they are created.
 folder_output = nn.config.get(software, 'outputdirectory')
@@ -132,10 +139,9 @@ folder_output_python = os.path.join(folder_output, os.path.join(r'nextnanopy', f
 mkdir_if_not_exist(folder_output_python)
 
 # modify the parameters in the input file
-comment_original = input_file.variables['num_ev_CB'].comment
-input_file.set_variable('num_ev_CB',   value=num_ev_CB,       comment='<= nextnanopy <= ' + comment_original)
-input_file.set_variable('num_ev_VB',   value=num_ev_VB,       comment='<= nextnanopy <= ' + input_file.variables['num_ev_VB'].comment)
-input_file.set_variable('Thickness',   value=layer_thickness, comment='<= nextnanopy <= ' + input_file.variables['Thickness'].comment)
+input_file.set_variable('num_ev_CB', value=num_ev_CB)
+input_file.set_variable('num_ev_VB', value=num_ev_VB)
+input_file.set_variable('Thickness', value=layer_thickness)
 
 
 print('Modified input parameter: ', input_file.get_variable('num_ev_CB').text)
@@ -164,14 +170,8 @@ if RunKP8:
 
     filename_kp8 = filename.replace(FileExtension, '_kp8' + FileExtension)
     InputPath_kp8 = os.path.join(folder_path, filename_kp8)
-    input_file.save(InputPath_kp8, overwrite=True)
-    input_file.execute(convergenceCheck=True)
-
-    if RemoveInputFile:
-        os.remove(InputPath_kp8)
-        print('Temporary input file deleted.')
-    else:
-        print('The temporary input file was saved in the input folder.')
+    input_file.save(InputPath_kp8, overwrite=True, automkdir=True)
+    input_file.execute(convergenceCheck=True, delete_input_files=RemoveInputFile)
 else:
     print('KP8 calculation skipped.')
 
@@ -186,42 +186,37 @@ filename_temporary = filename.replace(FileExtension, '_' + simulation_type + Fil
 InputPath_temporary = os.path.join(folder_path, filename_temporary)
 input_file.save(InputPath_temporary, overwrite=True)
 
-# instantiate nextnanopy.Sweep() object
-my_sweep = nn.Sweep({SweepVariable: list_of_values}, InputPath_temporary)
-my_sweep.save_sweep()
+# instantiate nextnanopy-wrapper.SweepHelper to facilitate simulation execution and postprocessing
+helper = SweepHelper(sweep_ranges, input_file)
 
 
 if Run_KP6 or Run_SingleBand:
     print('\n------------------------------------------')
     print(f'Running {software} {simulation_type} simulation')
     print('------------------------------------------\n')
-    my_sweep.execute_sweep(delete_input_files=RemoveInputFile, overwrite=True, convergenceCheck=True) # overwrite=True avoids enumeration of output folders for secure output data access
+    helper.execute_sweep(parallel_limit=4) # overwrite=True to avoid enumeration of output folders for secure output data access
 
+    if RemoveInputFile:
+        helper.delete_input_files()
 
 
 #%% Postprocessing (calculate tunnel current)
 
 # data containers for the I-V curve
-V_list = list()
-I_list = list()
-
-# sweep subfolder paths
-sweep_subfolders = list()
-
-folder = s.getSweepOutputFolderPath(InputPath_temporary, software, SweepVariable)
-for input_file in my_sweep.input_files:
-    subfolder_path = s.get_output_subfolder_path(folder, input_file.fullpath)
-    sweep_subfolders.append(subfolder_path)
+voltages = list()
+currents = list()
 
 # Read out simulation results and calculate tunnel current for each bias
-for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
+for sweep_coords, sweep_subfolder in zip(helper.data['sweep_coords'], helper.data['output_subfolder']):
+
+    SweepValue = sweep_coords[0]  # one-dimensional sweep
 
     print('\n------------------------------------------')
     print(f"nextnanopy postprocessing for {SweepVariable}={SweepValue}")
     print('------------------------------------------\n')
 
     # extract values from simulation - electrostatic potential gradient
-    df_potential = s.getDataFile_in_folder('potential.dat', sweep_subfolder, software)
+    df_potential = helper.shortcuts.get_DataFile_in_folder('potential.dat', sweep_subfolder)
     x = df_potential.coords['x'].value      # this is the simulation grid
 
     if CalculateEffectiveField_fromOutput:
@@ -259,7 +254,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     print('No. of conduction band eigenvalues (without spin degeneracy) = ', num_ev_CB)
     print('No. of valence band eigenvalues (considering different spin states) = ', num_ev_VB)
 
-    df_amplitudeGamma = s.getDataFile_in_folder(['amplitudes_QuantumRegion', 'Gamma'], sweep_subfolder, software)
+    df_amplitudeGamma = helper.shortcuts.get_DataFile_in_folder(['amplitudes_QuantumRegion', 'Gamma'], sweep_subfolder)
     # x = df_amplitudeGamma.coords['x'].value  # numpy.array
     amplitude_Gamma = np.zeros((num_ev_CB, len(x)), dtype = np.float64)    # (CB eigenvalue index, position x). For effective mass model the amplitude is a real function.
     for i in range(num_ev_CB):
@@ -268,7 +263,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
     # extract values from simulation - valence band complex envelope functions
     if Run_KP6 or DoNotRunSimulation:
-        df_amplitudeVB = s.getDataFile_in_folder(['amplitudes_QuantumRegion', 'SXYZ'], sweep_subfolder, software)
+        df_amplitudeVB = helper.shortcuts.get_DataFile_in_folder(['amplitudes_QuantumRegion', 'SXYZ'], sweep_subfolder)
         amplitude_VB_x1 = np.zeros((num_ev_VB, len(x)), dtype = np.complex128)          # (VB eigenvalue index, position x). For k.p model the amplitude is a complex function.
         amplitude_VB_x2 = np.zeros((num_ev_VB, len(x)), dtype = np.complex128)          # In nn++, x, y, and z components refers to the simulation coordinates and not the crystal coordinates. Growth direction = x.
         for j in range(num_ev_VB):
@@ -276,7 +271,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
                 amplitude_VB_x1[j, pos] = complex(df_amplitudeVB.variables[f'Psi_{j+1}_x1_real'].value[pos], df_amplitudeVB.variables[f'Psi_{j+1}_x1_imag'].value[pos])   # envelope amplitude
                 amplitude_VB_x2[j, pos] = complex(df_amplitudeVB.variables[f'Psi_{j+1}_x2_real'].value[pos], df_amplitudeVB.variables[f'Psi_{j+1}_x2_imag'].value[pos])
     elif Run_SingleBand:
-        df_amplitudeVB = s.getDataFile_in_folder('amplitudes_QuantumRegion_SO', sweep_subfolder, software)
+        df_amplitudeVB = helper.shortcuts.get_DataFile_in_folder('amplitudes_QuantumRegion_SO', sweep_subfolder)
         amplitude_VB_SO = np.zeros((num_ev_VB, len(x)), dtype = np.float64)
         for j in range(num_ev_VB):
             for pos in range(len(x)):
@@ -287,14 +282,14 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
     # extract values from simulation - bandgap
     print('Extracting bandgap...')
-    df_bandgap = s.getDataFile_in_folder('bandgap.dat', sweep_subfolder, software)
+    df_bandgap = helper.shortcuts.get_DataFile_in_folder('bandgap.dat', sweep_subfolder)
     bandgap_gamma = s.scale_eV_to_J * df_bandgap.variables['Bandgap_Gamma'].value
 
 
 
     # extract values from simulation - crystal-field and spin-orbit splitting
     print('Reading in the position-dependent material parameters...')
-    df_splitting = s.getDataFile('spin_orbit_coupling_energies.dat', filename_kp8, software)
+    df_splitting = helper.shortcuts.get_DataFile('spin_orbit_coupling_energies.dat', filename_kp8)
     Crystal_splitting = s.scale_eV_to_J * df_splitting.variables['Delta_1'].value     # Delta_1 = Delta_crystal
     SpinOrbit_splitting = s.scale_eV_to_J * df_splitting.variables['Delta_2'].value   # Delta_2 = Delta_parallel
 
@@ -306,7 +301,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     # obtain Kane parameter P_1
     if KaneParameter_fromOutput:
         # extract values from simulation - Kane parameter
-        df_kpParam = s.getDataFile(['kp_parameters', 'kp8'], filename_kp8, software)
+        df_kpParam = helper.shortcuts.get_DataFile(['kp_parameters', 'kp8'], filename_kp8)
         Kane_P1 = s.scale_eV_to_J * s.scale_Angstrom_to_nm * df_kpParam.variables['P1'].value   # P_1 = along the c crystal axis. Units translated to [J nm]
         Kane_P1_on_sim_grid = s.convert_grid(Kane_P1, x_material_grid, x)   # convert from material to simulation grid
     elif not user_defined_Kane_EP1:
@@ -367,6 +362,8 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
 
 
 
+
+
     if Run_KP6 or DoNotRunSimulation:
         # calculate the integrand for each spin
         integrand1 = np.zeros((num_ev_CB, num_ev_VB, len(x_cut)), dtype = np.complex128)  # create a (num_ev_CB * num_ev_VB) matrix with position-dependent elements
@@ -382,7 +379,7 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         print('Transition matrix (row, column): ', np.shape(integral1))
 
         # read in the spinor composition from nextnano output
-        df_spinor = s.getDataFile_in_folder(['spinor_composition', 'SXYZ'], sweep_subfolder, software)
+        df_spinor = helper.shortcuts.get_DataFile_in_folder(['spinor_composition', 'SXYZ'], sweep_subfolder)
         spinor_x1_squared = df_spinor.variables['x1'].value   # list of spinor x1 components squared for all eigenstates j
         spinor_x2_squared = df_spinor.variables['x2'].value   # list of spinor x2 components squared for all eigenstates j
 
@@ -408,11 +405,14 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         M_absoluteSquared_spinsum = 2 * np.absolute(M) * np.absolute(M)
 
 
+
+
+
     # reduced mass
     if CalculateReducedMass_fromOutput:
         # extract values from simulation - mass
         print('Extracting masses and calculating reduced mass...')
-        df_mass = s.getDataFile_in_folder('charge_carrier_masses.dat', sweep_subfolder, software)
+        df_mass = helper.shortcuts.get_DataFile_in_folder('charge_carrier_masses.dat', sweep_subfolder)
         mass_CB = df_mass.variables['Gamma_mass_t'].value       # effective mass along in-plane direction [unit: m_0]
         mass_VB = df_mass.variables['SO_mass_t'].value          # we take SO effective mass as it contributes dominantly.
 
@@ -431,6 +431,9 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
         print('Using user-defined reduced mass...')
 
 
+
+
+
     # calculate tunnel current for the transition j -> i
     I_ij = s.scale1ToCenti**(-2) * s.elementary_charge * mass_r_averaged * M_absoluteSquared_spinsum / s.hbar**3   # [A/cm^2]
 
@@ -438,12 +441,12 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
     # sum over possible transitions (energy levels)
     I = 0.
     num_possible_transitions = 0
-    df_ev_CB     = s.getDataFile_in_folder(['energy_spectrum', 'Gamma'], sweep_subfolder, software)
+    df_ev_CB     = helper.shortcuts.get_DataFile_in_folder(['energy_spectrum', 'Gamma'], sweep_subfolder)
 
     if Run_KP6 or DoNotRunSimulation:
-        df_ev_VB = s.getDataFile_in_folder(['energy_spectrum', 'kp6'], sweep_subfolder, software)
+        df_ev_VB = helper.shortcuts.get_DataFile_in_folder(['energy_spectrum', 'kp6'], sweep_subfolder)
     elif Run_SingleBand:
-        df_ev_VB = s.getDataFile_in_folder(['energy_spectrum', 'SO'], sweep_subfolder, software)
+        df_ev_VB = helper.shortcuts.get_DataFile_in_folder(['energy_spectrum', 'SO'], sweep_subfolder)
 
 
     for i in range(num_ev_CB):
@@ -454,10 +457,11 @@ for SweepValue, sweep_subfolder in zip(list_of_values, sweep_subfolders):
             if eigenvalue_VB >= eigenvalue_CB:
                 I += I_ij[i][j]
                 num_possible_transitions += 1
+                print(f'possible transition VB{j+1} --> CB{i+1}')
     print(f'\nNumber of possible transitions at the bias {SweepValue}: {num_possible_transitions} out of ', num_ev_CB * num_ev_VB)
 
-    V_list.append(-SweepValue)   # minus sign converts the backward bias to positive values
-    I_list.append(I)
+    voltages.append(-SweepValue)   # minus sign converts the backward bias to positive values
+    currents.append(I)
 
 
     # wave function overlap. Not used during simulation, for reference
@@ -509,7 +513,7 @@ print('\nPLOT: bandgap, position-dependent material parameters and dipole moment
 fig, ax = plt.subplots()
 plt.yscale('log')
 plt.ylim([1e-6, 1e1])
-ax.plot(V_list, I_list, 'o-')
+ax.plot(voltages, currents, 'o-')
 ax.set_xlabel('bias [V]')
 ax.set_ylabel('[A/cm^2]')
 ax.set_title('Tunnel current simulated by 6-band k.p model')
@@ -519,7 +523,7 @@ fig.savefig(os.path.join(folder_output_python,'TunnelCurrent_vs_bias' + FigForma
 a = os.path.join(folder_output_python, f'TunnelCurrent_vs_bias_{simulation_type}.dat')
 with open(a, 'w') as f:
     f.write('bias(V)\ttunnel current(A/cm^2)\n')
-    for bias, current in zip(V_list, I_list):
+    for bias, current in zip(voltages, currents):
         f.write(f'{bias}\t{current}')
         f.write('\n')
 print(f'\nTotal tunnel current has been plotted and saved in the folder {folder_output_python}\n')
