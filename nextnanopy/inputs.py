@@ -861,8 +861,9 @@ class Sweep(InputFileTemplate):
         for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values()):
             self.sweep_output_infodict[inputfile.folder_output] = variable_combination
         # TODO create files with info in output_directories
-        if False:# TODO
-            self.create_infodict_files()
+        if True:# TODO
+            # self.create_infodict_files()
+            self.create_infodict_json()
 
     def create_infodict_files(self):
         """
@@ -870,6 +871,15 @@ class Sweep(InputFileTemplate):
 
         """
         raise NotImplementedError
+
+    def create_infodict_json(self):
+        """
+        Creates json file to store infodict
+        """
+        import json
+        filepath = os.path.join(self.sweep_output_directory, 'sweep_infodict.json')
+        with open(filepath, "w") as file:
+            json.dump(self.sweep_output_infodict, file, indent=4)
 
     def mk_dir(self,overwrite = False, output_directory = None):
         vars = ''
