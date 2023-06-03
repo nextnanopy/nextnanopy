@@ -5,6 +5,8 @@ import numpy as np
 
 
 class GdsPolygons(GdsPolygonsRaw):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def get_obelisks(self, zi, zf):
         shapes = []
@@ -26,7 +28,8 @@ class GdsPolygons(GdsPolygonsRaw):
     def get_polygonal_prisms(self, zi, zf):
         z = np.array([zi, zf])
         axes = ['x', 'y', 'z']
-        shapes = [Polygonal_prism(axes=axes, vertexes=xy, height=z) for xy in self.polygons_xy]
+        shapes = [Polygonal_prism(axes=axes, vertexes=xy, height=z) for xy in
+                  self.polygons_xy]
         return shapes
 
 
@@ -72,7 +75,8 @@ class Obelisk(Shape):
 
 class Polygonal_prism(Shape):
 
-    def __init__(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]], height=[0, 10]):
+    def __init__(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]],
+                 height=[0, 10]):
         super().__init__()
         self.axes = axes
         self.vertexes = vertexes
