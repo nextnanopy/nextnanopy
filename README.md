@@ -39,6 +39,10 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.17 (Jun 07th, 2023)
+* fixed a bug with nnp.shapes.GdsPolygons.get_obelisks
+* get_obelisks can be used again. The usage is deprecated, nnp.shapes.GdsPolygons.get_polygonal_prisms is prefered way to convert gds to nextnano++ structure
+
 ### Vesrion 0.1.16 (Apr 25th, 2023)
 * nextnanopy now supports python 3.10!
 * The execute_sweep function has been updated to include a new parameter, separate_sweep_dir, which allows the user to specify whether the output files should be saved in a separate directory or a common output directory.
