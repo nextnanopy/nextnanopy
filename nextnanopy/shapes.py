@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from cycler import cycler
 import gdspy
+import warnings
 
 units_factor = {
     'nm': 1e-9,
@@ -58,6 +59,11 @@ class GdsPolygonsRaw(object):
     def nb_polygons(self):
         return len(self.polygons_xy)
 
+    @property
+    def slices(self):
+        warnings.warn("The GdsPolygonsRaw.slices is deprecated",DeprecationWarning)
+        from nextnanopy.utils.shapes_deprecated import SlicedPolygon
+        return [SlicedPolygon(pol_xy) for pol_xy in self.polygons_xy]
 
     def load(self):
         self.load_polygons_xy()

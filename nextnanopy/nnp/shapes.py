@@ -2,11 +2,12 @@ from nextnanopy.nnp.assistants import InputAssistant
 from collections import OrderedDict
 from nextnanopy.shapes import GdsPolygonsRaw
 import numpy as np
-
+import warnings
 
 class GdsPolygons(GdsPolygonsRaw):
 
     def get_obelisks(self, zi, zf):
+        warnings.warn("The usage of get_obelisks is deprecated. Please, GdsPolygons.get_polygonal_prisms instead", DeprecationWarning)
         shapes = []
         z = np.array([zi, zf] * 2)
         for si in self.slices:
