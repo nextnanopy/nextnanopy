@@ -21,12 +21,13 @@ def validate_unit(key):
 
 
 class GdsPolygonsRaw(object):
-    def __init__(self, fullpath, unit='nm'):
+    def __init__(self, fullpath, unit='nm', **kwargs):
         self.fullpath = fullpath
         self._labels = []
         self._unit = 'm'
-        self.load()
+        self.load(**kwargs)
         self.unit = unit
+        self.added_labels = []
 
     @property
     def xy(self):
@@ -40,7 +41,8 @@ class GdsPolygonsRaw(object):
     @unit.setter
     def unit(self, key):
         validate_unit(key)
-        self.polygons_xy = [xy * units_factor[self._unit] / units_factor[key] for xy in self.polygons_xy]
+        self.polygons_xy = [xy * units_factor[self._unit] / units_factor[key]
+                            for xy in self.polygons_xy]
         self._unit = key
 
     @property
@@ -59,6 +61,8 @@ class GdsPolygonsRaw(object):
     def nb_polygons(self):
         return len(self.polygons_xy)
 
+    def load(self, **kwargs):
+        self.load_polygons_xy(**kwargs)
     @property
     def slices(self):
         warnings.warn("The GdsPolygonsRaw.slices is deprecated",DeprecationWarning)
@@ -69,11 +73,13 @@ class GdsPolygonsRaw(object):
         self.load_polygons_xy()
         self.set_default_labels()
 
-    def load_polygons_xy(self):
+    def load_polygons_xy(self, **kwargs):
         gds_lib = gdspy.GdsLibrary(infile=self.fullpath)
         xys = []
+        if 'by_spec' not in kwargs:
+            kwargs['by_spec'] = False
         for cell in gds_lib.top_level():
-            pols = cell.get_polygons()
+            pols = cell.get_polygons(kwargs['by_spec'])
             pols = [pi * gds_lib.unit for pi in pols]
             xys.extend(pols)
         self.polygons_xy = xys
@@ -135,3 +141,14 @@ class GdsPolygonsRaw(object):
                 ax.fill(x, y, **fill_kw)
         return ax
 
+    def show_polygon(self, polygon, label, ax=None, cmap='nipy_spectral', fill_kw={}):
+        # print(f"Polygon:  {polygon}")
+        # print(f"Label:  {label}")
+        ax = self._prepare_ax(ax, cmap)
+        for _ in polygon:
+            x, y = zip(*polygon)
+            ax.fill(x, y, label=label, **fill_kw)
+        # if label not in self.added_labels:
+        #     ax.legend(loc='upper right')
+        #     self.added_labels.append(label)
+        return ax

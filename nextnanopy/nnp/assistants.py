@@ -30,7 +30,12 @@ class InputAssistant(object):
         'block_init': '',
         'block_end': '',
         'comment': '# ',
-        'if': '#if ',
+        'oif': '#if ',
+        'nif': '!IF',
+        'when': '!WHEN ',
+        'elif': '!ELIF',
+        'else': '!ELSE',
+        'endif': '!ENDIF',
     }
 
     def __init__(self):
@@ -103,9 +108,31 @@ class InputAssistant(object):
     def comment(self, text, end='\n'):
         return self.text(self.rc['comment'], text, end)
 
-    def if_lines(self, text, variable):
-        init = self.rc['if'] + f'${variable} '
+    def when_line(self, text, variable):
+        init = self.rc['when'] + f"${variable} "
         return self.modify_lines(init, text)
+
+    def if_lines(self, text, variable):
+        init = self.rc['nif'] + f'${variable} '
+        return self.modify_lines(init, text)
+
+    def if_block(self, if_variable, if_content, elif_variable=None,
+                 elif_content=None, else_content=None):
+        content = (self.rc['nif'] + f'(${if_variable})' + self.rc['new_line']
+                   + self.modify_lines(self.rc['indent'], if_content)
+                   + self.rc['new_line'])
+        if elif_variable is not None:
+            content += (self.rc['elif'] + f'(${elif_variable})'
+                        + self.rc['new_line']
+                        + self.modify_lines(self.rc['indent'], elif_content)
+                        + self.rc['new_line'])
+        if else_content is not None:
+            content += (self.rc['else'] + f'(${else_variable})'
+                        + self.rc['new_line']
+                        + self.modify_lines(self.rc['indent'], else_content)
+                        + self.rc['new_line'])
+        content += self.rc['endif']
+        return content
 
     # - Variables
     def variables(self, **kwargs):
