@@ -24,7 +24,7 @@ class GdsPolygonsRaw(object):
         self.fullpath = fullpath
         self._labels = []
         self._unit = 'm'
-        self.load()
+        self.load(**kwargs)
         self.unit = unit
         self.added_labels = []
 
@@ -137,8 +137,9 @@ class GdsPolygonsRaw(object):
         # print(f"Polygon:  {polygon}")
         # print(f"Label:  {label}")
         ax = self._prepare_ax(ax, cmap)
-        x, y = zip(*polygon)
-        ax.fill(x, y, label=label, **fill_kw)
+        for _ in polygon:
+            x, y = zip(*polygon)
+            ax.fill(x, y, label=label, **fill_kw)
         # if label not in self.added_labels:
         #     ax.legend(loc='upper right')
         #     self.added_labels.append(label)
