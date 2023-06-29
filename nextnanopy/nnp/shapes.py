@@ -5,6 +5,8 @@ import numpy as np
 import warnings
 
 class GdsPolygons(GdsPolygonsRaw):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def get_obelisks(self, zi, zf):
         warnings.warn("The usage of get_obelisks is deprecated. Please, GdsPolygons.get_polygonal_prisms instead", DeprecationWarning)
@@ -27,7 +29,8 @@ class GdsPolygons(GdsPolygonsRaw):
     def get_polygonal_prisms(self, zi, zf):
         z = np.array([zi, zf])
         axes = ['x', 'y', 'z']
-        shapes = [Polygonal_prism(axes=axes, vertexes=xy, height=z) for xy in self.polygons_xy]
+        shapes = [Polygonal_prism(axes=axes, vertexes=xy, height=z) for xy in
+                  self.polygons_xy]
         return shapes
 
 
@@ -73,7 +76,8 @@ class Obelisk(Shape):
 
 class Polygonal_prism(Shape):
 
-    def __init__(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]], height=[0, 10]):
+    def __init__(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]],
+                 height=[0, 10]):
         super().__init__()
         self.axes = axes
         self.vertexes = vertexes
