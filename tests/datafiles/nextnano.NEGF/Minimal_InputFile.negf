@@ -1,4 +1,4 @@
-$alloyComposition = 0.15
+$alloyComposition = 0.15 #alloy composition
 
 nextnano.NEGF{ 				# Version = 1.1.5
     Header{

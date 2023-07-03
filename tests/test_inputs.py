@@ -453,7 +453,149 @@ class Test_negf(unittest.TestCase):
 
 class Test_negfpp(unittest.TestCase):
     # TODO: implement test for NEGF++ input file
-    pass
+    def test_load(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+
+        file = InputFile(fullpath)
+        self.assertEqual(file.product, 'nextnano.NEGF++')
+
+        self.assertEqual(len(file.variables.keys()), 1)
+        self.assertEqual(file.variables['alloyComposition'].name, 'alloyComposition')
+        self.assertAlmostEqual(file.variables['alloyComposition'].value, float(0.15), delta=1e-9)
+        self.assertEqual(file.variables['alloyComposition'].comment, 'alloy composition')
+
+
+
+        fullpath = os.path.join(folder_nnp, 'virtual_file.in')
+        self.assertRaises(FileNotFoundError, InputFile, fullpath)
+
+    def test_get_variables(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+        file = InputFile(fullpath)
+
+        self.assertEqual(file.variables['alloyComposition'], file.get_variable('alloyComposition'))
+        self.assertRaises(KeyError, file.get_variable, name='new_variable')
+
+    def test_set_variables(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+        file = InputFile(fullpath)
+        file.set_variable('alloyComposition', 1e-5, 'some comment', 'some unit')#unit is not visible in nn++
+
+        self.assertEqual(file.variables['alloyComposition'].name, 'alloyComposition')
+        self.assertEqual(file.variables['alloyComposition'].value, 1e-5)
+        self.assertEqual(file.variables['alloyComposition'].comment, 'some comment')
+        self.assertEqual(file.variables['alloyComposition'].text, f'$alloyComposition = {str(1e-5)} # some comment')
+        self.assertEqual(file.lines[0], f'$alloyComposition = {str(1e-5)} # some comment')
+
+        file.set_variable('alloyComposition', value=1e-7)
+        self.assertEqual(file.variables['alloyComposition'].name, 'alloyComposition')
+        self.assertEqual(file.variables['alloyComposition'].value, 1e-7)
+        self.assertEqual(file.variables['alloyComposition'].comment, 'some comment')
+        self.assertEqual(file.variables['alloyComposition'].text, f'$alloyComposition = {str(1e-7)} # some comment')
+        self.assertEqual(file.lines[0], f'$alloyComposition = {str(1e-7)} # some comment')
+
+        file.set_variable('alloyComposition', comment='new comment')
+        self.assertEqual(file.variables['alloyComposition'].name, 'alloyComposition')
+        self.assertEqual(file.variables['alloyComposition'].value, 1e-7)
+        self.assertEqual(file.variables['alloyComposition'].comment, 'new comment')
+        self.assertEqual(file.variables['alloyComposition'].text, f'$alloyComposition = {str(1e-7)} # new comment')
+        self.assertEqual(file.lines[0], f'$alloyComposition = {str(1e-7)} # new comment')
+
+        file.set_variable('alloyComposition', value=0)
+        self.assertEqual(file.variables['alloyComposition'].value, 0)
+
+        self.assertRaises(KeyError, file.set_variable, name='new_variable')
+        self.assertRaises(KeyError, file.set_variable, name='new_variable')
+
+    def test_fullpath(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+        file = InputFile(fullpath)
+
+        self.assertEqual(file.fullpath, fullpath)
+        self.assertEqual(file.save(file.fullpath, overwrite=False),
+                         os.path.join(folder_negf, 'Minimal_InputFile_0.negf'))
+        os.remove(file.fullpath)
+
+    def test_config(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+        file = InputFile(fullpath)
+        from nextnanopy import config
+        for key, value in config.config['nextnano.NEGF++'].items():
+            self.assertEqual(file.default_command_args[key], value)
+
+    # def test_text(self):
+    #     fullpath = os.path.join(folder_nnp, 'only_variables.in')
+    #
+    #     file = InputFile(fullpath)
+    #     text = file.text
+    #
+    #     new_file = InputFile()
+    #     self.assertEqual(new_file.product, 'not valid')
+    #     self.assertEqual(new_file.fullpath, None)
+    #     self.assertEqual(new_file.text, '')
+    #     self.assertEqual(new_file.raw_lines, [])
+    #
+    #     new_file.text = text
+    #     self.assertEqual(new_file.product, 'nextnano++')
+    #     self.assertEqual(new_file.fullpath, None)
+    #     self.assertEqual(new_file.text, text)
+    #     self.assertEqual(new_file.lines, file.lines)
+    #     self.assertEqual(new_file.variables['MAYUS'].name, 'MAYUS')
+    #     self.assertEqual(new_file.variables['MAYUS'].value, 'TEXT')
+    #     self.assertEqual(new_file.variables['MAYUS'].comment, '')
+    #     self.assertEqual(new_file.variables['MAYUS'].text, '$MAYUS = TEXT')
+    #     self.assertRaises(ValueError, new_file.save)
+    #     self.assertEqual(new_file.save(file.fullpath, overwrite=False),
+    #                      os.path.join(folder_nnp, 'only_variables_0.in'))
+    #     os.remove(new_file.fullpath)
+
+    def test_set_and_save(self):
+        fullpath = os.path.join(folder_negf, 'Minimal_InputFile.negf')
+        file = InputFile(fullpath)
+        file.set_variable(name='alloyComposition', value=0.4)
+        self.assertAlmostEqual(file.variables['alloyComposition'].value, 0.4)
+
+        self.addCleanup(os.remove,os.path.join(folder_negf,'Minimal_InputFile_0.negf'))
+        file.save()
+        self.assertTrue(os.path.isfile(os.path.join(folder_negf,'Minimal_InputFile_0.negf')))
+
+
+    def test_same_dir_saving(self):
+        current_directory = os.getcwd()
+        self.addCleanup(os.chdir,current_directory)
+
+
+        os.chdir(folder_negf)
+
+        path = 'Minimal_InputFile.negf'
+        file = InputFile(path)
+        file.set_variable(name='alloyComposition', value=0.3333)
+        self.assertAlmostEqual(file.variables['alloyComposition'].value, 0.3333)
+        self.addCleanup(delete_files,'Minimal_InputFile', directory='.', exceptions=['Minimal_InputFile.negf'])
+        file.save()
+        self.assertTrue(os.path.isfile('Minimal_InputFile_0.negf'))
+
+
+    ###content tests
+
+    # def test_content_get(self): # LATER also check this
+    #     fullpath = os.path.join(folder_nnp, 'only_variables.in')
+    #     file = InputFile(fullpath)
+    #
+    #
+    #     self.assertIsNotNone(file.content)
+    #     self.assertEqual(file.content[0],'$float = 0.0 ')
+    #     self.assertEqual(file.content[-1].name, 'global')
+    #
+    # def test_content_set(self):
+    #     fullpath = os.path.join(folder_nnp, 'only_variables.in')
+    #     file = InputFile(fullpath)
+    #
+    #
+    #     file.content[0] = '$DUMMY = 1'
+    #     self.assertEqual(file.content[0],'$DUMMY = 1')
+    #     file.content['_entry_0'] = 'DUMMY LINE'
+    #     self.assertEqual(file.content[0], 'DUMMY LINE')
 
 class TestInputFile(unittest.TestCase):
 
