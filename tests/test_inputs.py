@@ -287,34 +287,32 @@ class Test_nn3(unittest.TestCase):
         os.remove(file.fullpath)
         os.rmdir(new_folder)
 
-    # def test_text(self):
-    #     fullpath = os.path.join(folder_nn3, 'only_variables.in')
-    #
-    #     file = InputFile(fullpath)
-    #     text = file.text
-    #
-    #     new_file = InputFile()
-    #     self.assertEqual(new_file.product, 'not valid')
-    #     self.assertEqual(new_file.fullpath, None)
-    #     self.assertEqual(new_file.text, '')
-    #     self.assertEqual(new_file.raw_lines, [])
-    #
-    #     new_file.text = text
-    #     print(new_file.product)
-    #     print(new_file)
-    #     exit()
-    #     self.assertEqual(new_file.product, 'nextnano3')
-    #     self.assertEqual(new_file.fullpath, None)
-    #     self.assertEqual(new_file.text, text)
-    #     self.assertEqual(new_file.lines, file.lines)
-    #     self.assertEqual(new_file.variables['MAYUS'].name, 'MAYUS')
-    #     self.assertEqual(new_file.variables['MAYUS'].value, 'TEXT')
-    #     self.assertEqual(new_file.variables['MAYUS'].comment, '')
-    #     self.assertEqual(new_file.variables['MAYUS'].text, '%MAYUS = TEXT')
-    #     self.assertRaises(ValueError, new_file.save)
-    #     self.assertEqual(new_file.save(file.fullpath, overwrite=False),
-    #                      os.path.join(folder_nn3, 'only_variables_0.in'))
-    #     os.remove(new_file.fullpath)
+    def test_text(self):
+        fullpath_onlyvar = os.path.join(folder_nn3, 'only_variables.in')
+        fullpath_example = os.path.join(folder_nn3, 'example.in')
+        file = InputFile(fullpath_onlyvar)
+        text = file.text
+
+        new_file = InputFile(fullpath_example)
+        # self.assertEqual(new_file.product, 'not valid')
+        # self.assertEqual(new_file.fullpath, None)
+        # self.assertEqual(new_file.text, '')
+        # self.assertEqual(new_file.raw_lines, [])
+
+        new_file.text = text
+
+        self.assertEqual(new_file.product, 'nextnano3')
+        # self.assertEqual(new_file.fullpath, None)
+        self.assertEqual(new_file.text, text)
+        self.assertEqual(new_file.lines, file.lines)
+        self.assertEqual(new_file.variables['MAYUS'].name, 'MAYUS')
+        self.assertEqual(new_file.variables['MAYUS'].value, 'TEXT')
+        self.assertEqual(new_file.variables['MAYUS'].comment, '')
+        self.assertEqual(new_file.variables['MAYUS'].text, '%MAYUS = TEXT')
+        # self.assertRaises(ValueError, new_file.save)
+        self.assertEqual(new_file.save(file.fullpath, overwrite=False),
+                         os.path.join(folder_nn3, 'only_variables_0.in'))
+        os.remove(new_file.fullpath)
 
     def test_set_and_save(self):
         fullpath = os.path.join(folder_nn3, 'only_variables.in')
