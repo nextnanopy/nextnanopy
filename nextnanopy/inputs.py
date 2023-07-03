@@ -115,13 +115,13 @@ class InputFileTemplate(object):
     def text(self):
         return str(lines_to_text(*self.lines))
 
-    # @text.setter
-    # def text(self, text):
-    #     self.raw_lines = list(text_to_lines(text))
-    #     self.find_product()
-    #     self.validate()
-    #     self.load_variables()
-    #     self.load_content()
+    @text.setter
+    def text(self, text):
+        self.raw_lines = list(text_to_lines(text))
+        # self.find_product()
+        self.validate()
+        self.load_variables()
+        self.load_content()
 
     @property
     def raw_text(self):
