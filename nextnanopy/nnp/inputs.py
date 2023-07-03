@@ -29,6 +29,11 @@ class InputFile(InputFileTemplate):
     #     return self.load_content()
 
     def save(self, fullpath=None, overwrite=False, automkdir=True, content = False):
+        """
+        content=True invokes the demo feature of saving self.content instead of self.test
+
+        be aware that the content=True ignores comments
+        """
         if fullpath is None:
             if self.fullpath is None:
                 raise ValueError('Please, specify a fullpath')
