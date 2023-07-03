@@ -11,6 +11,7 @@ from nextnanopy.msb import defaults as msb_defaults
 folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
 folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
 folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
+folder_negfpp = os.path.join('tests', 'datafiles', 'nextnano.NEGF++')
 
 
 class TestDictlist(unittest.TestCase):
@@ -30,6 +31,7 @@ class TestFormatting(unittest.TestCase):
         self.assertTrue(nn3_defaults.is_nn3_input_file(fullpath))
         self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
         self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
+        self.assertFalse(negf_defaults.is_negfpp_input_file(fullpath))
         self.assertEqual(defaults.input_file_type(fullpath), 'nextnano3')
         self.assertEqual(defaults.get_fmt('nextnano3')['var_char'], '%')
         self.assertEqual(defaults.get_fmt('nextnano3')['com_char'], '!')
@@ -40,6 +42,7 @@ class TestFormatting(unittest.TestCase):
         self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
         self.assertTrue(nnp_defaults.is_nnp_input_file(fullpath))
         self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
+        self.assertFalse(negf_defaults.is_negfpp_input_file(fullpath))
         self.assertEqual(defaults.input_file_type(fullpath), 'nextnano++')
         self.assertEqual(defaults.get_fmt('nextnano++')['var_char'], '$')
         self.assertEqual(defaults.get_fmt('nextnano++')['com_char'], '#')
@@ -50,10 +53,23 @@ class TestFormatting(unittest.TestCase):
         self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
         self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
         self.assertTrue(negf_defaults.is_negf_input_file(fullpath))
-        self.assertEqual(defaults.input_file_type(fullpath), 'nextnano.NEGF')
+        self.assertFalse(negf_defaults.is_negfpp_input_file(fullpath))
+        self.assertEqual(defaults.input_file_type(fullpath), 'nextnano.NEGF') 
         self.assertEqual(defaults.get_fmt('nextnano.NEGF')['var_char'], '$')
         self.assertEqual(defaults.get_fmt('nextnano.NEGF')['com_char'], '<!--')
         self.assertEqual(defaults.get_fmt('nextnano.NEGF')['input_pattern'], '<Simulation')
+
+    # def test_negfpp(self):
+    #     # TODO: prepare an NEGF++ .negf input example for test
+    #     fullpath = os.path.join(folder_negfpp, 'example.negf')
+    #     self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
+    #     self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
+    #     self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
+    #     self.assertTrue(negf_defaults.is_negfpp_input_file(fullpath))
+    #     self.assertEqual(defaults.input_file_type(fullpath), 'nextnano.NEGF++') 
+    #     self.assertEqual(defaults.get_fmt('nextnano.NEGF++')['var_char'], '$')
+    #     self.assertEqual(defaults.get_fmt('nextnano.NEGF++')['com_char'], '#')
+    #     self.assertEqual(defaults.get_fmt('nextnano.NEGF++')['input_pattern'], 'nextnano.NEGF{')
 
 
 if __name__ == '__main__':

@@ -10,6 +10,12 @@ fmt = {
     'input_pattern': '<Simulation',
 }
 
+fmtpp = {
+    'var_char': '$',
+    'com_char': '#',
+    'input_pattern': 'nextnano.NEGF{',
+}
+
 config_validator = {
     'exe': str_to_path,
     'license': str_to_path,
@@ -37,12 +43,32 @@ def command_negf(
         **kwargs,
 ):
     kwargs = OrderedDict(
-        exe=[_path(exe), ''],
-        inputfile=[_path(inputfile), ''],
-        outputdirectory=[_path(outputdirectory), ''],
-        database=[_path(database), ''],
-        license=[_path(license), ''],
-        threads=['-threads', threads],
+        exe            = [_path(exe), ''],
+        inputfile      = [_path(inputfile), ''],
+        outputdirectory= [_path(outputdirectory), ''],
+        database       = [_path(database), ''],
+        license        = [_path(license), ''],
+        threads        = ['-threads', threads],
+    )
+    return generate_command(kwargs.values())
+
+
+def command_negfpp(
+        inputfile,
+        exe,
+        license,
+        database,
+        outputdirectory,
+        threads=0,
+        **kwargs,
+):
+    kwargs = OrderedDict(
+        exe            = [_path(exe), ''],
+        inputfile      = ['--input-file', _path(inputfile)],
+        outputdirectory= ['--outputdirectory', _path(outputdirectory)],
+        database       = ['--database', _path(database)],
+        license        = ['--license', _path(license)],
+        threads        = ['--threads', threads],
     )
     return generate_command(kwargs.values())
 
@@ -64,8 +90,16 @@ def is_negf_input_file(fullpath):
     return pattern_in_file(fullpath, fmt['input_pattern'])
 
 
+def is_negfpp_input_file(fullpath):
+    return pattern_in_file(fullpath, fmtpp['input_pattern'])
+
+
 def is_negf_input_text(text):
     return pattern_in_text(text, fmt['input_pattern'])
+
+
+def is_negfpp_input_text(text):
+    return pattern_in_text(text, fmtpp['input_pattern'])
 
 
 class InputVariable_NEGF(InputVariable):

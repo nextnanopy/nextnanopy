@@ -1,0 +1,986 @@
+##########################################################################################
+# Copyright notice - Material_Database.negf                                                
+#                                                                                         
+# This material parameters database file and its content is copyright of nextnano GmbH.   
+# (c) 2023 nextnano GmbH. All rights reserved.                                            
+#                                                                                         
+# Any redistribution or reproduction of part or all of the contents in any form is        
+# prohibited without our express written permission.                                      
+# You may not, except with our express written permission, distribute it in public or     
+# commercially exploit the content.                                                       
+#                                                                                         
+# Obviously, if you have a valid license for the nextnano software, you are allowed to    
+# modify the content of this database file and share it with your research colleagues.    
+# If you include Supplementary Material in publications, it makes sense to only publish   
+# the material parameters that were actually used in the calculations but not the entire  
+# database. It also makes sense to include your nextnano input files in Supplementary     
+# Material. In fact, the best practice is to include the material parameters directly     
+# into the input file.                                                                    
+##########################################################################################
+
+$NEGF = 1  # use nextnano.NEGF default values
+$MSB  = 0  # use nextnano.MSB  default values
+$nnp  = 0  # use nextnano++    default values
+$TCAD = 0  # use TiberCAD      default values
+$decouple_interband = 0  # decouple the interband coupling by setting Ep to zero, while rescaling S to conserve the electron effective mass.
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Note:                                                             
+# These parameters are only used by the nextnano.MSB: 
+#    <LOPhononWidth>                                               
+#    <AcousticPhononEnergy>                                        
+#    <Binary1> <Binary2> <Binary3>  (from 2022-03-31)              
+# 
+# These parameters are only used by the nextnano.NEGF:               
+#    <Alloy>                        (from 2022-03-31)                                 
+#    <ValenceDefPotShear_d>                                          
+#    <ValenceDefPotWZ>                                               
+#    <kp_8_bands>                                                                          
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Database{ 				# version = 2023_03_24
+    # L band of Si
+    Material{
+        Name = SiL
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 1.4447 		# Unit = eV
+        ValenceBandOffset = 1.090 			# Unit = eV  # take Qteish value of -6.93 and shift it by 8.02 to align it with Zunger's average valence band energy (van der Walle model)
+        MaterialDensity = 2.329e3 			# Unit = kg/m^3  # http://www.ioffe.ru/SVA/NSM/Semicond/Si/basic.html
+        VelocityOfSound = 9e3 				# Unit = m/s
+        LOPhononEnergy = 63e-3 				# Unit = eV  # http://www.ioffe.ru/SVA/NSM/Semicond/Si/mechanic.html
+        LOPhononWidth = 0 					# Unit = eV
+        AcousticPhononEnergy = 0 			# Unit = eV
+        EpsStatic = 11.7            		# http://www.ioffe.ru/SVA/NSM/Semicond/Si/basic.html
+        EpsOptic = 11.7
+        LatticeA = 0.54256 					# Unit = nm  # at 0K
+        LatticeA_expansion = 0          	# TODO
+        ElasticC11 = 165.77 				# Unit = GPa
+        ElasticC12 = 63.93 					# Unit = GPa
+        ElasticC44 = 79.62 					# Unit = GPa
+        PiezoE14 = 0 						# Unit = C/m^2  # TODO
+        DeformationPotential = -0.66 		# Unit = eV
+        BandGap = 0 						# Unit = eV  # TODO
+        BandGapAlpha = 0 					# Unit = eV/K  # TODO
+        BandGapBeta = 0 					# Unit = K  # TODO
+        ElectronMass = 0.1865 				# Unit = m0  # axial
+    }
+
+    # L band of Ge
+    Material{
+        Name = GeL
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0.8375 			# Unit = eV
+        ValenceBandOffset = 0 					# Unit = eV  # TODO
+        MaterialDensity = 5.3234e3 				# Unit = kg/m^3  # http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html
+        VelocityOfSound = 5.2e3 				# Unit = m/s
+        EpsStatic = 16.2            			# http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html
+        EpsOptic = 16.2
+        LOPhononEnergy = 37e-3 					# Unit = eV  # http://www.ioffe.ru/SVA/NSM/Semicond/Ge/basic.html
+        LOPhononWidth = 0 						# Unit = eV  # TODO
+        AcousticPhononEnergy = 0 				# Unit = eV  # TODO
+        OpticalDeformationPotential = 3.5e8 				# Unit = eV/cm
+        LatticeA = 0.56405 						# Unit = nm  # at 0 K
+        LatticeA_expansion = 0          		# TODO
+        ElasticC11 = 128.53 					# Unit = GPa
+        ElasticC12 = 48.26 						# Unit = GPa
+        ElasticC44 = 66.80 						# Unit = GPa
+        PiezoE14 = 0 							# Unit = C/m^2  # TODO
+        DeformationPotential = -1.54 			# Unit = eV
+        BandGap = 0 							# Unit = eV  # TODO
+        BandGapAlpha = 0 						# Unit = eV/K  # TODO
+        BandGapBeta = 0 						# Unit = K  # TODO
+        ElectronMass = 0.135 					# Unit = m0  # axial mass for [001] growth direction. NEW VALUE: Ciano et al, Physical Review Applied 11, 014003 (2019)
+        ElectronMassInPlane = 0.30 				# Unit = m0
+    }
+
+    Material{
+        Name = "SiL(x)GeL(1-x)"
+        Alloy = "SiL(x);GeL(1-x)"
+        Binary1 = "SiL(x)"
+        Binary2 = "GeL(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 			# Unit = eV
+        ValenceBandOffset = 0 				# Unit = eV
+        BandGap = 0
+        ElectronMass = 0
+        MaterialDensity = 0
+        VelocityOfSound = 0
+        LatticeA = 0.0026174 				# Unit = nm
+    }
+
+    # gallium arsenide
+    Material{
+        Name = GaAs
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 2.979 		# Unit = eV
+        ValenceBandOffset = 1.346 			# Unit = eV  # S.-H. Wei, A. Zunger, APL 72, 2011 (1998)
+        # ValenceBandOffset = -0.80         # Vurgaftman
+        BandGap = 1.519 					# Unit = eV
+        BandGapAlpha = 0.5405e-3 			# Unit = eV/K
+        BandGapBeta = 204 					# Unit = K
+        ElectronMass = 0.067 				# Unit = m0
+        EpsStatic = 12.93
+        EpsOptic = 10.89
+        !WHEN $NEGF DeformationPotential = -7.17 	# Unit = eV  # Vurgaftman1
+        !WHEN $MSB  DeformationPotential = -9.36 	# Unit = eV
+        !WHEN $nnp  DeformationPotential = -9.36 	# Unit = eV  # A. Zunger: a_c = a_v + a_gap = -1.21 - 8.15 = -9.36
+        !WHEN $TCAD DeformationPotential = -9.36 	# Unit = eV  # not checked!
+        !WHEN $NEGF ValenceDefPotHydro = 1.16 		# Unit = eV  # Vurgaftman1 - Note that Vurgaftman1 has different sign convention. => -1.16
+		!WHEN $MSB  ValenceDefPotHydro = 1.16 		# Unit = eV
+        !WHEN $nnp  ValenceDefPotHydro =-1.21       # Unit = eV  # A. Zunger: a_v
+        !WHEN $TCAD ValenceDefPotHydro =-1.21       # Unit = eV  # not checked!
+        ValenceDefPotUniaxial_b = -2.0 				# Unit = eV
+        ValenceDefPotShear_d = -4.8 				# Unit = eV
+        MaterialDensity = 5.316e3 					# Unit = kg/m^3
+        VelocityOfSound = 4.73e3 					# Unit = m/s
+        !WHEN $NEGF LOPhononEnergy = 36e-3 			# Unit = eV
+        !WHEN $MSB  LOPhononEnergy = 35e-3 			# Unit = eV
+        LOPhononWidth = 3e-3 						# Unit = eV
+        TOPhononEnergy = 33.86e-3 					# Unit = eV
+        AcousticPhononEnergy = 5e-3 				# Unit = eV
+
+        !IF($decouple_interband)
+			S = 14.925375
+			Ep = 0.0 								# Unit = eV
+			kp_8_bands{
+				B = 7.979
+				L = 2.73984
+				M = -3.86
+				N = 1.37984
+				kappa = -1.74
+			}
+		!ELSE
+        S = -2.88
+        Ep = 28.8 									# Unit = eV
+        kp_8_bands{
+            B = 7.979
+            L = 2.73984
+            M = -3.86
+            N = 1.37984
+            kappa = -1.74
+        }
+        !ENDIF
+
+        DeltaSO = 0.341 				# Unit = eV
+
+        LatticeA = 0.565325 			# Unit = nm
+        LatticeA_expansion = 3.88e-5
+        ElasticC11 = 122.1 				# Unit = GPa
+        ElasticC12 = 56.6 				# Unit = GPa
+        ElasticC44 = 60.0 				# Unit = GPa
+        PiezoE14 = -0.160 				# Unit = C/m^2
+    }
+
+    # aluminum arsenide
+    Material{
+        Name = AlAs
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 4.049 	# Unit = eV
+        ValenceBandOffset = 0.857 		# Unit = eV
+        BandGap = 3.099 				# Unit = eV
+        BandGapAlpha = 0.885e-3 		# Unit = eV/K
+        BandGapBeta = 530 				# Unit = K
+        ElectronMass = 0.15 			# Unit = m0
+        EpsStatic = 10.064
+        EpsOptic = 8.162
+        !WHEN $NEGF DeformationPotential = -5.64 		# Unit = eV  # Vurgaftman1
+        !WHEN $MSB  DeformationPotential = -7.40 		# Unit = eV
+        !WHEN $nnp  DeformationPotential = -7.40 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = 1.53 - 8.93 = -7.40
+        !WHEN $TCAD DeformationPotential = -7.40 		# Unit = eV  # not checked!
+        !WHEN $NEGF ValenceDefPotHydro = 2.47 			# Unit = eV  # Vurgaftman1 - Note that Vurgaftman1 has different sign convention. => -2.47
+        !WHEN $MSB  ValenceDefPotHydro = 2.47 			# Unit = eV
+        !WHEN $nnp  ValenceDefPotHydro = 1.53 			# Unit = eV  # A. Zunger: a_v
+        !WHEN $TCAD ValenceDefPotHydro = 1.53 			# Unit = eV  # not checked!
+        ValenceDefPotUniaxial_b = -2.3 					# Unit = eV
+        ValenceDefPotShear_d = -3.4 					# Unit = eV
+        MaterialDensity = 3.72e3 						# Unit = kg/m^3
+        VelocityOfSound = 6.4e3 						# Unit = m/s
+        LOPhononEnergy = 50e-3 							# Unit = eV
+        LOPhononWidth = 3e-3 							# Unit = eV
+        AcousticPhononEnergy = 5e-3 					# Unit = eV
+
+        !IF($decouple_interband)
+			S = 6.6666667
+			Ep = 0.0 					# Unit = eV
+			kp_8_bands{
+				B = 5.591
+				L = -1.23135
+				M = -3.12
+				N = -1.71135
+				kappa = -0.982
+			}
+		!ELSE
+            S = 0.04
+            Ep = 21.1 						# Unit = eV
+            kp_8_bands{
+                B = 5.591
+                L = -1.23135
+                M = -3.12
+                N = -1.71135
+                kappa = -0.982
+            }
+        !ENDIF
+
+        DeltaSO = 0.28 					# Unit = eV
+		
+        LatticeA = 0.56611 				# Unit = nm
+        LatticeA_expansion = 2.90e-5
+        ElasticC11 = 125.0 				# Unit = GPa
+        ElasticC12 = 53.4 				# Unit = GPa
+        ElasticC44 = 54.2 				# Unit = GPa
+        PiezoE14 = -0.015 				# Unit = C/m^2
+    }
+
+    # indium arsenide
+    Material{
+        Name = InAs
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 1.937 	# Unit = eV
+        !WHEN $NEGF ValenceBandOffset = 1.39 	# Unit = eV  # [A. Zunger]
+        !WHEN $MSB  ValenceBandOffset = 1.39    # Unit = eV  # [A. Zunger]
+        !WHEN $nnp  ValenceBandOffset = 1.39    # Unit = eV  # [A. Zunger]
+        !WHEN $TCAD ValenceBandOffset = -0.72   # Ev - deltaSO / 3; TiberCAD cites Vurgaftman1 for Ev
+        !WHEN $NEGF BandGap = 0.417 			# Unit = eV
+        !WHEN $MSB  BandGap = 0.417 			# Unit = eV
+        !WHEN $nnp  BandGap = 0.417 			# Unit = eV
+        !WHEN $TCAD BandGap = 0.4175 			# Unit = eV
+        BandGapAlpha = 0.276e-3 		# Unit = eV/K
+        BandGapBeta = 93 				# Unit = K
+        ElectronMass = 0.026 			# Unit = m0
+        EpsStatic = 15.15
+        EpsOptic = 12.25
+        !WHEN $NEGF DeformationPotential = -5.08 		# Unit = eV  # Vurgaftman1, Webster [J. Appl. Phys. 118, 245706 (2015)]
+        !WHEN $MSB  DeformationPotential = -6.66 		# Unit = eV
+        !WHEN $nnp  DeformationPotential = -6.66 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = -1.00 - 5.66 = -6.66
+        !WHEN $TCAD DeformationPotential = -5.08        # Unit = eV
+        !WHEN $NEGF ValenceDefPotHydro = 1.0 			# Unit = eV  # Vurgaftman1, Webster - Note that Vurgaftman1 has different sign convention. => -1.00
+        !WHEN $MSB  ValenceDefPotHydro = 1.0 			# Unit = eV
+        !WHEN $nnp  ValenceDefPotHydro =-1.0 			# Unit = eV  # A. Zunger: a_v
+        !WHEN $TCAD ValenceDefPotHydro = 1.0            # Unit = eV
+        ValenceDefPotUniaxial_b = -1.8 			# Unit = eV
+        ValenceDefPotShear_d = -3.6 			# Unit = eV
+        MaterialDensity = 5.61e3 				# Unit = kg/m^3
+        VelocityOfSound = 3.97e3 				# Unit = m/s
+        !WHEN $NEGF LOPhononEnergy = 29e-3 		# Unit = eV
+        !WHEN $MSB  LOPhononEnergy = 30e-3 		# Unit = eV
+        LOPhononWidth = 3e-3 					# Unit = eV
+        AcousticPhononEnergy = 5e-3 			# Unit = eV
+        !WHEN $NEGF S = -4.80                   # S = 1 + 2F = 1 + 2 (-2.90) = -4.80 (Vurgaftman1)
+        !WHEN $nnp  S = -4.79159                # S = 1 + 2F = (calculated) (Vurgaftman1)
+        !WHEN $TCAD S = -4.80
+        !WHEN $NEGF Ep = 21.5 					# Unit = eV  # Vurgaftman1
+        !WHEN $nnp  Ep = 21.5                   # Unit = eV  # Vurgaftman1
+        !WHEN $TCAD Ep = 20.0645                # Unit = eV  # fitted against TB
+        kp_8_bands{
+            B = 3.596
+            L = -3.44125
+            M = -4.0
+            N = -3.64125
+            kappa = 1.129
+        }
+
+        DeltaSO = 0.39 					# Unit = eV
+		
+        LatticeA = 0.60583 				# Unit = nm
+        LatticeA_expansion = 2.74e-5
+        ElasticC11 = 83.29 				# Unit = GPa
+        ElasticC12 = 45.26 				# Unit = GPa
+        ElasticC44 = 39.59 				# Unit = GPa
+        PiezoE14 = -0.044 				# Unit = C/m^2
+    }
+
+    # indium phosphide
+    Material{
+        Name = InP
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 2.524 	# Unit = eV
+        ValenceBandOffset = 1.064 		# Unit = eV
+        BandGap = 1.4236 				# Unit = eV
+        BandGapAlpha = 0.363e-3 		# Unit = eV/K
+        BandGapBeta = 162 				# Unit = K
+        ElectronMass = 0.0795 			# Unit = m0
+        EpsStatic = 12.61
+        EpsOptic = 9.61
+        DeformationPotential = -6.34 	# Unit = eV
+        ValenceDefPotHydro = -0.41 		# Unit = eV
+        ValenceDefPotUniaxial_b = -2.0 	# Unit = eV
+        ValenceDefPotShear_d = -5.0 	# Unit = eV
+        MaterialDensity = 5.316e3 		# Unit = kg/m^3
+        VelocityOfSound = 4.73e3 		# Unit = m/s
+        LOPhononEnergy = 43e-3 			# Unit = eV
+        LOPhononWidth = 3e-3 			# Unit = eV
+        AcousticPhononEnergy = 5e-3 	# Unit = eV
+        TOPhononEnergy = 33.86e-3 		# Unit = eV
+        Ep = 20.07 						# Unit = eV
+        S = -1.6202
+        kp_8_bands{             		# TODO
+            B = 0
+            L = 0
+            M = 0
+            N = 0
+        }
+
+        DeltaSO = 0.108 				# Unit = eV
+		
+        LatticeA = 0.58697 				# Unit = nm
+        LatticeA_expansion = 0          # TODO
+        ElasticC11 = 101.1 				# Unit = GPa
+        ElasticC12 = 56.1 				# Unit = GPa
+        ElasticC44 = 45.6 				# Unit = GPa
+        PiezoE14 = 0.056 				# Unit = C/m^2
+    }
+
+    # gallium antimonide
+    Material{
+        Name = GaSb
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 2.842 	# Unit = eV
+        !WHEN $NEGF ValenceBandOffset = 1.777 		# Unit = eV  # A. Zunger
+        !WHEN $MSB  ValenceBandOffset = 1.777 		# Unit = eV  # A. Zunger
+        !WHEN $nnp  ValenceBandOffset = 1.777 		# Unit = eV  # A. Zunger
+        !WHEN $TCAD ValenceBandOffset = -0.283 		# Unit = eV  # Ev - deltaSO / 3; TiberCAD cites Vurgaftman1 for Ev
+        BandGap = 0.812 				# Unit = eV
+        BandGapAlpha = 0.417e-3 		# Unit = eV/K
+        BandGapBeta = 140 				# Unit = K
+        ElectronMass = 0.039 			# Unit = m0
+        EpsStatic = 15.69
+        EpsOptic = 14.44
+        !WHEN $NEGF DeformationPotential = -9.33 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = -1.32 - 8.01 = -9.33
+        !WHEN $MSB  DeformationPotential = -9.33 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = -1.32 - 8.01 = -9.33
+        !WHEN $nnp  DeformationPotential = -9.33 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = -1.32 - 8.01 = -9.33
+        !WHEN $TCAD DeformationPotential = -7.5 		# Unit = eV  # Vurgaftman1
+        !WHEN $NEGF ValenceDefPotHydro = -1.32 			# Unit = eV  # A. Zunger: a_v, Chen [Zunger]
+        !WHEN $MSB  ValenceDefPotHydro = -1.32 			# Unit = eV  # A. Zunger: a_v, Chen [Zunger]
+        !WHEN $nnp  ValenceDefPotHydro = -1.32 			# Unit = eV  # A. Zunger: a_v, Chen [Zunger]
+        !WHEN $TCAD ValenceDefPotHydro =  0.8 			# Unit = eV  # Vurgaftman1 - Note that Vurgaftman1 has different sign convention. => -0.8
+        ValenceDefPotUniaxial_b = -2.0 		# Unit = eV
+        ValenceDefPotShear_d = -4.7 		# Unit = eV
+        MaterialDensity = 5.614e3 			# Unit = kg/m^3
+        VelocityOfSound = 3.83e3 			# Unit = m/s
+        LOPhononEnergy = 24e-3 				# Unit = eV
+        LOPhononWidth = 3e-3 				# Unit = eV
+        AcousticPhononEnergy = 5e-3 		# Unit = eV
+        S = -2.252
+        Ep = 27.0 							# Unit = eV
+        kp_8_bands{
+            B = 13.079
+            L = 0.0512315
+            M = -5.0
+            N = -2.74877
+            kappa = -1.044
+        }
+
+        DeltaSO = 0.76 					# Unit = eV
+		
+        LatticeA = 0.60959 				# Unit = nm
+        LatticeA_expansion = 4.72e-5
+        ElasticC11 = 88.42 				# Unit = GPa
+        ElasticC12 = 40.26 				# Unit = GPa
+        ElasticC44 = 43.22 				# Unit = GPa
+        PiezoE14 = -0.172 				# Unit = C/m^2
+    }
+
+    # indium antimonide
+    Material{
+        Name = InSb
+        CrystalStructure = Zincblende
+        !WHEN $NEGF ValenceBandOffset = 1.750 		# Unit = eV  # A. Zunger
+        !WHEN $MSB  ValenceBandOffset = 1.750 		# Unit = eV  # A. Zunger
+        !WHEN $nnp  ValenceBandOffset = 1.750 		# Unit = eV  # A. Zunger
+        !WHEN $TCAD ValenceBandOffset =-0.27 		# Unit = eV  # Ev - deltaSO / 3; TiberCAD cites Vurgaftman1 for Ev
+        ConductionBandOffset = 2.255 	# Unit = eV
+        BandGap = 0.235 				# Unit = eV
+        BandGapAlpha = 0.32e-3 			# Unit = eV/K
+        BandGapBeta = 170 				# Unit = K
+        ElectronMass = 0.0135 			# Unit = m0
+        S = 0.542566
+        Ep = 23.3 						# Unit = eV
+        kp_8_bands{
+            B = 2.703
+            L = 1.34894
+            M = -4.8
+            N = 0.148936
+            kappa = 7.91
+        }
+
+		DeltaSO = 0.81                  # Unit = eV, Vurgaftman1
+		
+        EpsStatic = 17.5
+        EpsOptic = 15.68
+        !WHEN $NEGF DeformationPotential = -6.04 	# Unit = eV  # Qteish / A. Zunger: a_c = a_v + a_gap = 0.31 - 6.35 = -6.04
+        !WHEN $MSB  DeformationPotential = -6.04 	# Unit = eV  # Qteish / A. Zunger: a_c = a_v + a_gap = 0.31 - 6.35 = -6.04
+        !WHEN $nnp  DeformationPotential = -6.04 	# Unit = eV  # Qteish / A. Zunger: a_c = a_v + a_gap = 0.31 - 6.35 = -6.04
+        !WHEN $TCAD DeformationPotential = -6.94 	# Unit = eV  # Vurgaftman1, Webster [J. Appl. Phys. 118, 245706 (2015)]
+        !WHEN $NEGF ValenceDefPotHydro = 0.31 		# Unit = eV  # Qteish value, no Zunger value available: a_v
+        !WHEN $MSB  ValenceDefPotHydro = 0.31 		# Unit = eV  # Qteish value, no Zunger value available: a_v
+        !WHEN $nnp  ValenceDefPotHydro = 0.31 		# Unit = eV  # Qteish value, no Zunger value available: a_v
+        !WHEN $TCAD ValenceDefPotHydro = 0.36 		# Unit = eV  # Vurgaftman1, Webster - Note that Vurgaftman1 has different sign convention. => -0.36
+        ValenceDefPotUniaxial_b = -2.0 	# Unit = eV
+        ValenceDefPotShear_d = -4.7 	# Unit = eV
+        MaterialDensity = 5.77e3 		# Unit = kg/m^3
+        VelocityOfSound = 3.42e3 		# Unit = m/s
+        LOPhononEnergy = 22e-3 			# Unit = eV
+        LOPhononWidth = 3e-3 			# Unit = eV
+        AcousticPhononEnergy = 5e-3 	# Unit = eV
+        LatticeA = 0.64794 				# Unit = nm
+        LatticeA_expansion = 3.48e-5
+        ElasticC11 = 68.47 				# Unit = GPa
+        ElasticC12 = 37.35 				# Unit = GPa
+        ElasticC44 = 31.11 				# Unit = GPa
+        PiezoE14 = -0.076 				# Unit = C/m^2
+    }
+
+    # aluminum antimonide
+    Material{
+        Name = AlSb
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 3.996 		# Unit = eV
+        !WHEN $NEGF ValenceBandOffset = 1.385 			# Unit = eV  # A. Zunger
+        !WHEN $MSB  ValenceBandOffset = 1.385 			# Unit = eV  # A. Zunger
+        !WHEN $nnp  ValenceBandOffset = 1.385 			# Unit = eV  # A. Zunger
+        !WHEN $TCAD ValenceBandOffset =-0.635 			# Unit = eV  # Ev - deltaSO / 3; TiberCAD cites Vurgaftman1 for Ev
+        ElectronMass = 0.14 				# Unit = m0
+        BandGap = 2.386 					# Unit = eV
+        BandGapAlpha = 0.42e-3 	            # Unit = eV/K  # Vurgaftman1 = nextnano++ = NEGF = MSB = TiberCAD
+        BandGapBeta = 140 					# Unit = K
+        EpsStatic = 12.04
+        EpsOptic = 10.24
+        !WHEN $NEGF DeformationPotential = -8.12 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = 0.73 - 8.85 = -8.12
+        !WHEN $MSB  DeformationPotential = -8.12 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = 0.73 - 8.85 = -8.12
+        !WHEN $nnp  DeformationPotential = -8.12 		# Unit = eV  # A. Zunger: a_c = a_v + a_gap = 0.73 - 8.85 = -8.12
+        !WHEN $TCAD DeformationPotential = -4.5 		# Unit = eV  # Vurgaftman1
+        !WHEN $NEGF ValenceDefPotHydro = 0.73 			# Unit = eV  # A. Zunger: a_v
+        !WHEN $MSB  ValenceDefPotHydro = 0.73 			# Unit = eV  # A. Zunger: a_v
+        !WHEN $nnp  ValenceDefPotHydro = 0.73 			# Unit = eV  # A. Zunger: a_v
+        !WHEN $TCAD ValenceDefPotHydro = 1.4 			# Unit = eV  # Vurgaftman1 - Note that Vurgaftman1 has different sign convention. => -1.4
+        ValenceDefPotUniaxial_b = -1.35 	# Unit = eV  # Vurgaftman1 = TiberCAD
+        ValenceDefPotShear_d = -4.3 		# Unit = eV  # Vurgaftman1 = TiberCAD
+        MaterialDensity = 0 				# Unit = kg/m^3  # TODO
+        VelocityOfSound = 0 				# Unit = m/s
+        LOPhononEnergy = 42e-3 				# Unit = eV
+        LOPhononWidth = 3e-3 				# Unit = eV
+        AcousticPhononEnergy = 5e-3 		# Unit = eV
+        S = -0.118
+        Ep = 18.7 							# Unit = eV
+        kp_8_bands{
+            B = 0
+            L = -3.10262
+            M = -3.80
+            N = -3.98262
+            kappa = -0.884
+        }
+
+        DeltaSO = 0.676 					# Unit = eV
+		
+        !WHEN $NEGF LatticeA = 0.60959 		# Unit = nm
+        !WHEN $MSB  LatticeA = 0.60959 		# Unit = nm
+        !WHEN $nnp  LatticeA = 0.61355 		# Unit = nm  # Vurgaftman1 (300 K)
+        !WHEN $TCAD LatticeA = 0.61355 		# Unit = nm  # Vurgaftman1 (300 K)
+        LatticeA_expansion = 2.60e-5    	# Vurgaftman1
+        ElasticC11 = 87.69 					# Unit = GPa
+        ElasticC12 = 43.41 					# Unit = GPa
+        ElasticC44 = 40.76 					# Unit = GPa
+        PiezoE14 = -0.055 					# Unit = C/m^2
+    }
+
+
+    ### binary wurtzite compounds ###################################
+
+    # gallium nitride
+    Material{
+        Name = GaN
+        CrystalStructure = Wurtzite
+        ConductionBandOffset = 2.79967 		# Unit = eV
+        ValenceBandOffset = -0.726 			# Unit = eV
+        BandGap = 3.510 					# Unit = eV
+        BandGapAlpha = 0.909e-3 			# Unit = eV/K
+        BandGapBeta = 830 					# Unit = K
+        ElectronMass = 0.2 					# Unit = m0
+        EpsStatic = 9.28
+        EpsStaticA = 9.28
+        EpsStaticC = 10.10
+        EpsOptic = 5.29
+        DeformationPotential = -4.9 		# Unit = eV
+        ValenceDefPotWZ{
+            d1 = -3.7
+            d2 = 4.5
+            d3 = 8.2
+            d4 = -4.1
+            d5 = -4.0
+            d6 = -5.5
+        }
+
+        MaterialDensity = 5.316e3 			# Unit = kg/m^3
+        VelocityOfSound = 5.96e3 			# Unit = m/s
+        LOPhononEnergy = 90e-3 				# Unit = eV
+        LOPhononWidth = 3e-3 				# Unit = eV
+        TOPhononEnergy = 0 					# Unit = eV  # TODO
+        Ep = 14.4 							# Unit = eV
+        S = 1
+        AcousticPhononEnergy = 5e-3 		# Unit = eV
+        DeltaSO = 0.017 					# Unit = eV
+		
+        LatticeA = 0.3189 					# Unit = nm
+        LatticeC = 0.5185 					# Unit = nm
+        LatticeA_expansion = 0          	# TODO
+        LatticeC_expansion = 0          	# TODO
+        ElasticC11 = 390 					# Unit = GPa
+        ElasticC12 = 145 					# Unit = GPa
+        ElasticC13 = 106 					# Unit = GPa
+        ElasticC33 = 398 					# Unit = GPa
+        ElasticC44 = 105 					# Unit = GPa
+        !IF($NEGF)
+            PiezoE33 = 1.27 				# Unit = C/m^2
+            PiezoE31 = -0.35 				# Unit = C/m^2
+            PiezoE15 = -0.3 				# Unit = C/m^2
+        !ELIF($MSB)
+            PiezoE33 = 0.9928 				# Unit = C/m^2
+            PiezoE31 = -0.5491 				# Unit = C/m^2
+            PiezoE15 = 0.1785 				# Unit = C/m^2
+        !ENDIF
+        Pyro = -0.034 						# Unit = C/m^2
+    }
+
+    # aluminum nitride
+    Material{
+        Name = AlN
+        CrystalStructure = Wurtzite
+        ConductionBandOffset = 4.724455883 	# Unit = eV
+        ValenceBandOffset = -1.526 			# Unit = eV
+        BandGap = 6.25 						# Unit = eV
+        BandGapAlpha = 1.799e-3 			# Unit = eV/K
+        BandGapBeta = 1462 					# Unit = K
+        ElectronMass = 0.3 					# Unit = m0
+        EpsStatic = 8.67
+        EpsStaticA = 8.67
+        EpsStaticC = 8.57
+        EpsOptic = 4.68
+        DeformationPotential = -3.4 		# Unit = eV
+        MaterialDensity = 5.316e3 			# Unit = kg/m^3
+        VelocityOfSound = 5.96e3 			# Unit = m/s
+        LOPhononEnergy = 90e-3 				# Unit = eV
+        LOPhononWidth = 3e-3 				# Unit = eV
+        TOPhononEnergy = 0 					# Unit = eV  # TODO
+        AcousticPhononEnergy = 5e-3 		# Unit = eV
+        Ep = 14.5 							# Unit = eV
+        S = 1
+        DeltaSO = 0.019 				# Unit = eV
+		
+        LatticeA = 0.3112 				# Unit = nm
+        LatticeC = 0.4982 				# Unit = nm
+        LatticeA_expansion = 0          # TODO
+        LatticeC_expansion = 0          # TODO
+        ElasticC11 = 396 				# Unit = GPa
+        ElasticC12 = 137 				# Unit = GPa
+        ElasticC13 = 108 				# Unit = GPa
+        ElasticC33 = 373 				# Unit = GPa
+        ElasticC44 = 116 				# Unit = GPa
+        !IF($NEGF)
+            PiezoE33 = 1.79 			# Unit = C/m^2
+            PiezoE31 = -0.50 			# Unit = C/m^2
+            PiezoE15 = -0.48 			# Unit = C/m^2
+            Pyro = -0.090 				# Unit = C/m^2
+        !ELIF($MSB)
+            PiezoE33 = 1.02 			# Unit = C/m^2
+            PiezoE31 = -0.568 			# Unit = C/m^2
+            PiezoE15 = -0.192 			# Unit = C/m^2
+            Pyro = -0.04 				# Unit = C/m^2
+        !ENDIF
+    }
+
+    # indium nitride
+    Material{
+        Name = InN
+        CrystalStructure = Wurtzite
+        ConductionBandOffset = 4.724455883 	# Unit = eV
+        ValenceBandOffset = -0.462 			# Unit = eV
+        BandGap = 0.78 						# Unit = eV
+        BandGapAlpha = 0.245e-3 			# Unit = eV/K
+        BandGapBeta = 624 					# Unit = K
+        EpsStatic = 8.67
+        EpsStaticA = 8.67
+        EpsStaticC = 8.57
+        EpsOptic = 4.68
+        AcousticPhononEnergy = 5e-3 	# Unit = eV
+        ElectronMass = 0.12 			# Unit = m0
+        DeformationPotential = -3.5 	# Unit = eV
+        MaterialDensity = 5.316e3 		# Unit = kg/m^3
+        VelocityOfSound = 5.96e3 		# Unit = m/s
+        LOPhononEnergy = 90e-3 			# Unit = eV
+        LOPhononWidth = 3e-3 			# Unit = eV
+        TOPhononEnergy = 0 				# Unit = eV  # TODO
+        Ep = 14.5 						# Unit = eV
+        S = 1
+        DeltaSO = 0.005 				# Unit = eV
+		
+        LatticeA = 0.3545 				# Unit = nm
+        LatticeC = 0.5703 				# Unit = nm
+        LatticeA_expansion = 0          # TODO
+        LatticeC_expansion = 0          # TODO
+        ElasticC11 = 223 				# Unit = GPa
+        ElasticC12 = 115 				# Unit = GPa
+        ElasticC13 = 92 				# Unit = GPa
+        ElasticC33 = 224 				# Unit = GPa
+        ElasticC44 = 48 				# Unit = GPa
+        PiezoE33 = 0.97 				# Unit = C/m^2
+        PiezoE31 = -0.57 				# Unit = C/m^2
+        !WHEN $NEGF PiezoE15 = -0.48 	# Unit = C/m^2
+        !WHEN $MSB  PiezoE15 = -0.192 	# Unit = C/m^2
+        Pyro = -0.042 					# Unit = C/m^2
+    }
+
+
+    ### Bowing parameters for ternary zinc blende compounds ##########
+
+    # aluminum gallium arsenide (AlGaAs)
+    Material{
+        Name = "Al(x)Ga(1-x)As"
+        Alloy = "AlAs(x);GaAs(1-x)"
+        Binary1 = "AlAs(x)"
+        Binary2 = "GaAs(1-x)"
+        CrystalStructure = Zincblende
+        !WHEN $NEGF ConductionBandOffset = 0.318 	# Unit = eV
+        !WHEN $MSB  ConductionBandOffset = 0 		# Unit = eV
+        !WHEN $nnp  ConductionBandOffset = 0 		# Unit = eV
+        !WHEN $TCAD ConductionBandOffset = 0        # Unit = eV  # not checked!
+        ValenceBandOffset = 0 			# Unit = eV
+        !IF($NEGF)  # cubic interpolation. Consistent with nextnano++ default.
+            BandGap = -0.127 	        # Unit = eV  
+            BandGapCubic = 1.310 		# Unit = eV
+        !ELIF($nnp)  # cubic interpolation. Consistent with nextnano.NEGF default.
+            BandGap = -0.127 	        # Unit = eV  
+            BandGapCubic = 1.310 		# Unit = eV
+        !ELIF($MSB)  # quadratic interpolation
+            BandGap = 0.0695 	        # Unit = eV
+            BandGapCubic = 0     		# Unit = eV
+        !ELIF($TCAD) # not checked!
+            BandGap = -0.127 	        # Unit = eV  
+            BandGapCubic = 1.310 		# Unit = eV
+        !ENDIF
+        BandGapAlpha = 0 				# Unit = eV/K
+        BandGapBeta = 0 				# Unit = K
+        ElectronMass = 0 				# Unit = m0
+        DeltaSO = 0 					# Unit = eV
+		
+        EpsStatic = 0
+        EpsOptic = 0
+        DeformationPotential = 0 		# Unit = eV
+        ValenceDefPotHydro = 0 			# Unit = eV
+        ValenceDefPotUniaxial_b = 0 	# Unit = eV
+        ValenceDefPotShear_d = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3
+        VelocityOfSound = 0 			# Unit = m/s
+        LOPhononEnergy = 0 				# Unit = eV
+        LOPhononWidth = 0 				# Unit = eV
+        AcousticPhononEnergy = 0 		# Unit = eV
+        LatticeA = 0 					# Unit = nm
+        ElasticC11 = 0 					# Unit = GPa
+        ElasticC12 = 0 					# Unit = GPa
+        ElasticC44 = 0 					# Unit = GPa
+        PiezoE14 = 0 					# Unit = C/m^2
+    }
+
+    # indium gallium arsenide (InGaAs)
+    Material{
+        Name = "In(x)Ga(1-x)As"
+        Alloy = "InAs(x);GaAs(1-x)"
+        Binary1 = "InAs(x)"
+        Binary2 = "GaAs(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = -0.38 		# Unit = eV
+        BandGap = 0.477 				# Unit = eV
+        BandGapAlpha = 0 				# Unit = eV/K
+        BandGapBeta = 0 				# Unit = K
+		
+        ElectronMass = 0.0091 			# Unit = m0
+        EpsStatic = 0
+        EpsOptic = 0
+        S = 3.54 				# Unit = eV
+        Ep = -1.48 				# Unit = eV
+        kp_8_bands{             # TODO
+            B = 0.0
+            L = 0.0
+            M = -1.140907266
+            N = 0.0
+        }
+
+		DeltaSO = 0.15 					# Unit = eV
+		
+        DeformationPotential = 2.61 	# Unit = eV
+        ValenceDefPotHydro = 0 			# Unit = eV
+        ValenceDefPotUniaxial_b = 0 	# Unit = eV
+        ValenceDefPotShear_d = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3
+        VelocityOfSound = 0 			# Unit = m/s
+        LOPhononEnergy = 0 				# Unit = eV
+        LOPhononWidth = 0 				# Unit = eV
+        AcousticPhononEnergy = 0 		# Unit = eV
+        LatticeA = 0 				    # Unit = nm
+        ElasticC11 = 0 				    # Unit = GPa
+        ElasticC12 = 0 				    # Unit = GPa
+        ElasticC44 = 0 				    # Unit = GPa
+        PiezoE14 = 0 				    # Unit = C/m^2
+    }
+
+    # gallium arsenide antimonide (GaAsSb)
+    Material{
+        Name = "GaAs(x)Sb(1-x)"
+        Alloy = "GaAs(x);GaSb(1-x)"
+        Binary1 = "GaAs(x)"
+        Binary2 = "GaSb(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 				# Unit = eV
+        !WHEN $NEGF ValenceBandOffset = -1.06 	# Unit = eV  # Vurgaftman1 (Stefan: Does this value refer to the valence band edge or to the average valence band edge?) very likely to high, different VBOs!!! Takuma: bandedge energies are as expected in GaAs/AlGaAs/GaAsSb triple barrier RTDs (UWUE).
+        !WHEN $MSB  ValenceBandOffset = -1.06 	# Unit = eV
+        !WHEN $nnp  ValenceBandOffset = 0.0 	# Unit = eV
+        !WHEN $TCAD ValenceBandOffset = 0.0 	# Unit = eV  # not checked!
+        BandGap = 1.43 				    # Unit = eV
+        BandGapAlpha = 0 			    # Unit = eV/K
+        BandGapBeta = 0 			    # Unit = K
+        ElectronMass = 0 			    # Unit = m0
+        DeltaSO = 0.6 				    # Unit = eV
+		
+        EpsStatic = 0
+        EpsOptic = 0
+        DeformationPotential = 0 		# Unit = eV
+        ValenceDefPotHydro = 0 			# Unit = eV
+        ValenceDefPotUniaxial_b = 0 	# Unit = eV
+        ValenceDefPotShear_d = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3
+        VelocityOfSound = 0 			# Unit = m/s
+        LOPhononEnergy = 0 				# Unit = eV
+        LOPhononWidth = 0 				# Unit = eV
+        AcousticPhononEnergy = 0 		# Unit = eV
+        LatticeA = 0 				    # Unit = nm
+        ElasticC11 = 0 				    # Unit = GPa
+        ElasticC12 = 0 				    # Unit = GPa
+        ElasticC44 = 0 				    # Unit = GPa
+        PiezoE14 = 0 				    # Unit = C/m^2
+    }
+
+    # gallium indium antimonide (GaInSb)
+    Material{
+        Name = "Ga(x)In(1-x)Sb"
+        Alloy = "GaSb(x);InSb(1-x)"
+        Binary1 = "GaSb(x)"
+        Binary2 = "InSb(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 		# Unit = eV  # TODO, not existing in nnp database
+        ValenceBandOffset = 0 			# Unit = eV
+        BandGap = 0.415 				# Unit = eV  # Vurgaftman1 = nextnano++ = nextnano.NEGF = TiberCAD. Neglect temperature-dependence for now, see [Vurgaftman1] p.5842
+        BandGapAlpha = 0 				# Unit = eV/K
+        BandGapBeta = 0 				# Unit = K
+        ElectronMass = 0.0092 			# Unit = m0
+        DeltaSO = 0.1 					# Unit = eV  # Vurgaftman1 = nextnano++ = nextnano.NEGF = TiberCAD
+		
+        S = -13.68 						# Unit = eV
+        EpsStatic = 0           		# TODO, not existing in nnp database
+        EpsOptic = 0            		# TODO, not existing in nnp database
+        DeformationPotential = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3  # TODO, not existing in nnp database
+        VelocityOfSound = 0 			# Unit = m/s  # TODO, not existing in nnp database
+        LOPhononEnergy = 0 				# Unit = eV  # TODO, not existing in nnp database
+        LOPhononWidth = 0 				# Unit = eV  # TODO, not existing in nnp database
+        AcousticPhononEnergy = 0 		# Unit = eV  # TODO, not existing in nnp database
+        LatticeA = 0 					# Unit = nm
+        ElasticC11 = 0 					# Unit = GPa
+        ElasticC12 = 0 					# Unit = GPa
+        ElasticC44 = 0 					# Unit = GPa
+        PiezoE14 = 0 					# Unit = C/m^2
+    }
+
+    # aluminum indium arsenide (AlInAs)
+    Material{
+        Name = "Al(x)In(1-x)As"
+        Alloy = "AlAs(x);InAs(1-x)"
+        Binary1 = "AlAs(x)"
+        Binary2 = "InAs(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = -0.64 		# Unit = eV
+        BandGap = 0.70 					# Unit = eV
+        BandGapAlpha = 0 				# Unit = eV/K
+        BandGapBeta = 0 				# Unit = K
+        ElectronMass = 0.049 			# Unit = m0
+        DeltaSO = 0.15 					# Unit = eV
+		
+        S = -8.88 						# Unit = eV
+        Ep = -4.81 						# Unit = eV
+        EpsStatic = 0
+        EpsOptic = 0
+        DeformationPotential = -1.4 	# Unit = eV
+        ValenceDefPotHydro = 0 			# Unit = eV
+        ValenceDefPotUniaxial_b = 0 	# Unit = eV
+        ValenceDefPotShear_d = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3
+        VelocityOfSound = 0 			# Unit = m/s
+        LOPhononEnergy = 0 				# Unit = eV
+        LOPhononWidth = 0 				# Unit = eV
+        AcousticPhononEnergy = 0 		# Unit = eV
+        LatticeA = 0 				    # Unit = nm
+        ElasticC11 = 0 				    # Unit = GPa
+        ElasticC12 = 0 				    # Unit = GPa
+        ElasticC44 = 0 				    # Unit = GPa
+        PiezoE14 = 0 				    # Unit = C/m^2
+    }
+
+    # indium arsenide antimonide (InAsSb)
+    Material{
+        Name = "InAs(x)Sb(1-x)"
+        Alloy = "InAs(x);InSb(1-x)"
+        Binary1 = "InAs(x)"
+        Binary2 = "InSb(1-x)"
+        CrystalStructure = Zincblende
+        ConductionBandOffset = 0 	# Unit = eV
+        ValenceBandOffset = 0 		# Unit = eV
+        BandGap = 0.67 				# Unit = eV
+        BandGapAlpha = 0 			# Unit = eV/K
+        BandGapBeta = 0 			# Unit = K
+        ElectronMass = 0.035 		# Unit = m0
+        DeltaSO = 0 				# Unit = eV
+		
+        EpsStatic = 0
+        EpsOptic = 0
+        DeformationPotential = 0 	# Unit = eV
+        ValenceDefPotHydro = 0 		# Unit = eV
+        ValenceDefPotUniaxial_b = 0 # Unit = eV
+        ValenceDefPotShear_d = 0 	# Unit = eV
+        MaterialDensity = 0 		# Unit = kg/m^3
+        VelocityOfSound = 0 		# Unit = m/s
+        LOPhononEnergy = 0 			# Unit = eV
+        LOPhononWidth = 0 			# Unit = eV
+        AcousticPhononEnergy = 0 	# Unit = eV
+        LatticeA = 0 				# Unit = nm
+        ElasticC11 = 0 				# Unit = GPa
+        ElasticC12 = 0 				# Unit = GPa
+        ElasticC44 = 0 				# Unit = GPa
+        PiezoE14 = 0 				# Unit = C/m^2
+    }
+
+    # aluminum arsenide antimonide (AlAsSb)
+    Material{
+        Name = "AlAs(x)Sb(1-x)"
+        CrystalStructure = Zincblende
+        Alloy = "AlAs(x);AlSb(1-x)"
+        Binary1 = "AlAs(x)"
+        Binary2 = "AlSb(1-x)"
+        ConductionBandOffset = 0 					# Unit = eV
+        !WHEN $NEGF ValenceBandOffset = -1.71 		# Unit = eV  # Vurgaftman1 (Comment S. Birner: Does Vurgaftman's value refer to the valence band edge or to the average valence band edge?)
+        !WHEN $MSB  ValenceBandOffset = -1.71 		# Unit = eV
+        !WHEN $nnp  ValenceBandOffset = 0.0 		# Unit = eV  # Comment S. Birner: Vurgaftman1 value leads to type-II band alignment for e.g. x=0.16 (lattice-matched to InAs) but
+                                                                 # experimentalists expect type-I. Therefore we set this value to zero. The user should choose whatever he prefers.
+                                                                 # See e.g. H. Kroemer, Physica E 20, 196 (2004) or G. W. Turner, J. Crystal Growth 175/176, 825 (1997).
+        !WHEN $TCAD ValenceBandOffset = 0.0         # Unit = eV  # not checked!
+        BandGap = 0.8 					# Unit = eV
+        DeltaSO = 0.15 					# Unit = eV  # Vurgaftman1 (Comment S. Birner: Note that the bowing of Delta_so affects the valence band offset.)
+        # DeltaSO = 0.0                                       # Comment S. Birner: This Delta_so bowing parameter could be set to zero so that valence band offsets are not affected by this value.
+		
+        BandGapAlpha = 0 				# Unit = eV/K
+        BandGapBeta = 0 				# Unit = K
+        ElectronMass = 0.0 				# Unit = m0
+        EpsStatic = 0
+        EpsOptic = 0
+        DeformationPotential = 0 		# Unit = eV
+        ValenceDefPotHydro = 0 			# Unit = eV
+        ValenceDefPotUniaxial_b = 0 	# Unit = eV
+        ValenceDefPotShear_d = 0 		# Unit = eV
+        MaterialDensity = 0 			# Unit = kg/m^3
+        VelocityOfSound = 0 			# Unit = m/s
+        LOPhononEnergy = 0 				# Unit = eV
+        LOPhononWidth = 0 				# Unit = eV
+        AcousticPhononEnergy = 0 		# Unit = eV
+        LatticeA = 0 				    # Unit = nm
+        ElasticC11 = 0 				    # Unit = GPa
+        ElasticC12 = 0 				    # Unit = GPa
+        ElasticC44 = 0 				    # Unit = GPa
+        PiezoE14 = 0 				    # Unit = C/m^2
+    }
+
+
+    ### Ternary wurtzite compounds ##########
+
+    # aluminum gallium nitride (AlGaN)
+    Material{
+        Name = "Al(x)Ga(1-x)N"
+        CrystalStructure = Wurtzite
+        Alloy = "AlN(x);GaN(1-x)"
+        Binary1 = "AlN(x)"
+        Binary2 = "GaN(1-x)"
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = 0 			# Unit = eV
+        !WHEN $NEGF BandGap = 0.7 		# Unit = eV
+        !WHEN $MSB  BandGap = 1.0 		# Unit = eV
+		!WHEN $nnp  BandGap = 0.7 		# Unit = eV
+        !WHEN $TCAD BandGap = 0.7 		# Unit = eV  # not checked!
+        ElectronMass = 0.0
+        MaterialDensity = 0.0
+        VelocityOfSound = 0.0
+        Pyro = -0.021 					# Unit = C/m^2
+    }
+
+    # aluminum indium nitride (AlInN)
+    Material{
+        Name = "Al(x)In(1-x)N"
+        CrystalStructure = Wurtzite
+        Alloy = "AlN(x);InN(1-x)"
+        Binary1 = "AlN(x)"
+        Binary2 = "InN(1-x)"
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = 0 			# Unit = eV
+        !WHEN $NEGF BandGap = 2.5 		# Unit = eV
+        !WHEN $MSB  BandGap = 0 		# Unit = eV
+		!WHEN $nnp  BandGap = 2.5 		# Unit = eV
+        !WHEN $TCAD BandGap = 2.5 		# Unit = eV  # not checked!
+        ElectronMass = 0.0
+        MaterialDensity = 0.0
+        VelocityOfSound = 0.0
+        !WHEN $NEGF Pyro = -0.070 		# Unit = C/m^2
+        !WHEN $MSB  Pyro = 0 			# Unit = C/m^2
+		!WHEN $nnp  Pyro = -0.070 		# Unit = C/m^2
+        !WHEN $TCAD Pyro = -0.070 		# Unit = C/m^2  # not checked!
+    }
+
+    # indium gallium nitride (InGaN)
+    Material{
+        Name = "In(x)Ga(1-x)N"
+        CrystalStructure = Wurtzite
+        Alloy = "InN(x);GaN(1-x)"
+        Binary1 = "InN(x)"
+        Binary2 = "GaN(1-x)"
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = 0 			# Unit = eV
+        !WHEN $NEGF BandGap = 1.4 		# Unit = eV
+        !WHEN $MSB  BandGap = 3.0 		# Unit = eV
+		!WHEN $nnp  BandGap = 1.4 		# Unit = eV
+        !WHEN $TCAD BandGap = 1.4 		# Unit = eV  # not checked!
+        ElectronMass = 0.0
+        MaterialDensity = 0.0
+        VelocityOfSound = 0.0
+        !WHEN $NEGF Pyro = -0.037 		# Unit = C/m^2
+        !WHEN $MSB  Pyro = 0 			# Unit = C/m^2
+		!WHEN $nnp  Pyro = -0.037 		# Unit = C/m^2
+        !WHEN $TCAD Pyro = -0.037 		# Unit = C/m^2  # not checked!
+    }
+
+
+    ### quaternary wurtzite compounds ##########
+
+    # aluminum indium gallium nitride (AlInGaN)
+    Material{
+        Name = "Al(x)In(y)Ga(1-x-y)N"
+        CrystalStructure = Wurtzite
+        Alloy = "AlN(x);InN(y);GaN(1-x-y)"
+        Binary1 = "AlN(x)"
+        Binary2 = "InN(y)"
+        Binary3 = "GaN(1-x-y)"
+        TernaryXy = "Al(x)In(1-x)N"
+        TernaryX = "Al(x)Ga(1-x)N"
+        TernaryY = "In(x)Ga(1-x)N"
+        ConductionBandOffset = 0 		# Unit = eV
+        ValenceBandOffset = 0 			# Unit = eV
+    }
+
+}
+

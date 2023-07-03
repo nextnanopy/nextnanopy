@@ -36,7 +36,7 @@ class InputFile(InputFileTemplate):
         """
         if fullpath is None:
             if self.fullpath is None:
-                raise ValueError('Please, specify a fullpath')
+                raise ValueError('Please specify a fullpath')
             fullpath = self.fullpath
         if content:
             text = self.content.__str__()
@@ -49,7 +49,7 @@ class InputFile(InputFileTemplate):
 
     def validate(self):
         if not is_nnp_input_text(self.raw_text):
-            raise ValueError(f'Not valid nextnano++ input file')
+            raise ValueError(f'Not a valid nextnano++ input file')
 
 
 

@@ -1,0 +1,136 @@
+$alloyComposition = 0.15 #alloy composition
+
+nextnano.NEGF{ 				# Version = 1.1.5
+    Header{
+        Author = "Thomas Grange / Takuma Sato"
+        Content = "See comments in input file."
+        # 
+        # 			minimal input file for nextnano.NEGF
+        # 		
+    }
+
+    SweepParameters{
+        SweepType = Single
+        Min = 100
+        Max = 102
+        Delta = 2
+    }
+
+    Bias{
+        PotentialDrop = 58 				# unit = meV
+    }
+
+    Temperature = 300 				# unit = K
+    Materials{
+        Material{
+            Name = GaAs
+            Alias = well
+            EffectiveMassFromKpParameters = yes
+        }
+
+        Material{
+            Name = "Al(x)Ga(1-x)As"
+            AlloyComposition = $alloyComposition
+            Alias = barrier
+            EffectiveMassFromKpParameters = yes
+        }
+
+        NonParabolicity = no
+        UseConductionBandOffset = yes
+    }
+
+    Structure{
+        Layer{
+            Material = barrier
+            Thickness = 4.1 				# unit = nm
+        }
+
+        Layer{
+            Material = well
+            Thickness = 16.0 				# unit = nm
+        }
+
+        Layer{
+            Material = barrier
+            Thickness = 4.3 				# unit = nm
+        }
+
+        Layer{
+            Material = well
+            Thickness = 8.9 				# unit = nm
+        }
+
+        Layer{
+            Material = barrier
+            Thickness = 2.46 				# unit = nm
+        }
+
+        Layer{
+            Material = well
+            Thickness = 8.15 				# unit = nm
+        }
+
+        Doping{
+            DopingStart = 9.6 				# unit = nm
+            DopingEnd = 14.6 				# unit = nm
+            DopingSpecification = "2dequiv"
+            DopingDensity = 3e10
+        }
+
+        AnalysisSeparator{
+            SeparatorPosition = 2.0
+        }
+
+        AnalysisSeparator{
+            SeparatorPosition = 22.0
+        }
+
+    }
+
+    Scattering{
+        MaterialForScatteringParameters = well
+        InterfaceRoughness{
+            AmplitudeInZ = 0.12 				# unit = nm
+            InterfaceAutoCorrelationType = 0
+            CorrelationLengthInXY = 8 				# unit = nm
+        }
+
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0 				# unit = meV
+        ScreeningTemperatureType = offset
+        TemperatureOffsetParameter = 150
+        # AccuracySelfConsistentElectronTemperature = 0.05
+        # ElectronTemperatureForScreening = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = no
+        AlloyScattering = no
+    }
+
+    Poisson = yes
+    LateralDiscretization{
+        MaterialForLateralMotion = well
+        Value = 20 				# unit = meV
+    }
+
+    SimulationParameter{
+        BiasForInitialElectronicModes = 49 				# unit = meV
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.5 				# unit = nm
+        nLateralPeriodsForBandStructure = 1
+        EnergyGridSpacing = 2 				# unit = meV
+        EminShift = 0 				# unit = meV
+        EmaxShift = 0 				# unit = meV
+        EnergyRangeLateral = 50 				# unit = meV
+        EnergyRangeAxial = 50 				# unit = meV
+        ConvergenceValueGF = 1e-3
+        ConvergenceValueCurrent = 1e-3
+        NMaxIterations = 50
+        ConvergFactInit = 1.0
+    }
+
+    Output{
+        EnergyResolvedPlots = yes
+    }
+
+}
+

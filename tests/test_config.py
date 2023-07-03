@@ -49,10 +49,9 @@ class Test_NNConfig(unittest.TestCase):
     def test_default_negf(self):
         config = NNConfig()
         if system == 'Windows':
-        
-        	default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+            default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
         else:
-        	default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
+            default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano.NEGF' in config.validators.keys())
