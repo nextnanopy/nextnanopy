@@ -39,6 +39,11 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.18 (Jul 04th, 2023)
+* new product available: nextnano.NEGF++
+* setting the text for InputFile is available again (but switching product when setting text os forbidden)
+* interface with .gds files is extended
+
 ### Version 0.1.17 (Jun 07th, 2023)
 * fixed a bug with nnp.shapes.GdsPolygons.get_obelisks
 * get_obelisks can be used again. The usage is deprecated, nnp.shapes.GdsPolygons.get_polygonal_prisms is prefered way to convert gds to nextnano++ structure
