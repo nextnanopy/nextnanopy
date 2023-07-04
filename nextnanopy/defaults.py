@@ -164,6 +164,12 @@ class NNConfig(Config):
         if not os.path.isfile(fullpath):
             self.to_default()
             self.save()
+        elif not self._complete:
+            # TODO add tests for these behaviour
+            # ensures smooth transition to additional product: NEGF++
+            self.update_with_defaults()
+            self.save()
+
 
     def to_default(self):
         for section in self.defaults.keys():
@@ -175,3 +181,22 @@ class NNConfig(Config):
     def reset(self):
         self.to_default()
         self.save()
+
+
+    @property
+    def _complete(self):
+        return self.check_complete()
+
+    def check_complete(self):
+        for section in self.defaults.keys():
+            if section not in self.sections:
+                print(section)
+                return False
+        return True
+
+    def update_with_defaults(self):
+        for section in self.defaults.keys():
+            if section not in self.sections:
+                self.add_section(section)
+                for option, value in self.defaults[section].items():
+                    self.set(section, option, value)
