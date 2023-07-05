@@ -467,7 +467,41 @@ class DataFile(DataFileTemplate):
             raise NotImplementedError('Preview plot feature is implemented only for datafiles with 2 or less coordinates')
         return fig,ax
 
+    def save(self, filepath, extension='dat'):
+        accepted_extensions = ['dat', 'vtr']
+        if extension not in accepted_extensions:
+            raise NotImplementedError(f'{extension} extension is not supported for saving')
+        if extension=='dat':
+            ndim = len(self.coords)
+            if ndim>1:
+                raise ValueError(f'The DataFile is {ndim}-dimensional. More than 1 dimension is not supported for .dat extension')
+            with open(filepath, 'w') as f:
+                # Write headers
+                for header in self.metadata['headers']:
+                    f.write(header)
 
+                # Write data
+                combined_data = [coord.value for coord in self.coords] + [variable.value for variable in self.variables]
+
+                data = np.column_stack(combined_data).transpose()
+                np.savetxt(f, data.T)
+        elif extension=='vtr':
+            from nextnanopy.utils.formatting import create_vtk_header
+            header = create_vtk_header(len(self.coords), [len(coord.value)  for coord in self.coords])
+            with open(filepath, 'w') as file:
+                # Write the header
+                file.write(header)
+
+                file.write('<Coordinates>')
+
+                for coord in self.coords:
+
+                    file.write(
+                        f'<DataArray type="Float64" Name="{coord.name.upper()}_COORDINATES" NumberOfComponents="1" format="ascii">\n'
+                            )
+                    np.savetxt(file, coord.value, fmt='%.6f', delimiter='\t')
+                    file.write('</DataArray>\n')
+                file.write('</Coordinates')
 
 
 class AvsAscii(Output):

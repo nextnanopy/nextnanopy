@@ -140,7 +140,8 @@ class Dat(Output):
         self.variables = variables
         return coords, variables
 
-    def save(self, new_location):
+
+    def save(self, new_location, extension='dat'):
         with open(new_location, 'w') as f:
             # Write headers
             for header in self.metadata['headers']:

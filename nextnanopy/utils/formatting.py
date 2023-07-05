@@ -194,3 +194,20 @@ def best_str_to_name_unit(_str, default_unit=None):
             name, unit = str_to_name_unit_with_rest(_str, init=init, end=end, default_unit=None)
             break
     return name, unit
+
+def create_vtk_header(dim : int, coord_dimensions : list):
+    extent_str = ''
+    for d in range(dim):
+        extent_str+= f"1 {coord_dimensions}"
+
+    header = rf"""<VTKFile type="RectilinearGrid" version="0.1" format="ascii">
+<RectilinearGrid WholeExtent="{extent_str}">
+<Piece Extent="{extent_str}">
+    """
+
+    return header
+
+
+
+
+
