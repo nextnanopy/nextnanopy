@@ -139,3 +139,17 @@ class Dat(Output):
         self.coords = coords
         self.variables = variables
         return coords, variables
+
+    def save(self, new_location):
+        with open(new_location, 'w') as f:
+            # Write headers
+            for header in self.metadata['headers']:
+                f.write(header)
+
+            # Write data
+            data = np.concatenate([coord.value for coord in self.coords.values()], axis=0)
+            data = np.concatenate(data, [variable.value for variable in self.variables.values()], axis = 0)
+            np.savetxt(f, data.T)
+
+        # Optionally update the fullpath attribute to the new location
+        self.fullpath = new_location
