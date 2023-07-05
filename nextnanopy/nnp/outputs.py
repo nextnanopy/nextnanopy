@@ -147,8 +147,9 @@ class Dat(Output):
                 f.write(header)
 
             # Write data
-            data = np.concatenate([coord.value for coord in self.coords.values()], axis=0)
-            data = np.concatenate(data, [variable.value for variable in self.variables.values()], axis = 0)
+            combined_data = [coord.value for coord in self.coords] + [variable.value for variable in self.variables]
+
+            data = np.column_stack(combined_data).transpose()
             np.savetxt(f, data.T)
 
         # Optionally update the fullpath attribute to the new location
