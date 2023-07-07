@@ -495,12 +495,15 @@ class DataFile(DataFileTemplate):
                 file.write('<Coordinates>')
                 # TODO if dim=2, also add 3d dimension dummy ('Z_COORDINATES')
                 for coord in self.coords:
-
                     file.write(
                         f'<DataArray type="Float64" Name="{coord.name.upper()}_COORDINATES" NumberOfComponents="1" format="ascii">\n'
                             )
                     np.savetxt(file, coord.value, fmt='%.6f', delimiter='\t')
                     file.write('</DataArray>\n')
+                if len(self.coords)==2: #add Z coordinate
+                    file.write("""<DataArray type="Float64" Name ="Z_COORDINATES" NumberOfComponents ="1" format="ascii">
+                                        0
+                                    </DataArray>\n""")
                 file.write('</Coordinates>\n')
                 np.set_printoptions(threshold=20)
                 file.write('<PointData>\n')

@@ -199,6 +199,8 @@ def create_vtk_header(dim : int, coord_dimensions : list):
     extent_str = ''
     for i in range(dim):
         extent_str+= f"1 {coord_dimensions[i]} "
+    if dim==2:
+        extent_str+= "1 1 "
     extent_str = extent_str[:-1]
 
     header = rf"""<VTKFile type="RectilinearGrid" version="0.1" format="ascii">
