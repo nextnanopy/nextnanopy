@@ -493,7 +493,7 @@ class DataFile(DataFileTemplate):
                 file.write(header)
 
                 file.write('<Coordinates>')
-
+                # TODO if dim=2, also add 3d dimension dummy ('Z_COORDINATES')
                 for coord in self.coords:
 
                     file.write(
@@ -501,7 +501,27 @@ class DataFile(DataFileTemplate):
                             )
                     np.savetxt(file, coord.value, fmt='%.6f', delimiter='\t')
                     file.write('</DataArray>\n')
-                file.write('</Coordinates')
+                file.write('</Coordinates>\n')
+                np.set_printoptions(threshold=20)
+                file.write('<PointData>\n')
+                for variable in self.variables:
+                    if variable.unit:
+                        name = variable.name+f'[{variable.unit}]'
+                    else:
+                        name = variable.name
+                    file.write(f'<DataArray type="Float64" Name="{name}" NumberOfComponents="1" format="ascii">\n')
+                    flatten_array = variable.value.flatten('F')
+
+                    np.savetxt(file, flatten_array, fmt='%.6f', delimiter='\t')
+                    file.write('</DataArray>\n')
+                footer = """</PointData>
+                            </Piece>
+                            </RectilinearGrid>
+                            </VTKFile>"""
+                file.write(footer)
+        self.filepath = filepath
+
+
 
 
 class AvsAscii(Output):

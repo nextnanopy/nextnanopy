@@ -197,8 +197,9 @@ def best_str_to_name_unit(_str, default_unit=None):
 
 def create_vtk_header(dim : int, coord_dimensions : list):
     extent_str = ''
-    for d in range(dim):
-        extent_str+= f"1 {coord_dimensions}"
+    for i in range(dim):
+        extent_str+= f"1 {coord_dimensions[i]} "
+    extent_str = extent_str[:-1]
 
     header = rf"""<VTKFile type="RectilinearGrid" version="0.1" format="ascii">
 <RectilinearGrid WholeExtent="{extent_str}">
