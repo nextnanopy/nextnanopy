@@ -467,11 +467,12 @@ class DataFile(DataFileTemplate):
             raise NotImplementedError('Preview plot feature is implemented only for datafiles with 2 or less coordinates')
         return fig,ax
 
-    def save(self, filepath, extension='dat'):
-        accepted_extensions = ['dat', 'vtr']
-        if extension not in accepted_extensions:
+    def save(self, filepath, format='dat'):
+        # TODO  and AvsBinary (.fld)
+        accepted_format = ['dat', 'vtr', 'AvsAscii_one_file']
+        if format not in accepted_format:
             raise NotImplementedError(f'{extension} extension is not supported for saving')
-        if extension=='dat':
+        if format=='dat':
             ndim = len(self.coords)
             if ndim>1:
                 raise ValueError(f'The DataFile is {ndim}-dimensional. More than 1 dimension is not supported for .dat extension')
@@ -485,7 +486,7 @@ class DataFile(DataFileTemplate):
 
                 data = np.column_stack(combined_data).transpose()
                 np.savetxt(f, data.T)
-        elif extension=='vtr':
+        elif format=='vtr':
             from nextnanopy.utils.formatting import create_vtk_header
             header = create_vtk_header(len(self.coords), [len(coord.value)  for coord in self.coords])
             with open(filepath, 'w') as file:
@@ -522,6 +523,8 @@ class DataFile(DataFileTemplate):
                             </RectilinearGrid>
                             </VTKFile>"""
                 file.write(footer)
+        elif format=='AvsAscii_one_file':
+            write_avsascii_one_file(coordinates=self.coords, variables=self.variables, filename=filepath)
         self.filepath = filepath
 
 
@@ -745,3 +748,65 @@ def reshape_values(values, *dims):
     shape = tuple([dim for dim in dims])
     values = np.reshape(values, shape)
     return np.transpose(values)
+
+def write_avsascii_one_file(coordinates, variables, filename):
+    # Validate input
+    if len(coordinates) < 2 or len(coordinates) > 3:
+        raise ValueError("Coordinates array must have exactly 2 or 3 objects.")
+
+    num_coords = len(coordinates)
+    num_variables = len(variables)
+
+    # Calculate skip values
+    header_up_to_first_label = 9
+    header_lines = header_up_to_first_label + num_variables + 1 + num_variables + num_coords + 1 # each 1 is skipped line
+    coord_skip_values = [header_lines]
+    for i in range(num_coords-1):
+        coord_skip_values.append(coord_skip_values[-1] + coordinates[i].value.size+1) #1 for empty line after each coord
+
+    data_skip = coord_skip_values[-1] + coordinates[-1].value.size+1
+
+    # Calculate the number of lines each variable takes
+    number_of_lines_for_var = np.prod([coord.value.size for coord in coordinates])
+
+    # Open file for writing
+    with open(filename, "w") as file:
+        # Write header
+        file.write("# AVS/Express field file\n")
+        file.write("#\n")
+        file.write(f"ndim = {num_coords}\n")
+
+        for i in range(num_coords):
+            file.write(f"dim{i+1} = {coordinates[i].value.size}\n")
+
+        file.write("nspace = {}\n".format(num_coords))
+        file.write(f"veclen = {num_variables}\n")
+        file.write("data = double\n")
+        file.write("field = rectilinear\n")
+
+        # Write variable labels and units
+        for i in range(num_variables):
+            file.write(f"label = {variables[i].name}[{variables[i].unit}]\n")
+
+        # Write an empty line after the last label
+        file.write("\n")
+
+        # Write variable file paths
+        for i, var in enumerate(variables):
+            file.write(f"variable {i + 1} file={filename} filetype=ascii skip={data_skip + i * number_of_lines_for_var} offset=0 stride=1\n")
+
+        # Write coordinate file paths
+        for coord, skip_value, i in zip(coordinates, coord_skip_values, range(num_coords)):
+            file.write(f"coord {i+1} file={filename} filetype=ascii skip={skip_value} offset=0 stride=1\n")
+
+        # Write an empty line after the last coord line
+        file.write("\n")
+
+        # Write data for coordinates
+        for coord in coordinates:
+            np.savetxt(file, coord.value.flatten('F'), fmt='%.8f')
+            file.write("\n")
+
+        # Write data for variables
+        for var in variables:
+            np.savetxt(file, var.value.flatten('F'), fmt='%.8f')
