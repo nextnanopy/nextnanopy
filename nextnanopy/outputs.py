@@ -469,9 +469,9 @@ class DataFile(DataFileTemplate):
 
     def save(self, filepath, format='dat'):
         # TODO  and AvsBinary (.fld)
-        accepted_format = ['dat', 'vtr', 'AvsAscii_one_file']
+        accepted_format = ['dat', 'VTKAscii', 'AvsAscii_one_file']
         if format not in accepted_format:
-            raise NotImplementedError(f'{extension} extension is not supported for saving')
+            raise NotImplementedError(f'{format} format is not supported for saving')
         if format=='dat':
             ndim = len(self.coords)
             if ndim>1:
@@ -486,7 +486,7 @@ class DataFile(DataFileTemplate):
 
                 data = np.column_stack(combined_data).transpose()
                 np.savetxt(f, data.T)
-        elif format=='vtr':
+        elif format=='VTKAscii':
             from nextnanopy.utils.formatting import create_vtk_header
             header = create_vtk_header(len(self.coords), [len(coord.value)  for coord in self.coords])
             with open(filepath, 'w') as file:
