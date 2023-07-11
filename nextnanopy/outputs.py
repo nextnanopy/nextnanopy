@@ -493,8 +493,8 @@ class DataFile(DataFileTemplate):
                 # Write the header
                 file.write(header)
 
+                # Write the coordinates
                 file.write('<Coordinates>')
-                # TODO if dim=2, also add 3d dimension dummy ('Z_COORDINATES')
                 for coord in self.coords:
                     file.write(
                         f'<DataArray type="Float64" Name="{coord.name.upper()}_COORDINATES" NumberOfComponents="1" format="ascii">\n'
@@ -506,7 +506,8 @@ class DataFile(DataFileTemplate):
                                         0
                                     </DataArray>\n""")
                 file.write('</Coordinates>\n')
-                np.set_printoptions(threshold=20)
+
+                # Write the data
                 file.write('<PointData>\n')
                 for variable in self.variables:
                     if variable.unit:
@@ -518,6 +519,8 @@ class DataFile(DataFileTemplate):
 
                     np.savetxt(file, flatten_array, fmt='%.6f', delimiter='\t')
                     file.write('</DataArray>\n')
+
+                # Write the footer
                 footer = """</PointData>
                             </Piece>
                             </RectilinearGrid>
