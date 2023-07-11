@@ -752,7 +752,13 @@ def reshape_values(values, *dims):
     values = np.reshape(values, shape)
     return np.transpose(values)
 
-def write_avsascii_one_file(coordinates, variables, filename):
+def write_avsascii_one_file(coordinates, variables, filename, binary=False):
+    if binary:
+        filetype = 'binary'
+        numpy_encoding = 'bytes'
+    else:
+        filetype = 'ascii'
+        numpy_encoding = 'bytes'
     # Validate input
     if len(coordinates) < 2 or len(coordinates) > 3:
         raise ValueError("Coordinates array must have exactly 2 or 3 objects.")
@@ -761,6 +767,7 @@ def write_avsascii_one_file(coordinates, variables, filename):
     num_variables = len(variables)
 
     # Calculate skip values
+    # TODO calculate skip values (in bytes?) for binary output
     header_up_to_first_label = 9
     header_lines = header_up_to_first_label + num_variables + 1 + num_variables + num_coords + 1 # each 1 is skipped line
     coord_skip_values = [header_lines]
@@ -796,20 +803,20 @@ def write_avsascii_one_file(coordinates, variables, filename):
 
         # Write variable file paths
         for i, var in enumerate(variables):
-            file.write(f"variable {i + 1} file={filename} filetype=ascii skip={data_skip + i * number_of_lines_for_var} offset=0 stride=1\n")
+            file.write(f"variable {i + 1} file={filename} filetype={filetype} skip={data_skip + i * number_of_lines_for_var} offset=0 stride=1\n")
 
         # Write coordinate file paths
         for coord, skip_value, i in zip(coordinates, coord_skip_values, range(num_coords)):
-            file.write(f"coord {i+1} file={filename} filetype=ascii skip={skip_value} offset=0 stride=1\n")
+            file.write(f"coord {i+1} file={filename} filetype={filetype} skip={skip_value} offset=0 stride=1\n")
 
         # Write an empty line after the last coord line
         file.write("\n")
 
         # Write data for coordinates
         for coord in coordinates:
-            np.savetxt(file, coord.value.flatten('F'), fmt='%.8f')
+            np.savetxt(file, coord.value.flatten('F'), fmt='%.8f', encoding=numpy_encoding)
             file.write("\n")
 
         # Write data for variables
         for var in variables:
-            np.savetxt(file, var.value.flatten('F'), fmt='%.8f')
+            np.savetxt(file, var.value.flatten('F'), fmt='%.8f', encoding=numpy_encoding)
