@@ -135,16 +135,16 @@ class DataFolder(object):
                 list_of_files += folder.find(template=template, deep=deep)
             return list_of_files
 
-    def find_multiple(self, keywords, deep=False):
+    def find_multiple(self, templates, deep=False):
         list_of_files = []
 
         for file in self.files:
-            if all(keyword in os.path.basename(file) for keyword in keywords):
+            if all(keyword in os.path.basename(file) for keyword in templates):
                 list_of_files.append(file)
 
         if deep and self.folders:
             for folder in self.folders:
-                list_of_files += folder.find_multiple(keywords=keywords, deep=deep)
+                list_of_files += folder.find_multiple(templates=templates, deep=deep)
 
         return list_of_files
 
