@@ -207,6 +207,12 @@ class DataFolder(object):
         tree_list = self.make_tree(with_files = with_files, deep = deep)
         print('\n'.join(tree_list))
 
+    @property
+    def name(self):
+        # folder_path = os.path.dirname(self.fullpath)
+        folder_name = os.path.basename(self.fullpath)
+        return folder_name
+
 
 
 
