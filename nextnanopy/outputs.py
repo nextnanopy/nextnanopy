@@ -135,6 +135,20 @@ class DataFolder(object):
                 list_of_files += folder.find(template=template, deep=deep)
             return list_of_files
 
+    def find_multiple(self, templates, deep=False):
+        list_of_files = []
+
+        for file in self.files:
+            if all(keyword in os.path.basename(file) for keyword in templates):
+                list_of_files.append(file)
+
+        if deep and self.folders:
+            for folder in self.folders:
+                list_of_files += folder.find_multiple(templates=templates, deep=deep)
+
+        return list_of_files
+
+
 
     def file(self, filename):
         matched_files = self.find(template = filename, deep = False)
@@ -192,6 +206,12 @@ class DataFolder(object):
     def show_tree(self, with_files = True, deep = True):
         tree_list = self.make_tree(with_files = with_files, deep = deep)
         print('\n'.join(tree_list))
+
+    @property
+    def name(self):
+        # folder_path = os.path.dirname(self.fullpath)
+        folder_name = os.path.basename(self.fullpath)
+        return folder_name
 
 
 

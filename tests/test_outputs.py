@@ -692,6 +692,27 @@ class TestDataFolder(unittest.TestCase):
         self.assertNotEqual(len(datafolder.find('.vtr', deep=True)), 0)
         self.assertEqual(len(datafolder.find('bandedges', deep = True)), 17)
 
+    def test_find_multiple(self):
+        tests_folder = 'tests'
+        datafolder = outputs.DataFolder(tests_folder)
+        self.assertEqual(len(datafolder.find_multiple(('',))),12)
+
+        self.assertIn(os.path.join(tests_folder,'__init__.py'),datafolder.find_multiple(('',)))
+
+
+        self.assertNotIn('only_variables.in',datafolder.find_multiple(('',)))
+
+
+        datafolder = outputs.DataFolder(folder_nnp)
+        self.assertNotIn(os.path.join(tests_folder, '__init__.py'), datafolder.find_multiple(('tests',)))
+
+        self.assertEqual(len(datafolder.find_multiple(('bandedges',))), 7)
+        self.assertEqual(len(datafolder.find_multiple(('bandedges', '2d'))), 5)
+
+        self.assertNotIn('only_variables.in', datafolder.find_multiple(('abls',)))
+
+        self.assertEqual(len(datafolder.find_multiple(('.vtr',))), 2)
+        self.assertEqual(len(datafolder.find_multiple(('.vt', 'r'))), 2)
 
     def test_go_to(self):
         tests_folder = 'tests'
