@@ -488,6 +488,31 @@ class DataFile(DataFileTemplate):
         return fig,ax
 
     def save(self, filepath, format='dat'):
+        """
+           Save the data from the DataFile instance to a specified file in various formats.
+
+           Parameters:
+               filepath (str): The file path where the data will be saved.
+               format (str, optional): The format in which the data should be saved. Default is 'dat'.
+                   Supported formats:
+                   - 'dat' (for 1D files): Data is saved in a plain text format (.dat) with whitespace-separated values.
+                   - 'VTKAscii' (for 2D/3D files): Data is saved in VTK ASCII format (.vtk) suitable for visualization tools.
+                   - 'AvsAscii_one_file' (for 2D/3D files): Data is saved in AVS/Express ASCII format (.fld) for AVS/Express software.
+
+           Raises:
+               NotImplementedError: If the provided 'format' is not supported for saving.
+
+           Notes:
+               - For the 'dat' format, the DataFile instance should be one-dimensional (ndim=1).
+               - The 'VTKAscii' format requires 'nextnanopy.utils.formatting' module for creating the VTK header.
+               - The 'AvsAscii_one_file' format requires the 'write_avsascii_one_file' function.
+
+           Example:
+               # Assuming `data_file` is an instance of the `DataFile` class
+               data_file.save('data_file.dat', format='dat')  # Save data in .dat format
+               data_file.save('data_file.vtk', format='VTKAscii')  # Save data in VTK ASCII format
+               data_file.save('data_file.fld', format='AvsAscii_one_file')  # Save data in AVS/Express ASCII format
+           """
         # TODO  and AvsBinary (.fld)
         accepted_format = ['dat', 'VTKAscii', 'AvsAscii_one_file']
         if format not in accepted_format:
