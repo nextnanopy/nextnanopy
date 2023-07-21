@@ -39,6 +39,11 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.119 (Jul 21st, 2023)
+* new feature: saving DataFile: DataFile.save
+* new feature: DataFolder.find_multiple - search files by multiple keywords
+* new property DataFolder.name - return the basename of the folder
+
 ### Version 0.1.18 (Jul 04th, 2023)
 * new product available: nextnano.NEGF++
 * setting the text for InputFile is available again (but switching product when setting text os forbidden)
