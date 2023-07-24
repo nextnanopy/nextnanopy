@@ -1,3 +1,4 @@
+import json
 import os
 from itertools import islice
 import numpy as np
@@ -212,6 +213,18 @@ class DataFolder(object):
         # folder_path = os.path.dirname(self.fullpath)
         folder_name = os.path.basename(self.fullpath)
         return folder_name
+
+    def read_sweep_infodict(self):
+        infodict_path = os.path.join(self.fullpath, 'sweep_infodict.json')
+
+        if not os.path.isfile(infodict_path):
+            raise FileNotFoundError(
+                "Sweep infodict file not found. Make sure that the chosen folder is a sweep output folder.")
+
+        with open(infodict_path, 'r') as file:
+            infodict = json.load(file)
+
+        return infodict
 
 
 
