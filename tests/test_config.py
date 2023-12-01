@@ -11,10 +11,9 @@ class Test_NNConfig(unittest.TestCase):
         config = NNConfig()
         
         if system == 'Windows':
-        
-        	default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+            default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
         else:
-        	default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
+            default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
 
         self.assertEqual(config.fullpath, default_fullpath)
         self.assertTrue('nextnano3' in config.validators.keys())
@@ -62,6 +61,28 @@ class Test_NNConfig(unittest.TestCase):
             self.assertTrue(option in config.validators['nextnano.NEGF'].keys())
             self.assertTrue(option in config.defaults['nextnano.NEGF'].keys())
             self.assertTrue(option in config.config['nextnano.NEGF'].keys())
+        self.assertTrue(os.path.isfile(config.fullpath))
+
+    def test_default_nnevo(self):
+        config = NNConfig()
+        if system == 'Windows':
+            default_fullpath = os.path.join(os.environ['HOMEDRIVE'], os.environ['HOMEPATH'], '.nextnanopy-config')
+        else:
+            default_fullpath = os.path.join(os.environ['HOME'], '.nextnanopy-config')
+
+        self.assertEqual(config.fullpath, default_fullpath)
+        self.assertTrue('nextnanoevo' in config.validators.keys())
+        self.assertTrue('nextnanoevo' in config.defaults.keys())
+        self.assertTrue('nextnanoevo' in config.config.keys())
+        options = ['license']
+        for option in options:
+            self.assertTrue(option in config.validators['nextnanoevo'].keys())
+            self.assertTrue(option in config.defaults['nextnanoevo'].keys())
+            self.assertTrue(option in config.config['nextnanoevo'].keys())
+        option = 'exe' # no exe for nnevo
+        self.assertFalse(option in config.validators['nextnanoevo'].keys())
+        self.assertFalse(option in config.defaults['nextnanoevo'].keys())
+        self.assertFalse(option in config.config['nextnanoevo'].keys())
         self.assertTrue(os.path.isfile(config.fullpath))
 
     def test_load_nn3(self):

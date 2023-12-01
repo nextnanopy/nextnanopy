@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from nextnanopy.utils.config import Config
 
-products = ['nextnano++', 'nextnano3', 'nextnano.NEGF', 'nextnano.NEGF++', 'nextnano.MSB']
+products = ['nextnano++', 'nextnano3', 'nextnano.NEGF', 'nextnano.NEGF++', 'nextnano.MSB', 'nextnanoevo']
 default_folder = str(Path.home())
 config_default_path = os.path.join(default_folder, '.nextnanopy-config')
 messages = {
@@ -24,6 +24,8 @@ def get_InputFile(product):
         from nextnanopy.negf.inputspp import InputFile
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.inputs import InputFile
+    elif product == 'nextnanoevo':
+        raise ValueError('There is no InputFile format for nextnanoevo')
     elif product == 'not valid':
         from nextnanopy.inputs import InputFileTemplate as InputFile
     else:
@@ -40,6 +42,8 @@ def get_DataFile(product):
         from nextnanopy.negf.outputs import DataFile
     elif product == 'nextnano.MSB':
         from nextnanopy.negf.outputs import DataFile
+    elif product == 'nextnanoevo':
+        raise ValueError('There is no DataFile format for nextnanoevo')
     else:
         raise ValueError(f'{product} is not valid')
     return DataFile
@@ -56,6 +60,8 @@ def get_command(product):
         from nextnanopy.negf.defaults import command_negfpp as command
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.defaults import command_msb as command
+    elif product == 'nextnanoevo':
+        raise ValueError('There is no command format for nextnanoevo')
     else:
         raise ValueError(f'{product} is not valid')
     return command
@@ -72,6 +78,8 @@ def get_fmt(product):
         from nextnanopy.negf.defaults import fmtpp
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.defaults import fmt
+    elif product == 'nextnanoevo':
+        raise ValueError('There is no formatting defaults for nextnanoevo')
     else:
         raise ValueError(f'{product} is not valid')
     return fmt
@@ -130,10 +138,12 @@ def _get_config_validator(product):
         from nextnanopy.nnp.defaults import config_validator
     elif product == 'nextnano3':
         from nextnanopy.nn3.defaults import config_validator
-    elif product == 'nextnano.NEGF' or 'nextnano.NEGF++':
+    elif product == 'nextnano.NEGF' or product == 'nextnano.NEGF++':
         from nextnanopy.negf.defaults import config_validator
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.defaults import config_validator
+    elif product == 'nextnanoevo':
+        from nextnanopy.nnevo.defaults import config_validator
     else:
         raise ValueError(f'{product} is not valid')
     return config_validator
@@ -144,10 +154,12 @@ def _get_config_default(product):
         from nextnanopy.nnp.defaults import config_default
     elif product == 'nextnano3':
         from nextnanopy.nn3.defaults import config_default
-    elif product == 'nextnano.NEGF' or 'nextnano.NEGF++':
+    elif product == 'nextnano.NEGF' or product == 'nextnano.NEGF++':
         from nextnanopy.negf.defaults import config_default
     elif product == 'nextnano.MSB':
         from nextnanopy.msb.defaults import config_default
+    elif product == 'nextnanoevo':
+        from nextnanopy.nnevo.defaults import config_default
     else:
         raise ValueError(f'{product} is not valid')
     return config_default
@@ -190,7 +202,6 @@ class NNConfig(Config):
     def check_complete(self):
         for section in self.defaults.keys():
             if section not in self.sections:
-                print(section)
                 return False
         return True
 

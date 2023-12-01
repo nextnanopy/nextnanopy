@@ -63,7 +63,9 @@ class Config(object):
             create a new section in the configuration
 
     """
-    def __init__(self, fullpath, validators={}):
+    def __init__(self, fullpath, validators=None):
+        if validators is None:
+            validators = {}
         self.configparser = configparser.ConfigParser()
         self.validators = validators
         if fullpath:
