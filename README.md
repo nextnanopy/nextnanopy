@@ -40,7 +40,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 ## History of changes
 
 ### Version 0.1.20 (Dec 13th, 2023)
-* nextnanopy is aligned to be used with nextnanoevo
+* nextnanopy is aligned to be used with nextnanoevo. nextnanoevo will be released in 2024
 
 ### Version 0.1.19 (Jul 21st, 2023)
 * new feature: saving DataFile: DataFile.save
