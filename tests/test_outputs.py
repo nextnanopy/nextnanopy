@@ -6,10 +6,16 @@ from nextnanopy.utils.datasets import default_unit
 from os.path import join
 import os
 
-folder_nnp = os.path.join('tests', 'datafiles', 'nextnano++')
-folder_nn3 = os.path.join('tests', 'datafiles', 'nextnano3')
-folder_negf = os.path.join('tests', 'datafiles', 'nextnano.NEGF')
-folder_msb = os.path.join('tests', 'datafiles', 'nextnano.MSB')
+TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
+# folder_nnp = os.path.join(TESTS_DIR, 'datafiles', 'nextnano++')
+# folder_nn3 = os.path.join(TESTS_DIR, 'datafiles', 'nextnano3')
+# folder_negf = os.path.join(TESTS_DIR, 'datafiles', 'nextnano.NEGF')
+# folder_msb = os.path.join(TESTS_DIR, 'datafiles', 'nextnano.MSB')
+
+folder_nnp = os.path.join("tests", 'datafiles', 'nextnano++')
+folder_nn3 = os.path.join("tests", 'datafiles', 'nextnano3')
+folder_negf = os.path.join("tests", 'datafiles', 'nextnano.NEGF')
+folder_msb = os.path.join("tests", 'datafiles', 'nextnano.MSB')
 
 
 class TestOutputs_nnp(unittest.TestCase):
@@ -165,6 +171,14 @@ class TestOutputs_nnp(unittest.TestCase):
         df = outputs.DataFile(join(folder_nnp, 'variables_database.txt'), product='nextnano++')
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 0)
+
+        df = outputs.DataFile(join(folder_nnp, 'total_charges.txt'), product='nextnano++')
+        self.assertEqual(len(df.coords.keys()), 0)
+        self.assertEqual(len(df.variables.keys()), 6)
+        print(df.variables['fixed'].value)
+        self.assertAlmostEqual(df.variables['fixed'].value, 0.0)
+        self.assertEqual(df.variables[0].name, 'electron')
+        self.assertEqual(df.variables[0].unit, 'e/cm^2')
 
         files = ['simulation_database.txt', 'simulation_info.txt', 'simulation_input.txt']
         for file in files:
@@ -606,7 +620,7 @@ class TestDataFolder(unittest.TestCase):
         self.assertIsInstance(datafolder.datafiles.folders['nextnano++'], outputs.DataFolder)
         nnp_folder = datafolder.datafiles.folders['nextnano++']
         self.assertTrue(os.path.samefile(nnp_folder.fullpath, folder_nnp))
-        self.assertTrue(os.path.join(folder_nnp,'bandedges_2d_old.fld') in nnp_folder.files)
+        self.assertTrue(os.path.join(folder_nnp, 'bandedges_2d_old.fld') in nnp_folder.files)
 
 
     def test_filenamess(self):

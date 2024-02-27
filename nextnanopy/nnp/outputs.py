@@ -28,9 +28,9 @@ class DataFile(DataFileTemplate):
         if self.filename_only in ['variables_input', 'variables_database']:
             loader = InputVariables
         elif self.filename_only == 'materials':
-            NotImplementedError(f'Loading materials.txt is not implemented yet')
+            raise NotImplementedError(f'Loading materials.txt is not implemented yet')
         elif self.filename_only == 'total_charges':
-            NotImplementedError(f'Loading total_charges.txt is not implemented yet')
+            loader = TotalCharges
         else:
             raise NotImplementedError(f'Datafile {self.filename_only}.txt is not valid')
         return loader
@@ -57,6 +57,43 @@ class InputVariables(Output):
             name, value, comment = parse_nnp_variable(line)
             var = InputVariable_nnp(name=name, value=value, comment=comment, metadata={'line_idx': i})
             variables[var.name] = var
+        self.variables = variables
+        return self.variables
+
+
+class TotalCharges(Output):
+    def __init__(self, fullpath, **loader_kwargs):
+        super().__init__(fullpath)
+        self.load()
+
+    def load(self):
+        self.load_raw()
+        self.load_variables()
+
+    def load_raw(self):
+        with open(self.fullpath, 'r') as f:
+            self.raw_lines = f.readlines()
+
+    def load_variables(self):
+        variables = DictList()
+        for i, line in enumerate(self.raw_lines):
+            try:
+                name, value, unit = line.split()
+            except Exception as e:
+                raise ValueError(f"An error occurred while loading total_charges file:{e}")
+
+            try:
+                value = float(value)
+            except Exception as e:
+                raise ValueError(f"An error occurred while loading total_charges file:{e}")
+
+            # temp solution to omit ":" in the end of the line
+            if name[-1] == ':':
+                name = name[:-1]
+
+            var = Variable(name=name, unit=unit, value=value)
+            variables[var.name] = var
+
         self.variables = variables
         return self.variables
 
