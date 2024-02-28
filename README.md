@@ -39,6 +39,10 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+### Version 0.1.21 (Feb 28th, 2024)
+* Added DataFile loader for total_charges.txt 
+* nextnanopy now supports python3.10!
+
 ### Version 0.1.20 (Dec 13th, 2023)
 * nextnanopy is aligned to be used with nextnanoevo. nextnanoevo will be released in 2024
 
