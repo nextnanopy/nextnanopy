@@ -2,27 +2,30 @@ import setuptools
 from distutils.version import StrictVersion
 from importlib import import_module
 
+
+VERSION = "0.1.22"
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 extras = {
-    'gdspy': ('gdspy', '1.6', 'pip'),
-    'matplotlib': ('matplotlib', '3.2', 'conda'),
-    'cycler': ('cycler', '0.10', 'conda'),
+    "gdspy": ("gdspy", "1.6", "pip"),
+    "matplotlib": ("matplotlib", "3.2", "conda"),
+    "cycler": ("cycler", "0.10", "conda"),
 }
-extras_require = {k: '>='.join(v[0:2]) for k, v in extras.items()}
+extras_require = {k: ">=".join(v[0:2]) for k, v in extras.items()}
 
 install_requires = [
-    'numpy>=1.18',
-    'pyvista>=0.27',
+    "numpy>=1.18",
+    "pyvista>=0.27",
 ]
 
 setuptools.setup(
     name="nextnanopy",
-    version="0.1.21",
+    version=VERSION,
     author="nextnano GmbH",
     author_email="python@nextnano.com",
-    license='BSD-3-Clause',
+    license="BSD-3-Clause",
     description="Useful tools to interface the nextnano software (https://www.nextnano.com/)",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -39,57 +42,62 @@ setuptools.setup(
         "Intended Audience :: Science/Research",
         "Natural Language :: English",
     ],
-    python_requires='>=3.8',
+    python_requires=">=3.8",
     install_requires=install_requires,
-    extras_require=extras_require
+    extras_require=extras_require,
 )
 
 # Code below adapted from QCoDeS (https://qcodes.github.io/)
 
-version_template = '''
+version_template = """
 *****
 ***** package {0} must be at least version {1}.
 ***** Please upgrade it (pip install -U {0} or conda install {0})
 ***** in order to use {2}
 ***** Recommended method: {3}
 *****
-'''
+"""
 
-missing_template = '''
+missing_template = """
 *****
 ***** package {0} not found
 ***** Please install it (pip install {0} or conda install {0})
 ***** Recommended: {2} install {0}
 ***** in order to use {1}
 *****
-'''
+"""
 
-valueerror_template = '''
+valueerror_template = """
 *****
 ***** package {0} version not understood
 ***** Please make sure the installed version ({1})
 ***** is compatible with the minimum required version ({2})
 ***** in order to use {3}
 *****
-'''
+"""
 
-othererror_template = '''
+othererror_template = """
 *****
 ***** could not import package {0}. Please try importing it from
 ***** the commandline to diagnose the issue.
 *****
-'''
+"""
 
 # now test the versions of extras
 for extra, (module_name, min_version, install_method) in extras.items():
     try:
         module = import_module(module_name.lower())
         if StrictVersion(module.__version__) < StrictVersion(min_version):
-            print(version_template.format(module_name, min_version, extra, install_method))
+            print(
+                version_template.format(module_name, min_version, extra, install_method)
+            )
     except ImportError:
         print(missing_template.format(module_name, extra, install_method))
     except ValueError:
-        print(valueerror_template.format(
-            module_name, module.__version__, min_version, extra))
+        print(
+            valueerror_template.format(
+                module_name, module.__version__, min_version, extra
+            )
+        )
     except:
         print(othererror_template.format(module_name))
