@@ -63,7 +63,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 * fixed a bug with nnp.shapes.GdsPolygons.get_obelisks
 * get_obelisks can be used again. The usage is deprecated, nnp.shapes.GdsPolygons.get_polygonal_prisms is prefered way to convert gds to nextnano++ structure
 
-### Vesrion 0.1.16 (Apr 25th, 2023)
+### Version 0.1.16 (Apr 25th, 2023)
 * nextnanopy now supports python 3.10!
 * The execute_sweep function has been updated to include a new parameter, separate_sweep_dir, which allows the user to specify whether the output files should be saved in a separate directory or a common output directory.
 By default, execute_sweep will still create a separate output directory for each sweep. However, if the user sets separate_sweep_dir to False, the output files will be saved in a common output directory instead.
@@ -71,11 +71,11 @@ By default, execute_sweep will still create a separate output directory for each
 * nnpp assistant is updated
 * shapely is no longer necessary to import geometry from gdsii file
 
-### Vesrion 0.1.15 (Aug 31st, 2022)
-* input files now can be executed in parallel throuhg nextnanopy.inputs.ExecutionQueue class
+### Version 0.1.15 (Aug 31st, 2022)
+* input files now can be executed in parallel through nextnanopy.inputs.ExecutionQueue class
 * Sweep uses ExecutionQueue and executes several simulations in parallel if parallel_limit>1 in Sweep.execute_sweep(parallel_limit = n)
  
-### Vesrion 0.1.14 (Jul 27th, 2022)
+### Version 0.1.14 (Jul 27th, 2022)
 * nextnanopy.Sweep.save_sweep has parameter round_decimal to limit round of digits in the folder names. Deafault round_decimal = 8
 
 ### Version 0.1.13 (Jun 13th, 2022)
