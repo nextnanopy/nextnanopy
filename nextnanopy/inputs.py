@@ -361,7 +361,8 @@ class InputFileTemplate(object):
         self.fullpath = None
 
     def remove(self):
-        os.remove(self.fullpath)
+        if os.path.exists(self.fullpath):
+            os.remove(self.fullpath)
 
     def load_raw(self):
         with open(self.fullpath, 'r') as f:
@@ -846,16 +847,14 @@ class Sweep(InputFileTemplate):
             execution_queue.start()
 
             execution_queue.join()
-            if delete_input_files:
-                for inputfile in self.input_files:
-                    inputfile.remove()
         else:
             for i, inputfile in enumerate(self.input_files):
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
                 info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
-                if delete_input_files:
-                    inputfile.remove()
+        if delete_input_files:
+            for inputfile in self.input_files:
+                inputfile.remove()
 
         #part where the info is stored
         for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values()):
