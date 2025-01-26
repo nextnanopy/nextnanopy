@@ -60,6 +60,7 @@ def command_negfpp(
         database,
         outputdirectory,
         threads=0,
+        debug_ouptut_specifications=None,
         **kwargs,
 ):
     kwargs = OrderedDict(
@@ -70,6 +71,9 @@ def command_negfpp(
         license        = ['--license', _path(license)],
         threads        = ['--threads', threads],
     )
+    if debug_ouptut_specifications is not None:
+        kwargs['debug'] = ['--debug', debug_ouptut_specifications]
+        kwargs.move_to_end('debug')
     return generate_command(kwargs.values())
 
 
