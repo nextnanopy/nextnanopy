@@ -179,7 +179,7 @@ def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = Fals
     common_regions_list = list(regions_hole_set.intersection(regions_electron_set))
 
     if not common_regions_list:
-        return TypeError('integrated_density does not have common regions for holes and electrons')
+        raise TypeError('integrated_density does not have common regions for holes and electrons')
 
     #voltage = voltage[:-1]
 

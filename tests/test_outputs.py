@@ -1,6 +1,9 @@
 import unittest
 import warnings
 
+import matplotlib
+matplotlib.use("Agg")
+
 import nextnanopy.outputs as outputs
 from nextnanopy.utils.datasets import default_unit
 from pathlib import Path
@@ -245,6 +248,24 @@ class TestOutputs_nnp(unittest.TestCase):
     
     # TODO add tests for loading Origin like file
     # TODO add tests for exporting binary data
+
+
+class TestDataFilePlot(unittest.TestCase):
+    """Regression tests for the off-by-one fix in DataFile.plot() (review item 1.1):
+    with zero coords, every variable after the first (used as x-axis) must be plotted."""
+
+    def test_zero_coords_plots_all_variables(self):
+        df = outputs.DataFile(
+            folder_nnp / "total_charges.txt", product="nextnano++"
+        )
+        self.assertEqual(len(df.variables.keys()), 6)
+
+        fig, ax = df.plot()
+        labels = [line.get_label() for line in ax.get_lines()]
+
+        expected = [var.name for var in list(df.variables.values())[1:]]
+        self.assertEqual(labels, expected)
+        self.assertIn(df.variables[5].name, labels)
 
 
 class TestOutputs_nn3(unittest.TestCase):

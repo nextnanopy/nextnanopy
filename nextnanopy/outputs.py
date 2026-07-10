@@ -461,7 +461,7 @@ class DataFile(DataFileTemplate):
                 plot_coord = self.variables[0]
                 # plot_var = self.variables[1:]
                 # for var in plot_var:
-                for i in range(1, len(self.variables) - 1):
+                for i in range(1, len(self.variables)):
                     var = self.variables[i]
                     ax.plot(plot_coord.value, var.value, label=var.name)
                 ax.set_xlabel(f"{plot_coord.name}[{plot_coord.unit}]")
