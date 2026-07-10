@@ -40,7 +40,7 @@ class Data(object):
         If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
     """
 
-    params = ['name', 'value', 'unit', 'metadata'],
+    params = ['name', 'value', 'unit', 'metadata']
 
     def __init__(self, name, value, unit=None, metadata={}, label_fmt=None, *args,
                  **kwargs):
