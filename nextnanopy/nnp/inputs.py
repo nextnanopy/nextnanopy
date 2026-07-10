@@ -76,10 +76,10 @@ class Comment(object): #just to be able to check that entry is comment
         self.text = text
 
     def __repr__(self):
-        self.text.__repr__()
+        return self.text.__repr__()
 
     def __str__(self):
-        self.text.__str__()
+        return self.text.__str__()
 
 
 class Entry(object):
