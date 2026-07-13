@@ -296,7 +296,7 @@ class InputFileTemplate:
         convergenceCheck : bool, optional
             if True, check convergence of the simulation
             (default is False)
-        convergence_check_mode: string
+        convergence_check_mode : str, optional
             works only for convergenceCheck = True
             options:
                 'pause': asks user how to proceed if simulation did not converge (default)
@@ -854,23 +854,29 @@ class Sweep(InputFileTemplate):
             if True, the output overwrites the old output data. If False, execution will create a new output folder
             (with the unique name, created by adding an integer to the foldername). Default is False.
         show_log : bool, optional
-            if True, the simulation log is displayed in the console. If False, the count of current simulation is displayed without log. 
+            if True, the simulation log is displayed in the console. If False, the count of current simulation is displayed without log.
             Default is True.
             Note that the log file is always saved in the output folders regardless of this option.
         convergenceCheck : bool, optional
-            if True, nextnanopy scans the log file of the simulation performed and check whether the solution has converged. 
-            If it did not converge, nextnanopy warns you and ask if you want to proceed with postprocessing. 
-            Note that non-converged solutions are not reliable and further calculation and/or visualization from them do not make much sense. 
+            if True, nextnanopy scans the log file of the simulation performed and check whether the solution has converged.
+            If it did not converge, nextnanopy warns you and ask if you want to proceed with postprocessing.
+            Note that non-converged solutions are not reliable and further calculation and/or visualization from them do not make much sense.
             Default is False.
-        parallel_limit: int, optional
+        convergence_check_mode : str, optional
+            works only for convergenceCheck = True
+            options:
+                'pause': asks user how to proceed if simulation did not converge (default)
+                'terminate': terminate the script if the simulation did not converge
+                'continue': notify a user but continues execution of script
+        parallel_limit : int, optional
             number of simulation to run simultaniously. Espicially usefull for simple simulations which migh be more efficiently rn in parallel. Be aware that
             some nextnano solvers parallelize computations internally in threads (controlled by --threads in nextnanopy config). To avoid unexpected behaviour and
             not desirable decrease of simulation speed use the rule: parallel_limit*threads<= number of physical cores of the mahcine
             default 1
-        separate_sweep_dir: bool, optional
+        separate_sweep_dir : bool, optional
             if True, creates separate directory to store subdirectories of the sweep simulation. If False, stores all directories without separate directory.
             default True
-        **kwargs:
+        **kwargs :
             see **kwargs of InputFile.execute()
         """
         try:

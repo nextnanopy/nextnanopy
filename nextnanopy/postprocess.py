@@ -147,11 +147,11 @@ def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = Fals
     """
     Here parameter voltage is found.
     if both bias1 and bias2 are present in holes and electrones file, voltage = bias2-bias1
-    
+
     bias 2 is ignored if bias1 is None
-    
+
     if bias1 is present in common_biases_list, voltage = bias1
-    
+
     if bias1 = bias2 = None, voltage = first common bias
     """
     if not common_biases_list:

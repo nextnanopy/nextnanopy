@@ -1,3 +1,4 @@
+import functools
 import os
 
 import numpy as np
@@ -115,6 +116,7 @@ def get_file_idx(file):
 
 
 def message_decorator(method, init_msg=None, end_msg=None):
+    @functools.wraps(method)
     def f(*args, **kwargs):
         show_message(init_msg)
         result = method(*args, **kwargs)
