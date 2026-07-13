@@ -1,7 +1,7 @@
-# This workflow lints the source with ruff, using the rules in ruff.toml
+# This workflow lints and format-checks the source with ruff, using the rules in ruff.toml
 
 
-name: ruff lint
+name: ruff
 
 on:
   push:
@@ -27,3 +27,8 @@ jobs:
 
     - name: Lint with ruff
       run: ruff check --output-format=github .
+
+    # Runs even if the lint step failed, so a PR sees both sets of problems at once.
+    - name: Check formatting with ruff
+      if: always()
+      run: ruff format --check --diff .
