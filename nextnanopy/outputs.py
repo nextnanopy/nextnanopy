@@ -937,11 +937,11 @@ class Dat(Output):
             return columns
 
         # If not matching, try splitting by two or more spaces or tabs
-        columns = re.split(r"\s{2,}|\t+", header)
+        columns = re.split(r"\s{2,}|\t+", header.strip())
 
-        # Final check to ensure we have the right number of columns (optional)
+        # Final check to ensure we have the right number of columns
         if len(columns) != expected_num_columns:
-            None
+            return None
         return columns
 
     @staticmethod
