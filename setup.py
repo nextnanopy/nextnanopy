@@ -3,7 +3,7 @@ from importlib import import_module
 import setuptools
 from packaging.version import InvalidVersion, Version
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 with open("README.md") as fh:
     long_description = fh.read()
