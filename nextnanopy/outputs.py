@@ -11,11 +11,12 @@ import pyvista as pv
 from nextnanopy import defaults
 from nextnanopy.utils.datasets import Coord, Variable
 from nextnanopy.utils.formatting import best_str_to_name_unit
-from nextnanopy.utils.misc import get_filename, message_decorator, start_with_choice
+from nextnanopy.utils.misc import get_filename, message_decorator
 from nextnanopy.utils.mycollections import DictList
 
 _msgs = defaults.messages["load_output"]
-load_message = lambda method: message_decorator(
+def load_message(method):
+    return message_decorator(
     method, init_msg=_msgs[0], end_msg=_msgs[1]
 )
 
@@ -303,10 +304,10 @@ class Output:
         out.append(f"{self.__class__.__name__}")
         out.append(f"fullpath: {self.fullpath}")
         out.append(f"Coordinates: {len(self.coords)} datasets")
-        for key, coord in self.coords.items():
+        for coord in self.coords.values():
             out.append(f"\t{str(coord)}")
         out.append(f"Variables: {len(self.variables)} datasets")
-        for key, var in self.variables.items():
+        for var in self.variables.values():
             out.append(f"\t{str(var)}")
         out = "\n".join(out)
         return out
@@ -518,7 +519,7 @@ class DataFile(DataFileTemplate):
                         ax[i].set_title(f"{var.name}[{var.unit}]")
                         fig.colorbar(im, ax=ax[i])
                 else:
-                    for i, var in enumerate(self.variables):
+                    for var in self.variables:
                         fig, ax = plt.subplots()
                         im = ax.pcolormesh(
                             x.value,
@@ -656,7 +657,7 @@ class AvsAscii(Output):
         self.load_coords()
 
     def load_raw_metadata(self):
-        possible_keys = [
+        possible_keys = (
             "ndim",
             "dim",
             "nspace",
@@ -666,7 +667,7 @@ class AvsAscii(Output):
             "label",
             "variable",
             "coord",
-        ]
+        )
         info = []
         try:
             with open(self.fld) as f:
@@ -681,7 +682,7 @@ class AvsAscii(Output):
                             continue
                         # if line[0] != '#':
                         #     info.append(line)
-                        if start_with_choice(line, *possible_keys):
+                        if line.startswith(possible_keys):
                             info.append(line)
         except UnicodeDecodeError:
             with open(self.fld, "rb") as f:
@@ -696,7 +697,7 @@ class AvsAscii(Output):
                         continue
                     # if line[0] != '#':
                     #     info.append(line)
-                    if start_with_choice(line, *possible_keys):
+                    if line.startswith(possible_keys):
                         info.append(line)
         return info
 
@@ -1072,7 +1073,7 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
         file.write("\n")
 
         # Write variable file paths
-        for i, var in enumerate(variables):
+        for i, _var in enumerate(variables):
             file.write(
                 f"variable {i + 1} file={filename} filetype={filetype} skip={data_skip + i * number_of_lines_for_var} offset=0 stride=1\n"
             )
