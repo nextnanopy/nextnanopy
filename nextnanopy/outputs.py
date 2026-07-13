@@ -282,17 +282,29 @@ class Output:
     def __getitem__(self, item):
         return self.data[item]
 
+    def _raise_unknown_key(self, item):
+        known = list(self.coords.keys()) + list(self.variables.keys())
+        raise KeyError(
+            f"{item!r} is not a coordinate nor a variable of this {self.__class__.__name__}. "
+            f"Available keys: {known}. "
+            f"To add a new dataset, assign it to .coords or .variables directly."
+        )
+
     def __setitem__(self, item, value):
         if item in self.coords.keys():
             self.coords[item] = value
-        if item in self.variables.keys():
+        elif item in self.variables.keys():
             self.variables[item] = value
+        else:
+            self._raise_unknown_key(item)
 
     def __delitem__(self, item):
         if item in self.coords.keys():
             del self.coords[item]
-        if item in self.variables.keys():
+        elif item in self.variables.keys():
             del self.variables[item]
+        else:
+            self._raise_unknown_key(item)
 
     def __repr__(self):
         out = []

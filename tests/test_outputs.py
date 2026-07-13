@@ -702,6 +702,51 @@ class TestOutput(unittest.TestCase):
         for i, dfi in enumerate(df):
             self.assertEqual(df.data[i], dfi)
 
+    def test_setitem_coord(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        key = list(df.coords.keys())[0]
+        df[key] = "new coord"
+        self.assertEqual(df.coords[key], "new coord")
+        self.assertEqual(df[key], "new coord")
+
+    def test_setitem_variable(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        key = list(df.variables.keys())[0]
+        df[key] = "new variable"
+        self.assertEqual(df.variables[key], "new variable")
+        self.assertEqual(df[key], "new variable")
+
+    def test_setitem_unknown_key_raises(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        with self.assertRaises(KeyError):
+            df["not_a_key"] = 0
+        self.assertNotIn("not_a_key", df.data.keys())
+
+    def test_setitem_by_index_raises(self):
+        # positional access works for reading (DictList), but not for writing
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        with self.assertRaises(KeyError):
+            df[0] = 0
+
+    def test_delitem_coord(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        key = list(df.coords.keys())[0]
+        del df[key]
+        self.assertNotIn(key, df.coords.keys())
+        self.assertNotIn(key, df.data.keys())
+
+    def test_delitem_variable(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        key = list(df.variables.keys())[0]
+        del df[key]
+        self.assertNotIn(key, df.variables.keys())
+        self.assertNotIn(key, df.data.keys())
+
+    def test_delitem_unknown_key_raises(self):
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
+        with self.assertRaises(KeyError):
+            del df["not_a_key"]
+
 
 class TestDataFolder(unittest.TestCase):
     def test_init(self):
