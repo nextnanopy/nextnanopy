@@ -1,0 +1,29 @@
+# This workflow lints the source with ruff, using the rules in ruff.toml
+
+
+name: ruff lint
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  ruff:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    - name: Install ruff
+      run: pip install ruff==0.15.21
+
+    - name: Lint with ruff
+      run: ruff check --output-format=github .
