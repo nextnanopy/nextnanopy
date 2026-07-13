@@ -97,20 +97,6 @@ def preview(text, nums=True):
             print(f'{line}')
 
 
-def str_to_bool(string,
-                true_cases=['true', 't', 'yes', 'y', '1'],
-                false_cases=['false', 'f', 'no', 'n', '0'],
-                ):
-    str_low = string.lower()
-    if str_low in true_cases:
-        value = True
-    elif str_low in false_cases:
-        value = False
-    else:
-        raise ValueError('Ambiguos string to be converted to boolean')
-    return value
-
-
 def str_to_path(string):
     path = rf'{string}'
     return path
