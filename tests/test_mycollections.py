@@ -18,7 +18,7 @@ class TestDictList(unittest.TestCase):
 
     def test_loop(self):
         dl = DictList(a=3, b='test')
-        for value, expected in zip(dl, dl.values()):
+        for value, expected in zip(dl, dl.values(), strict=True):
             self.assertEqual(value, expected)
 
 
