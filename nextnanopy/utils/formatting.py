@@ -35,7 +35,7 @@ def autofmt_variable_value(value):
 
 
 def pattern_in_file(fullpath, input_pattern):
-    with open(fullpath, 'r') as f:
+    with open(fullpath) as f:
         for line in f:
             if input_pattern in line:
                 return True
@@ -112,13 +112,13 @@ def str_to_bool(string,
 
 
 def str_to_path(string):
-    path = r'{}'.format(string)
+    path = rf'{string}'
     return path
 
 
 def _path(path):
     if path:
-        path = r'{}'.format(path)
+        path = rf'{path}'
         path = f'"{path}"'
     return path
 

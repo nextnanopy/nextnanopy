@@ -1,5 +1,10 @@
 import unittest
-from nextnanopy.utils.formatting import best_str_to_name_unit, str_to_name_unit, str_to_name_unit_with_rest
+
+from nextnanopy.utils.formatting import (
+    best_str_to_name_unit,
+    str_to_name_unit,
+    str_to_name_unit_with_rest,
+)
 
 
 class TestNameUnit(unittest.TestCase):

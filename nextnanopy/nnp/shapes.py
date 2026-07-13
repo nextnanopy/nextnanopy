@@ -1,8 +1,11 @@
-from nextnanopy.nnp.assistants import InputAssistant
-from collections import OrderedDict
-from nextnanopy.shapes import GdsPolygonsRaw
-import numpy as np
 import warnings
+from collections import OrderedDict
+
+import numpy as np
+
+from nextnanopy.nnp.assistants import InputAssistant
+from nextnanopy.shapes import GdsPolygonsRaw
+
 
 class GdsPolygons(GdsPolygonsRaw):
     def __init__(self, *args, **kwargs):
@@ -34,7 +37,7 @@ class GdsPolygons(GdsPolygonsRaw):
         return shapes
 
 
-class Shape(object):
+class Shape:
     def __init__(self):
         self._ia = InputAssistant()
 

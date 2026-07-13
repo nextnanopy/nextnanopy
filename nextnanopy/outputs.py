@@ -1,19 +1,18 @@
 import json
 import os
-from itertools import islice
-import numpy as np
+import re
 import struct
 import warnings
-import re
+from itertools import islice
 
-from nextnanopy.utils.datasets import Variable, Coord
-from nextnanopy.utils.mycollections import DictList
-from nextnanopy.utils.formatting import best_str_to_name_unit
-from nextnanopy.utils.misc import get_filename, message_decorator, start_with_choice
-from nextnanopy import defaults
-
+import numpy as np
 import pyvista as pv
 
+from nextnanopy import defaults
+from nextnanopy.utils.datasets import Coord, Variable
+from nextnanopy.utils.formatting import best_str_to_name_unit
+from nextnanopy.utils.misc import get_filename, message_decorator, start_with_choice
+from nextnanopy.utils.mycollections import DictList
 
 _msgs = defaults.messages["load_output"]
 load_message = lambda method: message_decorator(
@@ -37,7 +36,7 @@ def displayname(data):
         return os.path.basename(data)
 
 
-class DataFolder(object):
+class DataFolder:
     """
     This class stores information about output directory.
     The stored data contains files (.files) and folders (.folders)
@@ -233,13 +232,13 @@ class DataFolder(object):
                 "Sweep infodict file not found. Make sure that the chosen folder is a sweep output folder."
             )
 
-        with open(infodict_path, "r") as file:
+        with open(infodict_path) as file:
             infodict = json.load(file)
 
         return infodict
 
 
-class Output(object):
+class Output:
 
     def __init__(self, fullpath, **loader_kwargs):
         self.fullpath = fullpath
@@ -434,10 +433,10 @@ class DataFile(DataFileTemplate):
         return loader
 
     def find_loader(self):
-        from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
-        from nextnanopy.nn3.outputs import DataFile as DataFile_nn3
-        from nextnanopy.negf.outputs import DataFile as DataFile_negf
         from nextnanopy.msb.outputs import DataFile as DataFile_msb
+        from nextnanopy.negf.outputs import DataFile as DataFile_negf
+        from nextnanopy.nn3.outputs import DataFile as DataFile_nn3
+        from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
 
         Dats = [DataFile_nn3, DataFile_nnp, DataFile_negf, DataFile_msb]
         for Dati in Dats:
@@ -666,7 +665,7 @@ class AvsAscii(Output):
         ]
         info = []
         try:
-            with open(self.fld, "r") as f:
+            with open(self.fld) as f:
                 for line in f:
                     line = line.replace("\n", "")
                     line = line.strip()
@@ -827,7 +826,7 @@ class Dat(Output):
 
     def _get_headers(self):
         headers = []
-        with open(self.fullpath, "r") as f:
+        with open(self.fullpath) as f:
             for line in f:
                 try:
                     float(line.split()[0])
@@ -838,7 +837,7 @@ class Dat(Output):
 
     def _get_nb_columns(self):
         meta = self.metadata
-        with open(self.fullpath, "r") as f:
+        with open(self.fullpath) as f:
             for i, line in enumerate(f):
                 if i < meta["skip_rows"]:
                     continue
@@ -1049,7 +1048,7 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
         for i in range(num_coords):
             file.write(f"dim{i+1} = {coordinates[i].value.size}\n")
 
-        file.write("nspace = {}\n".format(num_coords))
+        file.write(f"nspace = {num_coords}\n")
         file.write(f"veclen = {num_variables}\n")
         file.write("data = double\n")
         file.write("field = rectilinear\n")

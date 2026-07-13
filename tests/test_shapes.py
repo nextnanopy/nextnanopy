@@ -1,7 +1,9 @@
 import unittest
 from pathlib import Path
-from nextnanopy.shapes import GdsPolygonsRaw, units_factor, validate_unit
+
 import numpy as np
+
+from nextnanopy.shapes import GdsPolygonsRaw, units_factor, validate_unit
 
 np_equal = np.testing.assert_almost_equal
 

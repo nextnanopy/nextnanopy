@@ -1,10 +1,11 @@
 from copy import deepcopy
+
 import numpy as np
 
 default_unit = ""
 
 
-class Data(object):
+class Data:
     """
     This class stores any kind of information from nextnano files (input files, data files).
     This is a template class for datasets like Variables, Coords, InputVariables, etc.

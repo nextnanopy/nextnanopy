@@ -1,7 +1,8 @@
 import unittest
-from nextnanopy.utils.datasets import Data, Variable, Coord
-from nextnanopy.utils.datasets import default_unit
+
 import numpy as np
+
+from nextnanopy.utils.datasets import Coord, Data, Variable, default_unit
 
 
 class TestDatasets(unittest.TestCase):

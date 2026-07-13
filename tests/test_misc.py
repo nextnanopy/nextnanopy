@@ -1,4 +1,5 @@
 import unittest
+
 from nextnanopy.utils.misc import *
 
 

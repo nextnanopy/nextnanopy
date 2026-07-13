@@ -1,5 +1,7 @@
 import os
+
 import numpy as np
+
 
 def is_file(fullpath):
     filename = os.path.split(fullpath)[-1]

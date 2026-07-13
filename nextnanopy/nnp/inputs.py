@@ -1,8 +1,15 @@
-from nextnanopy.utils.mycollections import DictList
-from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.nnp.defaults import parse_nnp_variable, is_nnp_input_text, is_nnp_variable, InputVariable_nnp
-from nextnanopy.utils.misc import savetxt
 import os
+
+from nextnanopy.inputs import InputFileTemplate
+from nextnanopy.nnp.defaults import (
+    InputVariable_nnp,
+    is_nnp_input_text,
+    is_nnp_variable,
+    parse_nnp_variable,
+)
+from nextnanopy.utils.misc import savetxt
+from nextnanopy.utils.mycollections import DictList
+
 
 class InputFile(InputFileTemplate):
     def load_variables(self):
@@ -55,7 +62,7 @@ class InputFile(InputFileTemplate):
 
     def validate(self):
         if not is_nnp_input_text(self.raw_text):
-            raise ValueError(f'Not a valid nextnano++ input file')
+            raise ValueError('Not a valid nextnano++ input file')
 
 
 
@@ -71,7 +78,7 @@ def content_to_lines(content_to_transform):
         return result
 
 
-class Comment(object): #just to be able to check that entry is comment
+class Comment: #just to be able to check that entry is comment
     def __init__(self, text):
         self.text = text
 
@@ -82,7 +89,7 @@ class Comment(object): #just to be able to check that entry is comment
         return self.text.__str__()
 
 
-class Entry(object):
+class Entry:
     def __init__(self, content, intend_sign = '    '):
         self.content = content
         self.intend_sign = intend_sign
@@ -170,7 +177,7 @@ class Block(Entry):
 
 
 
-class Parser(object):
+class Parser:
     def __init__(self):
         self.lines = []
         self.result = Entry([])

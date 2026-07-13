@@ -2,11 +2,13 @@ import unittest
 import warnings
 
 import matplotlib
+
 matplotlib.use("Agg")
+
+from pathlib import Path
 
 import nextnanopy.outputs as outputs
 from nextnanopy.utils.datasets import default_unit
-from pathlib import Path
 
 folder_nnp = Path("tests") / "datafiles" / "nextnano++"
 folder_nn3 = Path("tests") / "datafiles" / "nextnano3"
@@ -245,7 +247,7 @@ class TestOutputs_nnp(unittest.TestCase):
         datafile = outputs.DataFile(filepath, product="nextnano++")
         self.assertEqual(len(datafile.coords), 2)
         self.assertEqual(len(datafile.variables), 1)
-    
+
     # TODO add tests for loading Origin like file
     # TODO add tests for exporting binary data
 
@@ -785,13 +787,13 @@ class TestDataFolder(unittest.TestCase):
             str(test_folder / "NotExistedFile.py") in datafolder.files
         )
 
-        
+
 
         self.assertTrue(datafolder.folders)
         self.assertTrue(datafolder.files)
 
         self.assertEqual(len(datafolder.files), 3)
-        
+
 
     def test_navigation(self):
         tests_folder = "tests"
@@ -996,7 +998,7 @@ class TestDataFolder(unittest.TestCase):
         datafolder_nnp = datafolder.go_to("datafiles", "nextnano++")
 
         self.assertTrue(Path(datafolder_nnp.fullpath).samefile(folder_nnp))
-        
+
 
     def test_file(self):
         tests_folder = "tests"

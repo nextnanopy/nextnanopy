@@ -1,8 +1,4 @@
-import numpy as np
-from nextnanopy.utils.mycollections import DictList
-from nextnanopy.outputs import Output, AvsAscii, Vtk, DataFileTemplate, Dat
-from nextnanopy.utils.datasets import Variable, Coord
-import re
+from nextnanopy.outputs import AvsAscii, Dat, DataFileTemplate, Vtk
 
 
 class DataFile(DataFileTemplate):
@@ -17,7 +13,7 @@ class DataFile(DataFileTemplate):
             loader = Vtk
         elif self.extension == ".txt":
             raise NotImplementedError(
-                f"Loading nextnano.MSB datafiles with extension.txt is not implemented yet"
+                "Loading nextnano.MSB datafiles with extension.txt is not implemented yet"
             )
         elif self.extension == ".dat":
             loader = Dat

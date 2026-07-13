@@ -1,11 +1,11 @@
-import setuptools
-from packaging.version import Version, InvalidVersion
 from importlib import import_module
 
+import setuptools
+from packaging.version import InvalidVersion, Version
 
 VERSION = "1.1.0"
 
-with open("README.md", "r") as fh:
+with open("README.md") as fh:
     long_description = fh.read()
 
 extras = {

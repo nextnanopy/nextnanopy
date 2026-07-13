@@ -1,13 +1,14 @@
-import sys, os
-import subprocess
-from pathlib import Path
+import os
 import queue
+import subprocess
+import sys
 import threading
 import warnings
-from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
-from nextnanopy import defaults
+from pathlib import Path
 
+from nextnanopy import defaults
 from nextnanopy.utils.formatting import generate_command
+from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
 
 
 def command(
@@ -109,7 +110,7 @@ def execute(
 
     # validate configuration of executable path
     if executable == "":
-        raise FileNotFoundError(f"Executable path is empty! Check nextnanopy.config")
+        raise FileNotFoundError("Executable path is empty! Check nextnanopy.config")
 
     if (not exe.is_file()) or (not wdir.is_dir()):
         raise FileNotFoundError(

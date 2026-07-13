@@ -1,5 +1,6 @@
-from pathlib import Path
 import warnings
+from pathlib import Path
+
 from nextnanopy.utils.config import Config
 
 products = [
@@ -92,13 +93,13 @@ def get_fmt(product):
 
 
 def input_file_type(fullpath):
-    from nextnanopy.nnp.defaults import is_nnp_input_file
-    from nextnanopy.nn3.defaults import is_nn3_input_file
+    from nextnanopy.msb.defaults import is_msb_input_file
     from nextnanopy.negf.defaults import (
         is_negf_classic_input_file,
         is_negf_input_file,
     )
-    from nextnanopy.msb.defaults import is_msb_input_file
+    from nextnanopy.nn3.defaults import is_nn3_input_file
+    from nextnanopy.nnp.defaults import is_nnp_input_file
 
     if is_nn3_input_file(fullpath):
         return "nextnano3"
@@ -115,13 +116,13 @@ def input_file_type(fullpath):
 
 
 def input_text_type(text):
-    from nextnanopy.nnp.defaults import is_nnp_input_text
-    from nextnanopy.nn3.defaults import is_nn3_input_text
+    from nextnanopy.msb.defaults import is_msb_input_text
     from nextnanopy.negf.defaults import (
         is_negf_classic_input_text,
         is_negf_input_text,
     )
-    from nextnanopy.msb.defaults import is_msb_input_text
+    from nextnanopy.nn3.defaults import is_nn3_input_text
+    from nextnanopy.nnp.defaults import is_nnp_input_text
 
     if is_nn3_input_text(text):
         return "nextnano3"

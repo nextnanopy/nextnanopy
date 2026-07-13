@@ -1,7 +1,8 @@
 import unittest
 from pathlib import Path
+
 from nextnanopy import commands
-from nextnanopy.utils.formatting import _path, _bool
+from nextnanopy.utils.formatting import _bool, _path
 
 folder_nnp = Path("tests") / "datafiles" / "nextnano++"
 folder_nn3 = Path("tests") / "datafiles" / "nextnano3"

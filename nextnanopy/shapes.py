@@ -1,10 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from cycler import cycler
-import gdspy
 import warnings
 from itertools import chain
+
+import gdspy
+import matplotlib.pyplot as plt
+import numpy as np
 import shapely
+from cycler import cycler
 
 units_factor = {
     'nm': 1e-9,
@@ -22,7 +23,7 @@ def validate_unit(key):
     return True
 
 
-class GdsPolygonsRaw(object):
+class GdsPolygonsRaw:
     def __init__(self, fullpath, unit='nm', by_spec_filter=None, cells=None):
         self.fullpath = fullpath
         self._labels = []
@@ -163,7 +164,7 @@ class GdsPolygonsRaw(object):
         #     ax.legend(loc='upper right')
         #     self.added_labels.append(label)
         return ax
-    
+
     def clip(self, clip_box: tuple):
         """
         Clip polygons to a given box and resets the labels to default values.

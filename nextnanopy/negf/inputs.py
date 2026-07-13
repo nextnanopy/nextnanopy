@@ -1,13 +1,14 @@
 import os
-from nextnanopy.utils.mycollections import DictList
+
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.nnp.defaults import (
-    parse_nnp_variable,
-    is_nnp_variable,
-    InputVariable_nnp,
-)
 from nextnanopy.negf.defaults import is_negf_input_text
+from nextnanopy.nnp.defaults import (
+    InputVariable_nnp,
+    is_nnp_variable,
+    parse_nnp_variable,
+)
 from nextnanopy.utils.misc import savetxt
+from nextnanopy.utils.mycollections import DictList
 
 
 class InputFile(InputFileTemplate):
@@ -48,4 +49,4 @@ class InputFile(InputFileTemplate):
 
     def validate(self):
         if not is_negf_input_text(self.raw_text):
-            raise ValueError(f"Not a valid nextnano.NEGF++ input file")
+            raise ValueError("Not a valid nextnano.NEGF++ input file")

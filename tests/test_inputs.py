@@ -1,7 +1,8 @@
-import unittest
 import os
 import tempfile
+import unittest
 from pathlib import Path
+
 from nextnanopy.inputs import InputFile, Sweep
 
 
@@ -31,11 +32,11 @@ class Test_nnp(unittest.TestCase):
 
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables["float"].name, "float")
-        self.assertEqual(file.variables["float"].value, float(0.0))
+        self.assertEqual(file.variables["float"].value, 0.0)
         self.assertEqual(file.variables["float"].comment, "float number (a.u.)")
 
         self.assertEqual(file.variables["int"].name, "int")
-        self.assertEqual(file.variables["int"].value, int(0))
+        self.assertEqual(file.variables["int"].value, 0)
         self.assertEqual(file.variables["int"].comment, "int number (random = 3)")
 
         self.assertEqual(file.variables["str"].name, "str")
@@ -235,11 +236,11 @@ class Test_nn3(unittest.TestCase):
 
         self.assertEqual(len(file.variables.keys()), 7)
         self.assertEqual(file.variables["float"].name, "float")
-        self.assertEqual(file.variables["float"].value, float(0.0))
+        self.assertEqual(file.variables["float"].value, 0.0)
         self.assertEqual(file.variables["float"].comment, "float number (a.u.)")
 
         self.assertEqual(file.variables["int"].name, "int")
-        self.assertEqual(file.variables["int"].value, int(0))
+        self.assertEqual(file.variables["int"].value, 0)
         self.assertEqual(file.variables["int"].comment, "int number (random = 3)")
 
         self.assertEqual(file.variables["str"].name, "str")
@@ -420,12 +421,12 @@ class Test_negf_classic(unittest.TestCase):
         self.assertEqual(len(file.variables.keys()), 4)
 
         self.assertEqual(file.variables["variable1"].name, "variable1")
-        self.assertEqual(file.variables["variable1"].value, float(0.24))
+        self.assertEqual(file.variables["variable1"].value, 0.24)
         self.assertEqual(file.variables["variable1"].comment, "Some comment")
         self.assertEqual(file.variables["variable1"].unit, "")
 
         self.assertEqual(file.variables["variable2"].name, "variable2")
-        self.assertEqual(file.variables["variable2"].value, int(0))
+        self.assertEqual(file.variables["variable2"].value, 0)
         self.assertEqual(file.variables["variable2"].comment, "Another comment")
         self.assertEqual(file.variables["variable2"].unit, "meV")
 
@@ -450,7 +451,7 @@ class Test_negf_classic(unittest.TestCase):
         file = InputFile(fullpath)
 
         file.set_variable("variable1", 0.137, "test comment", "test unit^2")
-        self.assertEqual(file.variables["variable1"].value, float(0.137))
+        self.assertEqual(file.variables["variable1"].value, 0.137)
         self.assertEqual(file.variables["variable1"].comment, "test comment")
         self.assertEqual(file.variables["variable1"].unit, "test unit^2")
 
@@ -522,7 +523,7 @@ class Test_negf(unittest.TestCase):
         self.assertEqual(len(file.variables.keys()), 1)
         self.assertEqual(file.variables["alloyComposition"].name, "alloyComposition")
         self.assertAlmostEqual(
-            file.variables["alloyComposition"].value, float(0.15), delta=1e-9
+            file.variables["alloyComposition"].value, 0.15, delta=1e-9
         )
         self.assertEqual(
             file.variables["alloyComposition"].comment, "alloy composition"

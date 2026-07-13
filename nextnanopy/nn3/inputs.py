@@ -1,6 +1,11 @@
-from nextnanopy.utils.mycollections import DictList
 from nextnanopy.inputs import InputFileTemplate
-from nextnanopy.nn3.defaults import parse_nn3_variable, is_nn3_input_text, is_nn3_variable, InputVariable_nn3
+from nextnanopy.nn3.defaults import (
+    InputVariable_nn3,
+    is_nn3_input_text,
+    is_nn3_variable,
+    parse_nn3_variable,
+)
+from nextnanopy.utils.mycollections import DictList
 
 
 class InputFile(InputFileTemplate):
@@ -17,4 +22,4 @@ class InputFile(InputFileTemplate):
 
     def validate(self):
         if not is_nn3_input_text(self.raw_text):
-            raise ValueError(f'Not valid nextnano3 input file')
+            raise ValueError('Not valid nextnano3 input file')

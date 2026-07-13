@@ -1,12 +1,13 @@
-from nextnanopy.utils.mycollections import DictList
+import xml.etree.ElementTree as ET
+
 from nextnanopy.inputs import InputFileTemplate
 from nextnanopy.negf.defaults import (
-    is_negf_classic_input_text,
     InputVariable_NEGF,
+    is_negf_classic_input_text,
     parse_negf_variable_name,
 )
 from nextnanopy.utils.formatting import autofmt_variable_value
-import xml.etree.ElementTree as ET
+from nextnanopy.utils.mycollections import DictList
 
 
 class InputFile(InputFileTemplate):
@@ -55,4 +56,4 @@ class InputFile(InputFileTemplate):
 
     def validate(self):
         if not is_negf_classic_input_text(self.raw_text):
-            raise ValueError(f"Not valid nextnano.NEGF input file")
+            raise ValueError("Not valid nextnano.NEGF input file")

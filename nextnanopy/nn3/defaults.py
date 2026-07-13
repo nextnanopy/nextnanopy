@@ -1,7 +1,15 @@
-from nextnanopy.utils.datasets import InputVariable
-from nextnanopy.utils.formatting import str_to_path, _path, pattern_in_file, is_variable, parse_variable, \
-    generate_command, pattern_in_text
 from collections import OrderedDict
+
+from nextnanopy.utils.datasets import InputVariable
+from nextnanopy.utils.formatting import (
+    _path,
+    generate_command,
+    is_variable,
+    parse_variable,
+    pattern_in_file,
+    pattern_in_text,
+    str_to_path,
+)
 
 fmt = {
     'var_char': '%',

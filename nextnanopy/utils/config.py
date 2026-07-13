@@ -2,7 +2,7 @@ import configparser
 from copy import deepcopy
 
 
-class Config(object):
+class Config:
     """
         This class stores and manipulates a configuration file.
 
@@ -101,7 +101,7 @@ class Config(object):
         for sec in self.sections:
             print('[%s]' % (sec))
             for key, value in self.config[sec].items():
-                print('{} = {}'.format(key, value))
+                print(f'{key} = {value}')
             print('')
 
     def get_options(self, section):

@@ -1,8 +1,8 @@
-from pathlib import Path
-from nextnanopy.defaults import NNConfig
 import unittest
 import warnings
+from pathlib import Path
 
+from nextnanopy.defaults import NNConfig
 
 default_config_path = Path.home() / ".nextnanopy-config"
 

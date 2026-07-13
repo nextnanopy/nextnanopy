@@ -1,10 +1,12 @@
-from nextnanopy.outputs import DataFolder, DataFile
-from nextnanopy.utils.misc import combinations
-from collections.abc import Iterable
 import os
+from collections.abc import Iterable
+
 import numpy as np
-from scipy.optimize import minimize as sp_minimize
 from scipy.optimize import fsolve
+from scipy.optimize import minimize as sp_minimize
+
+from nextnanopy.outputs import DataFile, DataFolder
+from nextnanopy.utils.misc import combinations
 
 elementary_charge = 1.60217662e-19
 

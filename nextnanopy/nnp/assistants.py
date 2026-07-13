@@ -1,4 +1,11 @@
-from nextnanopy.utils.formatting import text, lines_to_text, modify_lines_in_text, paragraph, text_to_lines, preview
+from nextnanopy.utils.formatting import (
+    lines_to_text,
+    modify_lines_in_text,
+    paragraph,
+    preview,
+    text,
+    text_to_lines,
+)
 
 cbkl = "{"
 cbkr = "}"
@@ -20,7 +27,7 @@ def quote(init='', mid='', end=''):
     return quo + text(init, mid, end) + quo
 
 
-class InputAssistant(object):
+class InputAssistant:
     rc_default = {
         'indent': ' ' * 3,
         'new_line': '\n',
@@ -291,7 +298,7 @@ class InputAssistant(object):
         content = self.lines(*points)
         content = self.add_indent(content)
         content = self.paragraph(content)
-        return self.block(f'vertex', content)
+        return self.block('vertex', content)
 
     def region_doping_constant(self, name, conc):
         cblock = self.equal_block('constant', dict(name=name, conc=conc))

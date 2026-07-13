@@ -1,13 +1,10 @@
-import numpy as np
-from nextnanopy.utils.mycollections import DictList
-from nextnanopy.outputs import Output, AvsAscii, Vtk, DataFileTemplate, Dat
 from nextnanopy.nn3.defaults import (
-    parse_nn3_variable,
-    is_nn3_variable,
     InputVariable_nn3,
+    is_nn3_variable,
+    parse_nn3_variable,
 )
-from nextnanopy.utils.datasets import Variable, Coord
-from nextnanopy.utils.formatting import best_str_to_name_unit
+from nextnanopy.outputs import AvsAscii, Dat, DataFileTemplate, Output, Vtk
+from nextnanopy.utils.mycollections import DictList
 
 
 class DataFile(DataFileTemplate):
@@ -34,9 +31,9 @@ class DataFile(DataFileTemplate):
         if self.filename_only in ["variables_input", "variables_database"]:
             loader = InputVariables
         elif self.filename_only == "materials":
-            NotImplementedError(f"Loading materials.txt is not implemented yet")
+            NotImplementedError("Loading materials.txt is not implemented yet")
         elif self.filename_only == "total_charges":
-            NotImplementedError(f"Loading total_charges.txt is not implemented yet")
+            NotImplementedError("Loading total_charges.txt is not implemented yet")
         else:
             raise NotImplementedError(f"Datafile {self.filename_only}.txt is not valid")
         return loader
@@ -52,7 +49,7 @@ class InputVariables(Output):
         self.load_variables()
 
     def load_raw(self):
-        with open(self.fullpath, "r") as f:
+        with open(self.fullpath) as f:
             self.raw_lines = f.readlines()
 
     def load_variables(self):

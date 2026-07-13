@@ -1,20 +1,27 @@
-import os,sys
+import atexit
+import itertools
+import os
+import queue
+import tempfile
 import threading
 import time
 import warnings
-import itertools
-import queue
-import nextnanopy
-from nextnanopy.utils.formatting import text_to_lines, lines_to_text
-from nextnanopy.utils.mycollections import DictList
-from nextnanopy.utils.misc import savetxt, get_filename, get_folder, get_file_extension, message_decorator, mkdir_even_if_exists, mkdir_if_not_exist
-from nextnanopy.commands import execute as cmd_execute
-from nextnanopy import defaults
-from collections.abc import Iterable
-from typing import Callable, Any
-import tempfile
-import atexit
+from collections.abc import Callable, Iterable
+from typing import Any
 
+from nextnanopy import defaults
+from nextnanopy.commands import execute as cmd_execute
+from nextnanopy.utils.formatting import lines_to_text, text_to_lines
+from nextnanopy.utils.misc import (
+    get_file_extension,
+    get_filename,
+    get_folder,
+    message_decorator,
+    mkdir_even_if_exists,
+    mkdir_if_not_exist,
+    savetxt,
+)
+from nextnanopy.utils.mycollections import DictList
 
 _msgs = defaults.messages['load_input']
 load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
@@ -24,7 +31,7 @@ _msgs = defaults.messages['execute_input']
 execute_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
-class InputFileTemplate(object):
+class InputFileTemplate:
     """
         This class stores and manipulates any kind of nextnano input files.
         For each nextnano product, the syntax is different but the core information
@@ -267,7 +274,7 @@ class InputFileTemplate(object):
                 raise ValueError('Please, specify a fullpath')
             else:
                 fullpath = self.fullpath
-        
+
         self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
         return self.fullpath
 
@@ -319,32 +326,32 @@ class InputFileTemplate(object):
     def check_convergence(self, mode = 'pause'):
         if self.product == 'nextnano.MSB':
             raise NotImplementedError('Convergence check has not yet implemented for nextnano.MSB!')
-            
+
         log = self.execute_info['logfile']
         try:
             if self.product == 'nextnano3':
-                with open(log, 'r') as file:
+                with open(log) as file:
                     for line in file:
                         if 'Exiting iteration and terminating simulation' in line or 'Program was terminated using a soft kill' in line or 'Terminating immediately' in line:
                             raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
                         elif 'Maximum number of iterations exceeded' in line:
                             raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
             elif self.product == 'nextnano++':
-                with open(log, 'r') as file:
+                with open(log) as file:
                     for line in file:
                         if 'Terminating program' in line:
                             raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
                         elif 'Maximum number of iterations exceeded' in line:
                             raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
                         elif 'Outdated numerics library (f95library) used' in line:
-                            raise RuntimeError(f'\nOutdated numerics library (f95library) used.')
+                            raise RuntimeError('\nOutdated numerics library (f95library) used.')
             elif self.product == 'nextnano.NEGF' or self.product == 'nextnano.NEGF_classic':   # NEGF reports convergence at every voltage and temperature sweep.
-                with open(log, 'r') as file:
+                with open(log) as file:
                     for line in file:
                         if 'Simulation has NOT CONVERGED' in line:
                             raise RuntimeError(f'\nSimulation has diverged! Check the log:\n{log}')
                         elif 'Simulation has partially converged' in line:
-                            print(f'\nWARNING: check_convergence(): Simulation did not fully converge.')
+                            print('\nWARNING: check_convergence(): Simulation did not fully converge.')
                         elif 'Terminating program!' in line:
                             raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
         except FileNotFoundError:
@@ -387,7 +394,7 @@ class InputFileTemplate(object):
             os.remove(self.fullpath)
 
     def load_raw(self):
-        with open(self.fullpath, 'r') as f:
+        with open(self.fullpath) as f:
             text = f.read()
         self.raw_lines = list(text_to_lines(text))
         return self.raw_lines
@@ -652,7 +659,7 @@ class ExecutionQueue(threading.Thread):
 
     """
     def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, convergenceCheck = False, **execution_kwargs):
-        super(ExecutionQueue, self).__init__()
+        super().__init__()
         self.waiting_queue = queue.Queue()#should be queue of InputFile objects
         self.started = []#should be list of execution_infos
         self.finished = []#should be list of execution_infos
@@ -678,7 +685,7 @@ class ExecutionQueue(threading.Thread):
             if self.limit_parallel>1:
                 input_f.__parallel__ = True
             if 'show_log' in self.execution_kwargs and not self.execution_kwargs['show_log']:
-                print(f"\nRemaining simulations in the queue: ", self.waiting_queue.qsize())
+                print("\nRemaining simulations in the queue: ", self.waiting_queue.qsize())
             info = input_f.execute(**self.execution_kwargs)
             self.started.append((info,input_f))
 
@@ -797,7 +804,7 @@ class Sweep(InputFileTemplate):
             path = input_file.fullpath
         else:
             path = self.fullpath
-        
+
         self.create_input_files(path, round_decimal, integer_only_in_name=integer_only_in_name, variables_comb_screen_fn=variables_comb_screen_fn)
 
     def prepare_output(self, overwrite = False, output_directory = None):
@@ -822,7 +829,7 @@ class Sweep(InputFileTemplate):
                     var_value_string = var_value
                 else:
                     var_value_string = round(var_value, round_decimal)
-                filename_end += '{}_{}_'.format(var_name, var_value_string)
+                filename_end += f'{var_name}_{var_value_string}_'
             if integer_only_in_name:
                 inputfile.save(overwrite = False)
             else:
@@ -936,10 +943,10 @@ class Sweep(InputFileTemplate):
     def create_info(self):
         file_location = os.path.join(self.sweep_output_directory,'sweep_info.txt')
         with open(file_location,'w') as file:
-            file.write("Input file: '{}' \n".format(self.fullpath))
+            file.write(f"Input file: '{self.fullpath}' \n")
             file.write("Sweep variables: \n")
             for i in self.var_sweep:
-                file.write("{} = {} \n".format(i,self.var_sweep[i]))
+                file.write(f"{i} = {self.var_sweep[i]} \n")
 
 
 

@@ -1,8 +1,8 @@
+import matplotlib.pyplot as plt
+import numpy as np
 import shapely
 import shapely.geometry
 import shapely.ops
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 class SlicedPolygon(shapely.geometry.Polygon):
@@ -170,8 +170,8 @@ class SlicedPolygon(shapely.geometry.Polygon):
     def show_slices(self, ax=None, fill_kw={}):
         if not ax:
             fig, ax = plt.subplots(1)
-        ax.set_xlabel(f'x')
-        ax.set_ylabel(f'y')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
         for pol in self.slices:
             x, y = pol.boundary.xy
             ax.fill(x, y, **fill_kw)

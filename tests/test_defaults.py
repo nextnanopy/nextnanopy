@@ -1,12 +1,11 @@
 import unittest
 from pathlib import Path
-from nextnanopy.utils import mycollections
-from nextnanopy import defaults
-from nextnanopy.nnp import defaults as nnp_defaults
-from nextnanopy.nn3 import defaults as nn3_defaults
-from nextnanopy.negf import defaults as negf_defaults
-from nextnanopy.msb import defaults as msb_defaults
 
+from nextnanopy import defaults
+from nextnanopy.negf import defaults as negf_defaults
+from nextnanopy.nn3 import defaults as nn3_defaults
+from nextnanopy.nnp import defaults as nnp_defaults
+from nextnanopy.utils import mycollections
 
 folder_nnp = Path("tests") / "datafiles" / "nextnano++"
 folder_nn3 = Path("tests") / "datafiles" / "nextnano3"
