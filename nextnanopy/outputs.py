@@ -451,7 +451,7 @@ class DataFile(DataFileTemplate):
                     continue
                 else:
                     break
-            except:
+            except Exception:
                 pass
         loader = Dati
         return loader
@@ -677,7 +677,7 @@ class AvsAscii(Output):
                     try:
                         float(line)
                         break
-                    except:
+                    except ValueError:
                         if line == "":
                             continue
                         # if line[0] != '#':
@@ -689,7 +689,7 @@ class AvsAscii(Output):
                 for line in f:
                     try:
                         line = line.decode("ascii")
-                    except:
+                    except UnicodeDecodeError:
                         break
                     line = line.replace("\n", "")
                     line = line.strip()
@@ -843,7 +843,7 @@ class Dat(Output):
                 try:
                     float(line.split()[0])
                     break
-                except:
+                except (ValueError, IndexError):
                     headers.append(line)
         return headers
 

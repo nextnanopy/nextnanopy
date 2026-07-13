@@ -110,7 +110,7 @@ def get_file_idx(file):
         end = prefix.split('_')[-1]
         try:
             idx = int(end)
-        except:
+        except ValueError:
             pass
     return idx
 

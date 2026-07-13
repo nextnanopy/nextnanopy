@@ -29,7 +29,7 @@ def autofmt_variable_value(value):
         try:
             value = case(value)
             break
-        except:
+        except (ValueError, TypeError):
             pass
     return value
 
