@@ -79,8 +79,8 @@ class Obelisk(Shape):
 
 class Polygonal_prism(Shape):
 
-    def __init__(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]],
-                 height=[0, 10]):
+    def __init__(self, axes=('x', 'y', 'z'), vertexes=((10.5, 14.0),),
+                 height=(0, 10)):
         super().__init__()
         self.axes = axes
         self.vertexes = vertexes

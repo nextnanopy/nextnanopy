@@ -43,7 +43,7 @@ class Data:
 
     params = ['name', 'value', 'unit', 'metadata']
 
-    def __init__(self, name, value, unit=None, metadata={}, label_fmt=None, *args,
+    def __init__(self, name, value, unit=None, metadata=None, label_fmt=None, *args,
                  **kwargs):
         self.name = str(name)
         self.value = np.array(value)
@@ -53,6 +53,8 @@ class Data:
         if label_fmt is None:
             label_fmt = lambda name, unit: f'{name} ({unit})'
         self.label_fmt = label_fmt
+        if metadata is None:
+            metadata = {}
         self.metadata = metadata
 
     def parameters(self):
@@ -119,7 +121,9 @@ class Variable(Data):
     """
     params = ['name', 'value', 'unit', 'metadata']
 
-    def __init__(self, name, value, unit=None, metadata={}, **kwargs):
+    def __init__(self, name, value, unit=None, metadata=None, **kwargs):
+        if metadata is None:
+            metadata = {}
         super().__init__(name, value, unit, metadata, **kwargs)
 
     def get_value(self):
@@ -184,7 +188,9 @@ class Coord(Data):
 
     params = ['name', 'value', 'unit', 'offset', 'dim', 'metadata']
 
-    def __init__(self, name, value, dim, unit=None, offset=0, metadata={}, **kwargs):
+    def __init__(self, name, value, dim, unit=None, offset=0, metadata=None, **kwargs):
+        if metadata is None:
+            metadata = {}
         super().__init__(name, value, unit, metadata, **kwargs)
         self.dim = int(dim)
         self.offset = np.array(offset)
@@ -251,7 +257,9 @@ class InputVariable(Data):
     var_char = ''
     com_char = ''
 
-    def __init__(self, name, value, unit='', comment='', metadata={}, **kwargs):
+    def __init__(self, name, value, unit='', comment='', metadata=None, **kwargs):
+        if metadata is None:
+            metadata = {}
         super().__init__(name, value, unit, metadata, **kwargs)
         self.comment = comment
 

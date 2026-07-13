@@ -167,7 +167,9 @@ class SlicedPolygon(shapely.geometry.Polygon):
             x = p_follow
         return x, y
 
-    def show_slices(self, ax=None, fill_kw={}):
+    def show_slices(self, ax=None, fill_kw=None):
+        if fill_kw is None:
+            fill_kw = {}
         if not ax:
             fig, ax = plt.subplots(1)
         ax.set_xlabel('x')

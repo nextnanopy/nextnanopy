@@ -150,7 +150,7 @@ class InputAssistant:
     def global_simulate(self, dim=1):
         return self.block(f'simulate{int(dim)}D', '')
 
-    def global_crystal(self, kind='zb', x_hkl=[1, 0, 0], y_hkl=[0, 1, 0]):
+    def global_crystal(self, kind='zb', x_hkl=(1, 0, 0), y_hkl=(0, 1, 0)):
         points = [self.point(key, *value) for key, value in dict(x_hkl=x_hkl, y_hkl=y_hkl).items()]
         content = self.lines(*points)
         content = self.add_indent(content)
@@ -287,7 +287,7 @@ class InputAssistant:
         content = self.paragraph(content)
         return self.block('cuboid', content)
 
-    def region_polygonal_prism(self, axes=['x', 'y', 'z'], vertexes=[[10.5, 14.0]], height=[0, 10]):
+    def region_polygonal_prism(self, axes=('x', 'y', 'z'), vertexes=((10.5, 14.0),), height=(0, 10)):
         point = self.point(axes[2], *height)
         blocks = [self.region_vertex(ax1=axes[0], ax2=axes[1], value1=v[0], value2=v[1]) for v in vertexes]
         return self.merge_blocks('polygonal_prism', point, *blocks)
@@ -403,7 +403,7 @@ class InputAssistant:
         so = self.classical_so()
         return self.lines(gamma, hh, lh, so)
 
-    def classical_output_bandedges(self, averaged='yes', profiles=['Gamma', 'electron_fermi_level']):
+    def classical_output_bandedges(self, averaged='yes', profiles=('Gamma', 'electron_fermi_level')):
         profiles = ' '.join(profiles)
         profiles = f'"{profiles}"'
         return self.equal_block('output_bandedges', dict(averaged=averaged, profiles=profiles))

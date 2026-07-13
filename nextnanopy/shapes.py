@@ -114,7 +114,9 @@ class GdsPolygonsRaw:
         ax.set_ylabel(f'y {self.unit}')
         return ax
 
-    def show_all(self, ax=None, cmap='nipy_spectral', fill_kw={}):
+    def show_all(self, ax=None, cmap='nipy_spectral', fill_kw=None):
+        if fill_kw is None:
+            fill_kw = {}
         ax = self._prepare_ax(ax, cmap)
         for xy, label in zip(self.xy, self.labels, strict=True):
             x, y = xy
@@ -122,7 +124,9 @@ class GdsPolygonsRaw:
         ax.legend(loc='upper right')
         return ax
 
-    def show_onebyone(self, ax=None, cmap='nipy_spectral', fill_kw={}):
+    def show_onebyone(self, ax=None, cmap='nipy_spectral', fill_kw=None):
+        if fill_kw is None:
+            fill_kw = {}
         ax = self._prepare_ax(ax, cmap)
         for pol in self.polygons:
             x, y = pol.boundary.xy
@@ -138,14 +142,18 @@ class GdsPolygonsRaw:
                 break
         return ax
 
-    def show(self, ax=None, cmap='nipy_spectral', fill_kw={}, onebyone=False):
+    def show(self, ax=None, cmap='nipy_spectral', fill_kw=None, onebyone=False):
+        if fill_kw is None:
+            fill_kw = {}
         if onebyone:
             ax = self.show_onebyone(ax, cmap, fill_kw)
         else:
             ax = self.show_all(ax, cmap, fill_kw)
         return ax
 
-    def show_slices(self, ax=None, fill_kw={}):
+    def show_slices(self, ax=None, fill_kw=None):
+        if fill_kw is None:
+            fill_kw = {}
         ax = self._prepare_ax(ax, cmap=None)
         for spol in self.slices:
             for pol in spol.slices:
@@ -153,7 +161,9 @@ class GdsPolygonsRaw:
                 ax.fill(x, y, **fill_kw)
         return ax
 
-    def show_polygon(self, polygon, label, ax=None, cmap='nipy_spectral', fill_kw={}):
+    def show_polygon(self, polygon, label, ax=None, cmap='nipy_spectral', fill_kw=None):
+        if fill_kw is None:
+            fill_kw = {}
         # print(f"Polygon:  {polygon}")
         # print(f"Label:  {label}")
         ax = self._prepare_ax(ax, cmap)
