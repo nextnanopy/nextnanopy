@@ -749,8 +749,14 @@ class AvsAscii(Output):
     def load_variables(self):
         meta = self.metadata
         variables = DictList()
+        # TODO: switch to strict=True once the label parser is fixed.
+        # load_metadata() splits a 'label = ...' line on whitespace, so a label that
+        # contains spaces (e.g. 'Density of States (Source) [1/eV/nm]')
+        # shatters into several labels for a single variable. strict=False silently
+        # truncates to the variable count, misnaming the variable ('Density').
+        # See .local_dev/to_fix_later.md and TestFldMultiwordLabel in test_outputs.py.
         for vmeta, label, unit in zip(
-            meta["variables"], meta["labels"], meta["units"], strict=True
+            meta["variables"], meta["labels"], meta["units"], strict=False
         ):
             values = load_values(
                 file=vmeta["file"],

@@ -1033,5 +1033,45 @@ class TestDataFolder(unittest.TestCase):
         self.assertLess(tree_list.index("        .nnconfig"), tree_list.index("        nextnano++/"))
         self.assertLess(tree_list.index("    datafiles/"), tree_list.index("        nextnano++/"))
 
+class TestFldMultiwordLabel(unittest.TestCase):
+    """Tripwire for a known bug.
+
+    load_metadata() splits a '.fld' label line on whitespace, so a label containing
+    spaces shatters into several labels for a single variable:
+
+        label = Density of States (Source) [1/eV/nm]
+        -> labels ['Density', 'of', 'States', '', ''] for 1 variable
+
+    The zip in load_variables() uses strict=False, which silently truncates to the
+    variable count and misnames the variable 'Density', dropping its unit.
+
+    These tests pin that CURRENT, WRONG behavior on purpose. Switching the zip to
+    strict=True makes the file raise on load, so they will FAIL - that failure is the
+    reminder to fix the label parser. When you fix it, replace these assertions with
+    the ones in test_correct_behavior_once_fixed below.
+    """
+
+    fld = folder_msb / "DOS_Lead_Source_position_resolved.avs.fld"
+
+    def test_multiword_label_is_currently_truncated(self):
+        df = outputs.DataFile(self.fld, product="nextnano.MSB")
+        self.assertEqual(len(df.variables), 1)
+        self.assertEqual(df.variables[0].name, "Density")
+        self.assertEqual(df.variables[0].unit, "")
+
+    def test_label_parser_overproduces_labels(self):
+        df = outputs.DataFile(self.fld, product="nextnano.MSB")
+        # 1 variable declared in the header, but 5 labels parsed from one label line.
+        self.assertEqual(len(df.metadata["variables"]), 1)
+        self.assertEqual(len(df.metadata["labels"]), 5)
+
+    @unittest.expectedFailure
+    def test_correct_behavior_once_fixed(self):
+        """The behavior we actually want. Flips to a pass when the parser is fixed."""
+        df = outputs.DataFile(self.fld, product="nextnano.MSB")
+        self.assertEqual(df.variables[0].name, "Density of States (Source)")
+        self.assertEqual(df.variables[0].unit, "1/eV/nm")
+
+
 if __name__ == "__main__":
     unittest.main()
