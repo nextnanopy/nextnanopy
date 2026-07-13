@@ -17,7 +17,7 @@ class InputFile(InputFileTemplate):
         root = ET.fromstring(self.text, parser=parser)
         varsection = root.find("Variables")
         variables = DictList()
-        if not varsection:
+        if varsection is None:
             self.variables = variables
             return self.variables
         vars = varsection.findall("Constant")
@@ -39,7 +39,7 @@ class InputFile(InputFileTemplate):
         root = ET.fromstring(self.raw_text)
         varsection = root.find("Variables")
         variables = self.variables
-        if varsection:
+        if varsection is not None:
             vars = varsection.findall("Constant")
             for var_element in vars:
                 for variable in variables:

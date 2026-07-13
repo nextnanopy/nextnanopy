@@ -491,6 +491,65 @@ class Test_negf_classic(unittest.TestCase):
         self.assertIsNone(file.content)
 
 
+class Test_negf_classic_variables_section(unittest.TestCase):
+    """A <Variables> section must be read and written back correctly whether it
+    is populated, present but empty, or absent altogether.
+
+    These three shapes are the contract. The empty section is the interesting
+    one: it exists but has no children, so any check that conflates "has
+    children" with "was found" collapses it into the absent case.
+    """
+
+    def write_input(self, variables_section):
+        text = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            "<Simulation>\n"
+            f"{variables_section}"
+            "</Simulation>\n"
+        )
+        fullpath = Path(tempfile.mkdtemp()) / "input.xml"
+        fullpath.write_text(text)
+        return fullpath
+
+    def test_populated_variables_section(self):
+        fullpath = self.write_input(
+            "  <Variables>\n"
+            '    <Constant><Name Comment="first">$alpha</Name>'
+            '<Value Unit="nm">3.5</Value></Constant>\n'
+            '    <Constant><Name Comment="second">$beta</Name>'
+            '<Value Unit="meV">42</Value></Constant>\n'
+            "  </Variables>\n"
+        )
+        file = InputFile(fullpath)
+
+        self.assertEqual(len(file.variables.keys()), 2)
+        self.assertEqual(file.variables["alpha"].value, 3.5)
+        self.assertEqual(file.variables["alpha"].unit, "nm")
+        self.assertEqual(file.variables["alpha"].comment, "first")
+        self.assertEqual(file.variables["beta"].value, 42)
+
+        # Edits must survive the round trip back out to XML.
+        file.set_variable("alpha", value=7.5, unit="um", comment="edited")
+        rendered = "\n".join(file.lines)
+        self.assertIn('<Value Unit="um">7.5</Value>', rendered)
+        self.assertIn('Comment="edited"', rendered)
+
+    def test_empty_variables_section(self):
+        fullpath = self.write_input("  <Variables></Variables>\n")
+        file = InputFile(fullpath)
+
+        # Present but childless: no variables, and the section is not dropped.
+        self.assertEqual(len(file.variables.keys()), 0)
+        self.assertIn("<Variables", "\n".join(file.lines))
+
+    def test_missing_variables_section(self):
+        fullpath = self.write_input("")
+        file = InputFile(fullpath)
+
+        self.assertEqual(len(file.variables.keys()), 0)
+        self.assertNotIn("<Variables", "\n".join(file.lines))
+
+
 class Test_negf(unittest.TestCase):
     # TODO: implement test for NEGF++ input file
     def test_load(self):
