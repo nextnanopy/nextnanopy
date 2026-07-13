@@ -953,7 +953,7 @@ class TestSweep(unittest.TestCase):
 
         for combination in sweep.sweep_infodict.values():
             combination = list(combination.values())
-            combination[0] > 0.2
+            assert combination[0] > 0.2
 
     def test_conditional_sweep_multivar(self):
         self.addCleanup(
