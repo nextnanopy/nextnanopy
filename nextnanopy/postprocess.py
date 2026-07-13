@@ -183,10 +183,6 @@ def calculate_CV(output_directory_path, bias1 = None, bias2 = None, total = Fals
     if not common_regions_list:
         raise TypeError('integrated_density does not have common regions for holes and electrons')
 
-    #voltage = voltage[:-1]
-
-    num_bias_points = len(voltage)
-
     regions = []
 
     for region in common_regions_list:

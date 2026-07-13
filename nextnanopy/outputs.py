@@ -718,15 +718,14 @@ class AvsAscii(Output):
                 if key in key_int:
                     value = int(value)
                     metadata[key] = value
+                elif key in key_str:
+                    metadata[key] = str(value)
                 elif key == "label":
                     labels = value.split()
                     for label in labels:
                         label, unit = best_str_to_name_unit(label, default_unit=None)
                         metadata["labels"].append(label)
                         metadata["units"].append(unit)
-                else:
-                    value = str(value)
-                    metadata[key] = value
 
                 if key[:3] == "dim":
                     metadata["dims"].append(metadata[key])

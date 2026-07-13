@@ -905,7 +905,7 @@ class Sweep(InputFileTemplate):
             for i, inputfile in enumerate(self.input_files):
                 if not show_log:
                     print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                info = inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
+                inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
         if delete_input_files:
             for inputfile in self.input_files:
                 inputfile.remove()

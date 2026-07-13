@@ -519,11 +519,11 @@ class InputAssistant:
 
         coords = self.equal_lines(**kwargs)
         ranges = dict(range_x=range_x, range_y=range_y, range_z=range_z)
-        kwargs = {}
-        for key, value in kwargs.items():
-            if value:
-                kwargs[key] = value
-        points = [self.point(key, value) for key, value in kwargs.items()]
+        range_kwargs = {}
+        for key, value in ranges.items():
+            if value is not None:
+                range_kwargs[key] = value
+        points = [self.point(key, *value) for key, value in range_kwargs.items()]
         content = self.lines(coords, *points)
         content = self.add_indent(content)
         content = self.paragraph(content)
