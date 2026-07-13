@@ -1,6 +1,6 @@
 import unittest
 
-from nextnanopy.utils.misc import *
+from nextnanopy.utils.misc import find_unused_name
 
 
 class TestMisc(unittest.TestCase):
