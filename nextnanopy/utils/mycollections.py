@@ -48,7 +48,7 @@ class DictList(OrderedDict):
     def __str__(self):
         cname = self.__class__.__name__
         args = [f"(index: {idx} - key: '{key}' - {value})" for idx, key, value in
-                zip(self._idxs.keys(), self.keys(), self.values())]
+                zip(self._idxs.keys(), self.keys(), self.values(), strict=True)]
         args = ',\n'.join(args)
         return f"{cname}([\n{args}\n])"
 

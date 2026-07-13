@@ -17,7 +17,7 @@ class GdsPolygons(GdsPolygonsRaw):
         z = np.array([zi, zf] * 2)
         for si in self.slices:
             xs, ys = si.correct_xy()
-            for x, y in zip(xs, ys):
+            for x, y in zip(xs, ys, strict=True):
                 kwargs = {
                     'base_x': x[:2],
                     'base_y': y[:2],

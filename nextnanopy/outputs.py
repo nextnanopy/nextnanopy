@@ -750,7 +750,9 @@ class AvsAscii(Output):
     def load_variables(self):
         meta = self.metadata
         variables = DictList()
-        for vmeta, label, unit in zip(meta["variables"], meta["labels"], meta["units"]):
+        for vmeta, label, unit in zip(
+            meta["variables"], meta["labels"], meta["units"], strict=True
+        ):
             values = load_values(
                 file=vmeta["file"],
                 filetype=vmeta["filetype"],
@@ -968,7 +970,7 @@ def values_metadata(line):
         rest.extend(ri)
     keys = rest[0::2]
     values = rest[1::2]
-    for key, value in zip(keys, values):
+    for key, value in zip(keys, values, strict=True):
         key = key.strip()
         value = value.strip()
         if key in ["num", "skip", "offset", "stride"]:
@@ -1071,9 +1073,7 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
             )
 
         # Write coordinate file paths
-        for coord, skip_value, i in zip(
-            coordinates, coord_skip_values, range(num_coords)
-        ):
+        for i, skip_value in enumerate(coord_skip_values):
             file.write(
                 f"coord {i+1} file={filename} filetype={filetype} skip={skip_value} offset=0 stride=1\n"
             )

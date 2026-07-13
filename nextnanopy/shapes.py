@@ -116,7 +116,7 @@ class GdsPolygonsRaw:
 
     def show_all(self, ax=None, cmap='nipy_spectral', fill_kw={}):
         ax = self._prepare_ax(ax, cmap)
-        for xy, label in zip(self.xy, self.labels):
+        for xy, label in zip(self.xy, self.labels, strict=True):
             x, y = xy
             ax.fill(x, y, label=label, **fill_kw)
         ax.legend(loc='upper right')
@@ -124,10 +124,10 @@ class GdsPolygonsRaw:
 
     def show_onebyone(self, ax=None, cmap='nipy_spectral', fill_kw={}):
         ax = self._prepare_ax(ax, cmap)
-        for pol, label in zip(self.polygons, self.labels):
+        for pol in self.polygons:
             x, y = pol.boundary.xy
             ax.fill(x, y, color='grey', alpha=0.5)
-        for pol, label in zip(self.polygons, self.labels):
+        for pol, label in zip(self.polygons, self.labels, strict=True):
             x, y = pol.boundary.xy
             ax.fill(x, y, label=label, **fill_kw)
             ax.legend(loc='upper right')
@@ -158,7 +158,7 @@ class GdsPolygonsRaw:
         # print(f"Label:  {label}")
         ax = self._prepare_ax(ax, cmap)
         for _ in polygon:
-            x, y = zip(*polygon)
+            x, y = zip(*polygon, strict=True)
             ax.fill(x, y, label=label, **fill_kw)
         # if label not in self.added_labels:
         #     ax.legend(loc='upper right')

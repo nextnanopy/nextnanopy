@@ -11,7 +11,7 @@ from nextnanopy.utils.misc import combinations
 elementary_charge = 1.60217662e-19
 
 def minimization_function(variables_values, inputfile, variables_names, target_filepath, target_variable, number =0, overwrite = True):
-    for varvalue, varname in zip(variables_values, variables_names):
+    for varvalue, varname in zip(variables_values, variables_names, strict=True):
         inputfile.set_variable(name = varname, value = varvalue)
     inputfile.save(overwrite = True)
     inputfile.execute(show_log = False)
@@ -22,7 +22,7 @@ def minimization_function(variables_values, inputfile, variables_names, target_f
     return target
 
 def optimization_function(variables_values, inputfile, variables_names, target_filepath, target_variable, target_value, number =0, overwrite = True):
-    for varvalue, varname in zip(variables_values, variables_names):
+    for varvalue, varname in zip(variables_values, variables_names, strict=True):
         inputfile.set_variable(name = varname, value = varvalue)
     inputfile.save(overwrite = True)
     inputfile.execute(show_log = False)
@@ -96,7 +96,7 @@ def simple_optimize(input_file, sweep_dict, target_filepath, target_variable, ta
     best_value = best_value_initial_dict[goal]
     best_diff = np.inf
     for combination in all_combinations:
-        for var_name,var_val in zip(var_names,combination):
+        for var_name,var_val in zip(var_names,combination, strict=True):
             input_file.set_variable(var_name,var_val)
         input_file.save(overwrite = True)
         input_file.execute(show_log = False)

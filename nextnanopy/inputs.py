@@ -797,7 +797,7 @@ class Sweep(InputFileTemplate):
         -------
         None
         """
-        if delete_old_files == True:
+        if delete_old_files:
             for inputfile in self.input_files:
                 inputfile.remove()
         self.input_files = []
@@ -826,7 +826,7 @@ class Sweep(InputFileTemplate):
         for combination in iteration_combinations:
             filename_end = '__'
             inputfile = InputFile(fullpath=input_file_path, configpath=self.configpath)
-            for var_name, var_value in zip(self.var_sweep.keys(), combination):
+            for var_name, var_value in zip(self.var_sweep.keys(), combination, strict=True):
                 inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
                 if isinstance(var_value,str):
                     var_value_string = var_value
@@ -837,7 +837,7 @@ class Sweep(InputFileTemplate):
                 inputfile.save(overwrite = False)
             else:
                 inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
-            variable_combination =  dict(zip(self.var_sweep.keys(), combination))
+            variable_combination =  dict(zip(self.var_sweep.keys(), combination, strict=True))
             self.input_files.append(inputfile)
             self.sweep_infodict[inputfile.fullpath] = variable_combination
 
@@ -905,7 +905,7 @@ class Sweep(InputFileTemplate):
                 inputfile.remove()
 
         #part where the info is stored
-        for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values()):
+        for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values(), strict=True):
             self.sweep_output_infodict[str(inputfile.folder_output)] = variable_combination
         # TODO create files with info in output_directories
         if True:# TODO

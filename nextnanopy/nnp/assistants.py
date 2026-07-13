@@ -192,7 +192,7 @@ class InputAssistant:
 
     def grid_axis(self, *pos_spacing, axis='x', min_pos=None, max_pos=None):
         content = [self.grid_line(pi, spi) for pi, spi in pos_spacing]
-        for key, value in zip(['min_pos', 'max_pos'], [min_pos, max_pos]):
+        for key, value in zip(['min_pos', 'max_pos'], [min_pos, max_pos], strict=True):
             if value:
                 content.append(self.equal(key, value))
         content = self.lines(*content)
