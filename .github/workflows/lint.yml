@@ -9,6 +9,8 @@ on:
   pull_request:
     branches: [ master ]
   workflow_dispatch:
+  # Lets the release pipeline reuse this as a gate (see python-publish.yml).
+  workflow_call:
 
 jobs:
   ruff:

@@ -27,11 +27,17 @@ permissions:
   contents: read
 
 jobs:
+  Lint:
+    name: Lint and format check
+    uses: ./.github/workflows/lint.yml
+
   Test:
     name: Test on Windows
 
     runs-on: windows-latest
-    
+
+    needs: Lint
+
     strategy:
       matrix:
         os: [windows-latest]
