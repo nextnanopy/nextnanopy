@@ -66,7 +66,7 @@ class GdsPolygonsRaw:
 
     @property
     def slices(self):
-        warnings.warn("The GdsPolygonsRaw.slices is deprecated",DeprecationWarning)
+        warnings.warn("The GdsPolygonsRaw.slices is deprecated", DeprecationWarning, stacklevel=2)
         from nextnanopy.utils.shapes_deprecated import SlicedPolygon
         return [SlicedPolygon(pol_xy) for pol_xy in self.polygons_xy]
 

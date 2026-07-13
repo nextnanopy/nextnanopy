@@ -198,9 +198,12 @@ class NNConfig(Config):
 
         unsupported_products = self.get_unsupported_products()
         if unsupported_products:
+            # stacklevel=1: fires at import time; the warning is about the config file's
+            # contents, not any call site, so no caller frame is actionable.
             warnings.warn(
-                f"Unsupported products in config file: {unsupported_products} will be ignored. To not see this message, please remove unsupported products from the config file: {self.fullpath}"
+                f"Unsupported products in config file: {unsupported_products} will be ignored. To not see this message, please remove unsupported products from the config file: {self.fullpath}. "
                 "Note: nextnano.NEGF++ was renamed to nextnano.NEGF, nextnano.NEGF was renamed to nextnano.NEGF_classic. Please check the documentation for more details.",
+                stacklevel=1,
             )
 
     def to_default(self):

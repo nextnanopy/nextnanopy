@@ -24,11 +24,14 @@ from nextnanopy.utils.misc import (
 from nextnanopy.utils.mycollections import DictList
 
 _msgs = defaults.messages['load_input']
-load_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+def load_message(method):
+    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 _msgs = defaults.messages['save_input']
-save_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+def save_message(method):
+    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 _msgs = defaults.messages['execute_input']
-execute_message = lambda method: message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
+def execute_message(method):
+    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 class InputFileTemplate:
@@ -265,7 +268,7 @@ class InputFileTemplate:
             (default is False)
         """
         if temp and fullpath is not None:
-            warnings.warn('Fullpath is specified, temp flag is ignored')
+            warnings.warn('Fullpath is specified, temp flag is ignored', stacklevel=2)
         if fullpath is None:
             if temp:
                 folder = self._get_temp_dir()
@@ -882,7 +885,7 @@ class Sweep(InputFileTemplate):
             self.sweep_output_directory = output_directory
 
         if not self.input_files:
-            warnings.warn('Nothing was executed in sweep! Input files to execute were not created.')
+            warnings.warn('Nothing was executed in sweep! Input files to execute were not created.', stacklevel=2)
             return
 
         #TODO: delete if statement (use execution_queue for both cases)

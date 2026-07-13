@@ -126,9 +126,12 @@ class DataFolder:
         check_list = dir(self)
         for key, folder in self.folders.items():
             if key in check_list:
+                # stacklevel=1: load() recurses into nested DataFolders, so the distance
+                # to the caller varies with folder nesting depth.
                 warnings.warn(
                     f"foldername '{key}' is not availabel for attribute navigation."
-                    " Please, use DataFolder.go_to()"
+                    " Please, use DataFolder.go_to()",
+                    stacklevel=1,
                 )
             else:
                 setattr(self, key, folder)
@@ -169,7 +172,8 @@ class DataFolder:
             return matched_files[0]
         else:
             warnings.warn(
-                f"More than one file match '{filename}' name match in directory {self.fullpath}. First match returned."
+                f"More than one file match '{filename}' name match in directory {self.fullpath}. First match returned.",
+                stacklevel=2,
             )
             return matched_files[0]
 
