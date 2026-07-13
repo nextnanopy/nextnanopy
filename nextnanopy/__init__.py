@@ -5,6 +5,16 @@ from nextnanopy.outputs import DataFile, DataFolder
 
 # from nextnanopy.shapes import GdsPolygonsRaw
 
+__all__ = [
+    "execute",
+    "NNConfig",
+    "InputFile",
+    "Sweep",
+    "DataFile",
+    "DataFolder",
+    "config",
+]
+
 config = NNConfig()
 
 
