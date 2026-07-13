@@ -15,10 +15,10 @@ from nextnanopy.utils.misc import get_filename, message_decorator
 from nextnanopy.utils.mycollections import DictList
 
 _msgs = defaults.messages["load_output"]
+
+
 def load_message(method):
-    return message_decorator(
-    method, init_msg=_msgs[0], end_msg=_msgs[1]
-)
+    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 def displayname(data):
@@ -138,9 +138,7 @@ class DataFolder:
                 setattr(self, key, folder)
 
     def find(self, template, deep=False):
-        list_of_files = [
-            file for file in self.files if template in os.path.basename(file)
-        ]
+        list_of_files = [file for file in self.files if template in os.path.basename(file)]
         if not deep:
             return list_of_files
         if not self.folders:
@@ -166,9 +164,7 @@ class DataFolder:
     def file(self, filename):
         matched_files = self.find(template=filename, deep=False)
         if not matched_files:
-            raise ValueError(
-                f"No file with filename {filename} in directory {self.fullpath}"
-            )
+            raise ValueError(f"No file with filename {filename} in directory {self.fullpath}")
         elif len(matched_files) == 1:
             return matched_files[0]
         else:
@@ -244,7 +240,6 @@ class DataFolder:
 
 
 class Output:
-
     def __init__(self, fullpath, **loader_kwargs):
         self.fullpath = fullpath
         self.metadata = {}
@@ -789,9 +784,7 @@ class AvsAscii(Output):
             )
             ax = coord_axis(vmeta["num"])
             unit = "nm"
-            var = Coord(
-                name=ax, value=values, unit=unit, dim=vmeta["num"] - 1, metadata=vmeta
-            )
+            var = Coord(name=ax, value=values, unit=unit, dim=vmeta["num"] - 1, metadata=vmeta)
             coords[var.name] = var
         self.coords = coords
         return coords
@@ -819,11 +812,7 @@ class Vtk(Output):
     def load_variables(self):
         for _name in self.vtk.array_names:
             name, unit = best_str_to_name_unit(_name, default_unit=None)
-            value = (
-                np.array(self.vtk[_name])
-                .reshape(self.vtk.dimensions, order="F")
-                .squeeze()
-            )
+            value = np.array(self.vtk[_name]).reshape(self.vtk.dimensions, order="F").squeeze()
             self.variables[name] = Variable(name=name, value=value, unit=unit)
 
 
@@ -985,16 +974,15 @@ def values_metadata(line):
     return metadata
 
 
-def load_values(
-    file, filetype="ascii", datatype="double", skip=0, offset=0, stride=1, size=None
-):
+def load_values(file, filetype="ascii", datatype="double", skip=0, offset=0, stride=1, size=None):
     """Return flat array of floating values"""
     if filetype == "ascii":
-
         stop = skip + size if size is not None else None
         with open(file, "rb") as f:
             lines = islice(f, skip, stop, 1)
-            values = [line.decode("ascii").replace("\n", "").strip().split()[offset] for line in lines]
+            values = [
+                line.decode("ascii").replace("\n", "").strip().split()[offset] for line in lines
+            ]
     elif filetype == "binary":
         datatypes = {"double": "d"}
         datatype_sizes = {"double": 8}
@@ -1058,7 +1046,7 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
         file.write(f"ndim = {num_coords}\n")
 
         for i in range(num_coords):
-            file.write(f"dim{i+1} = {coordinates[i].value.size}\n")
+            file.write(f"dim{i + 1} = {coordinates[i].value.size}\n")
 
         file.write(f"nspace = {num_coords}\n")
         file.write(f"veclen = {num_variables}\n")
@@ -1081,7 +1069,7 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
         # Write coordinate file paths
         for i, skip_value in enumerate(coord_skip_values):
             file.write(
-                f"coord {i+1} file={filename} filetype={filetype} skip={skip_value} offset=0 stride=1\n"
+                f"coord {i + 1} file={filename} filetype={filetype} skip={skip_value} offset=0 stride=1\n"
             )
 
         # Write an empty line after the last coord line
@@ -1089,13 +1077,9 @@ def write_avsascii_one_file(coordinates, variables, filename, binary=False):
 
         # Write data for coordinates
         for coord in coordinates:
-            np.savetxt(
-                file, coord.value.flatten("F"), fmt="%.8f", encoding=numpy_encoding
-            )
+            np.savetxt(file, coord.value.flatten("F"), fmt="%.8f", encoding=numpy_encoding)
             file.write("\n")
 
         # Write data for variables
         for var in variables:
-            np.savetxt(
-                file, var.value.flatten("F"), fmt="%.8f", encoding=numpy_encoding
-            )
+            np.savetxt(file, var.value.flatten("F"), fmt="%.8f", encoding=numpy_encoding)

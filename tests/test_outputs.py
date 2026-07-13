@@ -17,11 +17,8 @@ folder_msb = Path("tests") / "datafiles" / "nextnano.MSB"
 
 
 class TestOutputs_nnp(unittest.TestCase):
-
     def test_dat(self):
-        df = outputs.DataFile(
-            folder_nnp / "bandedges_1d.dat", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "bandedges_1d.dat", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords["x"].name, "x")
         self.assertEqual(df.coords["x"].unit, "nm")
@@ -33,9 +30,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata["ndim"], 1)
         self.assertEqual(df.metadata["dkeys"], [0])
 
-        df = outputs.DataFile(
-            folder_nnp / "wf_occupation_1d.dat", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "wf_occupation_1d.dat", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(len(df.variables.keys()), 1)
         self.assertEqual(df.coords["no."].name, "no.")
@@ -84,9 +79,7 @@ class TestOutputs_nnp(unittest.TestCase):
     # self.assertRaises(NotImplementedError, df.export, filename='TESTEXPORT.dat', format='dat')
 
     def test_avs(self):
-        df = outputs.DataFile(
-            folder_nnp / "bandedges_2d.fld", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ["x", "y"])
         self.assertEqual(df.coords["x"].unit, "nm")
@@ -181,9 +174,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.metadata, {})
 
     def test_txt(self):
-        df = outputs.DataFile(
-            folder_nnp / "variables_input.txt", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "variables_input.txt", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 3)
         self.assertEqual(df.variables["var_1"].name, "var_1")
@@ -192,15 +183,11 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(df.variables["var_2"].value, 75)
         self.assertEqual(df.variables["string"].value, '"hello"')
 
-        df = outputs.DataFile(
-            folder_nnp / "variables_database.txt", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "variables_database.txt", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 0)
 
-        df = outputs.DataFile(
-            folder_nnp / "total_charges.txt", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "total_charges.txt", product="nextnano++")
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 6)
         self.assertAlmostEqual(df.variables["fixed"].value, 0.0)
@@ -213,9 +200,6 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertEqual(len(df.variables.keys()), 5)
         self.assertAlmostEqual(df.variables["|Gamma_i>"].value[0], 1)
         self.assertAlmostEqual(df.variables["<Gamma_i|HH_j>"].value[0], 0.0333932)
-
-
-
 
     def test_rest(self):
         files = ["example.log", "example.in"]
@@ -257,9 +241,7 @@ class TestDataFilePlot(unittest.TestCase):
     with zero coords, every variable after the first (used as x-axis) must be plotted."""
 
     def test_zero_coords_plots_all_variables(self):
-        df = outputs.DataFile(
-            folder_nnp / "total_charges.txt", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "total_charges.txt", product="nextnano++")
         self.assertEqual(len(df.variables.keys()), 6)
 
         fig, ax = df.plot()
@@ -271,7 +253,6 @@ class TestDataFilePlot(unittest.TestCase):
 
 
 class TestOutputs_nn3(unittest.TestCase):
-
     def test_dat(self):
         df = outputs.DataFile(folder_nn3 / "bandedges_1d.dat", product="nextnano3")
         self.assertEqual(len(df.coords.keys()), 1)
@@ -297,9 +278,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata["ndim"], 1)
         self.assertEqual(df.metadata["dkeys"], [0])
 
-        df = outputs.DataFile(
-            folder_nn3 / "bandedges_2d_cut.dat", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "bandedges_2d_cut.dat", product="nextnano3")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords["position"].name, "position")
         self.assertEqual(df.coords["position"].unit, "nm")
@@ -378,9 +357,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata["field"], "rectilinear")
 
     def test_avs2D(self):
-        df = outputs.DataFile(
-            folder_nn3 / "2Dcb1_sg1_deg1_psi_ev001.fld", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "2Dcb1_sg1_deg1_psi_ev001.fld", product="nextnano3")
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ["x", "y"])
         self.assertEqual(df.coords["x"].unit, "nm")
@@ -426,9 +403,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata["field"], "rectilinear")
 
     def test_vtr_LocalDOS(self):
-        df = outputs.DataFile(
-            folder_nn3 / "LocalDOS_sg1_deg1_Lead1.vtr", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "LocalDOS_sg1_deg1_Lead1.vtr", product="nextnano3")
 
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ["x", "y"])
@@ -439,17 +414,13 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.coords["y"].value.size, 101)
         self.assertEqual(df.coords["y"].dim, 1)
         self.assertEqual(len(df.variables.keys()), 1)
-        self.assertEqual(
-            df.variables["LocalDOS_sg1_deg1_Lead1"].name, "LocalDOS_sg1_deg1_Lead1"
-        )
+        self.assertEqual(df.variables["LocalDOS_sg1_deg1_Lead1"].name, "LocalDOS_sg1_deg1_Lead1")
         self.assertEqual(df.variables["LocalDOS_sg1_deg1_Lead1"].unit, "nm^-1eV^-1")
         self.assertEqual(df.variables["LocalDOS_sg1_deg1_Lead1"].value.shape, (51, 101))
         self.assertEqual(df.metadata, {})
 
     def test_vtr_2Dcb1(self):
-        df = outputs.DataFile(
-            folder_nn3 / "2Dcb1_sg1_deg1_psi_ev001.vtr", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "2Dcb1_sg1_deg1_psi_ev001.vtr", product="nextnano3")
 
         self.assertEqual(len(df.coords.keys()), 2)
         self.assertEqual(list(df.coords.keys()), ["x", "y"])
@@ -494,9 +465,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.metadata, {})
 
     def test_txt(self):
-        df = outputs.DataFile(
-            folder_nn3 / "variables_input.txt", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "variables_input.txt", product="nextnano3")
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 3)
         self.assertEqual(df.variables["var_1"].name, "var_1")
@@ -505,9 +474,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(df.variables["var_2"].value, 75)
         self.assertEqual(df.variables["string"].value, '"hello"')
 
-        df = outputs.DataFile(
-            folder_nn3 / "variables_database.txt", product="nextnano3"
-        )
+        df = outputs.DataFile(folder_nn3 / "variables_database.txt", product="nextnano3")
         self.assertEqual(len(df.coords.keys()), 0)
         self.assertEqual(len(df.variables.keys()), 0)
 
@@ -525,11 +492,8 @@ class TestOutputs_nn3(unittest.TestCase):
 
 
 class TestOutputs_negf(unittest.TestCase):
-
     def test_dat(self):
-        df = outputs.DataFile(
-            folder_negf / "ReducedRealSpaceModes.dat", product="nextnano.NEGF"
-        )
+        df = outputs.DataFile(folder_negf / "ReducedRealSpaceModes.dat", product="nextnano.NEGF")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords["Position"], df.coords[0])
         self.assertEqual(df.coords["Position"].name, "Position")
@@ -537,23 +501,17 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.coords["Position"].value.size, 608)
         self.assertEqual(len(df.variables.keys()), 19)
         self.assertEqual(df.variables["Conduction_BandEdge"], df.variables[0])
-        self.assertEqual(
-            df.variables["Conduction_BandEdge"].name, "Conduction_BandEdge"
-        )
+        self.assertEqual(df.variables["Conduction_BandEdge"].name, "Conduction_BandEdge")
         self.assertEqual(df.variables["Conduction_BandEdge"].unit, "eV")
         self.assertEqual(df.variables["Conduction_BandEdge"].value.size, 608)
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"], df.variables[1])
-        self.assertEqual(
-            df.variables["Psi_1 (lev.1 per.0)"].name, "Psi_1 (lev.1 per.0)"
-        )
+        self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].name, "Psi_1 (lev.1 per.0)")
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].unit, "a.u.")
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].value.size, 608)
         self.assertEqual(df.metadata["ndim"], 1)
         self.assertEqual(df.metadata["dkeys"], [0])
 
-        df = outputs.DataFile(
-            folder_negf / "E_p (Kane energy).dat", product="nextnano.NEGF"
-        )
+        df = outputs.DataFile(folder_negf / "E_p (Kane energy).dat", product="nextnano.NEGF")
         self.assertEqual(df.coords["Position"], df.coords[0])
         self.assertEqual(df.coords["Position"].name, "Position")
         self.assertEqual(df.coords["Position"].unit, "nm")
@@ -577,15 +535,11 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.variables["Position"].unit, "nm")
         self.assertEqual(df.variables["Position"].value.size, 608)
         self.assertEqual(df.variables["Conduction_BandEdge"], df.variables[1])
-        self.assertEqual(
-            df.variables["Conduction_BandEdge"].name, "Conduction_BandEdge"
-        )
+        self.assertEqual(df.variables["Conduction_BandEdge"].name, "Conduction_BandEdge")
         self.assertEqual(df.variables["Conduction_BandEdge"].unit, "eV")
         self.assertEqual(df.variables["Conduction_BandEdge"].value.size, 608)
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"], df.variables[2])
-        self.assertEqual(
-            df.variables["Psi_1 (lev.1 per.0)"].name, "Psi_1 (lev.1 per.0)"
-        )
+        self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].name, "Psi_1 (lev.1 per.0)")
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].unit, "a.u.")
         self.assertEqual(df.variables["Psi_1 (lev.1 per.0)"].value.size, 608)
         self.assertEqual(df.metadata["ndim"], 0)
@@ -608,9 +562,7 @@ class TestOutputs_negf(unittest.TestCase):
         self.assertEqual(df.metadata["dkeys"], [0])
 
     def test_dat_no_units(self):
-        df = outputs.DataFile(
-            folder_negf / "datafile_with_no_units.dat", product="nextnano.NEGF"
-        )
+        df = outputs.DataFile(folder_negf / "datafile_with_no_units.dat", product="nextnano.NEGF")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords["Photon Energy"], df.coords[0])
         self.assertEqual(df.coords[0].name, "Photon Energy")
@@ -662,19 +614,14 @@ class TestOutputs_negf(unittest.TestCase):
 
 
 class TestOutputs_msb(unittest.TestCase):
-
     def test_dat(self):
-        df = outputs.DataFile(
-            folder_msb / "BandEdge_conduction.dat", product="nextnano.MSB"
-        )
+        df = outputs.DataFile(folder_msb / "BandEdge_conduction.dat", product="nextnano.MSB")
         self.assertEqual(len(df.coords.keys()), 1)
         self.assertEqual(df.coords["Position"].name, "Position")
         self.assertEqual(df.coords["Position"].unit, "nm")
         self.assertEqual(df.coords["Position"].value.size, 100)
         self.assertEqual(len(df.variables.keys()), 1)
-        self.assertEqual(
-            df.variables["Conduction Band Edge"].name, "Conduction Band Edge"
-        )
+        self.assertEqual(df.variables["Conduction Band Edge"].name, "Conduction Band Edge")
         self.assertEqual(df.variables["Conduction Band Edge"].unit, "eV")
         self.assertEqual(df.variables["Conduction Band Edge"].value.size, 100)
         self.assertEqual(df.metadata["ndim"], 1)
@@ -691,9 +638,7 @@ class TestOutputs_msb(unittest.TestCase):
         self.assertEqual(df.variables["Position"].name, "Position")
         self.assertEqual(df.variables["Position"].unit, "nm")
         self.assertEqual(df.variables["Position"].value.size, 100)
-        self.assertEqual(
-            df.variables["Conduction Band Edge"].name, "Conduction Band Edge"
-        )
+        self.assertEqual(df.variables["Conduction Band Edge"].name, "Conduction Band Edge")
         self.assertEqual(df.variables["Conduction Band Edge"].unit, "eV")
         self.assertEqual(df.variables["Conduction Band Edge"].value.size, 100)
         self.assertEqual(df.metadata["ndim"], 0)
@@ -709,9 +654,7 @@ class TestOutputs_msb(unittest.TestCase):
         self.assertEqual(df.coords["Position"].unit, "nm")
         self.assertEqual(df.coords["Position"].value.size, 100)
         self.assertEqual(len(df.variables.keys()), 1)
-        self.assertEqual(
-            df.variables["Conduction Band Edge"].name, "Conduction Band Edge"
-        )
+        self.assertEqual(df.variables["Conduction Band Edge"].name, "Conduction Band Edge")
         self.assertEqual(df.variables["Conduction Band Edge"].unit, "eV")
         self.assertEqual(df.variables["Conduction Band Edge"].value.size, 100)
         self.assertEqual(df.metadata["ndim"], 1)
@@ -739,11 +682,8 @@ class TestOutputs_msb(unittest.TestCase):
 
 
 class TestOutput(unittest.TestCase):
-
     def test_data(self):
-        df = outputs.DataFile(
-            folder_nnp / "bandedges_2d.fld", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
         self.assertEqual(len(df.data), len(df.coords) + len(df.variables))
         for key, value in df.coords.items():
             self.assertEqual(df.data[key], value)
@@ -751,18 +691,14 @@ class TestOutput(unittest.TestCase):
             self.assertEqual(df.data[key], value)
 
     def test_access_by_index(self):
-        df = outputs.DataFile(
-            folder_nnp / "bandedges_2d.fld", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
         for key, value in df.coords.items():
             self.assertEqual(df[key], value)
         for key, value in df.variables.items():
             self.assertEqual(df[key], value)
 
     def test_for_loop(self):
-        df = outputs.DataFile(
-            folder_nnp / "bandedges_2d.fld", product="nextnano++"
-        )
+        df = outputs.DataFile(folder_nnp / "bandedges_2d.fld", product="nextnano++")
         for i, dfi in enumerate(df):
             self.assertEqual(df.data[i], dfi)
 
@@ -775,25 +711,16 @@ class TestDataFolder(unittest.TestCase):
         test_folder = Path("tests") / "dfolder"
         datafolder = outputs.DataFolder(test_folder)
         self.assertTrue("another_folder" in datafolder.folders)
-        self.assertTrue(
-            str(test_folder / "file1") in datafolder.files
-        )
+        self.assertTrue(str(test_folder / "file1") in datafolder.files)
 
-        self.assertTrue(
-            str(test_folder / "file42") in datafolder.files
-        )
+        self.assertTrue(str(test_folder / "file42") in datafolder.files)
         self.assertFalse("NotExistedFile.py" in datafolder.files)
-        self.assertFalse(
-            str(test_folder / "NotExistedFile.py") in datafolder.files
-        )
-
-
+        self.assertFalse(str(test_folder / "NotExistedFile.py") in datafolder.files)
 
         self.assertTrue(datafolder.folders)
         self.assertTrue(datafolder.files)
 
         self.assertEqual(len(datafolder.files), 3)
-
 
     def test_navigation(self):
         tests_folder = "tests"
@@ -801,23 +728,17 @@ class TestDataFolder(unittest.TestCase):
         self.assertTrue("configs" in datafolder.__dict__)
         self.assertIsInstance(datafolder.configs, outputs.DataFolder)
         self.assertIsInstance(datafolder.datafiles.nextnano3, outputs.DataFolder)
-        self.assertIsInstance(
-            datafolder.datafiles.folders["nextnano++"], outputs.DataFolder
-        )
+        self.assertIsInstance(datafolder.datafiles.folders["nextnano++"], outputs.DataFolder)
         nnp_folder = datafolder.datafiles.folders["nextnano++"]
         self.assertTrue(Path(nnp_folder.fullpath).samefile(folder_nnp))
-        self.assertTrue(
-            str(folder_nnp / "bandedges_2d_old.fld") in nnp_folder.files
-        )
+        self.assertTrue(str(folder_nnp / "bandedges_2d_old.fld") in nnp_folder.files)
 
     def test_filenames(self):
 
         datafolder = outputs.DataFolder(folder_nnp)
         self.assertIn("only_variables.in", datafolder.filenames())
         self.assertNotIn("only_variables_0.in", datafolder.filenames())
-        self.assertNotIn(
-            str(folder_nnp / "only_variables.in"), datafolder.filenames()
-        )
+        self.assertNotIn(str(folder_nnp / "only_variables.in"), datafolder.filenames())
 
         tests_folder = "tests"
         datafolder = outputs.DataFolder(tests_folder)
@@ -825,9 +746,7 @@ class TestDataFolder(unittest.TestCase):
         self.assertIn("test_outputs.py", datafolder.filenames())
 
         self.assertNotIn("only_variables.in", datafolder.filenames())
-        self.assertNotIn(
-            str(folder_nnp / "only_variables.in"), datafolder.filenames()
-        )
+        self.assertNotIn(str(folder_nnp / "only_variables.in"), datafolder.filenames())
 
     def test_find(self):
         tests_folder = "tests"
@@ -835,54 +754,32 @@ class TestDataFolder(unittest.TestCase):
         self.assertEqual(len(datafolder.find("")), 12)
 
         self.assertIn(str(Path(tests_folder) / "__init__.py"), datafolder.find(""))
-        self.assertIn(
-            str(Path(tests_folder) / "test_commands.py"), datafolder.find("")
-        )
+        self.assertIn(str(Path(tests_folder) / "test_commands.py"), datafolder.find(""))
 
-        self.assertNotIn(
-            str(folder_nnp / "only_variables.in"), datafolder.find("")
-        )
+        self.assertNotIn(str(folder_nnp / "only_variables.in"), datafolder.find(""))
         self.assertNotIn("only_variables.in", datafolder.find(""))
 
-        self.assertNotIn(
-            str(Path(tests_folder) / "__init__.py"), datafolder.find("test")
-        )
-        self.assertIn(
-            str(Path(tests_folder) / "test_commands.py"), datafolder.find("test")
-        )
+        self.assertNotIn(str(Path(tests_folder) / "__init__.py"), datafolder.find("test"))
+        self.assertIn(str(Path(tests_folder) / "test_commands.py"), datafolder.find("test"))
 
-        self.assertNotIn(
-            str(folder_nnp / "only_variables.in"), datafolder.find("test")
-        )
+        self.assertNotIn(str(folder_nnp / "only_variables.in"), datafolder.find("test"))
         self.assertNotIn("only_variables.in", datafolder.find("test"))
-        self.assertNotIn(
-            str(Path(tests_folder) / "test_commands.py"), datafolder.find("test_i")
-        )
+        self.assertNotIn(str(Path(tests_folder) / "test_commands.py"), datafolder.find("test_i"))
         self.assertEqual(len(datafolder.find(".vtr")), 0)
 
         datafolder = outputs.DataFolder(folder_nnp)
-        self.assertNotIn(
-            str(Path(tests_folder) / "__init__.py"), datafolder.find("tests")
-        )
-        self.assertNotIn(
-            str(Path(tests_folder) / "test_commands.py"), datafolder.find("tests")
-        )
+        self.assertNotIn(str(Path(tests_folder) / "__init__.py"), datafolder.find("tests"))
+        self.assertNotIn(str(Path(tests_folder) / "test_commands.py"), datafolder.find("tests"))
 
-        self.assertNotIn(
-            str(folder_nnp / "only_variables.in"), datafolder.find("tests")
-        )
-        self.assertIn(
-            str(folder_nnp / "only_variables.in"), datafolder.find("only")
-        )
+        self.assertNotIn(str(folder_nnp / "only_variables.in"), datafolder.find("tests"))
+        self.assertIn(str(folder_nnp / "only_variables.in"), datafolder.find("only"))
         self.assertEqual(len(datafolder.find("bandedges")), 7)
         self.assertNotIn("only_variables.in", datafolder.find("abls"))
         self.assertEqual(len(datafolder.find(".vtr")), 2)
 
         # deep
         datafolder = outputs.DataFolder(tests_folder)
-        self.assertIn(
-            str(Path(tests_folder) / "__init__.py"), datafolder.find("", deep=True)
-        )
+        self.assertIn(str(Path(tests_folder) / "__init__.py"), datafolder.find("", deep=True))
         self.assertIn(
             str(Path(tests_folder) / "test_commands.py"),
             datafolder.find("", deep=True),
@@ -923,9 +820,7 @@ class TestDataFolder(unittest.TestCase):
 
         datafolder = outputs.DataFolder(folder_nnp)
 
-        self.assertNotIn(
-            str(Path(tests_folder) / "__init__.py"), datafolder.find("", deep=True)
-        )
+        self.assertNotIn(str(Path(tests_folder) / "__init__.py"), datafolder.find("", deep=True))
         self.assertNotIn(
             str(Path(tests_folder) / "test_commands.py"),
             datafolder.find("", deep=True),
@@ -961,9 +856,7 @@ class TestDataFolder(unittest.TestCase):
         datafolder = outputs.DataFolder(tests_folder)
         self.assertEqual(len(datafolder.find_multiple(("",))), 12)
 
-        self.assertIn(
-            str(Path(tests_folder) / "__init__.py"), datafolder.find_multiple(("",))
-        )
+        self.assertIn(str(Path(tests_folder) / "__init__.py"), datafolder.find_multiple(("",)))
 
         self.assertNotIn("only_variables.in", datafolder.find_multiple(("",)))
 
@@ -987,18 +880,13 @@ class TestDataFolder(unittest.TestCase):
         self.assertIsInstance(datafolder.go_to("datafiles"), outputs.DataFolder)
         self.assertIsInstance(datafolder.go_to("__init__.py"), str)
         self.assertTrue(
-            Path(datafolder.go_to("__init__.py")).samefile(
-                Path(tests_folder) / "__init__.py"
-            )
+            Path(datafolder.go_to("__init__.py")).samefile(Path(tests_folder) / "__init__.py")
         )
-        self.assertFalse(
-            Path(datafolder.go_to("__init__.py")).samefile(Path(tests_folder))
-        )
+        self.assertFalse(Path(datafolder.go_to("__init__.py")).samefile(Path(tests_folder)))
 
         datafolder_nnp = datafolder.go_to("datafiles", "nextnano++")
 
         self.assertTrue(Path(datafolder_nnp.fullpath).samefile(folder_nnp))
-
 
     def test_file(self):
         tests_folder = "tests"
@@ -1030,8 +918,11 @@ class TestDataFolder(unittest.TestCase):
         self.assertIn("        nextnano++/", tree_list)
 
         self.assertLess(tree_list.index("    configs/"), tree_list.index("        nextnano++/"))
-        self.assertLess(tree_list.index("        .nnconfig"), tree_list.index("        nextnano++/"))
+        self.assertLess(
+            tree_list.index("        .nnconfig"), tree_list.index("        nextnano++/")
+        )
         self.assertLess(tree_list.index("    datafiles/"), tree_list.index("        nextnano++/"))
+
 
 class TestFldMultiwordLabel(unittest.TestCase):
     """Tripwire for a known bug.

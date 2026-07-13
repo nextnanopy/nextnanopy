@@ -23,91 +23,102 @@ from nextnanopy.utils.misc import (
 )
 from nextnanopy.utils.mycollections import DictList
 
-_msgs = defaults.messages['load_input']
+_msgs = defaults.messages["load_input"]
+
+
 def load_message(method):
     return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
-_msgs = defaults.messages['save_input']
+
+
+_msgs = defaults.messages["save_input"]
+
+
 def save_message(method):
     return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
-_msgs = defaults.messages['execute_input']
+
+
+_msgs = defaults.messages["execute_input"]
+
+
 def execute_message(method):
     return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 class InputFileTemplate:
     """
-        This class stores and manipulates any kind of nextnano input files.
-        For each nextnano product, the syntax is different but the core information
-        is very similar like the variables that can be changed.
-        This class contains useful methods such as to get a preview of the file or
-        execute a simulation.
+    This class stores and manipulates any kind of nextnano input files.
+    For each nextnano product, the syntax is different but the core information
+    is very similar like the variables that can be changed.
+    This class contains useful methods such as to get a preview of the file or
+    execute a simulation.
 
-        The initialization of the class will execute the load method and setup the
-        config file.
+    The initialization of the class will execute the load method and setup the
+    config file.
 
-        ...
+    ...
 
-        Parameters
-        ----------
-        fullpath : str
-            path to the file.
-            If it is not None, it will load the file (default: None)
-        configpath : str
-            path to the config file.
-            If it is None, it will use the default configuration (default: None)
+    Parameters
+    ----------
+    fullpath : str
+        path to the file.
+        If it is not None, it will load the file (default: None)
+    configpath : str
+        path to the config file.
+        If it is None, it will use the default configuration (default: None)
 
 
-        Attributes
-        ----------
+    Attributes
+    ----------
 
-        fullpath : str
-            path to the file (default: None)
-        configpath : str
-            path to the config file (default: your home path)
-        variables : DictList
-            input variables defined in the file (default: DictList())
-        raw_lines : list
-            list of str of each line in the file
-        text : str
-            raw text of the file (settable)
-        lines : list
-            raw_lines updated with the current input variable parameters
-        filename : str
-            name with the file extension (settable)
-        filename_only :
-            name without the file extension (settable)
-        folder_input : str
-            folder of the fullpath (settable)
-        folder_output : str
-            folder where the simulated data is stored after execution
-        product : str
-            detected nextnano product when the file is loaded (default: 'not valid')
-        config: nextnano.NNConfig
-            config file object
-        execute_info: dict
-            information after executing the file
+    fullpath : str
+        path to the file (default: None)
+    configpath : str
+        path to the config file (default: your home path)
+    variables : DictList
+        input variables defined in the file (default: DictList())
+    raw_lines : list
+        list of str of each line in the file
+    text : str
+        raw text of the file (settable)
+    lines : list
+        raw_lines updated with the current input variable parameters
+    filename : str
+        name with the file extension (settable)
+    filename_only :
+        name without the file extension (settable)
+    folder_input : str
+        folder of the fullpath (settable)
+    folder_output : str
+        folder where the simulated data is stored after execution
+    product : str
+        detected nextnano product when the file is loaded (default: 'not valid')
+    config: nextnano.NNConfig
+        config file object
+    execute_info: dict
+        information after executing the file
 
-        Methods
-        -------
-        preview(nums=True)
-            print the text of the file.
+    Methods
+    -------
+    preview(nums=True)
+        print the text of the file.
 
-        load(fullpath)
-            load an input file
+    load(fullpath)
+        load an input file
 
-        save(fullpath=None, overwrite=False, automkdir=True)
-            save the current information into a file.
+    save(fullpath=None, overwrite=False, automkdir=True)
+        save the current information into a file.
 
-        execute(**kwargs)
-            execute the input file located at .fullpath
+    execute(**kwargs)
+        execute the input file located at .fullpath
 
-        get_variable(name)
-            equivalent to self.variables[name]
+    get_variable(name)
+        equivalent to self.variables[name]
 
-        set_variable(name, value=None, comment=None)
-            change the value and/or the comment of self.variable[name]
-            If value or comment is None, it won't change that parameter
+    set_variable(name, value=None, comment=None)
+        change the value and/or the comment of self.variable[name]
+        If value or comment is None, it won't change that parameter
     """
+
     _shared_temp_dir = None
 
     def __init__(self, fullpath=None, configpath=None, parse=False):
@@ -115,7 +126,7 @@ class InputFileTemplate:
         self.variables = DictList()
         self.content = None
         self.fullpath = fullpath
-        self.product = 'not valid'
+        self.product = "not valid"
         self.parse = parse
         self.__parallel__ = False
         if fullpath is not None:
@@ -154,7 +165,7 @@ class InputFileTemplate:
         new_lines = list(self.raw_lines)
         for ivar in self.variables.values():
             text = ivar.text
-            idx = ivar.metadata['line_idx']
+            idx = ivar.metadata["line_idx"]
             new_lines[idx] = text
         return new_lines
 
@@ -173,7 +184,7 @@ class InputFileTemplate:
     @filename_only.setter
     def filename_only(self, name):
         ext = get_file_extension(self.fullpath)
-        self.filename = f'{name}{ext}'
+        self.filename = f"{name}{ext}"
 
     @property
     def filename(self):
@@ -193,11 +204,11 @@ class InputFileTemplate:
 
     @property
     def folder_output(self):
-        key = 'outputdirectory'
+        key = "outputdirectory"
         if key in self.execute_info.keys():
             return self.execute_info[key]
         else:
-            raise KeyError('Input file has not been executed yet')
+            raise KeyError("Input file has not been executed yet")
 
     def preview(self, nums=True):
         """
@@ -210,9 +221,9 @@ class InputFileTemplate:
         """
         for i, line in enumerate(self.lines):
             if nums:
-                print(f'{i} {line}')
+                print(f"{i} {line}")
             else:
-                print(f'{line}')
+                print(f"{line}")
 
     @load_message
     def load(self, fullpath):
@@ -244,8 +255,8 @@ class InputFileTemplate:
 
     def validate(self):
         if self.product not in defaults.products:
-            self.product = 'Not valid'
-            #raise ValueError(f'Not valid input file')
+            self.product = "Not valid"
+            # raise ValueError(f'Not valid input file')
 
     @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True, temp=False):
@@ -268,21 +279,25 @@ class InputFileTemplate:
             (default is False)
         """
         if temp and fullpath is not None:
-            warnings.warn('Fullpath is specified, temp flag is ignored', stacklevel=2)
+            warnings.warn("Fullpath is specified, temp flag is ignored", stacklevel=2)
         if fullpath is None:
             if temp:
                 folder = self._get_temp_dir()
                 fullpath = os.path.join(folder, self.filename)
             elif self.fullpath is None:
-                raise ValueError('Please, specify a fullpath')
+                raise ValueError("Please, specify a fullpath")
             else:
                 fullpath = self.fullpath
 
-        self.fullpath = savetxt(fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir)
+        self.fullpath = savetxt(
+            fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir
+        )
         return self.fullpath
 
     @execute_message
-    def execute(self, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause',**kwargs):
+    def execute(
+        self, show_log=True, convergenceCheck=False, convergence_check_mode="pause", **kwargs
+    ):
         """
         Execute the input file located at .fullpath
         Individual kwargs can be passed like 'license' or 'database'
@@ -319,68 +334,88 @@ class InputFileTemplate:
 
         cmd_kwargs = dict(self.default_command_args)
         cmd_kwargs.update(kwargs)
-        cmd_kwargs['inputfile'] = self.fullpath
-        info = cmd_execute(show_log=show_log, parallel = self.__parallel__, **cmd_kwargs)
+        cmd_kwargs["inputfile"] = self.fullpath
+        info = cmd_execute(show_log=show_log, parallel=self.__parallel__, **cmd_kwargs)
         self.execute_info = info
-        if convergenceCheck and not self.__parallel__: #- possible solution for later (delete comment if not)
-            self.check_convergence(mode= convergence_check_mode)
+        if (
+            convergenceCheck and not self.__parallel__
+        ):  # - possible solution for later (delete comment if not)
+            self.check_convergence(mode=convergence_check_mode)
         return info
 
-    def check_convergence(self, mode = 'pause'):
-        if self.product == 'nextnano.MSB':
-            raise NotImplementedError('Convergence check has not yet implemented for nextnano.MSB!')
+    def check_convergence(self, mode="pause"):
+        if self.product == "nextnano.MSB":
+            raise NotImplementedError("Convergence check has not yet implemented for nextnano.MSB!")
 
-        log = self.execute_info['logfile']
+        log = self.execute_info["logfile"]
         try:
-            if self.product == 'nextnano3':
+            if self.product == "nextnano3":
                 with open(log) as file:
                     for line in file:
-                        if 'Exiting iteration and terminating simulation' in line or 'Program was terminated using a soft kill' in line or 'Terminating immediately' in line:
-                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
-                        elif 'Maximum number of iterations exceeded' in line:
-                            raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
-            elif self.product == 'nextnano++':
+                        if (
+                            "Exiting iteration and terminating simulation" in line
+                            or "Program was terminated using a soft kill" in line
+                            or "Terminating immediately" in line
+                        ):
+                            raise RuntimeError(
+                                f"\nSimulation got terminated! Check the log:\n{log}"
+                            )
+                        elif "Maximum number of iterations exceeded" in line:
+                            raise RuntimeError(
+                                f"\nSimulation did not converge! Check the log:\n{log}"
+                            )
+            elif self.product == "nextnano++":
                 with open(log) as file:
                     for line in file:
-                        if 'Terminating program' in line:
-                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
-                        elif 'Maximum number of iterations exceeded' in line:
-                            raise RuntimeError(f'\nSimulation did not converge! Check the log:\n{log}')
-                        elif 'Outdated numerics library (f95library) used' in line:
-                            raise RuntimeError('\nOutdated numerics library (f95library) used.')
-            elif self.product == 'nextnano.NEGF' or self.product == 'nextnano.NEGF_classic':   # NEGF reports convergence at every voltage and temperature sweep.
+                        if "Terminating program" in line:
+                            raise RuntimeError(
+                                f"\nSimulation got terminated! Check the log:\n{log}"
+                            )
+                        elif "Maximum number of iterations exceeded" in line:
+                            raise RuntimeError(
+                                f"\nSimulation did not converge! Check the log:\n{log}"
+                            )
+                        elif "Outdated numerics library (f95library) used" in line:
+                            raise RuntimeError("\nOutdated numerics library (f95library) used.")
+            elif (
+                self.product == "nextnano.NEGF" or self.product == "nextnano.NEGF_classic"
+            ):  # NEGF reports convergence at every voltage and temperature sweep.
                 with open(log) as file:
                     for line in file:
-                        if 'Simulation has NOT CONVERGED' in line:
-                            raise RuntimeError(f'\nSimulation has diverged! Check the log:\n{log}')
-                        elif 'Simulation has partially converged' in line:
-                            print('\nWARNING: check_convergence(): Simulation did not fully converge.')
-                        elif 'Terminating program!' in line:
-                            raise RuntimeError(f'\nSimulation got terminated! Check the log:\n{log}')
+                        if "Simulation has NOT CONVERGED" in line:
+                            raise RuntimeError(f"\nSimulation has diverged! Check the log:\n{log}")
+                        elif "Simulation has partially converged" in line:
+                            print(
+                                "\nWARNING: check_convergence(): Simulation did not fully converge."
+                            )
+                        elif "Terminating program!" in line:
+                            raise RuntimeError(
+                                f"\nSimulation got terminated! Check the log:\n{log}"
+                            )
         except FileNotFoundError:
-            print(f'Log file {log} not found!')
-            if mode != 'continue':
+            print(f"Log file {log} not found!")
+            if mode != "continue":
                 raise
             else:
                 pass
         except RuntimeError as e:
             print(e)
-            if mode == 'pause':
+            if mode == "pause":
                 pause = True
                 while pause:
-                    answer = input('Do you nevertheless want to continue? [y/n]: ')
-                    if answer == 'y' or answer == 'yes':
+                    answer = input("Do you nevertheless want to continue? [y/n]: ")
+                    if answer == "y" or answer == "yes":
                         pause = False
                         return
-                    elif answer == 'n' or answer == 'no':
+                    elif answer == "n" or answer == "no":
                         pause = False
-                        raise RuntimeError('Nextnanopy terminated.') from e
+                        raise RuntimeError("Nextnanopy terminated.") from e
                     else:
-                        print('Invalid input.')
+                        print("Invalid input.")
                         continue
-            elif mode == 'terminate':
-                raise RuntimeError('Nextnanopy terminated.') from e
-            elif mode == 'continue':
+            elif mode == "terminate":
+                raise RuntimeError("Nextnanopy terminated.") from e
+            elif mode == "continue":
                 return
             else:
                 raise ValueError(f'Mode "{mode}" is not valid') from e
@@ -423,10 +458,10 @@ class InputFileTemplate:
             If name is not a key of self.variables
         """
         if name not in self.variables.keys():
-            raise KeyError(f'{name} is not a valid variable.')
+            raise KeyError(f"{name} is not a valid variable.")
         return self.variables[name]
 
-    def set_variable(self, name, value=None, comment=None, unit = None):
+    def set_variable(self, name, value=None, comment=None, unit=None):
         """
         Change the value and/or the comment of self.variable[name]
 
@@ -451,7 +486,7 @@ class InputFileTemplate:
         if comment is not None:
             var.comment = comment
         if unit is not None:
-            var.unit  = unit
+            var.unit = unit
         return var
 
     def __getitem__(self, item):
@@ -465,12 +500,12 @@ class InputFileTemplate:
 
     def __repr__(self):
         out = []
-        out.append(f'{self.__class__.__name__}')
-        out.append(f'fullpath: {self.fullpath}')
-        out.append(f'Input variables: {len(self.variables)} elements')
+        out.append(f"{self.__class__.__name__}")
+        out.append(f"fullpath: {self.fullpath}")
+        out.append(f"Input variables: {len(self.variables)} elements")
         for var in self.variables.values():
-            out.append(f'\t{str(var)}')
-        out = '\n'.join(out)
+            out.append(f"\t{str(var)}")
+        out = "\n".join(out)
         return out
 
     def __iter__(self):
@@ -520,8 +555,7 @@ class InputFileTemplate:
 #     return cls
 
 
-
-#@class_decorator
+# @class_decorator
 class InputFile(InputFileTemplate):
     # def __init__(self,fullpath = None, configpath = None):
     #
@@ -593,136 +627,144 @@ class InputFile(InputFileTemplate):
     #     file.raw_lines = self.raw_lines
     #     return file.lines
 
+
 class ExecutionQueue(threading.Thread):
     """
-        This class take InputFiles and add them in the execution queue.
-        Depending on limit_parallel, InputFiles are executed in parallel or sequentially.
+    This class take InputFiles and add them in the execution queue.
+    Depending on limit_parallel, InputFiles are executed in parallel or sequentially.
 
 
-        Parameters
-        ----------
-        limit_parallel: int
-            number of InputFiles to be executed in parallel (default: 1)
-        terminate_empty : bool
-            If True, terminates once all added files are executed and logged.
-            If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
-            Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
-        convergenceCheck: bool
-            see convergenceCheck in InputFile
+    Parameters
+    ----------
+    limit_parallel: int
+        number of InputFiles to be executed in parallel (default: 1)
+    terminate_empty : bool
+        If True, terminates once all added files are executed and logged.
+        If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
+        Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
+    convergenceCheck: bool
+        see convergenceCheck in InputFile
 
-        **execution_kwargs: parameters to be taken by InputFile.execute()
-
-
+    **execution_kwargs: parameters to be taken by InputFile.execute()
 
 
-        Attributes
-        ----------
-        waiting_queue: queue.Queue
-            queue of InputFile objects to be executed
-        started: list
-            list of (simulation_info:dict, InputFile) currently executing
-
-        finished: list
-            list of simulation_infos for finished simulations
-
-        stop_when_empty: bool
-            see terminate_empty parameter
-        daemon: bool
-            see threading.Thread.daemon
-
-        Methods
-        ----------- for user
-        add(*input_files)
-            adds InputFiles to queue
-
-        start()
-            start the thread (i.e. execution)
-            see threading.Thread.start()
-
-        stop()
-            stop the thread (once all added files are executed)
-            only necessary if termanate_empty = True
 
 
-        -------internal (or for advanced users)
-        all_done()
-            return True if all execution and logging are finished
+    Attributes
+    ----------
+    waiting_queue: queue.Queue
+        queue of InputFile objects to be executed
+    started: list
+        list of (simulation_info:dict, InputFile) currently executing
 
-        add_execution()
-            pop an InputFile from self.waiting_queue, execute and add to self.started
+    finished: list
+        list of simulation_infos for finished simulations
 
-        log_finished()
-            finish logging for finished execution in self.started
+    stop_when_empty: bool
+        see terminate_empty parameter
+    daemon: bool
+        see threading.Thread.daemon
 
-        run()
-            commands to be run upon start():
-                pop simulation from queue and execute
-                log the simulation if some are finished from self.started
-            see threading.Thread.run()
+    Methods
+    ----------- for user
+    add(*input_files)
+        adds InputFiles to queue
+
+    start()
+        start the thread (i.e. execution)
+        see threading.Thread.start()
+
+    stop()
+        stop the thread (once all added files are executed)
+        only necessary if termanate_empty = True
+
+
+    -------internal (or for advanced users)
+    all_done()
+        return True if all execution and logging are finished
+
+    add_execution()
+        pop an InputFile from self.waiting_queue, execute and add to self.started
+
+    log_finished()
+        finish logging for finished execution in self.started
+
+    run()
+        commands to be run upon start():
+            pop simulation from queue and execute
+            log the simulation if some are finished from self.started
+        see threading.Thread.run()
 
     """
-    def __init__(self, limit_parallel : int = 1 , maxsize : int = 0, terminate_empty : bool = True, convergenceCheck = False, **execution_kwargs):
+
+    def __init__(
+        self,
+        limit_parallel: int = 1,
+        maxsize: int = 0,
+        terminate_empty: bool = True,
+        convergenceCheck=False,
+        **execution_kwargs,
+    ):
         super().__init__()
-        self.waiting_queue = queue.Queue()#should be queue of InputFile objects
-        self.started = []#should be list of execution_infos
-        self.finished = []#should be list of execution_infos
+        self.waiting_queue = queue.Queue()  # should be queue of InputFile objects
+        self.started = []  # should be list of execution_infos
+        self.finished = []  # should be list of execution_infos
         self.limit_parallel = limit_parallel
         self.execution_kwargs = execution_kwargs
         self.convergenceCheck = convergenceCheck
         self.stop_when_empty = terminate_empty
         self.daemon = False
+
     def all_done(self):
         return not bool(not self.waiting_queue.empty() or self.started)
 
-    def add(self,*input_files: InputFileTemplate):
+    def add(self, *input_files: InputFileTemplate):
         for input_file in input_files:
             self.waiting_queue.put(input_file)
 
     def stop(self):
         self.stop_when_empty = True
 
-
     def add_execution(self):
         if (len(self.started) < self.limit_parallel) and not self.waiting_queue.empty():
             input_f = self.waiting_queue.get()
-            if self.limit_parallel>1:
+            if self.limit_parallel > 1:
                 input_f.__parallel__ = True
-            if 'show_log' in self.execution_kwargs and not self.execution_kwargs['show_log']:
+            if "show_log" in self.execution_kwargs and not self.execution_kwargs["show_log"]:
                 print("\nRemaining simulations in the queue: ", self.waiting_queue.qsize())
             info = input_f.execute(**self.execution_kwargs)
-            self.started.append((info,input_f))
+            self.started.append((info, input_f))
 
     def log_finished(self):
-        if self.limit_parallel>1:
+        if self.limit_parallel > 1:
             i = 0
             while i < len(self.started):
-                poll = self.started[i][0]['process'].poll()
+                poll = self.started[i][0]["process"].poll()
                 if poll is None:
-                    i+=1
+                    i += 1
                 else:
-                    #TODO check once again del
-                    self.started[i][0]['process'].wait()
-                    tout = self.started[i][0]['tout']
-                    terr = self.started[i][0]['terr']
+                    # TODO check once again del
+                    self.started[i][0]["process"].wait()
+                    tout = self.started[i][0]["tout"]
+                    terr = self.started[i][0]["terr"]
                     for t in (tout, terr):
                         t.join()
-                    self.started[i][0]['queue'].put(None)
+                    self.started[i][0]["queue"].put(None)
                     if self.convergenceCheck:
-                        if 'convergence_check_mode' in self.execution_kwargs:
-                            convergence_check_mode = self.execution_kwargs['convergence_check_mode']
+                        if "convergence_check_mode" in self.execution_kwargs:
+                            convergence_check_mode = self.execution_kwargs["convergence_check_mode"]
                         else:
-                            convergence_check_mode = 'pause'
-                        self.started[i][1].check_convergence(mode = convergence_check_mode)
+                            convergence_check_mode = "pause"
+                        self.started[i][1].check_convergence(mode=convergence_check_mode)
                     self.finished.append(self.started[i][0])
                     del self.started[i]
-
 
         else:
             i = 0
             while i < len(self.started):
-                poll = self.started[i][0]['process'].poll()
+                poll = self.started[i][0]["process"].poll()
                 if poll is None:
-                    i+=1
+                    i += 1
                 else:
                     self.finished.append(self.started[i][0])
                     del self.started[i]
@@ -732,58 +774,64 @@ class ExecutionQueue(threading.Thread):
             self.add_execution()
             self.log_finished()
             if self.all_done():
-                print('\nWaiting queue is empty, all execution and logging are finished')
+                print("\nWaiting queue is empty, all execution and logging are finished")
 
                 if self.stop_when_empty:
                     break
                 while self.all_done() and not self.stop_when_empty:
-                    time.sleep(0.1) #to ensure switch to main thread
+                    time.sleep(0.1)  # to ensure switch to main thread
                     pass
-
 
 
 class Sweep(InputFileTemplate):
     """
-        This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
+    This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
 
 
-        Parameters:
-        -------------------
-        variables_to_sweep: dict
-            Dict of variables to sweep in the form of {name1:values1,name2:values2...}
-            values should be an iterable object (ideally list)
-        fullpath: str
-            defined as for InputFile
-        configpath: str
-            defined as for input files
+    Parameters:
+    -------------------
+    variables_to_sweep: dict
+        Dict of variables to sweep in the form of {name1:values1,name2:values2...}
+        values should be an iterable object (ideally list)
+    fullpath: str
+        defined as for InputFile
+    configpath: str
+        defined as for input files
 
 
-        Methods:
-        --------
-        save_sweep()
-            creates an output folder
-            creates input files for all combinations of sweep variables
-        execute_sweep():
-            execute created input files and saves information to output folder
+    Methods:
+    --------
+    save_sweep()
+        creates an output folder
+        creates input files for all combinations of sweep variables
+    execute_sweep():
+        execute created input files and saves information to output folder
 
     """
-    def __init__(self,variables_to_sweep,fullpath=None, configpath=None):
-        testInputFile = InputFile(fullpath = fullpath, configpath = configpath)
+
+    def __init__(self, variables_to_sweep, fullpath=None, configpath=None):
+        testInputFile = InputFile(fullpath=fullpath, configpath=configpath)
         super().__init__(fullpath, configpath)
         if set(variables_to_sweep.keys()).issubset(testInputFile.variables.keys()):
             self.var_sweep = variables_to_sweep
         else:
-            raise ValueError('Defined variables are not variables of input file')
+            raise ValueError("Defined variables are not variables of input file")
         for value in self.var_sweep.values():
             if not isinstance(value, Iterable):
-                raise TypeError('Values of variables_to_sweep should be iterable objects')
+                raise TypeError("Values of variables_to_sweep should be iterable objects")
         self.sweep_output_directory = None
         self.input_files = []
         self.sweep_infodict = DictList()
         self.sweep_output_infodict = DictList()
 
-    def save_sweep(self, delete_old_files=True, round_decimal=8, integer_only_in_name=False, temp=False,
-                   variables_comb_screen_fn : Callable[..., Any] = None):
+    def save_sweep(
+        self,
+        delete_old_files=True,
+        round_decimal=8,
+        integer_only_in_name=False,
+        temp=False,
+        variables_comb_screen_fn: Callable[..., Any] = None,
+    ):
         """
 
         Parameters
@@ -808,41 +856,65 @@ class Sweep(InputFileTemplate):
         else:
             path = self.fullpath
 
-        self.create_input_files(path, round_decimal, integer_only_in_name=integer_only_in_name, variables_comb_screen_fn=variables_comb_screen_fn)
+        self.create_input_files(
+            path,
+            round_decimal,
+            integer_only_in_name=integer_only_in_name,
+            variables_comb_screen_fn=variables_comb_screen_fn,
+        )
 
-    def prepare_output(self, overwrite = False, output_directory = None):
-        self.sweep_output_directory = self.mk_dir(overwrite=overwrite, output_directory = output_directory)
+    def prepare_output(self, overwrite=False, output_directory=None):
+        self.sweep_output_directory = self.mk_dir(
+            overwrite=overwrite, output_directory=output_directory
+        )
         self.create_info()
 
     def _screen_variables_comb(self, iteration_combinations, var_comb_screen_fn):
         return [comb_ for comb_ in iteration_combinations if var_comb_screen_fn(comb_)]
 
-    def create_input_files(self, input_file_path, round_decimal, integer_only_in_name=False, variables_comb_screen_fn : Callable[..., Any] = None):
+    def create_input_files(
+        self,
+        input_file_path,
+        round_decimal,
+        integer_only_in_name=False,
+        variables_comb_screen_fn: Callable[..., Any] = None,
+    ):
         iteration_combinations = list(itertools.product(*self.var_sweep.values()))
         if variables_comb_screen_fn is not None:
-            iteration_combinations = self._screen_variables_comb(iteration_combinations, variables_comb_screen_fn)
+            iteration_combinations = self._screen_variables_comb(
+                iteration_combinations, variables_comb_screen_fn
+            )
 
         filename_path, filename_extension = os.path.splitext(input_file_path)
         for combination in iteration_combinations:
-            filename_end = '__'
+            filename_end = "__"
             inputfile = InputFile(fullpath=input_file_path, configpath=self.configpath)
             for var_name, var_value in zip(self.var_sweep.keys(), combination, strict=True):
-                inputfile.set_variable(var_name, var_value, comment='THIS VARIABLE IS UNDER SWEEP')
-                if isinstance(var_value,str):
+                inputfile.set_variable(var_name, var_value, comment="THIS VARIABLE IS UNDER SWEEP")
+                if isinstance(var_value, str):
                     var_value_string = var_value
                 else:
                     var_value_string = round(var_value, round_decimal)
-                filename_end += f'{var_name}_{var_value_string}_'
+                filename_end += f"{var_name}_{var_value_string}_"
             if integer_only_in_name:
-                inputfile.save(overwrite = False)
+                inputfile.save(overwrite=False)
             else:
-                inputfile.save(filename_path + filename_end + filename_extension, overwrite = True)
-            variable_combination =  dict(zip(self.var_sweep.keys(), combination, strict=True))
+                inputfile.save(filename_path + filename_end + filename_extension, overwrite=True)
+            variable_combination = dict(zip(self.var_sweep.keys(), combination, strict=True))
             self.input_files.append(inputfile)
             self.sweep_infodict[inputfile.fullpath] = variable_combination
 
-
-    def execute_sweep(self, delete_input_files = False, overwrite = False, show_log = True, convergenceCheck = False, convergence_check_mode = 'pause', parallel_limit = 1, separate_sweep_dir = True, **kwargs):
+    def execute_sweep(
+        self,
+        delete_input_files=False,
+        overwrite=False,
+        show_log=True,
+        convergenceCheck=False,
+        convergence_check_mode="pause",
+        parallel_limit=1,
+        separate_sweep_dir=True,
+        **kwargs,
+    ):
         """
         Execute created input files and saves information to output folder.
 
@@ -880,10 +952,10 @@ class Sweep(InputFileTemplate):
             see **kwargs of InputFile.execute()
         """
         try:
-            output_directory = kwargs['outputdirectory']
-            del kwargs['outputdirectory']
+            output_directory = kwargs["outputdirectory"]
+            del kwargs["outputdirectory"]
         except KeyError:
-            output_directory = self.config.get(section = self.product,option = 'outputdirectory')
+            output_directory = self.config.get(section=self.product, option="outputdirectory")
         if separate_sweep_dir:
             self.prepare_output(overwrite, output_directory)
             output_directory = self.sweep_output_directory
@@ -891,12 +963,23 @@ class Sweep(InputFileTemplate):
             self.sweep_output_directory = output_directory
 
         if not self.input_files:
-            warnings.warn('Nothing was executed in sweep! Input files to execute were not created.', stacklevel=2)
+            warnings.warn(
+                "Nothing was executed in sweep! Input files to execute were not created.",
+                stacklevel=2,
+            )
             return
 
-        #TODO: delete if statement (use execution_queue for both cases)
-        if parallel_limit>1:
-            execution_queue = ExecutionQueue(limit_parallel=parallel_limit, terminate_empty=True, outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode, **kwargs)
+        # TODO: delete if statement (use execution_queue for both cases)
+        if parallel_limit > 1:
+            execution_queue = ExecutionQueue(
+                limit_parallel=parallel_limit,
+                terminate_empty=True,
+                outputdirectory=output_directory,
+                show_log=show_log,
+                convergenceCheck=convergenceCheck,
+                convergence_check_mode=convergence_check_mode,
+                **kwargs,
+            )
             execution_queue.add(*self.input_files)
             execution_queue.start()
 
@@ -904,17 +987,25 @@ class Sweep(InputFileTemplate):
         else:
             for i, inputfile in enumerate(self.input_files):
                 if not show_log:
-                    print(f"\nExecuting simulations [{i+1}/{len(self.input_files)}]...")
-                inputfile.execute(outputdirectory = output_directory, show_log = show_log, convergenceCheck = convergenceCheck, convergence_check_mode = convergence_check_mode,**kwargs)
+                    print(f"\nExecuting simulations [{i + 1}/{len(self.input_files)}]...")
+                inputfile.execute(
+                    outputdirectory=output_directory,
+                    show_log=show_log,
+                    convergenceCheck=convergenceCheck,
+                    convergence_check_mode=convergence_check_mode,
+                    **kwargs,
+                )
         if delete_input_files:
             for inputfile in self.input_files:
                 inputfile.remove()
 
-        #part where the info is stored
-        for inputfile, variable_combination in zip(self.input_files, self.sweep_infodict.values(), strict=True):
+        # part where the info is stored
+        for inputfile, variable_combination in zip(
+            self.input_files, self.sweep_infodict.values(), strict=True
+        ):
             self.sweep_output_infodict[str(inputfile.folder_output)] = variable_combination
         # TODO create files with info in output_directories
-        if True:# TODO
+        if True:  # TODO
             # self.create_infodict_files()
             self.create_infodict_json()
 
@@ -930,33 +1021,35 @@ class Sweep(InputFileTemplate):
         Creates json file to store infodict
         """
         import json
-        filepath = os.path.join(self.sweep_output_directory, 'sweep_infodict.json')
+
+        filepath = os.path.join(self.sweep_output_directory, "sweep_infodict.json")
         with open(filepath, "w") as file:
             # default conversion for numpy types
-            json.dump(self.sweep_output_infodict, file, indent=4, default=lambda o: o.item() if hasattr(o, "item") else o)
+            json.dump(
+                self.sweep_output_infodict,
+                file,
+                indent=4,
+                default=lambda o: o.item() if hasattr(o, "item") else o,
+            )
 
-    def mk_dir(self,overwrite = False, output_directory = None):
-        vars = ''
+    def mk_dir(self, overwrite=False, output_directory=None):
+        vars = ""
         for i in self.var_sweep.keys():
-            vars+=('__'+i)
+            vars += "__" + i
         name_of_file = self.filename_only
         if not output_directory:
-            output_directory = self.config.get(section = self.product,option = 'outputdirectory')
-        name = (name_of_file+'_sweep'+vars)
+            output_directory = self.config.get(section=self.product, option="outputdirectory")
+        name = name_of_file + "_sweep" + vars
         if overwrite:
-            directory = mkdir_if_not_exist(os.path.join(output_directory,name))
+            directory = mkdir_if_not_exist(os.path.join(output_directory, name))
         else:
-            directory = mkdir_even_if_exists(output_directory,name)
+            directory = mkdir_even_if_exists(output_directory, name)
         return directory
 
     def create_info(self):
-        file_location = os.path.join(self.sweep_output_directory,'sweep_info.txt')
-        with open(file_location,'w') as file:
+        file_location = os.path.join(self.sweep_output_directory, "sweep_info.txt")
+        with open(file_location, "w") as file:
             file.write(f"Input file: '{self.fullpath}' \n")
             file.write("Sweep variables: \n")
             for i in self.var_sweep:
                 file.write(f"{i} = {self.var_sweep[i]} \n")
-
-
-
-

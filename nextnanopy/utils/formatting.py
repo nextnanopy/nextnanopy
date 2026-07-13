@@ -3,7 +3,7 @@ def is_variable(text, var_char):
     text = str(text).strip()
     if not text:
         boolean = False
-    elif text[0] == var_char and '=' in text:
+    elif text[0] == var_char and "=" in text:
         boolean = True
     return boolean
 
@@ -12,12 +12,12 @@ def parse_variable(text, var_char, com_char):
     text = str(text).strip()
     if text[0] == var_char:
         text = str(text[1:])
-    name, right = text.split('=', maxsplit=1)
+    name, right = text.split("=", maxsplit=1)
     if com_char in right:
         value, comment = right.split(com_char, maxsplit=1)
     else:
         value = right
-        comment = ''
+        comment = ""
     name, value, comment = [_str.strip() for _str in [name, value, comment]]
     value = autofmt_variable_value(value)
     return name, value, comment
@@ -60,50 +60,50 @@ def generate_command(args):
         else:
             cmdi = f"{arg} {value}"
         cmd.append(cmdi)
-    cmd = ' '.join(cmd)
+    cmd = " ".join(cmd)
     return cmd
 
 
-def text(init='', mid='', end='', fmt=lambda i, m, f: i + m + f):
+def text(init="", mid="", end="", fmt=lambda i, m, f: i + m + f):
     return fmt(str(init), str(mid), str(end))
 
 
 def text_to_lines(text):
-    yield from str(text).split('\n')
+    yield from str(text).split("\n")
 
 
 def lines_to_text(*lines):
-    ls = '\n'.join([str(t) for t in lines])
+    ls = "\n".join([str(t) for t in lines])
     return ls
 
 
-def modify_lines_in_text(init='', mid='', end=''):
+def modify_lines_in_text(init="", mid="", end=""):
     ls = text_to_lines(mid)
     new = [text(init, line, end) for line in ls]
     return lines_to_text(*new)
 
 
 def paragraph(content):
-    return text('\n', content, '\n')
+    return text("\n", content, "\n")
 
 
 def preview(text, nums=True):
     lines = text_to_lines(text)
     for i, line in enumerate(lines):
         if nums:
-            print(f'{i} {line}')
+            print(f"{i} {line}")
         else:
-            print(f'{line}')
+            print(f"{line}")
 
 
 def str_to_path(string):
-    path = rf'{string}'
+    path = rf"{string}"
     return path
 
 
 def _path(path):
     if path:
-        path = rf'{path}'
+        path = rf"{path}"
         path = f'"{path}"'
     return path
 
@@ -139,7 +139,7 @@ def split_by_pattern(_str, init, end):
     return _l
 
 
-def str_to_name_unit(_str, init='[', end=']', default_unit=None, add_rest_to_name=False):
+def str_to_name_unit(_str, init="[", end="]", default_unit=None, add_rest_to_name=False):
     if init in _str and end in _str:
         splitted = _str.split(init)
         name = splitted[0]
@@ -149,7 +149,7 @@ def str_to_name_unit(_str, init='[', end=']', default_unit=None, add_rest_to_nam
         name = name.strip()
         unit = unit.strip()
         if add_rest_to_name:
-            name += ''.join(rest)
+            name += "".join(rest)
             name = name.strip()
     else:
         name = str(_str).strip()
@@ -168,8 +168,8 @@ def str_to_name_unit_with_rest(_str, init, end, default_unit=None):
 def best_str_to_name_unit(_str, default_unit=None):
     _str_copy = str(_str)
     unit_patterns = [
-        ['[', ']'],
-        ['(', ')'],
+        ["[", "]"],
+        ["(", ")"],
     ]
     name = str(_str).strip()
     unit = default_unit
@@ -180,12 +180,13 @@ def best_str_to_name_unit(_str, default_unit=None):
             break
     return name, unit
 
-def create_vtk_header(dim : int, coord_dimensions : list):
-    extent_str = ''
+
+def create_vtk_header(dim: int, coord_dimensions: list):
+    extent_str = ""
     for i in range(dim):
-        extent_str+= f"1 {coord_dimensions[i]} "
-    if dim==2:
-        extent_str+= "1 1 "
+        extent_str += f"1 {coord_dimensions[i]} "
+    if dim == 2:
+        extent_str += "1 1 "
     extent_str = extent_str[:-1]
 
     header = rf"""<VTKFile type="RectilinearGrid" version="0.1" format="ascii">
@@ -194,8 +195,3 @@ def create_vtk_header(dim : int, coord_dimensions : list):
     """
 
     return header
-
-
-
-
-

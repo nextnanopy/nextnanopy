@@ -95,9 +95,7 @@ def parse_negf_variable_name(text):
     if text.startswith(fmt_classic["var_char"]):
         return text[1:]
     else:
-        raise ValueError(
-            f"variable name in NEGF should start with {fmt_classic['var_char']}"
-        )
+        raise ValueError(f"variable name in NEGF should start with {fmt_classic['var_char']}")
 
 
 def is_negf_classic_input_file(fullpath):

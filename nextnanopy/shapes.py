@@ -8,26 +8,26 @@ import shapely
 from cycler import cycler
 
 units_factor = {
-    'nm': 1e-9,
-    'um': 1e-6,
-    'mm': 1e-3,
-    'm': 1,
-    'si': 1,
+    "nm": 1e-9,
+    "um": 1e-6,
+    "mm": 1e-3,
+    "m": 1,
+    "si": 1,
 }
 
 
 def validate_unit(key):
     key = str(key).lower()
     if key not in units_factor.keys():
-        raise KeyError(f'Invalid unit: {key}')
+        raise KeyError(f"Invalid unit: {key}")
     return True
 
 
 class GdsPolygonsRaw:
-    def __init__(self, fullpath, unit='nm', by_spec_filter=None, cells=None):
+    def __init__(self, fullpath, unit="nm", by_spec_filter=None, cells=None):
         self.fullpath = fullpath
         self._labels = []
-        self._unit = 'm'
+        self._unit = "m"
         self.load(by_spec_filter=by_spec_filter, cells=cells)
         self.unit = unit
         self.added_labels = []
@@ -44,8 +44,9 @@ class GdsPolygonsRaw:
     @unit.setter
     def unit(self, key):
         validate_unit(key)
-        self.polygons_xy = [xy * units_factor[self._unit] / units_factor[key]
-                            for xy in self.polygons_xy]
+        self.polygons_xy = [
+            xy * units_factor[self._unit] / units_factor[key] for xy in self.polygons_xy
+        ]
         self._unit = key
 
     @property
@@ -57,8 +58,10 @@ class GdsPolygonsRaw:
         if len(names) == self.nb_polygons:
             self._labels = names
         else:
-            print(f'Number of label ({names}) must be equal to number of polygons ({self.nb_polygons})')
-            print(f'Using default labels: {self.labels}')
+            print(
+                f"Number of label ({names}) must be equal to number of polygons ({self.nb_polygons})"
+            )
+            print(f"Using default labels: {self.labels}")
 
     @property
     def nb_polygons(self):
@@ -68,6 +71,7 @@ class GdsPolygonsRaw:
     def slices(self):
         warnings.warn("The GdsPolygonsRaw.slices is deprecated", DeprecationWarning, stacklevel=2)
         from nextnanopy.utils.shapes_deprecated import SlicedPolygon
+
         return [SlicedPolygon(pol_xy) for pol_xy in self.polygons_xy]
 
     def load(self, by_spec_filter=None, cells=None):
@@ -102,47 +106,47 @@ class GdsPolygonsRaw:
             self.labels = np.arange(self.nb_polygons)
 
     # -- Useful show methods
-    def _prepare_ax(self, ax=None, cmap='nipy_spectral'):
+    def _prepare_ax(self, ax=None, cmap="nipy_spectral"):
         plt.ion()
         if not ax:
             fig, ax = plt.subplots(1)
         if cmap:
             colormap = plt.get_cmap(cmap)
             colors = [colormap(i) for i in np.linspace(0, 1, self.nb_polygons)]
-            ax.set_prop_cycle(cycler('color', colors))
-        ax.set_xlabel(f'x {self.unit}')
-        ax.set_ylabel(f'y {self.unit}')
+            ax.set_prop_cycle(cycler("color", colors))
+        ax.set_xlabel(f"x {self.unit}")
+        ax.set_ylabel(f"y {self.unit}")
         return ax
 
-    def show_all(self, ax=None, cmap='nipy_spectral', fill_kw=None):
+    def show_all(self, ax=None, cmap="nipy_spectral", fill_kw=None):
         if fill_kw is None:
             fill_kw = {}
         ax = self._prepare_ax(ax, cmap)
         for xy, label in zip(self.xy, self.labels, strict=True):
             x, y = xy
             ax.fill(x, y, label=label, **fill_kw)
-        ax.legend(loc='upper right')
+        ax.legend(loc="upper right")
         return ax
 
-    def show_onebyone(self, ax=None, cmap='nipy_spectral', fill_kw=None):
+    def show_onebyone(self, ax=None, cmap="nipy_spectral", fill_kw=None):
         if fill_kw is None:
             fill_kw = {}
         ax = self._prepare_ax(ax, cmap)
         for pol in self.polygons:
             x, y = pol.boundary.xy
-            ax.fill(x, y, color='grey', alpha=0.5)
+            ax.fill(x, y, color="grey", alpha=0.5)
         for pol, label in zip(self.polygons, self.labels, strict=True):
             x, y = pol.boundary.xy
             ax.fill(x, y, label=label, **fill_kw)
-            ax.legend(loc='upper right')
+            ax.legend(loc="upper right")
             ax.figure.canvas.draw()
-            print('Do you want to continue? (enter = yes, any other key = no)')
+            print("Do you want to continue? (enter = yes, any other key = no)")
             answer = input().lower()
-            if answer != '':
+            if answer != "":
                 break
         return ax
 
-    def show(self, ax=None, cmap='nipy_spectral', fill_kw=None, onebyone=False):
+    def show(self, ax=None, cmap="nipy_spectral", fill_kw=None, onebyone=False):
         if fill_kw is None:
             fill_kw = {}
         if onebyone:
@@ -161,7 +165,7 @@ class GdsPolygonsRaw:
                 ax.fill(x, y, **fill_kw)
         return ax
 
-    def show_polygon(self, polygon, label, ax=None, cmap='nipy_spectral', fill_kw=None):
+    def show_polygon(self, polygon, label, ax=None, cmap="nipy_spectral", fill_kw=None):
         if fill_kw is None:
             fill_kw = {}
         # print(f"Polygon:  {polygon}")
@@ -200,4 +204,3 @@ class GdsPolygonsRaw:
 
         self.polygons_xy = clipped_polygons
         self.set_default_labels()
-

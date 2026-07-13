@@ -15,11 +15,13 @@ class InputFile(InputFileTemplate):
             if not is_nn3_variable(line):
                 continue
             name, value, comment = parse_nn3_variable(line)
-            var = InputVariable_nn3(name=name, value=value, comment=comment, metadata={'line_idx': i})
+            var = InputVariable_nn3(
+                name=name, value=value, comment=comment, metadata={"line_idx": i}
+            )
             variables[var.name] = var
         self.variables = variables
         return self.variables
 
     def validate(self):
         if not is_nn3_input_text(self.raw_text):
-            raise ValueError('Not valid nextnano3 input file')
+            raise ValueError("Not valid nextnano3 input file")

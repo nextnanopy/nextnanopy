@@ -3,24 +3,25 @@ from collections import OrderedDict
 
 class DictList(OrderedDict):
     """
-        This is a customized collections.OrderedDict
-        It is a mixture between a dictionary and a list because it allows to
-        access the values via keys or integer indexes.
-        Common usage:
-            d = DictList(a=3, b='t')
-            d[0] = 3
-            d['a'] = 3
+    This is a customized collections.OrderedDict
+    It is a mixture between a dictionary and a list because it allows to
+    access the values via keys or integer indexes.
+    Common usage:
+        d = DictList(a=3, b='t')
+        d[0] = 3
+        d['a'] = 3
 
-        It has all the methods and attributes from a dictionary like .keys(), .values(), .items()
+    It has all the methods and attributes from a dictionary like .keys(), .values(), .items()
 
-        Moreover, it supports iterations like a list:
-        for value in d:
-            print(value)
-        >>> 3
-        >>> 't'
+    Moreover, it supports iterations like a list:
+    for value in d:
+        print(value)
+    >>> 3
+    >>> 't'
 
 
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -32,7 +33,7 @@ class DictList(OrderedDict):
         for i, _key in enumerate(self.keys()):
             if _key == key:
                 return i
-        raise KeyError('No such key in the DictList')
+        raise KeyError("No such key in the DictList")
 
     def __getitem__(self, key):
         if isinstance(key, int):
@@ -47,9 +48,11 @@ class DictList(OrderedDict):
 
     def __str__(self):
         cname = self.__class__.__name__
-        args = [f"(index: {idx} - key: '{key}' - {value})" for idx, key, value in
-                zip(self._idxs.keys(), self.keys(), self.values(), strict=True)]
-        args = ',\n'.join(args)
+        args = [
+            f"(index: {idx} - key: '{key}' - {value})"
+            for idx, key, value in zip(self._idxs.keys(), self.keys(), self.values(), strict=True)
+        ]
+        args = ",\n".join(args)
         return f"{cname}([\n{args}\n])"
 
     def __iter__(self):

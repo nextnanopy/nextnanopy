@@ -91,17 +91,9 @@ for extra, (module_name, min_version, install_method) in extras.items():
         module = import_module(module_name.lower())
         try:
             if Version(module.__version__) < Version(min_version):
-                print(
-                    version_template.format(
-                        module_name, min_version, extra, install_method
-                    )
-                )
+                print(version_template.format(module_name, min_version, extra, install_method))
         except InvalidVersion:
-            print(
-                valueerror_template.format(
-                    module_name, module.__version__, min_version, extra
-                )
-            )
+            print(valueerror_template.format(module_name, module.__version__, min_version, extra))
     except ImportError:
         print(missing_template.format(module_name, extra, install_method))
     except Exception:

@@ -57,9 +57,7 @@ class TestFormatting(unittest.TestCase):
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano.NEGF_classic")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF_classic")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF_classic")["com_char"], "<!--")
-        self.assertEqual(
-            defaults.get_fmt("nextnano.NEGF_classic")["input_pattern"], "<Simulation"
-        )
+        self.assertEqual(defaults.get_fmt("nextnano.NEGF_classic")["input_pattern"], "<Simulation")
 
     def test_negf(self):
         fullpath = folder_negf / "Minimal_InputFile.negf"
@@ -70,9 +68,7 @@ class TestFormatting(unittest.TestCase):
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano.NEGF")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["com_char"], "#")
-        self.assertEqual(
-            defaults.get_fmt("nextnano.NEGF")["input_pattern"], "nextnano.NEGF{"
-        )
+        self.assertEqual(defaults.get_fmt("nextnano.NEGF")["input_pattern"], "nextnano.NEGF{")
 
 
 if __name__ == "__main__":

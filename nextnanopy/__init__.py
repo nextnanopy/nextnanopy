@@ -16,5 +16,3 @@ __all__ = [
 ]
 
 config = NNConfig()
-
-

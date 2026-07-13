@@ -32,8 +32,12 @@ def command(
 
     # warn if output path might be too long
     outdir_len = len(str(outputdirectory))
-    tooLongPath = (product in ["nextnano3", "nextnano++"]) and outdir_len + 80 > 260  # TODO: how long is the minimal path appended by nn3/nnp simulations?
-    tooLongPathNEGF = (product in ["nextnano.NEGF", "nextnano.NEGF_classic"]) and outdir_len + 80 > 260
+    tooLongPath = (
+        (product in ["nextnano3", "nextnano++"]) and outdir_len + 80 > 260
+    )  # TODO: how long is the minimal path appended by nn3/nnp simulations?
+    tooLongPathNEGF = (
+        product in ["nextnano.NEGF", "nextnano.NEGF_classic"]
+    ) and outdir_len + 80 > 260
     if tooLongPath or tooLongPathNEGF:
         # stacklevel=4 blames the caller of InputFile.execute(), the usual route here:
         # command() <- execute() <- InputFile.execute() <- user.
@@ -46,9 +50,7 @@ def command(
 
 def send(cmd, cwd=None):
     PIPE = subprocess.PIPE
-    return subprocess.Popen(
-        cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True, cwd=cwd
-    )
+    return subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True, cwd=cwd)
 
 
 def read_output(pipe, funcs):
@@ -70,12 +72,8 @@ def write_output(get, filepath, show=True):
 def start_log(process, filepath, show=True, parallel=False):
     q = queue.Queue()
     out, err = [], []
-    tout = threading.Thread(
-        target=read_output, args=(process.stdout, [q.put, out.append])
-    )
-    terr = threading.Thread(
-        target=read_output, args=(process.stderr, [q.put, err.append])
-    )
+    tout = threading.Thread(target=read_output, args=(process.stdout, [q.put, out.append]))
+    terr = threading.Thread(target=read_output, args=(process.stderr, [q.put, err.append]))
     twrite = threading.Thread(target=write_output, args=(q.get, filepath, show))
     for t in (tout, terr, twrite):
         t.daemon = False
@@ -109,16 +107,17 @@ def execute(
     cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
     cwd = os.getcwd()
     exe = Path(exe)
-    wdir, executable = exe.parent, exe.name  # nn3 assumes wdir at one folder upper than the executable
+    wdir, executable = (
+        exe.parent,
+        exe.name,
+    )  # nn3 assumes wdir at one folder upper than the executable
 
     # validate configuration of executable path
     if executable == "":
         raise FileNotFoundError("Executable path is empty! Check nextnanopy.config")
 
     if (not exe.is_file()) or (not wdir.is_dir()):
-        raise FileNotFoundError(
-            f"Executable path is invalid: {exe}\nCheck nextnanopy.config"
-        )
+        raise FileNotFoundError(f"Executable path is invalid: {exe}\nCheck nextnanopy.config")
     process = send(cmd, cwd=wdir)
     queue, tout, terr = start_log(process, logfile, show_log, parallel=parallel)
     os.chdir(cwd)

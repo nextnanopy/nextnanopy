@@ -25,6 +25,7 @@ folder_nn3 = Path("tests") / "datafiles" / "nextnano3"
 folder_negf = Path("tests") / "datafiles" / "nextnano.NEGF"
 folder_msb = Path("tests") / "datafiles" / "nextnano.MSB"
 
+
 class Test_nnp(unittest.TestCase):
     def test_load(self):
         fullpath = folder_nnp / "only_variables.in"
@@ -43,9 +44,7 @@ class Test_nnp(unittest.TestCase):
 
         self.assertEqual(file.variables["str"].name, "str")
         self.assertEqual(file.variables["str"].value, '"test"')
-        self.assertEqual(
-            file.variables["str"].comment, "first comments # second comment"
-        )
+        self.assertEqual(file.variables["str"].comment, "first comments # second comment")
 
         self.assertEqual(file.variables["reference"].name, "reference")
         self.assertEqual(file.variables["reference"].value, "$int - 1")
@@ -53,9 +52,7 @@ class Test_nnp(unittest.TestCase):
         self.assertEqual(file.variables["NoSpacing"].name, "NoSpacing")
         self.assertEqual(file.variables["NoSpacing"].value, int("7"))
         self.assertEqual(file.variables["NoSpacing"].comment, "this is a comment")
-        self.assertEqual(
-            file.variables["NoSpacing"].text, "$NoSpacing = 7 # this is a comment"
-        )
+        self.assertEqual(file.variables["NoSpacing"].text, "$NoSpacing = 7 # this is a comment")
 
         self.assertEqual(file.variables["MAYUS"].name, "MAYUS")
         self.assertEqual(file.variables["MAYUS"].value, "TEXT")
@@ -75,34 +72,26 @@ class Test_nnp(unittest.TestCase):
     def test_set_variables(self):
         fullpath = folder_nnp / "only_variables.in"
         file = InputFile(fullpath)
-        file.set_variable(
-            "float", 1e-5, "some comment", "some unit"
-        )  # unit is not visible in nn++
+        file.set_variable("float", 1e-5, "some comment", "some unit")  # unit is not visible in nn++
 
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-5)
         self.assertEqual(file.variables["float"].comment, "some comment")
-        self.assertEqual(
-            file.variables["float"].text, f"$float = {str(1e-5)} # some comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"$float = {str(1e-5)} # some comment")
         self.assertEqual(file.lines[3], f"$float = {str(1e-5)} # some comment")
 
         file.set_variable("float", value=1e-7)
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-7)
         self.assertEqual(file.variables["float"].comment, "some comment")
-        self.assertEqual(
-            file.variables["float"].text, f"$float = {str(1e-7)} # some comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"$float = {str(1e-7)} # some comment")
         self.assertEqual(file.lines[3], f"$float = {str(1e-7)} # some comment")
 
         file.set_variable("float", comment="new comment")
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-7)
         self.assertEqual(file.variables["float"].comment, "new comment")
-        self.assertEqual(
-            file.variables["float"].text, f"$float = {str(1e-7)} # new comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"$float = {str(1e-7)} # new comment")
         self.assertEqual(file.lines[3], f"$float = {str(1e-7)} # new comment")
 
         file.set_variable("float", value=0)
@@ -247,9 +236,7 @@ class Test_nn3(unittest.TestCase):
 
         self.assertEqual(file.variables["str"].name, "str")
         self.assertEqual(file.variables["str"].value, '"test"')
-        self.assertEqual(
-            file.variables["str"].comment, "first comments # second comment"
-        )
+        self.assertEqual(file.variables["str"].comment, "first comments # second comment")
 
         self.assertEqual(file.variables["reference"].name, "reference")
         self.assertEqual(file.variables["reference"].value, "$int - 1")
@@ -280,27 +267,21 @@ class Test_nn3(unittest.TestCase):
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-5)
         self.assertEqual(file.variables["float"].comment, "some comment")
-        self.assertEqual(
-            file.variables["float"].text, f"%float = {str(1e-5)} ! some comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"%float = {str(1e-5)} ! some comment")
         self.assertEqual(file.lines[3], f"%float = {str(1e-5)} ! some comment")
 
         file.set_variable("float", value=1e-7)
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-7)
         self.assertEqual(file.variables["float"].comment, "some comment")
-        self.assertEqual(
-            file.variables["float"].text, f"%float = {str(1e-7)} ! some comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"%float = {str(1e-7)} ! some comment")
         self.assertEqual(file.lines[3], f"%float = {str(1e-7)} ! some comment")
 
         file.set_variable("float", comment="new comment")
         self.assertEqual(file.variables["float"].name, "float")
         self.assertEqual(file.variables["float"].value, 1e-7)
         self.assertEqual(file.variables["float"].comment, "new comment")
-        self.assertEqual(
-            file.variables["float"].text, f"%float = {str(1e-7)} ! new comment"
-        )
+        self.assertEqual(file.variables["float"].text, f"%float = {str(1e-7)} ! new comment")
         self.assertEqual(file.lines[3], f"%float = {str(1e-7)} ! new comment")
 
         file.set_variable("float", value=0)
@@ -333,9 +314,7 @@ class Test_nn3(unittest.TestCase):
         file = InputFile(fullpath)
         new_folder = folder_nn3 / "temp"
         new_file = new_folder / "example_copy.in"
-        self.assertRaises(
-            FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False
-        )
+        self.assertRaises(FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False)
         self.assertEqual(Path(file.save(new_file, overwrite=True, automkdir=True)), new_file)
         Path(file.fullpath).unlink()
         new_folder.rmdir()
@@ -490,9 +469,7 @@ class Test_negf_classic(unittest.TestCase):
 
         new_folder = folder_negf / "temp"
         new_file = new_folder / "example_copy.in"
-        self.assertRaises(
-            FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False
-        )
+        self.assertRaises(FileNotFoundError, file.save, new_file, overwrite=True, automkdir=False)
         self.assertEqual(Path(file.save(new_file, overwrite=True, automkdir=True)), new_file)
         Path(file.fullpath).unlink()
         new_folder.rmdir()
@@ -524,12 +501,8 @@ class Test_negf(unittest.TestCase):
 
         self.assertEqual(len(file.variables.keys()), 1)
         self.assertEqual(file.variables["alloyComposition"].name, "alloyComposition")
-        self.assertAlmostEqual(
-            file.variables["alloyComposition"].value, 0.15, delta=1e-9
-        )
-        self.assertEqual(
-            file.variables["alloyComposition"].comment, "alloy composition"
-        )
+        self.assertAlmostEqual(file.variables["alloyComposition"].value, 0.15, delta=1e-9)
+        self.assertEqual(file.variables["alloyComposition"].comment, "alloy composition")
 
         fullpath = folder_nnp / "virtual_file.in"
         self.assertRaises(FileNotFoundError, InputFile, fullpath)
@@ -538,9 +511,7 @@ class Test_negf(unittest.TestCase):
         fullpath = folder_negf / "Minimal_InputFile.negf"
         file = InputFile(fullpath)
 
-        self.assertEqual(
-            file.variables["alloyComposition"], file.get_variable("alloyComposition")
-        )
+        self.assertEqual(file.variables["alloyComposition"], file.get_variable("alloyComposition"))
         self.assertRaises(KeyError, file.get_variable, name="new_variable")
 
     def test_set_variables(self):
@@ -557,9 +528,7 @@ class Test_negf(unittest.TestCase):
             file.variables["alloyComposition"].text,
             f"$alloyComposition = {str(1e-5)} # some comment",
         )
-        self.assertEqual(
-            file.lines[0], f"$alloyComposition = {str(1e-5)} # some comment"
-        )
+        self.assertEqual(file.lines[0], f"$alloyComposition = {str(1e-5)} # some comment")
 
         file.set_variable("alloyComposition", value=1e-7)
         self.assertEqual(file.variables["alloyComposition"].name, "alloyComposition")
@@ -569,9 +538,7 @@ class Test_negf(unittest.TestCase):
             file.variables["alloyComposition"].text,
             f"$alloyComposition = {str(1e-7)} # some comment",
         )
-        self.assertEqual(
-            file.lines[0], f"$alloyComposition = {str(1e-7)} # some comment"
-        )
+        self.assertEqual(file.lines[0], f"$alloyComposition = {str(1e-7)} # some comment")
 
         file.set_variable("alloyComposition", comment="new comment")
         self.assertEqual(file.variables["alloyComposition"].name, "alloyComposition")
@@ -581,9 +548,7 @@ class Test_negf(unittest.TestCase):
             file.variables["alloyComposition"].text,
             f"$alloyComposition = {str(1e-7)} # new comment",
         )
-        self.assertEqual(
-            file.lines[0], f"$alloyComposition = {str(1e-7)} # new comment"
-        )
+        self.assertEqual(file.lines[0], f"$alloyComposition = {str(1e-7)} # new comment")
 
         file.set_variable("alloyComposition", value=0)
         self.assertEqual(file.variables["alloyComposition"].value, 0)
@@ -664,10 +629,7 @@ class Test_msb(unittest.TestCase):
         )
         self.assertRaises(KeyError, input_file.get_variable, name="new_variable")
 
-        self.assertEqual(
-            input_file.variables["Well"].value,
-            0.14
-        )
+        self.assertEqual(input_file.variables["Well"].value, 0.14)
 
     def test_set_variable(self):
         fullpath = folder_msb / "example.msb"
@@ -692,7 +654,6 @@ class Test_msb(unittest.TestCase):
 
 
 class TestInputFile(unittest.TestCase):
-
     def test_access_by_index(self):
         fullpath = folder_nnp / "only_variables.in"
         file = InputFile(fullpath)
@@ -776,13 +737,9 @@ class TestSweep(unittest.TestCase):
         sweep.config.set("nextnano++", "outputdirectory", r"tests//outputs")
         created_directory = sweep.mk_dir(overwrite=True)
         self.assertTrue(
-            Path(created_directory).samefile(
-                Path("tests") / "outputs" / "only_variables_sweep"
-            )
+            Path(created_directory).samefile(Path("tests") / "outputs" / "only_variables_sweep")
         )
-        self.assertTrue(
-            (Path("tests") / "outputs" / "only_variables_sweep").is_dir()
-        )
+        self.assertTrue((Path("tests") / "outputs" / "only_variables_sweep").is_dir())
 
         self.addCleanup((Path("tests") / "outputs" / "only_variables_sweep").rmdir)
         self.addCleanup(
@@ -797,13 +754,9 @@ class TestSweep(unittest.TestCase):
         sweep = Sweep({}, fullpath=fullpath)
         created_directory = sweep.mk_dir(overwrite=True, output_directory=r"tests//outputs")
         self.assertTrue(
-            Path(created_directory).samefile(
-                Path("tests") / "outputs" / "only_variables_sweep"
-            )
+            Path(created_directory).samefile(Path("tests") / "outputs" / "only_variables_sweep")
         )
-        self.assertTrue(
-            (Path("tests") / "outputs" / "only_variables_sweep").is_dir()
-        )
+        self.assertTrue((Path("tests") / "outputs" / "only_variables_sweep").is_dir())
 
         self.addCleanup((Path("tests") / "outputs" / "only_variables_sweep").rmdir)
         self.addCleanup(
@@ -824,13 +777,9 @@ class TestSweep(unittest.TestCase):
         sweep = Sweep({"float": [1, 2], "str": ["test1", "test2"]}, fullpath)
         sweep.save_sweep()
 
-        files_with_names = [
-            p.name for p in folder_nnp.iterdir() if "only_variables" in p.name
-        ]
+        files_with_names = [p.name for p in folder_nnp.iterdir() if "only_variables" in p.name]
         self.assertEqual(len(files_with_names), 5)
-        self.assertTrue(
-            (folder_nnp / "only_variables__float_2_str_test1_.in").is_file()
-        )
+        self.assertTrue((folder_nnp / "only_variables__float_2_str_test1_.in").is_file())
 
     def test_nnp_save_temp(self):
         self.addCleanup(
@@ -844,14 +793,9 @@ class TestSweep(unittest.TestCase):
         sweep = Sweep({"float": [1, 2], "str": ["test1", "test2"]}, fullpath)
         sweep.save_sweep(temp=True)
 
-        files_with_names = [
-            file for file in os.listdir(folder_nnp) if "only_variables" in file
-        ]
+        files_with_names = [file for file in os.listdir(folder_nnp) if "only_variables" in file]
         self.assertEqual(len(files_with_names), 1)
-        self.assertFalse(
-            (folder_nnp / "only_variables__float_2_str_test1_.in").is_file()
-        )
-
+        self.assertFalse((folder_nnp / "only_variables__float_2_str_test1_.in").is_file())
 
     # nn3 section
     def test_nn3_init(self):
@@ -884,13 +828,9 @@ class TestSweep(unittest.TestCase):
         sweep.config.set("nextnano3", "outputdirectory", r"tests//outputs")
         created_directory = sweep.mk_dir(overwrite=True)
         self.assertTrue(
-            Path(created_directory).samefile(
-                Path("tests") / "outputs" / "only_variables_sweep"
-            )
+            Path(created_directory).samefile(Path("tests") / "outputs" / "only_variables_sweep")
         )
-        self.assertTrue(
-            (Path("tests") / "outputs" / "only_variables_sweep").is_dir()
-        )
+        self.assertTrue((Path("tests") / "outputs" / "only_variables_sweep").is_dir())
 
         self.addCleanup((Path("tests") / "outputs" / "only_variables_sweep").rmdir)
         self.addCleanup(
@@ -911,13 +851,9 @@ class TestSweep(unittest.TestCase):
         sweep = Sweep({"float": [1, 2], "str": ["test1", "test2"]}, fullpath)
         sweep.save_sweep()
 
-        files_with_names = [
-            p.name for p in folder_nn3.iterdir() if "only_variables" in p.name
-        ]
+        files_with_names = [p.name for p in folder_nn3.iterdir() if "only_variables" in p.name]
         self.assertEqual(len(files_with_names), 5)
-        self.assertTrue(
-            (folder_nn3 / "only_variables__float_2_str_test1_.in").is_file()
-        )
+        self.assertTrue((folder_nn3 / "only_variables__float_2_str_test1_.in").is_file())
 
     # TODO test parallel sweeps with and without convergenceCheck
     @classmethod
@@ -926,12 +862,8 @@ class TestSweep(unittest.TestCase):
         sweep_dir = Path("tests") / "outputs" / "only_variables_sweep"
         if sweep_dir.is_dir():
             sweep_dir.rmdir()
-        delete_files(
-            "only_variables", directory=folder_nnp, exceptions=["only_variables.in"]
-        )
-        delete_files(
-            "only_variables", directory=folder_nn3, exceptions=["only_variables.in"]
-        )
+        delete_files("only_variables", directory=folder_nnp, exceptions=["only_variables.in"])
+        delete_files("only_variables", directory=folder_nn3, exceptions=["only_variables.in"])
 
     def test_conditional_sweep(self):
         self.addCleanup(
@@ -940,6 +872,7 @@ class TestSweep(unittest.TestCase):
             directory=folder_nnp,
             exceptions=["only_variables.in"],
         )
+
         def condition(combination):
             return combination[0] > 0.2
 
@@ -964,8 +897,10 @@ class TestSweep(unittest.TestCase):
             directory=folder_nnp,
             exceptions=["only_variables.in"],
         )
+
         def condition(combination):
             return combination[1] > combination[0]
+
         fullpath = folder_nnp / "only_variables.in"
         sweep = Sweep(
             {"float": [0.5, 1.5, 2.5], "int": [1, 2, 3]},

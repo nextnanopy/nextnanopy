@@ -6,7 +6,7 @@ default_unit = ""
 
 
 def default_label_fmt(name, unit):
-    return f'{name} ({unit})'
+    return f"{name} ({unit})"
 
 
 class Data:
@@ -45,13 +45,12 @@ class Data:
         If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
     """
 
-    params = ['name', 'value', 'unit', 'metadata']
+    params = ["name", "value", "unit", "metadata"]
 
-    def __init__(self, name, value, unit=None, metadata=None, label_fmt=None, *args,
-                 **kwargs):
+    def __init__(self, name, value, unit=None, metadata=None, label_fmt=None, *args, **kwargs):
         self.name = str(name)
         self.value = np.array(value)
-        if unit is None or unit == '':
+        if unit is None or unit == "":
             unit = default_unit
         self.unit = str(unit)
         if label_fmt is None:
@@ -75,11 +74,11 @@ class Data:
 
     def __repr__(self):
         cname = self.__class__.__name__
-        out = f'{cname} - {str(self)}'
+        out = f"{cname} - {str(self)}"
         return out
 
     def __str__(self):
-        return f'name: {self.name}'
+        return f"name: {self.name}"
 
 
 class Variable(Data):
@@ -123,7 +122,8 @@ class Variable(Data):
         return a copy of the value
 
     """
-    params = ['name', 'value', 'unit', 'metadata']
+
+    params = ["name", "value", "unit", "metadata"]
 
     def __init__(self, name, value, unit=None, metadata=None, **kwargs):
         if metadata is None:
@@ -135,7 +135,7 @@ class Variable(Data):
         return value
 
     def __str__(self):
-        return f'name: {self.name} - unit: {self.unit} - shape: {self.value.shape}'
+        return f"name: {self.name} - unit: {self.unit} - shape: {self.value.shape}"
 
 
 class Coord(Data):
@@ -190,7 +190,7 @@ class Coord(Data):
         return a copy of the value with or without the offset
     """
 
-    params = ['name', 'value', 'unit', 'offset', 'dim', 'metadata']
+    params = ["name", "value", "unit", "offset", "dim", "metadata"]
 
     def __init__(self, name, value, dim, unit=None, offset=0, metadata=None, **kwargs):
         if metadata is None:
@@ -207,7 +207,9 @@ class Coord(Data):
         return value
 
     def __str__(self):
-        return f'name: {self.name} - unit: {self.unit} - shape: {self.value.shape} - dim: {self.dim}'
+        return (
+            f"name: {self.name} - unit: {self.unit} - shape: {self.value.shape} - dim: {self.dim}"
+        )
 
 
 class InputVariable(Data):
@@ -257,11 +259,11 @@ class InputVariable(Data):
         return a copy of the value
     """
 
-    params = ['name', 'value', 'unit', 'comment', 'metadata']
-    var_char = ''
-    com_char = ''
+    params = ["name", "value", "unit", "comment", "metadata"]
+    var_char = ""
+    com_char = ""
 
-    def __init__(self, name, value, unit='', comment='', metadata=None, **kwargs):
+    def __init__(self, name, value, unit="", comment="", metadata=None, **kwargs):
         if metadata is None:
             metadata = {}
         super().__init__(name, value, unit, metadata, **kwargs)
@@ -273,9 +275,9 @@ class InputVariable(Data):
 
     @property
     def text(self):
-        t = f'{self.var_char}{self.name} = {self.value}'
+        t = f"{self.var_char}{self.name} = {self.value}"
         if self.comment:
-            t = f'{t} {self.com_char} {self.comment}'
+            t = f"{t} {self.com_char} {self.comment}"
         return t
 
     def __str__(self):

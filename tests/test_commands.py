@@ -11,7 +11,6 @@ folder_msb = Path("tests") / "datafiles" / "nextnano.MSB"
 
 
 class TestCommands(unittest.TestCase):
-
     def test_commands_nnp(self):
         self.maxDiff = None
         inputfile = folder_nnp / "example.in"
@@ -76,7 +75,9 @@ class TestCommands(unittest.TestCase):
         database = Path("nextnano.NEGF") / "Material_Database.xml"
         outputdirectory = Path("tests") / "datafiles"
         threads = 4
-        cmd = f'"{exe}" "{inputfile}" "{outputdirectory}" "{database}" "{license}" -threads {threads}'
+        cmd = (
+            f'"{exe}" "{inputfile}" "{outputdirectory}" "{database}" "{license}" -threads {threads}'
+        )
         kwargs = dict(
             inputfile=inputfile,
             exe=exe,

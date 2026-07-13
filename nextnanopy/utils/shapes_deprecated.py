@@ -38,16 +38,16 @@ class SlicedPolygon(shapely.geometry.Polygon):
     @property
     def slice_axis(self):
         if len(self.x_unique) <= len(self.y_unique):
-            axis = 'x'
+            axis = "x"
         else:
-            axis = 'y'
+            axis = "y"
         return axis
 
     @property
     def slice_points(self):
-        if self.slice_axis == 'x':
+        if self.slice_axis == "x":
             arr = self.x_unique
-        elif self.slice_axis == 'y':
+        elif self.slice_axis == "y":
             arr = self.y_unique
         points = np.copy(arr[1:-1])
         return points
@@ -61,7 +61,7 @@ class SlicedPolygon(shapely.geometry.Polygon):
 
     @property
     def slice_line(self):
-        if self.slice_axis == 'x':
+        if self.slice_axis == "x":
             index = 0
             bounds = self.bounds_y
         else:
@@ -131,9 +131,9 @@ class SlicedPolygon(shapely.geometry.Polygon):
     def _correct_xy_for_triangles(self, x, y):
         nb_vertexes = len(x)
         if nb_vertexes == 3:  # it is a triangle
-            if self.slice_axis == 'x':
+            if self.slice_axis == "x":
                 p_check = x
-            elif self.slice_axis == 'y':
+            elif self.slice_axis == "y":
                 p_check = y
 
             if p_check[0] == p_check[1]:
@@ -148,10 +148,10 @@ class SlicedPolygon(shapely.geometry.Polygon):
         return x, y
 
     def _order_xy_for_nn(self, x, y):
-        if self.slice_axis == 'x':
+        if self.slice_axis == "x":
             p_sort = x
             p_follow = y
-        elif self.slice_axis == 'y':
+        elif self.slice_axis == "y":
             p_sort = y
             p_follow = x
 
@@ -159,10 +159,10 @@ class SlicedPolygon(shapely.geometry.Polygon):
         arg_sorted = np.argsort(p_sort)
         p_follow = p_follow[arg_sorted]
 
-        if self.slice_axis == 'x':
+        if self.slice_axis == "x":
             x = p_sorted
             y = p_follow
-        elif self.slice_axis == 'y':
+        elif self.slice_axis == "y":
             y = p_sorted
             x = p_follow
         return x, y
@@ -172,8 +172,8 @@ class SlicedPolygon(shapely.geometry.Polygon):
             fill_kw = {}
         if not ax:
             fig, ax = plt.subplots(1)
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
         for pol in self.slices:
             x, y = pol.boundary.xy
             ax.fill(x, y, **fill_kw)
