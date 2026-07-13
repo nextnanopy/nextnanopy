@@ -991,7 +991,7 @@ def load_values(
     """Return flat array of floating values"""
     if filetype == "ascii":
 
-        stop = skip + size if size != None else None
+        stop = skip + size if size is not None else None
         with open(file, "rb") as f:
             lines = islice(f, skip, stop, 1)
             values = [line.decode("ascii").replace("\n", "").strip().split()[offset] for line in lines]
