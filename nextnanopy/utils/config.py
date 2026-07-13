@@ -13,12 +13,19 @@ class Config:
     Parameters
     ----------
     fullpath : str
-        path to the file.
+        path to the file. It does not need to exist yet: loading a missing file
+        yields an empty configuration which can be filled in and then saved.
+        It must not be empty or None, otherwise a ValueError is raised.
     validators : dict
         dict where the keys are the name of the sections and the values
         are another dict.
         In the latter dict, the keys are the name of the options and the values
         are methods to convert the raw information (e.g: int)
+
+    Raises
+    ------
+    ValueError
+        if fullpath is empty or None.
 
     Attributes
     ----------
@@ -65,13 +72,16 @@ class Config:
     """
 
     def __init__(self, fullpath, validators=None):
+        if not fullpath:
+            raise ValueError(
+                f"fullpath must be a non-empty path to a configuration file, got {fullpath!r}"
+            )
         if validators is None:
             validators = {}
         self.configparser = configparser.ConfigParser()
         self.validators = validators
-        if fullpath:
-            self.fullpath = fullpath
-            self.load()
+        self.fullpath = fullpath
+        self.load()
 
     def load(self):
         self.read_file()

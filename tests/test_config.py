@@ -1,8 +1,10 @@
+import tempfile
 import unittest
 import warnings
 from pathlib import Path
 
 from nextnanopy.defaults import NNConfig
+from nextnanopy.utils.config import Config
 
 default_config_path = Path.home() / ".nextnanopy-config"
 
@@ -189,6 +191,61 @@ class Test_NNConfig(unittest.TestCase):
             unsupported_products,
             {"nextnano.NEGF++", "nextnano_nonexistent"},
         )
+
+
+class Test_Config(unittest.TestCase):
+    def test_falsy_fullpath_raises(self):
+        for fullpath in ["", None]:
+            with self.assertRaises(ValueError):
+                Config(fullpath)
+
+    def test_missing_file_yields_empty_config(self):
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "missing.nnconfig"
+            config = Config(str(fullpath))
+
+            self.assertEqual(list(config.sections), [])
+            self.assertEqual(Path(config.fullpath), fullpath)
+
+    def test_save_creates_missing_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "new.nnconfig"
+            config = Config(str(fullpath))
+            config.add_section("nextnano++")
+            config.set("nextnano++", "exe", "some_path")
+            config.save()
+
+            self.assertTrue(fullpath.is_file())
+            self.assertEqual(Config(str(fullpath)).get("nextnano++", "exe"), "some_path")
+
+    def test_set_without_save_does_not_create_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "unsaved.nnconfig"
+            config = Config(str(fullpath))
+            config.add_section("nextnano++")
+            config.set("nextnano++", "exe", "some_path")
+
+            self.assertEqual(config.get("nextnano++", "exe"), "some_path")
+            self.assertFalse(fullpath.is_file())
+
+    def test_set_without_save_does_not_change_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "existing.nnconfig"
+            config = Config(str(fullpath))
+            config.add_section("nextnano++")
+            config.set("nextnano++", "exe", "original")
+            config.save()
+
+            config.set("nextnano++", "exe", "modified")
+
+            self.assertEqual(config.get("nextnano++", "exe"), "modified")
+            self.assertEqual(Config(str(fullpath)).get("nextnano++", "exe"), "original")
+
+    def test_empty_fullpath_raises_for_nnconfig(self):
+        # None means 'use the default path', but an empty path is a caller bug
+        # and must not be silently treated as the default.
+        with self.assertRaises(ValueError):
+            NNConfig("")
 
 
 if __name__ == "__main__":
