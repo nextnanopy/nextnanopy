@@ -99,7 +99,7 @@ class Config:
 
     def preview(self):
         for sec in self.sections:
-            print('[%s]' % (sec))
+            print(f'[{sec}]')
             for key, value in self.config[sec].items():
                 print(f'{key} = {value}')
             print('')

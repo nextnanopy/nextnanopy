@@ -5,6 +5,10 @@ import numpy as np
 default_unit = ""
 
 
+def default_label_fmt(name, unit):
+    return f'{name} ({unit})'
+
+
 class Data:
     """
     This class stores any kind of information from nextnano files (input files, data files).
@@ -24,7 +28,7 @@ class Data:
         extra information (default is {})
     label_fmt : method, optional
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
 
     Attributes
     ----------
@@ -38,7 +42,7 @@ class Data:
         extra information (default is {})
     label_fmt : method
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
     """
 
     params = ['name', 'value', 'unit', 'metadata']
@@ -51,7 +55,7 @@ class Data:
             unit = default_unit
         self.unit = str(unit)
         if label_fmt is None:
-            label_fmt = lambda name, unit: f'{name} ({unit})'
+            label_fmt = default_label_fmt
         self.label_fmt = label_fmt
         if metadata is None:
             metadata = {}
@@ -96,7 +100,7 @@ class Variable(Data):
         extra information (default is {})
     label_fmt : method, optional
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
 
     Attributes
     ----------
@@ -110,7 +114,7 @@ class Variable(Data):
         extra information (default is {})
     label_fmt : method
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
 
 
     Methods
@@ -157,7 +161,7 @@ class Coord(Data):
         extra information (default is {})
     label_fmt : method, optional
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
 
     Attributes
     ----------
@@ -176,7 +180,7 @@ class Coord(Data):
         extra information (default is {})
     label_fmt : method
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
     valueo : not defined
         value with offset
 
@@ -227,7 +231,7 @@ class InputVariable(Data):
         extra information (default is {})
     label_fmt : method, optional
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
 
     Attributes
     ----------
@@ -243,7 +247,7 @@ class InputVariable(Data):
         extra information (default is {})
     label_fmt : method
         formatting label with label_fmt(name, unit) (default is None)
-        If it is None, label_fmt = lambda name, unit: f'{name} ({unit})'
+        If it is None, label_fmt = default_label_fmt, i.e. f'{name} ({unit})'
     text : str
         return the raw text for the input file
 

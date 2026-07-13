@@ -6,7 +6,9 @@ from pathlib import Path
 from nextnanopy.inputs import InputFile, Sweep
 
 
-def delete_files(start, directory=Path.cwd(), exceptions=None):
+def delete_files(start, directory=None, exceptions=None):
+    if directory is None:
+        directory = Path.cwd()
     for fpath in Path(directory).iterdir():
         if fpath.name.startswith(start):
             if exceptions:

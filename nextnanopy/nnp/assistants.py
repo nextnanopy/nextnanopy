@@ -66,7 +66,7 @@ class InputAssistant:
 
     @rc.setter
     def rc(self, params):
-        self._rc = rc
+        self._rc = {**self.rc_default, **params}
 
     # -- Basic methods
     def _indent(self, level):
@@ -134,7 +134,7 @@ class InputAssistant:
                         + self.modify_lines(self.rc['indent'], elif_content)
                         + self.rc['new_line'])
         if else_content is not None:
-            content += (self.rc['else'] + f'(${else_variable})'
+            content += (self.rc['else']
                         + self.rc['new_line']
                         + self.modify_lines(self.rc['indent'], else_content)
                         + self.rc['new_line'])

@@ -44,7 +44,7 @@ def command(
     return cmd(**kwargs)
 
 
-def send(cmd, cwd=os.getcwd()):
+def send(cmd, cwd=None):
     PIPE = subprocess.PIPE
     return subprocess.Popen(
         cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True, cwd=cwd

@@ -129,7 +129,7 @@ def message_decorator(method, init_msg=None, end_msg=None):
 def show_message(msg):
     if msg is None:
         return
-    if type(msg) == str:
+    if isinstance(msg, str):
         print(msg)
     elif callable(msg):
         msg()

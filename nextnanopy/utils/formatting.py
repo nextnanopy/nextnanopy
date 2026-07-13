@@ -69,8 +69,7 @@ def text(init='', mid='', end='', fmt=lambda i, m, f: i + m + f):
 
 
 def text_to_lines(text):
-    for line in str(text).split('\n'):
-        yield line
+    yield from str(text).split('\n')
 
 
 def lines_to_text(*lines):
