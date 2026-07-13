@@ -1,0 +1,22 @@
+# Ruff configuration — see https://docs.astral.sh/ruff/
+target-version = "py310"
+line-length = 100
+
+# Directories not part of the maintained source.
+extend-exclude = [
+    "build",
+    "dist",
+    "docs",
+    "templates",
+    "temp_tests",
+    ".venv",
+]
+
+[lint]
+# Curated starting set; broaden once the codebase is clean.
+#   E, W  pycodestyle       F  pyflakes        I  isort
+#   UP    pyupgrade         B  flake8-bugbear
+select = ["E", "W", "F", "I", "UP", "B"]
+ignore = [
+    "E501",  # line too long — leave lenient for now, tighten later
+]
