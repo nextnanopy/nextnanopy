@@ -319,7 +319,7 @@ class Output:
         try:
             result = self.data.__getitem__(self._iter_index)
         except (IndexError, KeyError):
-            raise StopIteration
+            raise StopIteration from None
         self._iter_index += 1
         return result
 

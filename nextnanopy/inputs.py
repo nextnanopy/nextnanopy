@@ -374,16 +374,16 @@ class InputFileTemplate:
                         return
                     elif answer == 'n' or answer == 'no':
                         pause = False
-                        raise RuntimeError('Nextnanopy terminated.')
+                        raise RuntimeError('Nextnanopy terminated.') from e
                     else:
                         print('Invalid input.')
                         continue
             elif mode == 'terminate':
-                raise RuntimeError('Nextnanopy terminated.')
+                raise RuntimeError('Nextnanopy terminated.') from e
             elif mode == 'continue':
                 return
             else:
-                raise ValueError(f'Mode "{mode}" is not valid')
+                raise ValueError(f'Mode "{mode}" is not valid') from e
         else:
             return
 
@@ -468,7 +468,7 @@ class InputFileTemplate:
         out.append(f'{self.__class__.__name__}')
         out.append(f'fullpath: {self.fullpath}')
         out.append(f'Input variables: {len(self.variables)} elements')
-        for key, var in self.variables.items():
+        for var in self.variables.values():
             out.append(f'\t{str(var)}')
         out = '\n'.join(out)
         return out
@@ -481,7 +481,7 @@ class InputFileTemplate:
         try:
             result = self.variables.__getitem__(self._iter_index)
         except (IndexError, KeyError):
-            raise StopIteration
+            raise StopIteration from None
         self._iter_index += 1
         return result
 

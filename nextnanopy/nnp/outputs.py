@@ -89,15 +89,17 @@ class TotalCharges(Output):
                 name, value, unit = line.split()
             except Exception as e:
                 raise ValueError(
-                    f"An error occurred while loading total_charges file:{e}"
-                )
+                    f"Malformed line {i + 1} in total_charges file {self.fullpath}: "
+                    f"expected 'name value unit', got {line.strip()!r}"
+                ) from e
 
             try:
                 value = float(value)
             except Exception as e:
                 raise ValueError(
-                    f"An error occurred while loading total_charges file:{e}"
-                )
+                    f"Non-numeric value on line {i + 1} in total_charges file "
+                    f"{self.fullpath}: {value!r}"
+                ) from e
 
             # temp solution to omit ":" in the end of the line
             if name[-1] == ":":
