@@ -53,19 +53,13 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 - removed the unused `is_{product}_input_file` functions (superseded by `is_{product}_input_text`)
 - internal: `savetxt` in `utils/misc` refactored; first unit tests for `ExecutionQueue` added and sped up; nextnano++ syntax updated in the test example input file
 
-
-## Version 1.1.0 (May 05th, 2026)
-
-- new parameter `parse` for `InputFile` (default `False`): content parsing of nextnano++ input files is now opt-in. Use `InputFile(fullpath, parse=True)` to populate `file.content` with the block structure. With the default `parse=False` the file loads normally — variables are available, `content` is `None` — which also allows loading files where preprocessor directives cause unbalanced `{}` that the parser cannot handle.
-
-
 ## Version 1.1.1 (July 13th, 2026)
 - bugfixes
 - enforce ruff linting and formatting
 
 ## Version 1.1.0 (May 5th, 2026)
 - most of the templates are moved to the nextnano tools distribution packages, no longer part of this repo
-- block parsing of nextnano++ input files is optional
+- new parameter `parse` for `InputFile` (default `False`): content parsing of nextnano++ input files is now opt-in. Use `InputFile(fullpath, parse=True)` to populate `file.content` with the block structure. With the default `parse=False` the file loads normally — variables are available, `content` is `None` — which also allows loading files where preprocessor directives cause unbalanced `{}` that the parser cannot handle.
 - bugfixes
 
 ## Version 1.0.5 (Mar 24th, 2026)
