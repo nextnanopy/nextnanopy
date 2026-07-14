@@ -6,7 +6,6 @@ from nextnanopy.utils.formatting import (
     generate_command,
     is_variable,
     parse_variable,
-    pattern_in_file,
     pattern_in_text,
     str_to_path,
 )
@@ -88,10 +87,6 @@ def is_nn3_variable(text):
 
 def parse_nn3_variable(text):
     return parse_variable(text, var_char=fmt["var_char"], com_char=fmt["com_char"])
-
-
-def is_nn3_input_file(fullpath):
-    return pattern_in_file(fullpath, fmt["input_pattern"])
 
 
 def is_nn3_input_text(text):

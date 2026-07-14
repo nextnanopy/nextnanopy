@@ -34,14 +34,6 @@ def autofmt_variable_value(value):
     return value
 
 
-def pattern_in_file(fullpath, input_pattern):
-    with open(fullpath) as f:
-        for line in f:
-            if input_pattern in line:
-                return True
-    return False
-
-
 def pattern_in_text(text, input_pattern):
     if input_pattern in text:
         return True

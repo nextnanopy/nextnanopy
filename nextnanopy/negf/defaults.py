@@ -5,7 +5,6 @@ from nextnanopy.utils.formatting import (
     _path,
     generate_command,
     is_variable,
-    pattern_in_file,
     pattern_in_text,
     str_to_path,
 )
@@ -96,14 +95,6 @@ def parse_negf_variable_name(text):
         return text[1:]
     else:
         raise ValueError(f"variable name in NEGF should start with {fmt_classic['var_char']}")
-
-
-def is_negf_classic_input_file(fullpath):
-    return pattern_in_file(fullpath, fmt_classic["input_pattern"])
-
-
-def is_negf_input_file(fullpath):
-    return pattern_in_file(fullpath, fmt["input_pattern"])
 
 
 def is_negf_classic_input_text(text):

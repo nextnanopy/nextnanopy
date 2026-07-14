@@ -93,9 +93,6 @@ def get_fmt(product):
 
 
 def input_file_type(fullpath):
-    # Read once and delegate to input_text_type. The per-product is_*_input_file()
-    # predicates each reopened and rescanned the file, so detecting a nextnano.MSB
-    # input (the last one checked) opened it five times.
     with open(fullpath) as f:
         text = f.read()
     return input_text_type(text)

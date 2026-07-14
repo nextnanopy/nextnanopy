@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest import mock
 
 from nextnanopy import defaults
+from nextnanopy.msb import defaults as msb_defaults
 from nextnanopy.negf import defaults as negf_defaults
 from nextnanopy.nn3 import defaults as nn3_defaults
 from nextnanopy.nnp import defaults as nnp_defaults
@@ -28,12 +29,23 @@ class TestDictlist(unittest.TestCase):
 
 
 class TestFormatting(unittest.TestCase):
+    """Each product's is_*_input_text() must recognize its own input and reject the others.
+
+    These used to assert against the is_*_input_file() variants, which took a path and
+    reopened the file per call. Those are gone (input_file_type() reads once and delegates
+    to input_text_type()), so the same assertions are now made on the text predicates --
+    which are the ones input_text_type() actually dispatches on, and which had no direct
+    coverage of their own before.
+    """
+
     def test_nn3(self):
         fullpath = folder_nn3 / "example.in"
-        self.assertTrue(nn3_defaults.is_nn3_input_file(fullpath))
-        self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_classic_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
+        text = fullpath.read_text()
+        self.assertTrue(nn3_defaults.is_nn3_input_text(text))
+        self.assertFalse(nnp_defaults.is_nnp_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_classic_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_input_text(text))
+        self.assertFalse(msb_defaults.is_msb_input_text(text))
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano3")
         self.assertEqual(defaults.get_fmt("nextnano3")["var_char"], "%")
         self.assertEqual(defaults.get_fmt("nextnano3")["com_char"], "!")
@@ -43,10 +55,12 @@ class TestFormatting(unittest.TestCase):
 
     def test_nnp(self):
         fullpath = folder_nnp / "example.in"
-        self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
-        self.assertTrue(nnp_defaults.is_nnp_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_classic_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
+        text = fullpath.read_text()
+        self.assertFalse(nn3_defaults.is_nn3_input_text(text))
+        self.assertTrue(nnp_defaults.is_nnp_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_classic_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_input_text(text))
+        self.assertFalse(msb_defaults.is_msb_input_text(text))
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano++")
         self.assertEqual(defaults.get_fmt("nextnano++")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano++")["com_char"], "#")
@@ -54,10 +68,12 @@ class TestFormatting(unittest.TestCase):
 
     def test_negf_classic(self):
         fullpath = folder_negf / "example.xml"
-        self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
-        self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_input_file(fullpath))
-        self.assertTrue(negf_defaults.is_negf_classic_input_file(fullpath))
+        text = fullpath.read_text()
+        self.assertFalse(nn3_defaults.is_nn3_input_text(text))
+        self.assertFalse(nnp_defaults.is_nnp_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_input_text(text))
+        self.assertTrue(negf_defaults.is_negf_classic_input_text(text))
+        self.assertFalse(msb_defaults.is_msb_input_text(text))
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano.NEGF_classic")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF_classic")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF_classic")["com_char"], "<!--")
@@ -65,14 +81,32 @@ class TestFormatting(unittest.TestCase):
 
     def test_negf(self):
         fullpath = folder_negf / "Minimal_InputFile.negf"
-        self.assertFalse(nn3_defaults.is_nn3_input_file(fullpath))
-        self.assertFalse(nnp_defaults.is_nnp_input_file(fullpath))
-        self.assertFalse(negf_defaults.is_negf_classic_input_file(fullpath))
-        self.assertTrue(negf_defaults.is_negf_input_file(fullpath))
+        text = fullpath.read_text()
+        self.assertFalse(nn3_defaults.is_nn3_input_text(text))
+        self.assertFalse(nnp_defaults.is_nnp_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_classic_input_text(text))
+        self.assertTrue(negf_defaults.is_negf_input_text(text))
+        self.assertFalse(msb_defaults.is_msb_input_text(text))
         self.assertEqual(defaults.input_file_type(fullpath), "nextnano.NEGF")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["com_char"], "#")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["input_pattern"], "nextnano.NEGF{")
+
+    def test_msb(self):
+        # example.msb, not example.xml: the latter is a legacy XML-syntax MSB file which
+        # the 'nextnano.MSB{' pattern cannot match (no brace in XML), so it detects as
+        # 'not valid'. Test_msb in test_inputs.py only ever loads example.msb too.
+        fullpath = folder_msb / "example.msb"
+        text = fullpath.read_text()
+        self.assertFalse(nn3_defaults.is_nn3_input_text(text))
+        self.assertFalse(nnp_defaults.is_nnp_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_classic_input_text(text))
+        self.assertFalse(negf_defaults.is_negf_input_text(text))
+        self.assertTrue(msb_defaults.is_msb_input_text(text))
+        self.assertEqual(defaults.input_file_type(fullpath), "nextnano.MSB")
+        self.assertEqual(defaults.get_fmt("nextnano.MSB")["var_char"], "$")
+        self.assertEqual(defaults.get_fmt("nextnano.MSB")["com_char"], "#")
+        self.assertEqual(defaults.get_fmt("nextnano.MSB")["input_pattern"], "nextnano.MSB{")
 
 
 class TestInputFileType(unittest.TestCase):
@@ -88,7 +122,7 @@ class TestInputFileType(unittest.TestCase):
             folder_nnp / "example.in",
             folder_negf / "example.xml",
             folder_negf / "Minimal_InputFile.negf",
-            folder_msb / "example.xml",
+            folder_msb / "example.msb",
         ]:
             with self.subTest(fullpath=fullpath):
                 text = Path(fullpath).read_text()
