@@ -41,6 +41,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## Development version
 
+- convergence check no longer hangs headless runs: `check_convergence(mode='pause')` asks how to proceed only when an interactive terminal is attached; without one (CI, cluster jobs) it now raises like `mode='terminate'` instead of blocking on input.
 - importing `nextnanopy` no longer creates or checks `~/.nextnanopy-config`. The config is built on first access of `nextnanopy.config` (or when an `InputFile` is created without `configpath`).
 - saving the config file is now atomic: an interrupted write can no longer leave a half-written `.nextnanopy-config` behind.
 - `Config` with an empty path now raises `ValueError`; a path to a non-existing file yields an empty configuration that can be filled in and saved.

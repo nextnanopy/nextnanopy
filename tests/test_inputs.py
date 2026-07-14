@@ -1112,6 +1112,69 @@ class TestSweep(unittest.TestCase):
             self.assertTrue(combination[1] > combination[0])
 
 
+class Test_check_convergence_pause_tty(unittest.TestCase):
+    """check_convergence(mode='pause') must never block on input() without a TTY.
+
+    Headless runs (CI, cluster jobs, the ExecutionQueue worker thread) have no
+    usable stdin; 'pause' must degrade to 'terminate' there instead of hanging.
+    """
+
+    NOT_CONVERGED = "Maximum number of iterations exceeded\n"
+
+    def make_file(self, log_text):
+        tmpdir = tempfile.TemporaryDirectory()
+        self.addCleanup(tmpdir.cleanup)
+        log = Path(tmpdir.name) / "sim.log"
+        log.write_text(log_text)
+        file = InputFile(folder_nnp / "only_variables.in")
+        file.execute_info = {"logfile": str(log)}
+        return file
+
+    def test_pause_without_tty_terminates_instead_of_prompting(self):
+        file = self.make_file(self.NOT_CONVERGED)
+        stdin = unittest.mock.Mock()
+        stdin.isatty.return_value = False
+        prompt = unittest.mock.Mock(side_effect=AssertionError("input() called without a TTY"))
+        with (
+            unittest.mock.patch("sys.stdin", stdin),
+            unittest.mock.patch("builtins.input", prompt),
+        ):
+            with self.assertRaises(RuntimeError):
+                file.check_convergence(mode="pause")
+        prompt.assert_not_called()
+
+    def test_pause_with_stdin_none_terminates(self):
+        # sys.stdin is None under pythonw / some embedded interpreters
+        file = self.make_file(self.NOT_CONVERGED)
+        with unittest.mock.patch("sys.stdin", None):
+            with self.assertRaises(RuntimeError):
+                file.check_convergence(mode="pause")
+
+    def test_pause_with_tty_still_prompts(self):
+        file = self.make_file(self.NOT_CONVERGED)
+        stdin = unittest.mock.Mock()
+        stdin.isatty.return_value = True
+        with (
+            unittest.mock.patch("sys.stdin", stdin),
+            unittest.mock.patch("builtins.input", return_value="y") as prompt,
+        ):
+            self.assertIsNone(file.check_convergence(mode="pause"))
+        prompt.assert_called()
+
+        with (
+            unittest.mock.patch("sys.stdin", stdin),
+            unittest.mock.patch("builtins.input", return_value="n"),
+        ):
+            with self.assertRaises(RuntimeError):
+                file.check_convergence(mode="pause")
+
+    def test_converged_log_never_prompts(self):
+        file = self.make_file("everything fine\n")
+        prompt = unittest.mock.Mock(side_effect=AssertionError("input() called for converged log"))
+        with unittest.mock.patch("builtins.input", prompt):
+            self.assertIsNone(file.check_convergence(mode="pause"))
+
+
 if __name__ == "__main__":
     unittest.main()
 

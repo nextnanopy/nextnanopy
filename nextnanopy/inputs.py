@@ -2,6 +2,7 @@ import atexit
 import itertools
 import os
 import queue
+import sys
 import tempfile
 import threading
 import time
@@ -317,7 +318,9 @@ class InputFileTemplate:
         convergence_check_mode : str, optional
             works only for convergenceCheck = True
             options:
-                'pause': asks user how to proceed if simulation did not converge (default)
+                'pause': asks user how to proceed if simulation did not converge (default);
+                    if no interactive terminal is attached (e.g. CI, cluster jobs),
+                    behaves like 'terminate' instead of blocking on input
                 'terminate': terminate the script if the simulation did not converge
                 'continue': notify a user but continues execution of script
         kwargs may contain:
@@ -411,6 +414,12 @@ class InputFileTemplate:
         except RuntimeError as e:
             print(e)
             if mode == "pause":
+                if sys.stdin is None or not sys.stdin.isatty():
+                    print(
+                        "check_convergence: mode 'pause' needs an interactive terminal to ask"
+                        " how to proceed, but none is attached - terminating instead."
+                    )
+                    raise RuntimeError("Nextnanopy terminated.") from e
                 pause = True
                 while pause:
                     answer = input("Do you nevertheless want to continue? [y/n]: ")
@@ -961,7 +970,9 @@ class Sweep(InputFileTemplate):
         convergence_check_mode : str, optional
             works only for convergenceCheck = True
             options:
-                'pause': asks user how to proceed if simulation did not converge (default)
+                'pause': asks user how to proceed if simulation did not converge (default);
+                    if no interactive terminal is attached (e.g. CI, cluster jobs),
+                    behaves like 'terminate' instead of blocking on input
                 'terminate': terminate the script if the simulation did not converge
                 'continue': notify a user but continues execution of script
         parallel_limit : int, optional
