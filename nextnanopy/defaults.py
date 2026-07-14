@@ -93,26 +93,12 @@ def get_fmt(product):
 
 
 def input_file_type(fullpath):
-    from nextnanopy.msb.defaults import is_msb_input_file
-    from nextnanopy.negf.defaults import (
-        is_negf_classic_input_file,
-        is_negf_input_file,
-    )
-    from nextnanopy.nn3.defaults import is_nn3_input_file
-    from nextnanopy.nnp.defaults import is_nnp_input_file
-
-    if is_nn3_input_file(fullpath):
-        return "nextnano3"
-    elif is_nnp_input_file(fullpath):
-        return "nextnano++"
-    elif is_negf_classic_input_file(fullpath):
-        return "nextnano.NEGF_classic"
-    elif is_negf_input_file(fullpath):
-        return "nextnano.NEGF"
-    elif is_msb_input_file(fullpath):
-        return "nextnano.MSB"
-    else:
-        return "not valid"
+    # Read once and delegate to input_text_type. The per-product is_*_input_file()
+    # predicates each reopened and rescanned the file, so detecting a nextnano.MSB
+    # input (the last one checked) opened it five times.
+    with open(fullpath) as f:
+        text = f.read()
+    return input_text_type(text)
 
 
 def input_text_type(text):

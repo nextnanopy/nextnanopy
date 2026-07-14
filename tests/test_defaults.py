@@ -1,5 +1,8 @@
+import builtins
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from nextnanopy import defaults
 from nextnanopy.negf import defaults as negf_defaults
@@ -10,6 +13,7 @@ from nextnanopy.utils import mycollections
 folder_nnp = Path("tests") / "datafiles" / "nextnano++"
 folder_nn3 = Path("tests") / "datafiles" / "nextnano3"
 folder_negf = Path("tests") / "datafiles" / "nextnano.NEGF"
+folder_msb = Path("tests") / "datafiles" / "nextnano.MSB"
 
 
 class TestDictlist(unittest.TestCase):
@@ -69,6 +73,52 @@ class TestFormatting(unittest.TestCase):
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["var_char"], "$")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["com_char"], "#")
         self.assertEqual(defaults.get_fmt("nextnano.NEGF")["input_pattern"], "nextnano.NEGF{")
+
+
+class TestInputFileType(unittest.TestCase):
+    """input_file_type() reads the file once and delegates to input_text_type().
+
+    The two used to be parallel if/elif chains over the same five patterns -- one
+    reopening the file per probe, one working on a string. They must agree.
+    """
+
+    def test_agrees_with_input_text_type(self):
+        for fullpath in [
+            folder_nn3 / "example.in",
+            folder_nnp / "example.in",
+            folder_negf / "example.xml",
+            folder_negf / "Minimal_InputFile.negf",
+            folder_msb / "example.xml",
+        ]:
+            with self.subTest(fullpath=fullpath):
+                text = Path(fullpath).read_text()
+                self.assertEqual(
+                    defaults.input_file_type(fullpath),
+                    defaults.input_text_type(text),
+                )
+
+    def test_unrecognized_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fullpath = Path(tmp) / "junk.in"
+            fullpath.write_text("this is not a nextnano input file\n")
+            self.assertEqual(defaults.input_file_type(fullpath), "not valid")
+
+    def test_reads_the_file_once(self):
+        # the whole point of the change: detection is one open(), not one per product.
+        # A file matching no product used to be the worst case -- all five probes ran.
+        fullpath = folder_nnp / "example.in"
+        real_open = builtins.open
+        opened = []
+
+        def counting_open(file, *args, **kwargs):
+            opened.append(file)
+            return real_open(file, *args, **kwargs)
+
+        with mock.patch("builtins.open", counting_open):
+            product = defaults.input_file_type(fullpath)
+
+        self.assertEqual(product, "nextnano++")
+        self.assertEqual(len(opened), 1)
 
 
 if __name__ == "__main__":
