@@ -1,6 +1,8 @@
+import builtins
 import os
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 from nextnanopy import defaults
@@ -826,6 +828,72 @@ class TestNotValidProduct(unittest.TestCase):
         self.assertIsInstance(file, InputFileTemplate)
         self.assertEqual(file.product, "not valid")
         self.assertEqual(len(file.variables), 0)
+
+
+class TestInputFileDispatch(unittest.TestCase):
+    """InputFile.__new__ detects the product, dispatches to the class for it, and
+    does both while reading each of the input file and the config exactly once.
+    """
+
+    def _counting_open(self, counter):
+        real_open = builtins.open
+
+        def counted(*args, **kwargs):
+            counter.append(args[0] if args else kwargs.get("file"))
+            return real_open(*args, **kwargs)
+
+        return counted
+
+    def test_reads_the_input_file_once(self):
+        fullpath = folder_nnp / "only_variables.in"
+        opened = []
+        with unittest.mock.patch.object(builtins, "open", self._counting_open(opened)):
+            InputFile(fullpath)
+        reads = [p for p in opened if Path(p) == fullpath]
+        # __new__ reads the text to detect the product and hands it to the class it
+        # picks, so the load does not go back to disk for the same bytes.
+        self.assertEqual(len(reads), 1)
+
+    def test_builds_the_config_once(self):
+        fullpath = folder_nnp / "only_variables.in"
+        real_init = defaults.NNConfig.__init__
+        calls = []
+
+        def counted(self, *args, **kwargs):
+            calls.append(1)
+            return real_init(self, *args, **kwargs)
+
+        with unittest.mock.patch.object(defaults.NNConfig, "__init__", counted):
+            InputFile(fullpath)
+        # only the returned object builds a config; product detection needs none.
+        self.assertEqual(len(calls), 1)
+
+    def test_dispatches_on_product(self):
+        # every product must reach its own InputFile class.
+        cases = [
+            (folder_nnp / "only_variables.in", "nextnano++"),
+            (folder_nnp / "example.in", "nextnano++"),
+            (folder_nn3 / "only_variables.in", "nextnano3"),
+            (folder_nn3 / "example.in", "nextnano3"),
+            (
+                Path("tests") / "datafiles" / "nextnano.NEGF" / "example.xml",
+                "nextnano.NEGF_classic",
+            ),
+            (Path("tests") / "datafiles" / "nextnano.MSB" / "example.msb", "nextnano.MSB"),
+        ]
+        for fullpath, product in cases:
+            with self.subTest(fullpath=fullpath):
+                file = InputFile(fullpath)
+                self.assertEqual(file.product, product)
+                self.assertIsInstance(file, defaults.get_InputFile(product))
+
+    def test_no_fullpath_gives_a_bare_template(self):
+        # with no path there is no text to detect from: InputFile() is an empty
+        # InputFileTemplate carrying the 'not valid' sentinel. __new__ must not open None.
+        file = InputFile()
+        self.assertIsInstance(file, InputFileTemplate)
+        self.assertEqual(file.product, "not valid")
+        self.assertIsNone(file.fullpath)
 
 
 class TestSweep(unittest.TestCase):

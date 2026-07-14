@@ -121,7 +121,7 @@ class InputFileTemplate:
 
     _shared_temp_dir = None
 
-    def __init__(self, fullpath=None, configpath=None, parse=False):
+    def __init__(self, fullpath=None, configpath=None, parse=False, text=None):
         self.raw_lines = []
         self.variables = DictList()
         self.content = None
@@ -130,7 +130,7 @@ class InputFileTemplate:
         self.parse = parse
         self.__parallel__ = False
         if fullpath is not None:
-            self.load(fullpath)
+            self.load(fullpath, text=text)
         if configpath is None:
             self.config = defaults.NNConfig()
         else:
@@ -226,7 +226,7 @@ class InputFileTemplate:
                 print(f"{line}")
 
     @load_message
-    def load(self, fullpath):
+    def load(self, fullpath, text=None):
         """
         The steps are the following:
             1. clear the current information
@@ -240,10 +240,13 @@ class InputFileTemplate:
         ----------
         fullpath : str
             path to the file to be loaded
+        text : str, optional
+            contents of fullpath, if the caller has already read them. Saves
+            re-reading the file from disk. If None (default), it is read here.
         """
         self.clear()
         self.fullpath = fullpath
-        self.load_raw()
+        self.load_raw(text=text)
         self.find_product()
         self.validate()
         self.load_variables()
@@ -431,9 +434,10 @@ class InputFileTemplate:
         if os.path.exists(self.fullpath):
             os.remove(self.fullpath)
 
-    def load_raw(self):
-        with open(self.fullpath) as f:
-            text = f.read()
+    def load_raw(self, text=None):
+        if text is None:
+            with open(self.fullpath) as f:
+                text = f.read()
         self.raw_lines = list(text_to_lines(text))
         return self.raw_lines
 
@@ -585,9 +589,16 @@ class InputFile(InputFileTemplate):
     #         setattr(self, key, self._helper_input_file.__dict__[key])
 
     def __new__(cls, fullpath=None, configpath=None, *args, **kwargs):
-        preInputFile = InputFileTemplate(fullpath, configpath)
-        _InputFileType = defaults.get_InputFile(preInputFile.product)
-        return _InputFileType(fullpath, configpath, **kwargs)
+        # The text is read here to pick the product's class, then passed on so the
+        # chosen class does not read the same file again.
+        # With no fullpath there is nothing to detect, and nothing to load: dispatch
+        # on the 'not valid' sentinel, which lands on InputFileTemplate.
+        if fullpath is None:
+            return defaults.get_InputFile("not valid")(fullpath, configpath, **kwargs)
+        with open(fullpath) as f:
+            text = f.read()
+        _InputFileType = defaults.get_InputFile(defaults.input_text_type(text))
+        return _InputFileType(fullpath, configpath, text=text, **kwargs)
 
     # def load_variables(self):
     #     """
