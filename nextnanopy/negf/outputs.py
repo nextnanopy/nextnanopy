@@ -24,34 +24,31 @@ def get_iv(path=""):
 
 def get_WannierStark_on(folder):
     ws = np.loadtxt(
-        folder + r"\WannierStark\\WannierStark_statesOn.dat",
+        os.path.join(folder, "WannierStark", "WannierStark_statesOn.dat"),
         skiprows=2,
         delimiter="\t",
         unpack=True,
     )
-    #  print('Number of states: ', len(ws)-2)
     return ws
 
 
 def get_WannierStark(folder):
     ws = np.loadtxt(
-        folder + r"\WannierStark\\WannierStark_states.dat",
+        os.path.join(folder, "WannierStark", "WannierStark_states.dat"),
         skiprows=2,
         delimiter="\t",
         unpack=True,
     )
-    #  print('Number of states: ', len(ws)-2)
     return ws
 
 
 def get_WannierStark_norm(folder, scaling_factor=1):
     ws = np.loadtxt(
-        folder + r"\WannierStark\\WannierStark_states.dat",
+        os.path.join(folder, "WannierStark", "WannierStark_states.dat"),
         skiprows=2,
         delimiter="\t",
         unpack=True,
     )
-    #  print('Number of states: ', len(ws)-2)
     norm = min(ws[1])
     z = ws[0]
     pot = ws[1] - norm
@@ -62,12 +59,11 @@ def get_WannierStark_norm(folder, scaling_factor=1):
 
 def get_WannierStark_norm_cpp(folder, scaling_factor=1):
     ws = np.loadtxt(
-        folder + r"\EnergyEigenstates\\EigenStates.dat",
+        os.path.join(folder, "EnergyEigenstates", "EigenStates.dat"),
         skiprows=2,
         delimiter="\t",
         unpack=True,
     )
-    #  print('Number of states: ', len(ws)-2)
     norm = min(ws[1])
     z = ws[0]
     pot = ws[1] - norm
