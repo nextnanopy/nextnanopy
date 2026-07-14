@@ -255,7 +255,7 @@ class InputFileTemplate:
 
     def validate(self):
         if self.product not in defaults.products:
-            self.product = "Not valid"
+            self.product = "not valid"
             # raise ValueError(f'Not valid input file')
 
     @save_message

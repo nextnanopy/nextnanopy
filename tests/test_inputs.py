@@ -3,7 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from nextnanopy.inputs import InputFile, Sweep
+from nextnanopy import defaults
+from nextnanopy.inputs import InputFile, InputFileTemplate, Sweep
 
 
 def delete_files(start, directory=None, exceptions=None):
@@ -780,6 +781,51 @@ class TestInputFile(unittest.TestCase):
         npath = Path("random") / "path"
         file.execute_info["outputdirectory"] = npath
         self.assertEqual(Path(file.folder_output), npath)
+
+
+class TestNotValidProduct(unittest.TestCase):
+    """The 'not valid' sentinel must be spelled the same everywhere.
+
+    InputFileTemplate.validate() used to write 'Not valid' (capital N) while the
+    __init__ default, both detectors (defaults.input_text_type / input_file_type) and
+    the dispatch branch in defaults.get_InputFile all use lowercase 'not valid'. The
+    mismatch made get_InputFile's 'not valid' -> InputFileTemplate branch unreachable,
+    so loading any non-nextnano file raised `ValueError: Not valid is not valid`.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.fullpath = Path(self._tmp.name) / "junk.in"
+        self.fullpath.write_text("this is not a nextnano input file\n")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_sentinel_is_lowercase_everywhere(self):
+        # the sentinel the detectors emit, the dispatcher accepts, and validate() writes
+        # must all be the same string.
+        self.assertEqual(defaults.input_text_type("not a nextnano file"), "not valid")
+        self.assertEqual(defaults.input_file_type(self.fullpath), "not valid")
+        self.assertIs(defaults.get_InputFile("not valid"), InputFileTemplate)
+
+        template = InputFileTemplate(self.fullpath)
+        self.assertEqual(template.product, "not valid")
+
+    def test_validate_keeps_the_lowercase_sentinel(self):
+        # validate() is what rewrote the sentinel. Reach it directly: a fresh template
+        # whose product is anything unrecognized must come out as lowercase 'not valid'.
+        template = InputFileTemplate()
+        template.product = "something unrecognized"
+        template.validate()
+        self.assertEqual(template.product, "not valid")
+
+    def test_unrecognized_file_loads_as_template(self):
+        # the user-visible consequence: this used to raise
+        # `ValueError: Not valid is not valid` out of InputFile.__new__.
+        file = InputFile(self.fullpath)
+        self.assertIsInstance(file, InputFileTemplate)
+        self.assertEqual(file.product, "not valid")
+        self.assertEqual(len(file.variables), 0)
 
 
 class TestSweep(unittest.TestCase):
