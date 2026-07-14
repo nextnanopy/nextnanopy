@@ -36,7 +36,7 @@ grid{
 
 
 impurities{
-   donor{ name = "Si" energy = -10 degeneracy = 2 } # fully ionized
+   donor{ name = "Si" fully_ionized{} degeneracy = 2 } # fully ionized
 }
 
 
@@ -112,7 +112,7 @@ quantum {
       name = "2DEG"
       x = [10+$SIZE-5, 250]
       Gamma{ num_ev = $NUMEV }
-      output_wavefunctions{ probabilities = yes  max_num = $NUMEV }
+      output_states{ probabilities = yes  max_num = $NUMEV }
    }
 }
 
@@ -134,7 +134,6 @@ currents{
 
 
 run{
-   solve_poisson{}
-   solve_quantum{}
-   outer_iteration{} # solve coupled Schrodinger-Poisson equations
+   poisson{}
+   quantum_poisson{} # solve coupled Schrodinger-Poisson equations
 }
