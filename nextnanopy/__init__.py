@@ -13,6 +13,31 @@ __all__ = [
     "DataFile",
     "DataFolder",
     "config",
+    "get_config",
 ]
 
-config = NNConfig()
+_config = None
+
+
+def get_config():
+    """Return the process-wide NNConfig, building it on first use.
+
+    Constructing an NNConfig reads ~/.nextnanopy-config, and creates it if it is
+    missing, so it is deliberately not done at import time: importing the package
+    must not touch the user's home directory. `nextnanopy.config` resolves here via
+    the module __getattr__ below, so the config is built on first access instead.
+    """
+    global _config
+    if _config is None:
+        _config = NNConfig()
+    return _config
+
+
+def __getattr__(name):
+    # PEP 562: only called for names not already in the module namespace, i.e. for
+    # `config` on its first access. Afterwards it still routes here, but get_config()
+    # returns the cached object, so `nextnanopy.config` is the same instance every
+    # time and `config.set(...)` followed by `config.save()` behaves as before.
+    if name == "config":
+        return get_config()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

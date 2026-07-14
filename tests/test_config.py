@@ -1,9 +1,13 @@
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 import warnings
 from pathlib import Path
 from unittest import mock
 
+import nextnanopy
 from nextnanopy.defaults import NNConfig
 from nextnanopy.utils.config import Config
 
@@ -194,6 +198,71 @@ class Test_NNConfig(unittest.TestCase):
         )
 
 
+class Test_LazyConfig(unittest.TestCase):
+    def _run_in_fake_home(self, code):
+        """Run code in a subprocess whose home directory is an empty temp folder.
+
+        A fresh interpreter is the only honest way to test import-time behaviour, and
+        a fake home is the only way to see the first-run bootstrap: this machine
+        already has a ~/.nextnanopy-config, which is the case that does NOT write.
+        """
+        with tempfile.TemporaryDirectory() as home:
+            env = dict(os.environ, HOME=home, USERPROFILE=home)
+            proc = subprocess.run(
+                [sys.executable, "-c", code],
+                env=env,
+                capture_output=True,
+                text=True,
+                cwd=Path(__file__).parent.parent,
+            )
+            self.assertEqual(proc.returncode, 0, proc.stderr)
+            created = [p.name for p in Path(home).iterdir()]
+            return proc.stdout.strip(), created
+
+    def test_import_does_not_create_config_file(self):
+        stdout, created = self._run_in_fake_home("import nextnanopy; print('imported')")
+
+        self.assertEqual(stdout, "imported")
+        self.assertEqual(created, [])
+
+    def test_accessing_config_creates_config_file(self):
+        # The bootstrap still happens, just on first access rather than on import.
+        stdout, created = self._run_in_fake_home(
+            "import nextnanopy; print(nextnanopy.config.fullpath)"
+        )
+
+        self.assertEqual(created, [".nextnanopy-config"])
+        self.assertEqual(Path(stdout).name, ".nextnanopy-config")
+
+    def test_config_is_cached_and_supports_set_then_save(self):
+        # The documented workflow (templates/config_nextnano.py): set on one access,
+        # save on another. It only works if both see the same object.
+        code = (
+            "import nextnanopy as nn\n"
+            "nn.config.set('nextnano++', 'exe', 'some_path')\n"
+            "nn.config.save()\n"
+            "print(nn.config is nn.config)\n"
+            "print(nn.NNConfig().get('nextnano++', 'exe'))\n"
+        )
+        stdout, created = self._run_in_fake_home(code)
+
+        self.assertEqual(created, [".nextnanopy-config"])
+        self.assertEqual(stdout.splitlines(), ["True", "some_path"])
+
+    def test_from_import_still_works(self):
+        stdout, _ = self._run_in_fake_home(
+            "from nextnanopy import config; print(type(config).__name__)"
+        )
+
+        self.assertEqual(stdout, "NNConfig")
+
+    def test_unknown_attribute_raises_attribute_error(self):
+        # Defining a module __getattr__ takes over the missing-attribute path: without
+        # the trailing raise, every unknown name would silently evaluate to None.
+        with self.assertRaises(AttributeError):
+            _ = nextnanopy.does_not_exist
+
+
 class Test_Config(unittest.TestCase):
     def test_falsy_fullpath_raises(self):
         for fullpath in ["", None]:
@@ -277,9 +346,7 @@ class Test_Config(unittest.TestCase):
             config.save()
 
             config.set("nextnano++", "exe", "modified")
-            with mock.patch.object(
-                config.configparser, "write", side_effect=OSError("disk full")
-            ):
+            with mock.patch.object(config.configparser, "write", side_effect=OSError("disk full")):
                 with self.assertRaises(OSError):
                     config.save()
 
