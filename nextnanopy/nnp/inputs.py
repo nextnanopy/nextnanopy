@@ -192,6 +192,7 @@ class Parser:
                     level = level - 1
                     if content_line:
                         current_block.content.append(content_line)
+                    content_line = ""
                     current_block = current_block.parent_block
                     last_word = ""
 

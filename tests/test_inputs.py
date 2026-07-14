@@ -7,6 +7,7 @@ from pathlib import Path
 
 from nextnanopy import defaults
 from nextnanopy.inputs import InputFile, InputFileTemplate, Sweep
+from nextnanopy.nnp.inputs import Parser
 
 
 def delete_files(start, directory=None, exceptions=None):
@@ -230,6 +231,34 @@ class Test_nnp(unittest.TestCase):
         self.assertEqual(file.content[0], "$DUMMY = 1")
         file.content["_entry_0"] = "DUMMY LINE"
         self.assertEqual(file.content[0], "DUMMY LINE")
+
+    def test_content_roundtrip_does_not_duplicate_statements(self):
+        """A block written on one line must not leak its body into the enclosing blocks.
+
+        Compare against the *original* text, not against a second parse: re-parsing the
+        duplicated output is idempotent, so a parse-twice-and-compare check passes even
+        when the tree is corrupt.
+        """
+        fullpath = folder_nnp / "example.in"
+        file = InputFile(fullpath, parse=True)
+        rendered = str(file.content)
+
+        for statement in ['pos =', 'spacing =', 'name = "GaAs"', "num_ev =", "alloy_x ="]:
+            self.assertEqual(
+                rendered.count(statement),
+                file.raw_text.count(statement),
+                f"{statement!r} was duplicated by the parser",
+            )
+
+    def test_content_roundtrip_preserves_block_nesting(self):
+        parser = Parser()
+        parser.parse("global{ sub{ a = 1 } }", mode="str")
+
+        outer = parser.result.content[0]
+        inner = outer.content[0]
+        self.assertEqual(len(parser.result.content), 1)  # nothing leaked to the root
+        self.assertEqual(len(outer.content), 1)  # nothing leaked into global{}
+        self.assertEqual(inner.content, ["a = 1 "])
 
     def test_non_parseable_parse_true_raises(self):
         fullpath = folder_nnp / "example_non_parseable.nnp"
