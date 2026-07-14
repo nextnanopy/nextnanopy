@@ -2,6 +2,7 @@ import tempfile
 import unittest
 import warnings
 from pathlib import Path
+from unittest import mock
 
 from nextnanopy.defaults import NNConfig
 from nextnanopy.utils.config import Config
@@ -246,6 +247,44 @@ class Test_Config(unittest.TestCase):
         # and must not be silently treated as the default.
         with self.assertRaises(ValueError):
             NNConfig("")
+
+    def test_save_to_new_path_leaves_no_temp_file(self):
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "first.nnconfig"
+            config = Config(str(fullpath))
+            config.add_section("nextnano++")
+            config.set("nextnano++", "exe", "some_path")
+            config.save()
+
+            new_fullpath = Path(folder) / "second.nnconfig"
+            config.save(str(new_fullpath))
+
+            self.assertEqual(Path(config.fullpath), new_fullpath)
+            self.assertEqual(Config(str(new_fullpath)).get("nextnano++", "exe"), "some_path")
+            self.assertEqual(
+                sorted(p.name for p in Path(folder).iterdir()),
+                ["first.nnconfig", "second.nnconfig"],
+            )
+
+    def test_failed_save_keeps_previous_file_and_leaves_no_temp_file(self):
+        # save() writes a temp file and swaps it in with os.replace, so a write that
+        # blows up half way must not truncate the config that is already on disk.
+        with tempfile.TemporaryDirectory() as folder:
+            fullpath = Path(folder) / "existing.nnconfig"
+            config = Config(str(fullpath))
+            config.add_section("nextnano++")
+            config.set("nextnano++", "exe", "original")
+            config.save()
+
+            config.set("nextnano++", "exe", "modified")
+            with mock.patch.object(
+                config.configparser, "write", side_effect=OSError("disk full")
+            ):
+                with self.assertRaises(OSError):
+                    config.save()
+
+            self.assertEqual(Config(str(fullpath)).get("nextnano++", "exe"), "original")
+            self.assertEqual([p.name for p in Path(folder).iterdir()], ["existing.nnconfig"])
 
 
 if __name__ == "__main__":

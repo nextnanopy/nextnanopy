@@ -1,5 +1,7 @@
 import configparser
+import os
 from copy import deepcopy
+from pathlib import Path
 
 
 class Config:
@@ -125,8 +127,19 @@ class Config:
             fullpath = self.fullpath
         else:
             self.fullpath = fullpath
-        with open(self.fullpath, "w") as file:
-            self.configparser.write(file)
+        target = Path(self.fullpath)
+        # Write to a sibling temp file and swap it in: os.replace is atomic, so a
+        # concurrent reader never sees a truncated file and a crash mid-write leaves
+        # the previous config intact. The temp file must share the target's directory,
+        # since os.replace is only atomic within one filesystem.
+        tmp = target.with_name(f"{target.name}.{os.getpid()}.tmp")
+        try:
+            with open(tmp, "w") as file:
+                self.configparser.write(file)
+            os.replace(tmp, target)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
 
     def config_to_configparser(self):
         for sec in self.sections:
