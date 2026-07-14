@@ -1,5 +1,6 @@
 import unittest
 import warnings
+from unittest import mock
 
 import matplotlib
 
@@ -967,6 +968,84 @@ class TestDataFolder(unittest.TestCase):
             tree_list.index("        .nnconfig"), tree_list.index("        nextnano++/")
         )
         self.assertLess(tree_list.index("    datafiles/"), tree_list.index("        nextnano++/"))
+
+
+class TestSingleLoad(unittest.TestCase):
+    """Tripwires for review item 2.1-A: a DataFile must parse its file exactly once.
+
+    Before the fix, the per-product DataFile classes acted as both public class and
+    loader delegate of the generic one, so nn.DataFile(path, product=...) ran the
+    real loader (Dat/Vtk/AvsAscii) twice, and autodetect ran it four times.
+    """
+
+    def _count_loads(self, cls):
+        original = cls.load
+        calls = []
+
+        def counting_load(*args, **kwargs):
+            calls.append(1)
+            return original(*args, **kwargs)
+
+        patcher = mock.patch.object(cls, "load", counting_load)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        return calls
+
+    def test_dat_with_product_loads_once(self):
+        calls = self._count_loads(outputs.Dat)
+        df = outputs.DataFile(folder_nnp / "bandedges_1d.dat", product="nextnano++")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(df.coords), 1)
+        self.assertEqual(len(df.variables), 4)
+
+    def test_dat_autodetect_loads_once(self):
+        calls = self._count_loads(outputs.Dat)
+        df = outputs.DataFile(folder_nnp / "bandedges_1d.dat")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(df.coords), 1)
+        self.assertEqual(len(df.variables), 4)
+
+    def test_vtr_with_product_loads_once(self):
+        calls = self._count_loads(outputs.Vtk)
+        df = outputs.DataFile(folder_nnp / "potential.vtr", product="nextnano++")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(df.coords), 3)
+
+    def test_loader_kwargs_reach_the_single_load(self):
+        df = outputs.DataFile(
+            folder_nnp / "bandedges_1d.dat",
+            product="nextnano++",
+            FirstVarIsCoordFlag=False,
+        )
+        self.assertEqual(len(df.coords), 0)
+        self.assertEqual(len(df.variables), 5)
+
+    def test_msb_class_forwards_loader_kwargs(self):
+        # msb.DataFile.__init__ used to call self.load() without kwargs,
+        # silently dropping the user's loader_kwargs.
+        from nextnanopy.msb.outputs import DataFile as DataFile_msb
+
+        df = DataFile_msb(folder_msb / "BandEdge_conduction.dat", FirstVarIsCoordFlag=False)
+        self.assertEqual(len(df.coords), 0)
+
+    def test_product_class_is_thin_shim(self):
+        # The per-product classes stay importable but must go through the same
+        # single-load path as the generic DataFile.
+        from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
+
+        calls = self._count_loads(outputs.Dat)
+        df = DataFile_nnp(folder_nnp / "bandedges_1d.dat")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(df.product, "nextnano++")
+        self.assertIsInstance(df, outputs.DataFile)
+
+    def test_nn3_unsupported_txt_raises_notimplemented(self):
+        # nn3's _find_txt_loader built NotImplementedError without raising it,
+        # then hit NameError on the unbound 'loader'. The path never touches
+        # disk, so a nonexistent file is fine here.
+        for name in ["materials.txt", "total_charges.txt"]:
+            with self.assertRaises(NotImplementedError):
+                outputs.DataFile(folder_nn3 / name, product="nextnano3")
 
 
 class TestFldMultiwordLabel(unittest.TestCase):

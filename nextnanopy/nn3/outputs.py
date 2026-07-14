@@ -3,40 +3,32 @@ from nextnanopy.nn3.defaults import (
     is_nn3_variable,
     parse_nn3_variable,
 )
-from nextnanopy.outputs import AvsAscii, Dat, DataFileTemplate, Output, Vtk
+from nextnanopy.outputs import DataFile as _DataFile
+from nextnanopy.outputs import Output, resolve_loader
 from nextnanopy.utils.mycollections import DictList
 
 
-class DataFile(DataFileTemplate):
+def get_loader(extension, filename_only):
+    return resolve_loader(extension, filename_only, txt_loader=_txt_loader, product="nextnano3")
+
+
+def _txt_loader(filename_only):
+    if filename_only in ["variables_input", "variables_database"]:
+        loader = InputVariables
+    elif filename_only == "materials":
+        raise NotImplementedError("Loading materials.txt is not implemented yet")
+    elif filename_only == "total_charges":
+        raise NotImplementedError("Loading total_charges.txt is not implemented yet")
+    else:
+        raise NotImplementedError(f"Datafile {filename_only}.txt is not valid")
+    return loader
+
+
+class DataFile(_DataFile):
+    """Backwards-compatible alias for nextnanopy.DataFile(..., product='nextnano3')."""
+
     def __init__(self, fullpath, **loader_kwargs):
-        super().__init__(fullpath, product="nextnano3")
-        self.load(**loader_kwargs)
-
-    def get_loader(self):
-        if self.extension in [".v", ".fld", ".coord"]:
-            loader = AvsAscii
-        elif self.extension == ".vtr":
-            loader = Vtk
-        elif self.extension == ".txt":
-            loader = self._find_txt_loader()
-        elif self.extension == ".dat":
-            loader = Dat
-        else:
-            raise NotImplementedError(
-                f"Loading datafile with extension {self.extension} is not implemented yet"
-            )
-        return loader
-
-    def _find_txt_loader(self):
-        if self.filename_only in ["variables_input", "variables_database"]:
-            loader = InputVariables
-        elif self.filename_only == "materials":
-            NotImplementedError("Loading materials.txt is not implemented yet")
-        elif self.filename_only == "total_charges":
-            NotImplementedError("Loading total_charges.txt is not implemented yet")
-        else:
-            raise NotImplementedError(f"Datafile {self.filename_only}.txt is not valid")
-        return loader
+        super().__init__(fullpath, product="nextnano3", **loader_kwargs)
 
 
 class InputVariables(Output):

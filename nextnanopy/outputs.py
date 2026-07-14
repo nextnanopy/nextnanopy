@@ -426,14 +426,10 @@ class DataFileTemplate(Output):
 
 
 class DataFile(DataFileTemplate):
-    def __init__(self, fullpath, product=None, **loader_kwargs):
-        super().__init__(
-            fullpath, product=product, **loader_kwargs
-        )  # **loader_kwargs) #, FirstVarIsCoordFlag = False
-
     def get_loader(self):
         if self.product:
-            loader = defaults.get_DataFile(self.product)
+            resolve = defaults.get_DataFile_loader(self.product)
+            loader = resolve(self.extension, self.filename_only)
         else:
             print(
                 "[Warning] nextnano product is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB"
@@ -445,23 +441,27 @@ class DataFile(DataFileTemplate):
         return loader
 
     def find_loader(self):
-        from nextnanopy.msb.outputs import DataFile as DataFile_msb
-        from nextnanopy.negf.outputs import DataFile as DataFile_negf
-        from nextnanopy.nn3.outputs import DataFile as DataFile_nn3
-        from nextnanopy.nnp.outputs import DataFile as DataFile_nnp
+        # Every product maps non-'.txt' extensions to the same loader, so only
+        # '.txt' actually needs product detection.
+        if self.extension != ".txt":
+            return resolve_loader(self.extension, self.filename_only)
 
-        Dats = [DataFile_nn3, DataFile_nnp, DataFile_negf, DataFile_msb]
-        for Dati in Dats:
+        # Probe the products that support '.txt' (historic order: nn3 first).
+        from nextnanopy.nn3 import outputs as nn3_outputs
+        from nextnanopy.nnp import outputs as nnp_outputs
+
+        for module in (nn3_outputs, nnp_outputs):
             try:
-                df = Dati(self.fullpath)
-                if "" in df.variables.keys():
-                    continue
-                else:
-                    break
+                loader = module.get_loader(self.extension, self.filename_only)
+                df = loader(self.fullpath)
             except Exception:
-                pass
-        loader = Dati
-        return loader
+                continue
+            if "" not in df.variables.keys():
+                return loader
+        raise NotImplementedError(
+            f"Could not autodetect a loader for {self.fullpath}. "
+            f"Specify the product: nextnano++ or nextnano3"
+        )
 
     def plot(self, legend=False, y_axis_name="", subplots=False):
         import matplotlib.pyplot as plt
@@ -956,6 +956,32 @@ class Dat(Output):
         else:
             name, unit = column.strip(), ""
         return name, unit
+
+
+def resolve_loader(extension, filename_only, txt_loader=None, product=None):
+    """
+    Map a datafile extension to its loader class.
+
+    Every nextnano product shares this table except for '.txt', which is the
+    only product-specific format: products that support it pass their own
+    txt_loader(filename_only) hook, the rest get a NotImplementedError.
+    """
+    if extension in [".v", ".fld", ".coord"]:
+        return AvsAscii
+    elif extension == ".vtr":
+        return Vtk
+    elif extension == ".dat":
+        return Dat
+    elif extension == ".txt":
+        if txt_loader is None:
+            raise NotImplementedError(
+                f"Loading {product} datafiles with extension .txt is not implemented yet"
+            )
+        return txt_loader(filename_only)
+    else:
+        raise NotImplementedError(
+            f"Loading datafile with extension {extension} is not implemented yet"
+        )
 
 
 def coord_axis(dim):

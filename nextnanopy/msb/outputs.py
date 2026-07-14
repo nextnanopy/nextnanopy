@@ -1,24 +1,13 @@
-from nextnanopy.outputs import AvsAscii, Dat, DataFileTemplate, Vtk
+from nextnanopy.outputs import DataFile as _DataFile
+from nextnanopy.outputs import resolve_loader
 
 
-class DataFile(DataFileTemplate):
+def get_loader(extension, filename_only):
+    return resolve_loader(extension, filename_only, product="nextnano.MSB")
+
+
+class DataFile(_DataFile):
+    """Backwards-compatible alias for nextnanopy.DataFile(..., product='nextnano.MSB')."""
+
     def __init__(self, fullpath, **loader_kwargs):
-        super().__init__(fullpath, product="nextnano.MSB")
-        self.load()
-
-    def get_loader(self):
-        if self.extension in [".v", ".fld", ".coord"]:
-            loader = AvsAscii
-        elif self.extension == ".vtr":
-            loader = Vtk
-        elif self.extension == ".txt":
-            raise NotImplementedError(
-                "Loading nextnano.MSB datafiles with extension.txt is not implemented yet"
-            )
-        elif self.extension == ".dat":
-            loader = Dat
-        else:
-            raise NotImplementedError(
-                f"Loading datafile with extension {self.extension} is not implemented yet"
-            )
-        return loader
+        super().__init__(fullpath, product="nextnano.MSB", **loader_kwargs)
