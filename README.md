@@ -49,6 +49,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 - performance: creating an `InputFile` reads the file (and sets up the config) only once; product detection loads the file once instead of once per product; `DataFile` loads the data from disk only once (product-specific `.txt` files still need two reads).
 - `DataFile` restructured: the per-product `DataFile` classes are removed, only per-product `.txt` loaders remain. Loader autodetection now raises `NotImplementedError` with a clear message when no loader fits.
 - `nextnanopy.commands.execute` now raises a clear `ValueError` for an empty or non-existing input file path before starting a simulation.
+- bug fix: nested or concurrent loops over the same `DictList`, `InputFile` or `DataFile` no longer interfere with each other. Iterating the same object in an inner and an outer loop (e.g. `for v1 in datafile: for v2 in datafile: ...`) used to end the outer loop early, because the iteration position was stored on the object itself. Iteration still yields the values (`Variable`/`Coord` objects, input variables), so no API change.
 - bug fix: the detected product for invalid input files is consistently lowercase `'not valid'`
 - bug fix: replaced deprecated `xml` usage in nextnano.NEGF_classic input handling
 - removed the unused `is_{product}_input_file` functions (superseded by `is_{product}_input_text`)

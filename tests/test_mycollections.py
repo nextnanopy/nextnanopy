@@ -20,6 +20,20 @@ class TestDictList(unittest.TestCase):
         for value, expected in zip(dl, dl.values(), strict=True):
             self.assertEqual(value, expected)
 
+    def test_nested_loops_are_independent(self):
+        dl = DictList(a=3, b="test")
+        pairs = [(outer, inner) for outer in dl for inner in dl]
+        self.assertEqual(pairs, [(3, 3), (3, "test"), ("test", 3), ("test", "test")])
+
+    def test_dict_semantics_are_key_based(self):
+        dl = DictList(a=3, b="test")
+        self.assertEqual(dict(dl), {"a": 3, "b": "test"})
+        self.assertIn("a", dl)
+        self.assertNotIn(3, dl)
+        other = DictList()
+        other.update(dl)
+        self.assertEqual(list(other.items()), [("a", 3), ("b", "test")])
+
 
 if __name__ == "__main__":
     unittest.main()

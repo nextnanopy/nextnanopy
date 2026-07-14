@@ -320,16 +320,9 @@ class Output:
         return out
 
     def __iter__(self):
-        self._iter_index = 0
-        return self
-
-    def __next__(self):
-        try:
-            result = self.data.__getitem__(self._iter_index)
-        except (IndexError, KeyError):
-            raise StopIteration from None
-        self._iter_index += 1
-        return result
+        # Yields the Coord/Variable objects, not their names (see DictList docstring).
+        # Fresh iterator per call, so nested loops over the same output do not interfere.
+        return iter(self.data.values())
 
 
 class DataFileTemplate(Output):

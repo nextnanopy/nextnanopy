@@ -19,7 +19,15 @@ class DictList(OrderedDict):
     >>> 3
     >>> 't'
 
+    Two deliberate deviations from normal Mapping semantics:
 
+    1. Iteration yields VALUES, not keys. This is the documented behaviour of this class and
+       much of nextnanopy relies on it (e.g. `for var in datafile.variables: var.name`).
+       Note that dict/OrderedDict C-level fast paths bypass __iter__, so `dict(d)`,
+       `d.update(other)`, `key in d` and `**d` keep their usual key-based behaviour.
+       Use .keys() when you need keys.
+    2. Integer subscripts are positions, not keys, so integer keys are unreachable via d[...].
+       All keys used in nextnanopy are strings (variable/file/folder names).
     """
 
     def __init__(self, *args, **kwargs):
@@ -56,13 +64,6 @@ class DictList(OrderedDict):
         return f"{cname}([\n{args}\n])"
 
     def __iter__(self):
-        self._iter_index = 0
-        return self
-
-    def __next__(self):
-        try:
-            result = self.__getitem__(self._iter_index)
-        except (IndexError, KeyError):
-            raise StopIteration from None
-        self._iter_index += 1
-        return result
+        # Yields values, not keys (see class docstring). Returns a fresh iterator each call so
+        # that nested/concurrent loops over the same object do not share iteration state.
+        return iter(self.values())

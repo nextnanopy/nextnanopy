@@ -529,16 +529,9 @@ class InputFileTemplate:
         return out
 
     def __iter__(self):
-        self._iter_index = 0
-        return self
-
-    def __next__(self):
-        try:
-            result = self.variables.__getitem__(self._iter_index)
-        except (IndexError, KeyError):
-            raise StopIteration from None
-        self._iter_index += 1
-        return result
+        # Yields the input variables themselves, not their names (see DictList docstring).
+        # Fresh iterator per call, so nested loops over the same file do not interfere.
+        return iter(self.variables.values())
 
 
 # def decor(func):
