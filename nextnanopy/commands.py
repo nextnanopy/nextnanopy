@@ -49,6 +49,14 @@ def command(
 
 
 def send(cmd, cwd=None):
+    """
+    Launch `cmd` through the system shell (`shell=True`).
+
+    Note: because the command runs via the shell, the returned Popen object is
+    the shell process (cmd.exe on Windows), not the simulator itself. On
+    Windows, calling .kill()/.terminate() on it stops only the shell wrapper;
+    the running simulation is NOT stopped.
+    """
     PIPE = subprocess.PIPE
     return subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE, close_fds=True, shell=True, cwd=cwd)
 

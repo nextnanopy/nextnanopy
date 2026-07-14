@@ -333,6 +333,13 @@ class InputFileTemplate:
         For example, 'threads' is accepted by nextnano++.
         See the documentation of the command line arguments of each nextnano product
         on the online Manual (https://www.nextnano.de/manual/).
+
+        Notes
+        -----
+        The simulation is launched through the system shell, so
+        execute_info['process'] is the shell process, not the simulator
+        itself. On Windows, calling .kill()/.terminate() on it stops only
+        the shell wrapper; the running simulation is NOT stopped.
         """
 
         cmd_kwargs = dict(self.default_command_args)

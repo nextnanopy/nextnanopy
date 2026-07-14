@@ -39,6 +39,21 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## History of changes
 
+## Development version
+
+- importing `nextnanopy` no longer creates or checks `~/.nextnanopy-config`. The config is built on first access of `nextnanopy.config` (or when an `InputFile` is created without `configpath`).
+- saving the config file is now atomic: an interrupted write can no longer leave a half-written `.nextnanopy-config` behind.
+- `Config` with an empty path now raises `ValueError`; a path to a non-existing file yields an empty configuration that can be filled in and saved.
+- bug fix: `ExecutionQueue` no longer busy-spins at 100% CPU while waiting for parallel simulations (`limit_parallel > 1`). It now sleeps between checks (`ExecutionQueue.poll_interval`, default 0.1 s) and fills all free parallel slots at once; wall time is unchanged.
+- performance: creating an `InputFile` reads the file (and sets up the config) only once; product detection loads the file once instead of once per product; `DataFile` loads the data from disk only once (product-specific `.txt` files still need two reads).
+- `DataFile` restructured: the per-product `DataFile` classes are removed, only per-product `.txt` loaders remain. Loader autodetection now raises `NotImplementedError` with a clear message when no loader fits.
+- `nextnanopy.commands.execute` now raises a clear `ValueError` for an empty or non-existing input file path before starting a simulation.
+- bug fix: the detected product for invalid input files is consistently lowercase `'not valid'`
+- bug fix: replaced deprecated `xml` usage in nextnano.NEGF_classic input handling
+- removed the unused `is_{product}_input_file` functions (superseded by `is_{product}_input_text`)
+- internal: `savetxt` in `utils/misc` refactored; first unit tests for `ExecutionQueue` added and sped up; nextnano++ syntax updated in the test example input file
+
+
 ## Version 1.1.0 (May 05th, 2026)
 
 - new parameter `parse` for `InputFile` (default `False`): content parsing of nextnano++ input files is now opt-in. Use `InputFile(fullpath, parse=True)` to populate `file.content` with the block structure. With the default `parse=False` the file loads normally — variables are available, `content` is `None` — which also allows loading files where preprocessor directives cause unbalanced `{}` that the parser cannot handle.
