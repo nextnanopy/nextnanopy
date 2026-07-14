@@ -675,6 +675,9 @@ class ExecutionQueue(threading.Thread):
         see terminate_empty parameter
     daemon: bool
         see threading.Thread.daemon
+    poll_interval: float
+        seconds between checks for finished simulations while the queue is running
+        (class attribute, default 0.1)
 
     Methods
     ----------- for user
@@ -708,6 +711,8 @@ class ExecutionQueue(threading.Thread):
 
     """
 
+    poll_interval = 0.1
+
     def __init__(
         self,
         limit_parallel: int = 1,
@@ -737,7 +742,7 @@ class ExecutionQueue(threading.Thread):
         self.stop_when_empty = True
 
     def add_execution(self):
-        if (len(self.started) < self.limit_parallel) and not self.waiting_queue.empty():
+        while (len(self.started) < self.limit_parallel) and not self.waiting_queue.empty():
             input_f = self.waiting_queue.get()
             if self.limit_parallel > 1:
                 input_f.__parallel__ = True
@@ -790,8 +795,9 @@ class ExecutionQueue(threading.Thread):
                 if self.stop_when_empty:
                     break
                 while self.all_done() and not self.stop_when_empty:
-                    time.sleep(0.1)  # to ensure switch to main thread
-                    pass
+                    time.sleep(self.poll_interval)
+            else:
+                time.sleep(self.poll_interval)
 
 
 class Sweep(InputFileTemplate):
