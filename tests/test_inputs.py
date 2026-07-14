@@ -152,6 +152,11 @@ class Test_nnp(unittest.TestCase):
         self.assertTrue((folder_nnp / "only_variables_0.in").is_file())
 
     def test_save_temp(self):
+        # The saved filename is deliberately not asserted here. _get_temp_dir hands out one
+        # directory per class for the whole process, so an earlier temp save of the same file
+        # (Sweep.save_sweep does one) is still sitting in it and pushes this save onto an
+        # index - which index depends on test order. test_save_to_another_folder covers the
+        # "free name keeps its name" contract in a directory this test owns.
         fullpath = folder_nnp / "only_variables.in"
         file = InputFile(fullpath)
         file.save(temp=True)
@@ -165,6 +170,25 @@ class Test_nnp(unittest.TestCase):
         finally:
             if Path(file.fullpath).exists():
                 Path(file.fullpath).unlink()
+
+    def test_save_to_another_folder(self):
+        file = InputFile(folder_nnp / "only_variables.in")
+        with tempfile.TemporaryDirectory() as target:
+            target = Path(target)
+
+            # the name is free in the target folder, so it is kept as-is
+            first = Path(file.save(target / "only_variables.in"))
+            self.assertEqual(first.name, "only_variables.in")
+            self.assertTrue(first.is_file())
+            self.assertEqual([p.name for p in target.iterdir()], ["only_variables.in"])
+
+            # only once the name is taken does an index appear
+            second = Path(file.save(target / "only_variables.in"))
+            self.assertEqual(second.name, "only_variables_0.in")
+            self.assertTrue(second.is_file())
+
+            # the source file in the original folder was left alone
+            self.assertFalse((folder_nnp / "only_variables_0.in").exists())
 
     def test_same_dir_saving(self):
         current_directory = Path.cwd()

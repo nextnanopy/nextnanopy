@@ -1,41 +1,22 @@
 import functools
+import itertools
 import os
+from pathlib import Path
 
 import numpy as np
 
 
-def is_file(fullpath):
-    filename = os.path.split(fullpath)[-1]
-    if "." not in filename:
-        bool = False
-    else:
-        bool = True
-    return bool
-
-
 def get_filename(fullpath, ext=True):
-    if not is_file(fullpath):
-        raise ValueError(f"{fullpath} is not a file")
-    filename = os.path.split(fullpath)[-1]
-    if not ext:
-        filename = os.path.splitext(filename)[0]
-    return filename
+    filename = os.path.basename(fullpath)
+    return filename if ext else os.path.splitext(filename)[0]
 
 
 def get_file_extension(fullpath):
-    if not is_file(fullpath):
-        raise ValueError(f"{fullpath} is not a file")
-    filename = os.path.split(fullpath)[-1]
-    ext = f".{filename.split('.')[-1]}"
-    return ext
+    return os.path.splitext(fullpath)[1]
 
 
 def get_folder(fullpath):
-    if not is_file(fullpath):
-        folder = fullpath
-    else:
-        folder = os.path.split(fullpath)[0]
-    return folder
+    return os.path.dirname(fullpath)
 
 
 def get_path_files(path):
@@ -52,48 +33,64 @@ def mkdir_if_not_exist(path):
     return path
 
 
-def find_unused_name(name, list_names, extension, max_idx=True):
-    if extension[0] != ".":
-        extension = f".{extension}"
-    if extension not in name:
-        name += extension
-    prefix = get_file_prefix(name)
-    lnames = list(filter(lambda ln: extension in ln and prefix in ln, list_names))
-
-    if len(lnames) == 0:
-        max_idx = 0
-    if max_idx:
-        idxs = [get_file_idx(name) for name in lnames]
-        idxs.sort()
-        max_idx = idxs[-1]
-        unused_name = f"{prefix}_{max_idx + 1}{extension}"
-    else:
-        idx = 0
-        unused_name = f"{prefix}_{idx}{extension}"
-        while unused_name in list_names:
-            unused_name = f"{prefix}_{idx}{extension}"
-            idx += 1
-    return unused_name
-
-
-def find_unused_in_folder(fullpath, overwrite=False):
-    # folder, name = os.path.split(fullpath)
-    name = os.path.basename(fullpath)
-    folder = os.path.dirname(fullpath)
-    ext = get_file_extension(name)
-    cwd_files = get_path_files(folder)
-    if not overwrite:
-        name = find_unused_name(name, cwd_files, ext)
-    return os.path.join(folder, name)
+def candidate_names(path):
+    """Names to try, in order: the requested one first, then name_0, name_1, ... Whether any
+    of them is free is not decided here - see savetxt. An index already on the name is dropped
+    before counting, so 'ex_0.in' falls back to 'ex_1.in' rather than to 'ex_0_0.in'."""
+    yield path
+    stem = get_file_prefix(path.name)
+    for idx in itertools.count():
+        yield path.with_name(f"{stem}_{idx}{path.suffix}")
 
 
 def savetxt(fullpath, text, overwrite=False, automkdir=True):
+    """
+    Write text to a file without clobbering an existing one.
+
+    If fullpath is free, it is used as-is. If it is taken, an index is appended to the file
+    name and the first free one wins: ex.in, then ex_0.in, ex_1.in, ... Gaps are reused, so a
+    folder holding ex.in and ex_1.in gets ex_0.in next.
+
+    Parameters
+    ----------
+    fullpath : str or Path
+        path including the file name where the text should be saved
+    text : str
+        the content to write
+    overwrite : bool, optional
+        If True, fullpath is written even if it already exists, and no index is appended
+        (default is False)
+    automkdir : bool, optional
+        If True, the parent folder is created if it does not exist. If False, a missing parent
+        raises FileNotFoundError (default is True)
+
+    Returns
+    -------
+    str
+        path of the file that was actually written - not necessarily fullpath, since an index
+        may have been appended
+
+    Notes
+    -----
+    The name is claimed by creating the file, not by checking whether it exists and writing
+    afterwards, so two processes saving to the same folder at the same time cannot be handed
+    the same name.
+    """
+    path = Path(fullpath)
     if automkdir:
-        mkdir_if_not_exist(get_folder(fullpath))
-    fullpath = find_unused_in_folder(fullpath, overwrite)
-    with open(fullpath, "w+") as file:
-        file.write(text)
-    return fullpath
+        path.parent.mkdir(parents=True, exist_ok=True)
+    if overwrite:
+        path.write_text(text)
+        return str(path)
+    for candidate in candidate_names(path):
+        try:
+            # "x" creates the file only if it does not exist, in one atomic step: it is both
+            # the existence check and the guard against a racing writer taking the same name.
+            with open(candidate, "x") as file:
+                file.write(text)
+        except FileExistsError:
+            continue
+        return str(candidate)
 
 
 def get_file_prefix(file):

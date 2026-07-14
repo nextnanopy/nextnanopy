@@ -8,7 +8,7 @@ from pathlib import Path
 
 from nextnanopy import defaults
 from nextnanopy.utils.formatting import generate_command
-from nextnanopy.utils.misc import get_filename, mkdir_if_not_exist
+from nextnanopy.utils.misc import mkdir_if_not_exist
 
 
 def command(
@@ -99,13 +99,13 @@ def execute(
     parallel=False,
     **kwargs,
 ):
-    filename = get_filename(inputfile, ext=False)
+    # validate the input file
+    if not str(inputfile):
+        raise ValueError("Input file path is empty")
     inputfile = Path(inputfile).resolve()
-    outputdirectory = Path(outputdirectory) / filename
-    mkdir_if_not_exist(outputdirectory)
-    logfile = outputdirectory / f"{filename}.log"
-    cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
-    cwd = os.getcwd()
+    if not inputfile.is_file():
+        raise ValueError(f"Input file is not an existing file: {inputfile}")
+
     exe = Path(exe)
     wdir, executable = (
         exe.parent,
@@ -118,6 +118,13 @@ def execute(
 
     if (not exe.is_file()) or (not wdir.is_dir()):
         raise FileNotFoundError(f"Executable path is invalid: {exe}\nCheck nextnanopy.config")
+
+    filename = inputfile.stem
+    outputdirectory = Path(outputdirectory) / filename
+    mkdir_if_not_exist(outputdirectory)
+    logfile = outputdirectory / f"{filename}.log"
+    cmd = command(inputfile, exe, license, database, outputdirectory, **kwargs)
+    cwd = os.getcwd()
     process = send(cmd, cwd=wdir)
     queue, tout, terr = start_log(process, logfile, show_log, parallel=parallel)
     os.chdir(cwd)
