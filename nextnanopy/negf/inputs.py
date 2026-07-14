@@ -1,5 +1,3 @@
-import os
-
 from nextnanopy.inputs import InputFileTemplate
 from nextnanopy.negf.defaults import is_negf_input_text
 from nextnanopy.nnp.defaults import (
@@ -7,7 +5,6 @@ from nextnanopy.nnp.defaults import (
     is_nnp_variable,
     parse_nnp_variable,
 )
-from nextnanopy.utils.misc import savetxt
 from nextnanopy.utils.mycollections import DictList
 
 
@@ -24,29 +21,6 @@ class InputFile(InputFileTemplate):
             variables[var.name] = var
         self.variables = variables
         return self.variables
-
-    def save(self, fullpath=None, overwrite=False, automkdir=True, content=False, temp=False):
-        """
-        content=True invokes the demo feature of saving self.content instead of self.test
-
-        be aware that the content=True ignores comments
-        """
-        if fullpath is None:
-            if temp:
-                folder = self._get_temp_dir()
-                fullpath = os.path.join(folder, self.filename)
-            elif self.fullpath is None:
-                raise ValueError("Please, specify a fullpath")
-            else:
-                fullpath = self.fullpath
-        if content:
-            text = self.content.__str__()
-        else:
-            text = self.text
-        self.fullpath = savetxt(
-            fullpath=fullpath, text=text, overwrite=overwrite, automkdir=automkdir
-        )
-        return self.fullpath
 
     def validate(self):
         if not is_negf_input_text(self.raw_text):

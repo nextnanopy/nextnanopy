@@ -263,7 +263,7 @@ class InputFileTemplate:
             # raise ValueError(f'Not valid input file')
 
     @save_message
-    def save(self, fullpath=None, overwrite=False, automkdir=True, temp=False):
+    def save(self, fullpath=None, overwrite=False, automkdir=True, temp=False, content=False):
         """
         Save the current information into a file.
 
@@ -281,6 +281,10 @@ class InputFileTemplate:
         temp: bool, optional
             If it is True, it will save the file in a temporary location.
             (default is False)
+        content: bool, optional
+            If it is True, it will save the parsed .content instead of .text.
+            Comments are not preserved. It requires the file to be loaded with parse=True.
+            (default is False)
         """
         if temp and fullpath is not None:
             warnings.warn("Fullpath is specified, temp flag is ignored", stacklevel=2)
@@ -293,8 +297,18 @@ class InputFileTemplate:
             else:
                 fullpath = self.fullpath
 
+        if content:
+            if self.content is None:
+                raise ValueError(
+                    "There is no parsed content to save. "
+                    "Load the input file with parse=True to use content=True"
+                )
+            text = str(self.content)
+        else:
+            text = self.text
+
         self.fullpath = savetxt(
-            fullpath=fullpath, text=self.text, overwrite=overwrite, automkdir=automkdir
+            fullpath=fullpath, text=text, overwrite=overwrite, automkdir=automkdir
         )
         return self.fullpath
 
