@@ -797,7 +797,7 @@ class TestDataFolder(unittest.TestCase):
     def test_find(self):
         tests_folder = "tests"
         datafolder = outputs.DataFolder(tests_folder)
-        self.assertEqual(len(datafolder.find("")), 13)
+        self.assertEqual(len(datafolder.find("")), 14)
 
         self.assertIn(str(Path(tests_folder) / "__init__.py"), datafolder.find(""))
         self.assertIn(str(Path(tests_folder) / "test_commands.py"), datafolder.find(""))
@@ -900,7 +900,7 @@ class TestDataFolder(unittest.TestCase):
     def test_find_multiple(self):
         tests_folder = "tests"
         datafolder = outputs.DataFolder(tests_folder)
-        self.assertEqual(len(datafolder.find_multiple(("",))), 13)
+        self.assertEqual(len(datafolder.find_multiple(("",))), 14)
 
         self.assertIn(str(Path(tests_folder) / "__init__.py"), datafolder.find_multiple(("",)))
 
