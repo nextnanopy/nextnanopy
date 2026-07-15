@@ -29,10 +29,17 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-gdspy = ["gdspy>=1.6"]
-matplotlib = ["matplotlib>=3.2"]
-cycler = ["cycler>=0.10"]
-shapely = ["shapely>=1.7"]
+# Plotting helpers: nextnanopy.utils.plotting and DataFile.plot().
+plot = ["matplotlib>=3.2", "cycler>=0.10"]
+# GDS shape import: nextnanopy.shapes / nextnanopy.nnp.shapes. Needs the plot
+# deps too, since shapes.py imports matplotlib and cycler at module level.
+gds = ["nextnanopy[plot]", "gdspy>=1.6", "shapely>=1.7"]
+# Post-processing: nextnanopy.postprocess (CV curves, minimization).
+post = ["scipy>=1.7"]
+# Every optional runtime feature.
+all = ["nextnanopy[plot,gds,post]"]
+# Development: everything optional plus the test runner and linter.
+dev = ["nextnanopy[all]", "pytest>=7.0", "ruff>=0.15"]
 
 [project.urls]
 Homepage = "https://github.com/nextnano-GmbH/nextnanopy"
