@@ -823,7 +823,7 @@ class ExecutionQueue(threading.Thread):
                 time.sleep(self.poll_interval)
 
 
-class Sweep(InputFileTemplate):
+class Sweep:
     """
     This class give a user possibility to run multiple simulations (sweep) over defined variables in the input file.
 
@@ -839,6 +839,11 @@ class Sweep(InputFileTemplate):
         defined as for input files
 
 
+    Attributes:
+    -----------
+    input_file: InputFile
+        the parsed prototype input file whose variables are swept
+
     Methods:
     --------
     save_sweep()
@@ -850,9 +855,12 @@ class Sweep(InputFileTemplate):
     """
 
     def __init__(self, variables_to_sweep, fullpath=None, configpath=None):
-        testInputFile = InputFile(fullpath=fullpath, configpath=configpath)
-        super().__init__(fullpath, configpath)
-        if set(variables_to_sweep.keys()).issubset(testInputFile.variables.keys()):
+        # Parse the prototype exactly once. Everything the sweep needs from an
+        # input file (variables to validate against, fullpath, config, product)
+        # comes from this single object instead of a throwaway plus a base-class
+        # re-parse.
+        self.input_file = InputFile(fullpath=fullpath, configpath=configpath)
+        if set(variables_to_sweep.keys()).issubset(self.input_file.variables.keys()):
             self.var_sweep = variables_to_sweep
         else:
             raise ValueError("Defined variables are not variables of input file")
@@ -863,6 +871,30 @@ class Sweep(InputFileTemplate):
         self.input_files = []
         self.sweep_infodict = DictList()
         self.sweep_output_infodict = DictList()
+
+    @property
+    def fullpath(self):
+        return self.input_file.fullpath
+
+    @property
+    def config(self):
+        return self.input_file.config
+
+    @config.setter
+    def config(self, value):
+        self.input_file.config = value
+
+    @property
+    def configpath(self):
+        return self.input_file.configpath
+
+    @property
+    def product(self):
+        return self.input_file.product
+
+    @property
+    def filename_only(self):
+        return self.input_file.filename_only
 
     def save_sweep(
         self,
@@ -902,6 +934,19 @@ class Sweep(InputFileTemplate):
             integer_only_in_name=integer_only_in_name,
             variables_comb_screen_fn=variables_comb_screen_fn,
         )
+
+    def save(self, *args, **kwargs):
+        """
+        Save the sweep input files. See :meth:`save_sweep` for the parameters.
+
+        Notes
+        -----
+        This is the preferred name. For now it simply forwards to
+        :meth:`save_sweep`. In a future patch the two will swap: ``save`` will
+        hold the implementation and ``save_sweep`` will become the mirror,
+        emitting a deprecation warning.
+        """
+        return self.save_sweep(*args, **kwargs)
 
     def prepare_output(self, overwrite=False, output_directory=None):
         self.sweep_output_directory = self.mk_dir(
@@ -1050,6 +1095,19 @@ class Sweep(InputFileTemplate):
         if True:  # TODO
             # self.create_infodict_files()
             self.create_infodict_json()
+
+    def execute(self, *args, **kwargs):
+        """
+        Execute the sweep. See :meth:`execute_sweep` for the parameters.
+
+        Notes
+        -----
+        This is the preferred name. For now it simply forwards to
+        :meth:`execute_sweep`. In a future patch the two will swap: ``execute``
+        will hold the implementation and ``execute_sweep`` will become the
+        mirror, emitting a deprecation warning.
+        """
+        return self.execute_sweep(*args, **kwargs)
 
     def create_infodict_files(self):
         """

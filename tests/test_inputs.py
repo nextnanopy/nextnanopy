@@ -1081,6 +1081,58 @@ class TestSweep(unittest.TestCase):
         self.assertEqual(len(files_with_names), 5)
         self.assertTrue((folder_nn3 / "only_variables__float_2_str_test1_.in").is_file())
 
+    # --- 2.13: Sweep composes an InputFile instead of inheriting one ---
+
+    def test_composes_single_input_file(self):
+        # The prototype must be parsed exactly once. The old design built a
+        # throwaway InputFile *and* re-parsed via the base-class __init__, so
+        # the input file was read multiple times before the sweep did anything.
+        fullpath = folder_nnp / "only_variables.in"
+        real_load_raw = InputFileTemplate.load_raw
+        calls = []
+
+        def counting_load_raw(self, *args, **kwargs):
+            calls.append(self.fullpath)
+            return real_load_raw(self, *args, **kwargs)
+
+        with unittest.mock.patch.object(
+            InputFileTemplate, "load_raw", counting_load_raw
+        ):
+            sweep = Sweep({"float": [1, 2, 5]}, fullpath)
+
+        prototype_reads = [c for c in calls if Path(c) == fullpath]
+        self.assertEqual(len(prototype_reads), 1)
+        # InputFile.__new__ returns the product-specific subclass (nnp/nn3/...),
+        # which inherits from InputFileTemplate, not the base InputFile itself.
+        self.assertIsInstance(sweep.input_file, InputFileTemplate)
+        # Variables are validated against the real, parsed prototype.
+        self.assertIn("float", sweep.input_file.variables.keys())
+
+    def test_does_not_expose_input_file_api(self):
+        # A Sweep is-a-sweep, not an input file: the inherited, nonsensical
+        # surface must be gone so a future accidental re-inheritance fails here.
+        fullpath = folder_nnp / "only_variables.in"
+        sweep = Sweep({}, fullpath)
+        self.assertNotIsInstance(sweep, InputFileTemplate)
+        for attr in ("check_convergence", "set_variable", "get_variable", "load"):
+            self.assertFalse(hasattr(sweep, attr), f"Sweep should not expose {attr!r}")
+        # The forwarded, still-needed members remain available.
+        self.assertEqual(Path(sweep.fullpath), fullpath)
+        self.assertEqual(sweep.product, sweep.input_file.product)
+        self.assertIs(sweep.config, sweep.input_file.config)
+
+    def test_execute_and_save_mirror_the_sweep_methods(self):
+        # `execute`/`save` exist, but as sweep-level mirrors of
+        # execute_sweep/save_sweep - NOT the old inherited input-file methods.
+        fullpath = folder_nnp / "only_variables.in"
+        sweep = Sweep({}, fullpath)
+        with unittest.mock.patch.object(Sweep, "save_sweep") as mock_save:
+            sweep.save("a", b=1)
+            mock_save.assert_called_once_with("a", b=1)
+        with unittest.mock.patch.object(Sweep, "execute_sweep") as mock_execute:
+            sweep.execute("a", b=1)
+            mock_execute.assert_called_once_with("a", b=1)
+
     # TODO test parallel sweeps with and without convergenceCheck
     @classmethod
     def tearDownClass(cls):
