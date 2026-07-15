@@ -1,4 +1,5 @@
 import atexit
+import concurrent.futures
 import itertools
 import os
 import queue
@@ -821,6 +822,145 @@ class ExecutionQueue(threading.Thread):
                     time.sleep(self.poll_interval)
             else:
                 time.sleep(self.poll_interval)
+
+
+class ExecutionPool:
+    """
+    Run added InputFiles concurrently, at most parallel_limit at a time.
+
+    Candidate replacement for ExecutionQueue, built on
+    concurrent.futures.ThreadPoolExecutor instead of a hand-rolled scheduler
+    thread. Each worker thread runs one simulation at a time through the
+    blocking execution path (InputFile.execute() with __parallel__ = False):
+    commands.start_log() itself waits for the simulator process, joins the
+    log-pump threads and finishes the log file, and the convergence check runs
+    inline in InputFile.execute(). Completion is therefore event-driven — no
+    polling loop, no poll_interval — and an exception in a worker cannot kill
+    a scheduler thread: it is captured in the corresponding future and
+    re-raised by join().
+
+    Unlike ExecutionQueue there is no terminate_empty flag: the pool accepts
+    add() at any point — before or after start(), even after join() — until
+    stop() shuts it down. Idle worker threads cost nothing and exit with the
+    interpreter, so calling stop() is optional.
+
+    Parameters
+    ----------
+    parallel_limit : int
+        maximum number of simulations running simultaneously (default: 1).
+        Same spelling as Sweep.execute_sweep(parallel_limit=...); note that
+        ExecutionQueue calls this limit_parallel.
+    **execution_kwargs :
+        forwarded to InputFile.execute() of every added file: outputdirectory,
+        show_log, convergenceCheck, convergence_check_mode, exe, license,
+        database, ... With parallel_limit > 1 and show_log=True the console
+        logs of concurrent simulations interleave (the per-simulation .log
+        files are unaffected). convergenceCheck with mode 'pause' can prompt
+        for several finished simulations at once (unlike ExecutionQueue,
+        which serialized the prompts through its manager thread); with
+        parallel_limit > 1 prefer mode 'terminate' or 'continue'.
+
+    Attributes
+    ----------
+    finished : list
+        info dicts (as returned by InputFile.execute()) of the completed
+        simulations, in completion order.
+    errors : list
+        exceptions raised by workers; filled by join() once all work is done.
+
+    Methods
+    -------
+    add(*input_files)
+        hand InputFiles to the pool. Buffered before start(), submitted to the
+        workers immediately after it.
+    start()
+        create the worker threads and submit everything buffered so far.
+    join(timeout=None)
+        wait until the work submitted so far is done, or timeout (in seconds)
+        elapses — check is_alive() to tell which. Once everything is done,
+        re-raises the first worker exception, if any (all of them are kept in
+        .errors; successful runs are in .finished either way).
+    is_alive()
+        True while at least one added simulation has not finished.
+    stop()
+        wait for outstanding work and shut the pool down; add() raises
+        afterwards.
+    """
+
+    def __init__(self, parallel_limit: int = 1, **execution_kwargs):
+        self.parallel_limit = parallel_limit
+        self.execution_kwargs = execution_kwargs
+        self.finished = []
+        self.errors = []
+        self._executor = None
+        self._futures = []
+        self._buffer = []
+        self._lock = threading.Lock()
+
+    def add(self, *input_files: InputFileTemplate):
+        with self._lock:
+            if self._executor is None:
+                self._buffer.extend(input_files)
+                return
+            executor = self._executor
+        futures = [executor.submit(self._execute_one, f) for f in input_files]
+        with self._lock:
+            self._futures.extend(futures)
+
+    def start(self):
+        with self._lock:
+            if self._executor is not None:
+                raise RuntimeError("ExecutionPool can only be started once")
+            self._executor = concurrent.futures.ThreadPoolExecutor(
+                max_workers=self.parallel_limit,
+                thread_name_prefix="ExecutionPool",
+            )
+            buffer, self._buffer = self._buffer, []
+        self.add(*buffer)
+
+    def _execute_one(self, input_file):
+        # The blocking path on purpose: start_log(parallel=False) waits for the
+        # process and tears down the log threads, InputFile.execute() runs the
+        # convergence check — nothing is left to supervise from here.
+        input_file.__parallel__ = False
+        info = input_file.execute(**self.execution_kwargs)
+        with self._lock:
+            self.finished.append(info)
+            n_done, n_known = len(self.finished), len(self._futures)
+        if not self.execution_kwargs.get("show_log", True):
+            print(f"\nSimulations finished: {n_done} of {n_known} submitted")
+        return info
+
+    def join(self, timeout=None):
+        with self._lock:
+            if self._executor is None:
+                raise RuntimeError("cannot join ExecutionPool before it is started")
+            futures = list(self._futures)
+        _, not_done = concurrent.futures.wait(futures, timeout=timeout)
+        if not_done:
+            return
+        with self._lock:
+            all_futures = list(self._futures)
+        if len(all_futures) > len(futures):
+            # work was added while waiting; the caller sees is_alive() True
+            return
+        self.errors = [f.exception() for f in all_futures if f.exception() is not None]
+        if self.errors:
+            raise self.errors[0]
+
+    def is_alive(self):
+        with self._lock:
+            if self._buffer:
+                return True
+            futures = list(self._futures)
+        return any(not f.done() for f in futures)
+
+    def stop(self):
+        with self._lock:
+            if self._executor is None:
+                raise RuntimeError("cannot stop ExecutionPool before it is started")
+            executor = self._executor
+        executor.shutdown(wait=True)
 
 
 class Sweep:
