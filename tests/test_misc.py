@@ -1,10 +1,11 @@
 import itertools
 import os
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
-from nextnanopy.utils.misc import candidate_names, savetxt
+from nextnanopy.utils.misc import candidate_names, mkdir_even_if_exists, savetxt
 
 
 class TestCandidateNames(unittest.TestCase):
@@ -182,6 +183,97 @@ class TestSavetxt(unittest.TestCase):
         out = savetxt(str(self.folder / "ex.in"), "x")
         self.assertIsInstance(out, str)
         self.assertTrue(os.path.isfile(out))
+
+
+class TestMkdirEvenIfExists(unittest.TestCase):
+    """Contract of mkdir_even_if_exists.
+
+    1. If the requested name is free, that directory is created and returned as-is.
+    2. Otherwise the first free index is appended - name_0, name_1, ... - filling any gaps.
+    3. The directory is claimed by creating it, not by checking-then-creating, so concurrent
+       callers in the same folder can never be handed the same name.
+
+    Every test checks the returned path is a real directory the call created.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.folder = self._tmp.name
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def mkdir(self, name="sweep"):
+        """mkdir_even_if_exists, asserting it really created the directory it returned."""
+        out = mkdir_even_if_exists(self.folder, name)
+        self.assertTrue(os.path.isdir(out), f"returned {out}, but no such directory exists")
+        self.assertEqual(os.path.dirname(out), self.folder)
+        return os.path.basename(out)
+
+    def existing(self, *names):
+        for name in names:
+            os.makedirs(os.path.join(self.folder, name))
+
+    def assertFolderHolds(self, *names):
+        self.assertEqual(sorted(os.listdir(self.folder)), sorted(names))
+
+    # --- rule 1: a free name is used unchanged ---------------------------------
+
+    def test_free_name_is_created_without_an_index(self):
+        self.assertEqual(self.mkdir("sweep"), "sweep")
+        self.assertFolderHolds("sweep")
+
+    # --- rule 2: taken name -> first free index, gaps included -----------------
+
+    def test_taken_name_falls_back_to_index_0(self):
+        self.existing("sweep")
+        self.assertEqual(self.mkdir("sweep"), "sweep_0")
+        self.assertFolderHolds("sweep", "sweep_0")
+
+    def test_repeated_calls_walk_up_the_indices(self):
+        names = [self.mkdir("sweep") for _ in range(3)]
+        self.assertEqual(names, ["sweep", "sweep_0", "sweep_1"])
+        self.assertFolderHolds("sweep", "sweep_0", "sweep_1")
+
+    def test_gap_in_the_indices_is_reused(self):
+        self.existing("sweep", "sweep_0", "sweep_2")
+        self.assertEqual(self.mkdir("sweep"), "sweep_1")
+        self.assertFolderHolds("sweep", "sweep_0", "sweep_1", "sweep_2")
+
+    def test_index_uses_an_underscore_separator(self):
+        # consistent with candidate_names: name_0, not name0
+        self.existing("sweep")
+        self.assertEqual(self.mkdir("sweep"), "sweep_0")
+
+    # --- rule 3: concurrent callers never collide ------------------------------
+
+    def test_concurrent_callers_get_distinct_directories(self):
+        n = 40
+        results = []
+        errors = []
+        lock = threading.Lock()
+        barrier = threading.Barrier(n)
+
+        def worker():
+            barrier.wait()  # release all at once to maximize contention
+            try:
+                out = mkdir_even_if_exists(self.folder, "sweep")
+            except Exception as exc:  # a TOCTOU race would surface as FileExistsError here
+                with lock:
+                    errors.append(repr(exc))
+            else:
+                with lock:
+                    results.append(out)
+
+        threads = [threading.Thread(target=worker) for _ in range(n)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        self.assertEqual(errors, [], "a race caused an exception")
+        self.assertEqual(len(set(results)), n, "two callers were handed the same directory")
+        self.assertTrue(all(os.path.isdir(d) for d in results))
 
 
 if __name__ == "__main__":

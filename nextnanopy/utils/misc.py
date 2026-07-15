@@ -137,23 +137,26 @@ def show_message(msg):
 
 def mkdir_even_if_exists(path, name):
     """creates a directory under path with a given name. If exists, adds integer number to directory name.
-    returns directory full path"""
+    returns directory full path
+
+    The name is claimed by creating the directory, not by checking whether it exists and creating
+    afterwards, so two processes making directories in the same folder at the same time cannot be
+    handed the same name.
+    """
     directory = os.path.join(path, name)
-    if os.path.exists(directory):
-        i = 0
-        while True:
-            directory_numbered = directory + str(i)
-            if os.path.exists(directory_numbered):
-                i += 1
-            elif i > 2147483646:
-                raise StopIteration("too many folders with the same name")
-            else:
-                os.makedirs(directory_numbered)
-                directory = directory_numbered
-                break
-    else:
-        os.makedirs(directory)
-    return directory
+    for i in itertools.count(-1):
+        # -1 yields the bare name first, then name_0, name_1, ...
+        if i > 2147483646:
+            raise RuntimeError("too many folders with the same name")
+        candidate = directory if i < 0 else f"{directory}_{i}"
+        try:
+            # os.makedirs is atomic: it creates the directory only if it does not exist and
+            # raises otherwise, in one step - both the existence check and the guard against a
+            # racing process taking the same name.
+            os.makedirs(candidate)
+        except FileExistsError:
+            continue
+        return candidate
 
 
 def combinations(*args):
