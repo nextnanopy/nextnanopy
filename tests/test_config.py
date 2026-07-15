@@ -33,9 +33,11 @@ class Test_NNConfig(unittest.TestCase):
             "softkill",
         ]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano3"].keys())
             self.assertTrue(option in config.defaults["nextnano3"].keys())
             self.assertTrue(option in config.config["nextnano3"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        for option in ["threads", "debuglevel", "cancel", "softkill"]:
+            self.assertTrue(option in config.validators["nextnano3"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
 
     def test_default_nnp(self):
@@ -46,9 +48,10 @@ class Test_NNConfig(unittest.TestCase):
         self.assertTrue("nextnano++" in config.config.keys())
         options = ["exe", "license", "database", "threads", "outputdirectory"]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano++"].keys())
             self.assertTrue(option in config.defaults["nextnano++"].keys())
             self.assertTrue(option in config.config["nextnano++"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        self.assertTrue("threads" in config.validators["nextnano++"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
 
     def test_default_negf(self):
@@ -59,9 +62,10 @@ class Test_NNConfig(unittest.TestCase):
         self.assertTrue("nextnano.NEGF" in config.config.keys())
         options = ["exe", "license", "database", "threads", "outputdirectory"]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano.NEGF"].keys())
             self.assertTrue(option in config.defaults["nextnano.NEGF"].keys())
             self.assertTrue(option in config.config["nextnano.NEGF"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        self.assertTrue("threads" in config.validators["nextnano.NEGF"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
 
     def test_default_nnevo(self):
@@ -72,9 +76,11 @@ class Test_NNConfig(unittest.TestCase):
         self.assertTrue("nextnanoevo" in config.config.keys())
         options = ["license"]
         for option in options:
-            self.assertTrue(option in config.validators["nextnanoevo"].keys())
             self.assertTrue(option in config.defaults["nextnanoevo"].keys())
             self.assertTrue(option in config.config["nextnanoevo"].keys())
+        # nnevo has no option needing type conversion, so its validator dict is empty;
+        # 'license' is a path kept verbatim.
+        self.assertFalse("license" in config.validators["nextnanoevo"].keys())
         option = "exe"  # no exe for nnevo
         self.assertFalse(option in config.validators["nextnanoevo"].keys())
         self.assertFalse(option in config.defaults["nextnanoevo"].keys())
@@ -100,9 +106,11 @@ class Test_NNConfig(unittest.TestCase):
             "softkill",
         ]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano3"].keys())
             self.assertTrue(option in config.defaults["nextnano3"].keys())
             self.assertTrue(option in config.config["nextnano3"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        for option in ["threads", "debuglevel", "cancel", "softkill"]:
+            self.assertTrue(option in config.validators["nextnano3"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
         if Path(config.fullpath).is_file():
             Path(config.fullpath).unlink()
@@ -132,9 +140,10 @@ class Test_NNConfig(unittest.TestCase):
         self.assertTrue("nextnano++" in config.config.keys())
         options = ["exe", "license", "database", "threads", "outputdirectory"]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano++"].keys())
             self.assertTrue(option in config.defaults["nextnano++"].keys())
             self.assertTrue(option in config.config["nextnano++"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        self.assertTrue("threads" in config.validators["nextnano++"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
         if Path(config.fullpath).is_file():
             Path(config.fullpath).unlink()
@@ -164,9 +173,10 @@ class Test_NNConfig(unittest.TestCase):
         self.assertTrue("nextnano.NEGF" in config.config.keys())
         options = ["exe", "license", "database", "threads", "outputdirectory"]
         for option in options:
-            self.assertTrue(option in config.validators["nextnano.NEGF"].keys())
             self.assertTrue(option in config.defaults["nextnano.NEGF"].keys())
             self.assertTrue(option in config.config["nextnano.NEGF"].keys())
+        # Only options that need type conversion carry a validator; path options do not.
+        self.assertTrue("threads" in config.validators["nextnano.NEGF"].keys())
         self.assertTrue(Path(config.fullpath).is_file())
         if Path(config.fullpath).is_file():
             Path(config.fullpath).unlink()

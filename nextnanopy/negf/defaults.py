@@ -6,7 +6,6 @@ from nextnanopy.utils.formatting import (
     generate_command,
     is_variable,
     pattern_in_text,
-    str_to_path,
 )
 
 fmt_classic = {
@@ -21,11 +20,11 @@ fmt = {
     "input_pattern": "nextnano.NEGF{",
 }
 
+# Only options whose raw config string needs converting to another type get a
+# validator. Path options (exe/license/database/outputdirectory) are kept verbatim:
+# no useful validation exists at config-load time (see decisions_later.md), and their
+# absence here means validate_config() passes them through untouched.
 config_validator = {
-    "exe": str_to_path,
-    "license": str_to_path,
-    "database": str_to_path,
-    "outputdirectory": str_to_path,
     "threads": int,
 }
 

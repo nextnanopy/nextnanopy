@@ -88,11 +88,6 @@ def preview(text, nums=True):
             print(f"{line}")
 
 
-def str_to_path(string):
-    path = rf"{string}"
-    return path
-
-
 def _path(path):
     if path:
         path = rf"{path}"
