@@ -1,9 +1,18 @@
+from importlib.metadata import PackageNotFoundError, version
+
 from nextnanopy.commands import execute
 from nextnanopy.defaults import NNConfig
 from nextnanopy.inputs import InputFile, Sweep
 from nextnanopy.outputs import DataFile, DataFolder
 
 # from nextnanopy.shapes import GdsPolygonsRaw
+
+try:
+    __version__ = version("nextnanopy")
+except PackageNotFoundError:
+    # Package is not installed (e.g. running from a source checkout without
+    # `pip install -e .`); there is no metadata to read the version from.
+    __version__ = "unknown"
 
 __all__ = [
     "execute",
@@ -14,6 +23,7 @@ __all__ = [
     "DataFolder",
     "config",
     "get_config",
+    "__version__",
 ]
 
 _config = None
