@@ -243,7 +243,7 @@ class Test_nnp(unittest.TestCase):
         file = InputFile(fullpath, parse=True)
         rendered = str(file.content)
 
-        for statement in ['pos =', 'spacing =', 'name = "GaAs"', "num_ev =", "alloy_x ="]:
+        for statement in ["pos =", "spacing =", 'name = "GaAs"', "num_ev =", "alloy_x ="]:
             self.assertEqual(
                 rendered.count(statement),
                 file.raw_text.count(statement),
@@ -1095,9 +1095,7 @@ class TestSweep(unittest.TestCase):
             calls.append(self.fullpath)
             return real_load_raw(self, *args, **kwargs)
 
-        with unittest.mock.patch.object(
-            InputFileTemplate, "load_raw", counting_load_raw
-        ):
+        with unittest.mock.patch.object(InputFileTemplate, "load_raw", counting_load_raw):
             sweep = Sweep({"float": [1, 2, 5]}, fullpath)
 
         prototype_reads = [c for c in calls if Path(c) == fullpath]
