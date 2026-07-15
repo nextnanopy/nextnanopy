@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nextnanopy"
+version = "1.1.1"
+description = "Useful tools to interface the nextnano software (https://www.nextnano.com/)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [
+    { name = "nextnano GmbH", email = "python@nextnano.com" },
+]
+keywords = ["nextnano"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Customer Service",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+]
+dependencies = [
+    "numpy>=1.18",
+    "pyvista>=0.27",
+]
+
+[project.optional-dependencies]
+gdspy = ["gdspy>=1.6"]
+matplotlib = ["matplotlib>=3.2"]
+cycler = ["cycler>=0.10"]
+shapely = ["shapely>=1.7"]
+
+[project.urls]
+Homepage = "https://github.com/nextnano-GmbH/nextnanopy"
+
+[tool.setuptools.packages.find]
+include = ["nextnanopy*"]
+
+[tool.setuptools.package-data]
+"nextnanopy.utils.styles" = ["*.mplstyle"]
