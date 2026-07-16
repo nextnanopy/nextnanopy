@@ -12,12 +12,6 @@ products = [
     "nextnanoevo",
 ]
 config_default_path = Path.home() / ".nextnanopy-config"
-messages = {
-    "load_input": [None, None],
-    "save_input": [None, None],
-    "execute_input": [None, None],
-    "load_output": [None, None],
-}
 
 
 def get_InputFile(product):

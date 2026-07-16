@@ -18,32 +18,11 @@ from nextnanopy.utils.misc import (
     get_file_extension,
     get_filename,
     get_folder,
-    message_decorator,
     mkdir_even_if_exists,
     mkdir_if_not_exist,
     savetxt,
 )
 from nextnanopy.utils.mycollections import DictList
-
-_msgs = defaults.messages["load_input"]
-
-
-def load_message(method):
-    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
-
-
-_msgs = defaults.messages["save_input"]
-
-
-def save_message(method):
-    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
-
-
-_msgs = defaults.messages["execute_input"]
-
-
-def execute_message(method):
-    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 class InputFileTemplate:
@@ -227,7 +206,6 @@ class InputFileTemplate:
             else:
                 print(f"{line}")
 
-    @load_message
     def load(self, fullpath, text=None):
         """
         The steps are the following:
@@ -262,7 +240,6 @@ class InputFileTemplate:
         if self.product not in defaults.products:
             self.product = "not valid"
 
-    @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True, temp=False, content=False):
         """
         Save the current information into a file.
@@ -312,7 +289,6 @@ class InputFileTemplate:
         )
         return self.fullpath
 
-    @execute_message
     def execute(
         self, show_log=True, convergenceCheck=False, convergence_check_mode="pause", **kwargs
     ):

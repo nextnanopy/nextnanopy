@@ -1,4 +1,3 @@
-import functools
 import itertools
 import os
 from pathlib import Path
@@ -111,28 +110,6 @@ def get_file_idx(file):
         except ValueError:
             pass
     return idx
-
-
-def message_decorator(method, init_msg=None, end_msg=None):
-    @functools.wraps(method)
-    def f(*args, **kwargs):
-        show_message(init_msg)
-        result = method(*args, **kwargs)
-        show_message(end_msg)
-        return result
-
-    return f
-
-
-def show_message(msg):
-    if msg is None:
-        return
-    if isinstance(msg, str):
-        print(msg)
-    elif callable(msg):
-        msg()
-    else:
-        pass
 
 
 def mkdir_even_if_exists(path, name):

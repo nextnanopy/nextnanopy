@@ -11,14 +11,8 @@ import pyvista as pv
 from nextnanopy import defaults
 from nextnanopy.utils.datasets import Coord, Variable
 from nextnanopy.utils.formatting import best_str_to_name_unit
-from nextnanopy.utils.misc import get_filename, message_decorator
+from nextnanopy.utils.misc import get_filename
 from nextnanopy.utils.mycollections import DictList
-
-_msgs = defaults.messages["load_output"]
-
-
-def load_message(method):
-    return message_decorator(method, init_msg=_msgs[0], end_msg=_msgs[1])
 
 
 def displayname(data):
@@ -269,7 +263,6 @@ class Output:
         dl.update(self.variables)
         return dl
 
-    @load_message
     def load(self):
         pass
 
@@ -385,7 +378,6 @@ class DataFileTemplate(Output):
         self.product = product
         self.load(**loader_kwargs)
 
-    @load_message
     def load(self, **loader_kwargs):
         """
         Find the loader and update the stored information with the loaded data
