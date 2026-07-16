@@ -40,22 +40,6 @@ def get_InputFile(product):
     return InputFile
 
 
-def get_DataFile(product):
-    if product == "nextnano3":
-        from nextnanopy.nn3.outputs import DataFile
-    elif product == "nextnano++":
-        from nextnanopy.nnp.outputs import DataFile
-    elif product == "nextnano.NEGF_classic" or product == "nextnano.NEGF":
-        from nextnanopy.negf.outputs import DataFile
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.outputs import DataFile
-    elif product == "nextnanoevo":
-        raise ValueError("There is no DataFile format for nextnanoevo")
-    else:
-        raise ValueError(f"{product} is not valid")
-    return DataFile
-
-
 def get_DataFile_loader(product):
     """Return the product's get_loader(extension, filename_only) function."""
     if product == "nextnano3":

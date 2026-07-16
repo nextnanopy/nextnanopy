@@ -182,7 +182,7 @@ class _Raises:
 RAISES = _Raises()
 
 
-# The product dispatch matrix: what each of defaults.py's seven getters must return for
+# The product dispatch matrix: what each of defaults.py's six getters must return for
 # each product, or RAISES where it must reject it.
 #
 # Spelled out longhand against objects imported straight from the product packages, on
@@ -201,7 +201,6 @@ RAISES = _Raises()
 DISPATCH_MATRIX = {
     "nextnano++": {
         "InputFile": nnp_inputs.InputFile,
-        "DataFile": nnp_outputs.DataFile,
         "DataFile_loader": nnp_outputs.get_loader,
         "command": nnp_defaults.command_nnp,
         "fmt": nnp_defaults.fmt,
@@ -210,7 +209,6 @@ DISPATCH_MATRIX = {
     },
     "nextnano3": {
         "InputFile": nn3_inputs.InputFile,
-        "DataFile": nn3_outputs.DataFile,
         "DataFile_loader": nn3_outputs.get_loader,
         "command": nn3_defaults.command_nn3,
         "fmt": nn3_defaults.fmt,
@@ -219,7 +217,6 @@ DISPATCH_MATRIX = {
     },
     "nextnano.NEGF": {
         "InputFile": negf_inputs.InputFile,
-        "DataFile": negf_outputs.DataFile,
         "DataFile_loader": negf_outputs.get_loader,
         "command": negf_defaults.command_negf,
         "fmt": negf_defaults.fmt,
@@ -228,7 +225,6 @@ DISPATCH_MATRIX = {
     },
     "nextnano.NEGF_classic": {
         "InputFile": negf_inputs_classic.InputFile,
-        "DataFile": negf_outputs.DataFile,  # shared with nextnano.NEGF
         "DataFile_loader": negf_outputs.get_loader,  # shared with nextnano.NEGF
         "command": negf_defaults.command_negf_classic,
         "fmt": negf_defaults.fmt_classic,
@@ -237,7 +233,6 @@ DISPATCH_MATRIX = {
     },
     "nextnano.MSB": {
         "InputFile": msb_inputs.InputFile,
-        "DataFile": msb_outputs.DataFile,
         "DataFile_loader": msb_outputs.get_loader,
         "command": msb_defaults.command_msb,
         "fmt": msb_defaults.fmt,
@@ -245,11 +240,10 @@ DISPATCH_MATRIX = {
         "config_default": msb_defaults.config_default,
     },
     # nextnanoevo is the shape that makes the matrix worth writing down: it is a real
-    # product with real config, but it has no input-file format at all, so five of its
-    # seven cells are rejections and only the config pair resolves.
+    # product with real config, but it has no input-file format at all, so four of its
+    # six cells are rejections and only the config pair resolves.
     "nextnanoevo": {
         "InputFile": RAISES,
-        "DataFile": RAISES,
         "DataFile_loader": RAISES,
         "command": RAISES,
         "fmt": RAISES,
@@ -260,7 +254,6 @@ DISPATCH_MATRIX = {
 
 DISPATCH_GETTERS = {
     "InputFile": defaults.get_InputFile,
-    "DataFile": defaults.get_DataFile,
     "DataFile_loader": defaults.get_DataFile_loader,
     "command": defaults.get_command,
     "fmt": defaults.get_fmt,
@@ -288,7 +281,7 @@ class TestProductDispatchMatrix(unittest.TestCase):
 
     def test_matrix_covers_every_supported_product(self):
         # Fails when a product is added to defaults.products without a matrix row -- which
-        # is the moment to check it was wired into all seven getters, not just some. That
+        # is the moment to check it was wired into all six getters, not just some. That
         # is exactly the drift the registry is meant to make impossible.
         self.assertEqual(set(DISPATCH_MATRIX), set(defaults.products))
 
