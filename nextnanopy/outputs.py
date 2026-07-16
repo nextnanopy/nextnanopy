@@ -424,12 +424,6 @@ class DataFile(DataFileTemplate):
             resolve = defaults.get_DataFile_loader(self.product)
             loader = resolve(self.extension, self.filename_only)
         else:
-            print(
-                "[Warning] nextnano product is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB"
-            )
-            print(
-                "[Warning] Autosearching for the best loading method. Note: The result may not be correct"
-            )
             loader = self.find_loader()
         return loader
 
@@ -438,6 +432,14 @@ class DataFile(DataFileTemplate):
         # '.txt' actually needs product detection.
         if self.extension != ".txt":
             return resolve_loader(self.extension, self.filename_only)
+
+        # stacklevel=3: find_loader() <- get_loader() <- load() <- user.
+        warnings.warn(
+            "nextnano product is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB. "
+            "Autosearching for the best loading method to parse this '.txt' file. "
+            "Note: the result may not be correct.",
+            stacklevel=3,
+        )
 
         # Probe the products that support '.txt' (historic order: nn3 first).
         from nextnanopy.nn3 import outputs as nn3_outputs
