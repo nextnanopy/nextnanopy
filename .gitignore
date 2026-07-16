@@ -4,3 +4,16 @@ dist/
 
 .vscode/
 **/__pycache__/
+
+# virtual envs 
+.venv/
+
+# test/tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+*.log

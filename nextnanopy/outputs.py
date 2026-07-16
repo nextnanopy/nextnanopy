@@ -130,7 +130,7 @@ class DataFolder:
                 # stacklevel=1: load() recurses into nested DataFolders, so the distance
                 # to the caller varies with folder nesting depth.
                 warnings.warn(
-                    f"foldername '{key}' is not availabel for attribute navigation."
+                    f"foldername '{key}' is not available for attribute navigation."
                     " Please, use DataFolder.go_to()",
                     stacklevel=1,
                 )
@@ -872,12 +872,6 @@ class Dat(Output):
 
         columns_and_units = [self._extract_name_and_unit(column) for column in header]
 
-        # diff = len(columns) - len(units)
-        # if len(columns) > nb:
-        #     columns = columns[0:nb]
-        # elif diff > 0:
-        #     empty = [""] * diff
-        #     units.extend(empty)
         ndim = 0
         dkeys = []
 
@@ -892,15 +886,7 @@ class Dat(Output):
         return self.metadata
 
     def load_data(self):
-        data = []
         meta = self.metadata
-        # with open(self.fullpath, 'r') as f:
-        #     for i, line in enumerate(f):
-        #         if i < meta['skip_rows']:
-        #             continue
-        #         line = line.replace('\n', '').strip().split()
-        #         if line:
-        #             data.append(line)
         data = np.loadtxt(self.fullpath, skiprows=meta["skip_rows"])
         data = np.array(data, dtype=float).T  # columns 1st index
         coords, variables = DictList(), DictList()

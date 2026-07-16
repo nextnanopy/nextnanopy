@@ -261,7 +261,6 @@ class InputFileTemplate:
     def validate(self):
         if self.product not in defaults.products:
             self.product = "not valid"
-            # raise ValueError(f'Not valid input file')
 
     @save_message
     def save(self, fullpath=None, overwrite=False, automkdir=True, temp=False, content=False):
@@ -549,69 +548,7 @@ class InputFileTemplate:
         return iter(self.variables.values())
 
 
-# def decor(func):
-#     def inner(*args,**kwargs):
-#
-#         args = list(args)
-#         initial_object = args[0]
-#         if hasattr(initial_object, '_helper_input_file'):
-#             helper =  initial_object._helper_input_file
-#         else:
-#             func(*args,**kwargs)
-#             return
-#
-#         helper_func = getattr(helper, func.__name__)
-#
-#
-#         args = args[1:]
-#
-#
-#         # print(kwargs)
-#         #print('Start of decor message')
-#         helper_func(*args, **kwargs)
-#
-#         for key in helper.__dict__:
-#             setattr(initial_object, key, helper.__dict__[key])
-#         #print('End of decor message')
-#     return inner
-#
-# def class_decorator(cls):
-#     for attr_name in dir(cls):
-#         attr_value = getattr(cls, attr_name)
-#         if hasattr(attr_value, '__call__') and not attr_name.startswith('__') and attr_name !='load': # check if attr is a function
-#             setattr(cls, attr_name, decor(attr_value))
-#     return cls
-
-
-# @class_decorator
 class InputFile(InputFileTemplate):
-    # def __init__(self,fullpath = None, configpath = None):
-    #
-    #     self.raw_lines = []
-    #     self.variables = DictList()
-    #     self.content = None
-    #     self.fullpath = fullpath
-    #     self.product = 'not valid'
-    #     self.__parallel__ = False
-    #     if fullpath is not None:
-    #         self.clear()
-    #         self.fullpath = fullpath
-    #         self.load_raw()
-    #         self.find_product()
-    #         self.validate()
-    #     if configpath is None:
-    #         self.config = defaults.NNConfig()
-    #     else:
-    #         self.config = defaults.NNConfig(configpath)
-    #     self.execute_info = {}
-    #
-    #
-    #     _helper_input_file_type = defaults.get_InputFile(self.product)
-    #     self._helper_input_file = _helper_input_file_type(fullpath = fullpath, configpath = configpath)
-    #
-    #     for key in self._helper_input_file.__dict__:
-    #         setattr(self, key, self._helper_input_file.__dict__[key])
-
     def __new__(cls, fullpath=None, configpath=None, *args, **kwargs):
         # The text is read here to pick the product's class, then passed on so the
         # chosen class does not read the same file again.
@@ -623,44 +560,6 @@ class InputFile(InputFileTemplate):
             text = f.read()
         _InputFileType = defaults.get_InputFile(defaults.input_text_type(text))
         return _InputFileType(fullpath, configpath, text=text, **kwargs)
-
-    # def load_variables(self):
-    #     """
-    #     Convenient method to find the best loading method for each nextnano product.
-    #     self.variables will be updated
-    #     """
-    #     _InputFile = defaults.get_InputFile(self.product)
-    #     file = _InputFile()
-    #     file.text = self.text
-    #     self.variables = file.variables
-    #
-    # def load_content(self):
-    #     _InputFile = defaults.get_InputFile(self.product)
-    #     file = _InputFile()
-    #     file.text = self.text
-    #     file.load_content()
-    #     self.content = file.content
-    #
-    # @property
-    # def lines(self):
-    #     """
-    #     update method to support NEGF input
-    #     """
-    #     try:
-    #         _InputFile = defaults.get_InputFile(self.product)
-    #     except ValueError:
-    #         _InputFile = InputFileTemplate
-    #
-    #
-    #     file = _InputFile()
-    #     #file.product = self.product
-    #     #file.text = self.raw_text
-    #     #file.variables = self.variables
-    #     #print(file.product)
-    #     #print(type(file))
-    #     file.variables = self.variables
-    #     file.raw_lines = self.raw_lines
-    #     return file.lines
 
 
 class ExecutionQueue(threading.Thread):
@@ -675,7 +574,7 @@ class ExecutionQueue(threading.Thread):
         number of InputFiles to be executed in parallel (default: 1)
     terminate_empty : bool
         If True, terminates once all added files are executed and logged.
-        If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
+        If you want to add more input files even after execution of all added in the beginning, use terminate_empty = False
         Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
     convergenceCheck: bool
         see convergenceCheck in InputFile
@@ -714,7 +613,7 @@ class ExecutionQueue(threading.Thread):
 
     stop()
         stop the thread (once all added files are executed)
-        only necessary if termanate_empty = True
+        only necessary if terminate_empty = True
 
 
     -------internal (or for advanced users)
@@ -1168,9 +1067,9 @@ class Sweep:
                 'terminate': terminate the script if the simulation did not converge
                 'continue': notify a user but continues execution of script
         parallel_limit : int, optional
-            number of simulation to run simultaniously. Espicially usefull for simple simulations which migh be more efficiently rn in parallel. Be aware that
+            number of simulations to run simultaneously. Especially useful for simple simulations which might be more efficiently run in parallel. Be aware that
             some nextnano solvers parallelize computations internally in threads (controlled by --threads in nextnanopy config). To avoid unexpected behaviour and
-            not desirable decrease of simulation speed use the rule: parallel_limit*threads<= number of physical cores of the mahcine
+            not desirable decrease of simulation speed use the rule: parallel_limit*threads<= number of physical cores of the machine
             default 1
         separate_sweep_dir : bool, optional
             if True, creates separate directory to store subdirectories of the sweep simulation. If False, stores all directories without separate directory.

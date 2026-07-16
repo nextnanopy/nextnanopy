@@ -232,13 +232,13 @@ def calculate_CV(output_directory_path, bias1=None, bias2=None, total=False, net
     if bias1:
         if bias1 not in common_biases_list:
             raise ValueError(
-                "Specified reference bias1 is not commmon bias for holes and electrons"
+                "Specified reference bias1 is not common bias for holes and electrons"
             )
 
         if bias2:
             if bias2 not in common_biases_list:
                 raise ValueError(
-                    "Specified reference bias2 is not commmon bias for holes and electrons"
+                    "Specified reference bias2 is not common bias for holes and electrons"
                 )
             else:
                 voltage = dfile_hole.variables[bias2].value - dfile_hole.variables[bias1].value
