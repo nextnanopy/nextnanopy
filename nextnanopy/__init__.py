@@ -1,6 +1,5 @@
 from importlib.metadata import PackageNotFoundError, version
 
-from nextnanopy.commands import execute
 from nextnanopy.defaults import NNConfig
 from nextnanopy.inputs import InputFile, Sweep
 from nextnanopy.outputs import DataFile, DataFolder
@@ -13,7 +12,6 @@ except PackageNotFoundError:
     __version__ = "unknown"
 
 __all__ = [
-    "execute",
     "NNConfig",
     "InputFile",
     "Sweep",
