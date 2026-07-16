@@ -1,90 +1,174 @@
 import warnings
+from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 
+from nextnanopy.inputs import InputFileTemplate
+from nextnanopy.msb import defaults as _msb
+from nextnanopy.msb import inputs as _msb_inputs
+from nextnanopy.msb import outputs as _msb_outputs
+from nextnanopy.negf import defaults as _negf
+from nextnanopy.negf import inputs as _negf_inputs
+from nextnanopy.negf import inputs_classic as _negf_inputs_classic
+from nextnanopy.negf import outputs as _negf_outputs
+from nextnanopy.nn3 import defaults as _nn3
+from nextnanopy.nn3 import inputs as _nn3_inputs
+from nextnanopy.nn3 import outputs as _nn3_outputs
+from nextnanopy.nnevo import defaults as _nnevo
+from nextnanopy.nnp import defaults as _nnp
+from nextnanopy.nnp import inputs as _nnp_inputs
+from nextnanopy.nnp import outputs as _nnp_outputs
 from nextnanopy.utils.config import Config
 
-products = [
-    "nextnano++",
-    "nextnano3",
-    "nextnano.NEGF",
-    "nextnano.NEGF_classic",
-    "nextnano.MSB",
-    "nextnanoevo",
-]
 config_default_path = Path.home() / ".nextnanopy-config"
+
+# Sentinel product for text that matches no nextnano syntax. Deliberately not a PRODUCTS
+# key: it must stay out of `products`, or it would gain a section in ~/.nextnanopy-config.
+# Only get_InputFile() accepts it, returning the product-agnostic template.
+NOT_VALID = "not valid"
+
+
+@dataclass(frozen=True)
+class ProductSpec:
+    """Everything nextnanopy knows about one nextnano product.
+
+    A product need not support every part of the package. nextnanoevo has configuration
+    but no input-file format at all, so its fmt/command/detect/InputFile/get_loader are
+    None and the matching getters reject it. `None` therefore means "this product has no
+    such thing", and the getters turn that into the ValueError they always raised.
+    """
+
+    name: str
+    # Every product has configuration, including those with no input-file format.
+    config_default: dict
+    config_validator: dict
+    # Input-file support: either all of these are set, or all are None.
+    fmt: dict | None = None
+    command: Callable | None = None
+    detect: Callable[[str], bool] | None = None
+    InputFile: type | None = None
+    get_loader: Callable | None = None
+
+
+# The one place a product is defined. Adding a product is one entry here; previously it
+# meant editing `products` plus six parallel if/elif chains, where missing one left that
+# single aspect raising "is not valid" at runtime.
+#
+# Order carries two meanings, neither of which currently constrains it. `products` is
+# derived from it, so it is the order sections are written to a *fresh* config file
+# (existing files are never reordered) -- cosmetic. And input_text_type() returns the
+# first spec whose `detect` matches, so of two products that both recognize a file, the
+# earlier one wins. No shipped input file matches more than one product's pattern, so
+# today no order is more correct than another; this one is kept for historical continuity.
+# That could change: NEGF and MSB input files use nnp brace syntax, and the patterns are
+# plain substring checks, so a NEGF file that ever grows a `global{` block would be
+# detected as nextnano++ from here.
+
+PRODUCTS: dict[str, ProductSpec] = {
+    "nextnano++": ProductSpec(
+        name="nextnano++",
+        config_default=_nnp.config_default,
+        config_validator=_nnp.config_validator,
+        fmt=_nnp.fmt,
+        command=_nnp.command_nnp,
+        detect=_nnp.is_nnp_input_text,
+        InputFile=_nnp_inputs.InputFile,
+        get_loader=_nnp_outputs.get_loader,
+    ),
+    "nextnano3": ProductSpec(
+        name="nextnano3",
+        config_default=_nn3.config_default,
+        config_validator=_nn3.config_validator,
+        fmt=_nn3.fmt,
+        command=_nn3.command_nn3,
+        detect=_nn3.is_nn3_input_text,
+        InputFile=_nn3_inputs.InputFile,
+        get_loader=_nn3_outputs.get_loader,
+    ),
+    # The two NEGF variants share their whole output layer and configuration, and differ
+    # only in input syntax: classic is XML, modern is nnp-style braces.
+    "nextnano.NEGF": ProductSpec(
+        name="nextnano.NEGF",
+        config_default=_negf.config_default,
+        config_validator=_negf.config_validator,
+        fmt=_negf.fmt,
+        command=_negf.command_negf,
+        detect=_negf.is_negf_input_text,
+        InputFile=_negf_inputs.InputFile,
+        get_loader=_negf_outputs.get_loader,
+    ),
+    "nextnano.NEGF_classic": ProductSpec(
+        name="nextnano.NEGF_classic",
+        config_default=_negf.config_default,
+        config_validator=_negf.config_validator,
+        fmt=_negf.fmt_classic,
+        command=_negf.command_negf_classic,
+        detect=_negf.is_negf_classic_input_text,
+        InputFile=_negf_inputs_classic.InputFile,
+        get_loader=_negf_outputs.get_loader,
+    ),
+    "nextnano.MSB": ProductSpec(
+        name="nextnano.MSB",
+        config_default=_msb.config_default,
+        config_validator=_msb.config_validator,
+        fmt=_msb.fmt,
+        command=_msb.command_msb,
+        detect=_msb.is_msb_input_text,
+        InputFile=_msb_inputs.InputFile,
+        get_loader=_msb_outputs.get_loader,
+    ),
+    # Configuration only: nextnanoevo has no input-file format, so it is not detectable
+    # and has no fmt, command, InputFile or loader.
+    "nextnanoevo": ProductSpec(
+        name="nextnanoevo",
+        config_default=_nnevo.config_default,
+        config_validator=_nnevo.config_validator,
+    ),
+}
+
+products = list(PRODUCTS)
+
+
+def _spec(product):
+    try:
+        return PRODUCTS[product]
+    except KeyError:
+        raise ValueError(f"{product} is not valid") from None
 
 
 def get_InputFile(product):
-    if product == "nextnano++":
-        from nextnanopy.nnp.inputs import InputFile
-    elif product == "nextnano3":
-        from nextnanopy.nn3.inputs import InputFile
-    elif product == "nextnano.NEGF_classic":
-        from nextnanopy.negf.inputs_classic import InputFile
-    elif product == "nextnano.NEGF":
-        from nextnanopy.negf.inputs import InputFile
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.inputs import InputFile
-    elif product == "nextnanoevo":
-        raise ValueError("There is no InputFile format for nextnanoevo")
-    elif product == "not valid":
-        from nextnanopy.inputs import InputFileTemplate as InputFile
-    else:
-        raise ValueError(f"{product} is not valid")
-    return InputFile
+    # NOT_VALID is a sentinel rather than a spec, so it is handled before the lookup.
+    # InputFileTemplate is imported at module level like the product classes; that works
+    # only as long as nextnanopy.inputs never reads an attribute off this module while
+    # its own body runs (it imports `defaults` for use inside methods, which is fine).
+    if product == NOT_VALID:
+        return InputFileTemplate
+    spec = _spec(product)
+    if spec.InputFile is None:
+        raise ValueError(f"There is no InputFile format for {product}")
+    return spec.InputFile
 
 
 def get_DataFile_loader(product):
     """Return the product's get_loader(extension, filename_only) function."""
-    if product == "nextnano3":
-        from nextnanopy.nn3.outputs import get_loader
-    elif product == "nextnano++":
-        from nextnanopy.nnp.outputs import get_loader
-    elif product == "nextnano.NEGF_classic" or product == "nextnano.NEGF":
-        from nextnanopy.negf.outputs import get_loader
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.outputs import get_loader
-    elif product == "nextnanoevo":
-        raise ValueError("There is no DataFile format for nextnanoevo")
-    else:
-        raise ValueError(f"{product} is not valid")
-    return get_loader
+    spec = _spec(product)
+    if spec.get_loader is None:
+        raise ValueError(f"There is no DataFile format for {product}")
+    return spec.get_loader
 
 
 def get_command(product):
-    if product == "nextnano++":
-        from nextnanopy.nnp.defaults import command_nnp as command
-    elif product == "nextnano3":
-        from nextnanopy.nn3.defaults import command_nn3 as command
-    elif product == "nextnano.NEGF_classic":
-        from nextnanopy.negf.defaults import command_negf_classic as command
-    elif product == "nextnano.NEGF":
-        from nextnanopy.negf.defaults import command_negf as command
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.defaults import command_msb as command
-    elif product == "nextnanoevo":
-        raise ValueError("There is no command format for nextnanoevo")
-    else:
-        raise ValueError(f"{product} is not valid")
-    return command
+    spec = _spec(product)
+    if spec.command is None:
+        raise ValueError(f"There is no command format for {product}")
+    return spec.command
 
 
 def get_fmt(product):
-    if product == "nextnano++":
-        from nextnanopy.nnp.defaults import fmt
-    elif product == "nextnano3":
-        from nextnanopy.nn3.defaults import fmt
-    elif product == "nextnano.NEGF_classic":
-        from nextnanopy.negf.defaults import fmt_classic as fmt
-    elif product == "nextnano.NEGF":
-        from nextnanopy.negf.defaults import fmt
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.defaults import fmt
-    elif product == "nextnanoevo":
-        raise ValueError("There is no formatting defaults for nextnanoevo")
-    else:
-        raise ValueError(f"{product} is not valid")
-    return fmt
+    spec = _spec(product)
+    if spec.fmt is None:
+        raise ValueError(f"There is no formatting defaults for {product}")
+    return spec.fmt
 
 
 def input_file_type(fullpath):
@@ -94,26 +178,10 @@ def input_file_type(fullpath):
 
 
 def input_text_type(text):
-    from nextnanopy.msb.defaults import is_msb_input_text
-    from nextnanopy.negf.defaults import (
-        is_negf_classic_input_text,
-        is_negf_input_text,
-    )
-    from nextnanopy.nn3.defaults import is_nn3_input_text
-    from nextnanopy.nnp.defaults import is_nnp_input_text
-
-    if is_nn3_input_text(text):
-        return "nextnano3"
-    elif is_nnp_input_text(text):
-        return "nextnano++"
-    elif is_negf_classic_input_text(text):
-        return "nextnano.NEGF_classic"
-    elif is_negf_input_text(text):
-        return "nextnano.NEGF"
-    elif is_msb_input_text(text):
-        return "nextnano.MSB"
-    else:
-        return "not valid"
+    for spec in PRODUCTS.values():
+        if spec.detect is not None and spec.detect(text):
+            return spec.name
+    return NOT_VALID
 
 
 def get_config_validators():
@@ -127,35 +195,11 @@ def get_config_defaults():
 
 
 def _get_config_validator(product):
-    if product == "nextnano++":
-        from nextnanopy.nnp.defaults import config_validator
-    elif product == "nextnano3":
-        from nextnanopy.nn3.defaults import config_validator
-    elif product == "nextnano.NEGF_classic" or product == "nextnano.NEGF":
-        from nextnanopy.negf.defaults import config_validator
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.defaults import config_validator
-    elif product == "nextnanoevo":
-        from nextnanopy.nnevo.defaults import config_validator
-    else:
-        raise ValueError(f"{product} is not valid")
-    return config_validator
+    return _spec(product).config_validator
 
 
 def _get_config_default(product):
-    if product == "nextnano++":
-        from nextnanopy.nnp.defaults import config_default
-    elif product == "nextnano3":
-        from nextnanopy.nn3.defaults import config_default
-    elif product == "nextnano.NEGF_classic" or product == "nextnano.NEGF":
-        from nextnanopy.negf.defaults import config_default
-    elif product == "nextnano.MSB":
-        from nextnanopy.msb.defaults import config_default
-    elif product == "nextnanoevo":
-        from nextnanopy.nnevo.defaults import config_default
-    else:
-        raise ValueError(f"{product} is not valid")
-    return config_default
+    return _spec(product).config_default
 
 
 class NNConfig(Config):
