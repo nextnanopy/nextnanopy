@@ -9,6 +9,7 @@ import threading
 import time
 import warnings
 from collections.abc import Callable, Iterable
+from copy import deepcopy
 from typing import Any
 
 from nextnanopy import defaults
@@ -45,7 +46,8 @@ class InputFileTemplate:
         If it is not None, it will load the file (default: None)
     configpath : str
         path to the config file.
-        If it is None, it will use the default configuration (default: None)
+        If it is None, it takes a copy of the process-wide configuration
+        (nextnanopy.config) instead of reading a file; see Notes (default: None)
 
 
     Attributes
@@ -74,9 +76,29 @@ class InputFileTemplate:
     product : str
         detected nextnano product when the file is loaded (default: 'not valid')
     config: nextnano.NNConfig
-        config file object
+        the configuration this file runs on, bound at construction (see Notes).
+        .default_command_args reads through it, so it is what execute() turns into
+        command line arguments
     execute_info: dict
         information after executing the file
+
+    Notes
+    -----
+    The configuration is bound at construction and never re-read afterwards. With no
+    `configpath`, the file takes a *copy* of the process-wide configuration
+    (`nextnanopy.config`) as it stands at that moment. Two things follow, both
+    intended:
+
+    - `nextnanopy.config.set(...)` reaches every input file built after it, and no
+      `save()` is needed for that -- saving only matters for other processes. It
+      reaches no file that already exists.
+    - The copy is this file's own. Editing `.config` here changes neither
+      `nextnanopy.config` nor any other input file, and later edits to
+      `nextnanopy.config` do not reach this file.
+
+    So configure first, then build the input files. To point a file that already
+    exists at a different configuration, assign `.config`; to build one on a config
+    file of its own, pass `configpath`.
 
     Methods
     -------
@@ -116,7 +138,11 @@ class InputFileTemplate:
         if fullpath is not None or text is not None:
             self.load(fullpath, text=text)
         if configpath is None:
-            self.config = defaults.NNConfig()
+            # A copy of the process-wide config, not the object itself and not a fresh
+            # read of the file: the copy carries changes that were only set() on
+            # nextnanopy.config, while leaving this file free to edit .config without
+            # reaching nextnanopy.config or any other input file. See the class Notes.
+            self.config = deepcopy(defaults.get_config())
         else:
             self.config = defaults.NNConfig(configpath)
         self.execute_info = {}
@@ -919,6 +945,13 @@ class Sweep:
     """
 
     def __init__(self, variables_to_sweep, fullpath=None, configpath=None):
+        # Keep the argument, not the resolved .configpath: the latter is a real path
+        # even when configpath is None, so handing it to the generated input files
+        # would make them read the config file from disk and miss anything that was
+        # only set() on nextnanopy.config -- which the prototype below, built with
+        # configpath=None, does pick up. A sweep's files must run on the same config
+        # as the sweep itself.
+        self._configpath = configpath
         # Parse the prototype exactly once. Everything the sweep needs from an
         # input file (variables to validate against, fullpath, config, product)
         # comes from this single object instead of a throwaway plus a base-class
@@ -986,7 +1019,7 @@ class Sweep:
                 inputfile.remove()
         self.input_files = []
         if temp:
-            input_file = InputFile(fullpath=self.fullpath, configpath=self.configpath)
+            input_file = InputFile(fullpath=self.fullpath, configpath=self._configpath)
             input_file.save(temp=True, overwrite=True)
             path = input_file.fullpath
         else:
@@ -1037,7 +1070,7 @@ class Sweep:
         filename_path, filename_extension = os.path.splitext(input_file_path)
         for combination in iteration_combinations:
             filename_end = "__"
-            inputfile = InputFile(fullpath=input_file_path, configpath=self.configpath)
+            inputfile = InputFile(fullpath=input_file_path, configpath=self._configpath)
             for var_name, var_value in zip(self.var_sweep.keys(), combination, strict=True):
                 inputfile.set_variable(var_name, var_value, comment="THIS VARIABLE IS UNDER SWEEP")
                 if isinstance(var_value, str):

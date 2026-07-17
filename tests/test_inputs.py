@@ -5,6 +5,7 @@ import unittest
 import unittest.mock
 from pathlib import Path
 
+import nextnanopy
 from nextnanopy import defaults
 from nextnanopy.inputs import InputFile, InputFileTemplate, Sweep
 from nextnanopy.nnp.inputs import Parser
@@ -883,19 +884,27 @@ class TestInputFileDispatch(unittest.TestCase):
         # picks, so the load does not go back to disk for the same bytes.
         self.assertEqual(len(reads), 1)
 
-    def test_builds_the_config_once(self):
+    def test_does_not_read_the_config_file(self):
+        # The file's config is a copy of the process-wide NNConfig, which is built once
+        # per process and cached, so once it exists a construction must not go back to
+        # disk for the config at all - neither for the returned object nor for product
+        # detection. This used to be 'builds the config exactly once', back when every
+        # input file re-read ~/.nextnanopy-config for itself.
         fullpath = folder_nnp / "only_variables.in"
-        real_init = defaults.NNConfig.__init__
-        calls = []
+        defaults.get_config()  # prime the cache; the first use is what may read a file
+        reads = []
+        real_read_file = defaults.NNConfig.read_file
 
-        def counted(self, *args, **kwargs):
-            calls.append(1)
-            return real_init(self, *args, **kwargs)
+        def counted(self):
+            reads.append(self.fullpath)
+            return real_read_file(self)
 
-        with unittest.mock.patch.object(defaults.NNConfig, "__init__", counted):
-            InputFile(fullpath)
-        # only the returned object builds a config; product detection needs none.
-        self.assertEqual(len(calls), 1)
+        with unittest.mock.patch.object(defaults.NNConfig, "read_file", counted):
+            file = InputFile(fullpath)
+
+        self.assertEqual(reads, [])
+        # and it is a copy, so it still carries the values
+        self.assertEqual(file.default_command_args, defaults.get_config().config["nextnano++"])
 
     def test_dispatches_on_product(self):
         # every product must reach its own InputFile class.
@@ -1012,6 +1021,237 @@ class TestInputFileDispatch(unittest.TestCase):
         self.assertIsInstance(file, MyNnpInput)
         self.assertEqual(file.my_helper(), "hello")
         self.assertEqual(file.product, "nextnano++")
+
+
+class TestConfigAtCreation(unittest.TestCase):
+    """`InputFile(..., configpath=...)` chooses the config file the object runs on.
+
+    The config is bound once, at construction: __init__ builds an NNConfig from
+    `configpath` (or from the default path when it is None) and every later read of
+    .default_command_args - which is what execute() turns into command line arguments -
+    goes through that object. So `configpath` is the supported way to run one file
+    against a config that is not the user's ~/.nextnanopy-config.
+    """
+
+    def write_config(self, **nnp_options):
+        """Write a config file to a temp folder and return its path.
+
+        NNConfig writes the full set of defaults out when the file does not exist yet,
+        so what lands on disk is a complete config with these options overridden.
+        """
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        fullpath = Path(folder.name) / "custom.nnconfig"
+        config = defaults.NNConfig(fullpath)
+        for option, value in nnp_options.items():
+            config.set("nextnano++", option, value)
+        config.save()
+        return fullpath
+
+    def fake_default_config_path(self):
+        """Redirect the default config path at a temp folder for the current test.
+
+        Two module globals have to move, and both are restored afterwards. NNConfig
+        reads config_default_path when it is called, so patching it keeps the
+        'configpath is None' tests off the developer's real ~/.nextnanopy-config - but
+        get_config() builds at most one NNConfig per process, so a cache primed by an
+        earlier test would hand back a config built from the real path and ignore the
+        redirect entirely.
+        """
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        fullpath = Path(folder.name) / ".nextnanopy-config"
+        for attribute, value in [("config_default_path", fullpath), ("_config", None)]:
+            patch = unittest.mock.patch.object(defaults, attribute, value)
+            patch.start()
+            self.addCleanup(patch.stop)
+        return fullpath
+
+    def test_configpath_is_used_instead_of_the_default(self):
+        configpath = self.write_config(outputdirectory=r"C:\custom\out", threads=7)
+
+        file = InputFile(folder_nnp / "only_variables.in", configpath=configpath)
+
+        self.assertEqual(Path(file.configpath), configpath)
+        self.assertEqual(Path(file.config.fullpath), configpath)
+        self.assertNotEqual(Path(file.configpath), defaults.config_default_path)
+        # the values the file will run on come from that file, not from the default one
+        self.assertEqual(file.default_command_args["outputdirectory"], r"C:\custom\out")
+        # and they are validated on the way in like any other config: threads is the
+        # int 7, not the string configparser read back off disk.
+        self.assertEqual(file.default_command_args["threads"], 7)
+
+    def test_configpath_is_the_second_positional_parameter(self):
+        # __new__ spells InputFileTemplate.__init__'s parameters out and forwards them
+        # positionally, so the second positional must still be configpath.
+        configpath = self.write_config(threads=7)
+
+        file = InputFile(folder_nnp / "only_variables.in", configpath)
+
+        self.assertEqual(Path(file.configpath), configpath)
+        self.assertEqual(file.default_command_args["threads"], 7)
+
+    def test_configpath_applies_when_building_from_text(self):
+        # the config is independent of where the input came from: no file on disk, but
+        # the object still runs on the config it was given.
+        configpath = self.write_config(threads=7)
+        text = (folder_nnp / "only_variables.in").read_text()
+
+        file = InputFile(text=text, configpath=configpath)
+
+        self.assertEqual(file.product, "nextnano++")
+        self.assertEqual(Path(file.configpath), configpath)
+        self.assertEqual(file.default_command_args["threads"], 7)
+
+    def test_each_file_gets_its_own_config(self):
+        # two files, two configs: neither the objects nor their values are shared, so
+        # setting one file's config cannot reach the other.
+        first_path = self.write_config(threads=7)
+        second_path = self.write_config(threads=3)
+
+        first = InputFile(folder_nnp / "only_variables.in", configpath=first_path)
+        second = InputFile(folder_nnp / "only_variables.in", configpath=second_path)
+
+        self.assertIsNot(first.config, second.config)
+        self.assertEqual(first.default_command_args["threads"], 7)
+        self.assertEqual(second.default_command_args["threads"], 3)
+
+    def test_configpath_none_uses_the_default_config_file(self):
+        fake_default = self.fake_default_config_path()
+
+        file = InputFile(folder_nnp / "only_variables.in")
+
+        self.assertEqual(Path(file.configpath), fake_default)
+
+    def test_configpath_that_does_not_exist_yet_is_created_with_the_defaults(self):
+        # NNConfig bootstraps a missing file rather than failing, so a fresh configpath
+        # is a usable one: the file comes up on the defaults and the config now exists.
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        configpath = Path(folder.name) / "not_written_yet.nnconfig"
+
+        file = InputFile(folder_nnp / "only_variables.in", configpath=configpath)
+
+        self.assertTrue(configpath.is_file())
+        self.assertEqual(Path(file.configpath), configpath)
+        self.assertEqual(
+            file.default_command_args["threads"],
+            defaults.PRODUCTS["nextnano++"].config_default["threads"],
+        )
+
+    def test_empty_configpath_raises(self):
+        # None means 'use the default path'; an empty path is a caller bug, and must
+        # not be silently read as the default.
+        with self.assertRaises(ValueError):
+            InputFile(folder_nnp / "only_variables.in", configpath="")
+
+
+class TestConfigFromTheGlobalConfig(unittest.TestCase):
+    """`nn.config.set(...)` before `InputFile(...)` reaches the new file.
+
+    Configure the process-wide config in the script, then build the input files and run
+    them - the workflow templates/config_nextnano.py teaches. No `save()` is needed for
+    it: an input file built with no configpath copies `nn.config` as it stands, so a
+    `set()` alone carries. Saving is for other processes.
+
+    A copy, not the object itself, which is what the last two tests are for. The two
+    halves of 'bound at construction' - a new file sees the change, an existing one
+    does not - only both hold if the file took a snapshot; sharing the global object
+    would break the second, and re-reading the file from disk (as this did before)
+    breaks the first.
+    """
+
+    SENTINEL = r"C:\sentinel\never-a-real-outputdirectory"
+
+    def global_config(self):
+        """The real process-wide config, restored after the test.
+
+        Mutating it in memory is safe - save() is never called here, so the user's
+        ~/.nextnanopy-config is only ever read - but it outlives the test, hence the
+        cleanup: Test_nnp.test_config asserts a file agrees with this same object.
+        """
+        config = nextnanopy.get_config()
+        original = config.get("nextnano++", "outputdirectory")
+        self.addCleanup(config.set, "nextnano++", "outputdirectory", original)
+        return config
+
+    def test_set_on_the_global_config_reaches_a_new_input_file(self):
+        config = self.global_config()
+        config.set("nextnano++", "outputdirectory", self.SENTINEL)
+
+        file = InputFile(folder_nnp / "only_variables.in")
+
+        self.assertEqual(
+            file.default_command_args["outputdirectory"],
+            self.SENTINEL,
+            "the value set on nn.config did not reach a file built after it, so"
+            " execute() would run this file on a stale outputdirectory",
+        )
+
+    def test_set_on_the_global_config_reaches_the_files_a_sweep_creates(self):
+        # A sweep builds input files of its own, and they must agree with the sweep's
+        # own prototype: they used to be handed the resolved .configpath, which made
+        # them read the config file from disk and miss this.
+        self.addCleanup(
+            delete_files,
+            "only_variables",
+            directory=folder_nnp,
+            exceptions=["only_variables.in"],
+        )
+        config = self.global_config()
+        config.set("nextnano++", "outputdirectory", self.SENTINEL)
+
+        sweep = Sweep({"float": [1, 2]}, folder_nnp / "only_variables.in")
+        sweep.save_sweep()
+
+        self.assertEqual(sweep.config.get("nextnano++", "outputdirectory"), self.SENTINEL)
+        self.assertEqual(len(sweep.input_files), 2)
+        for input_file in sweep.input_files:
+            self.assertEqual(input_file.default_command_args["outputdirectory"], self.SENTINEL)
+
+    def test_the_config_is_bound_at_construction(self):
+        # The design, stated in one test: a file takes the config as it stands when it
+        # is built. Changing nn.config afterwards does not reach back into files that
+        # already exist - it applies to the next one built.
+        config = self.global_config()
+        before = InputFile(folder_nnp / "only_variables.in")
+
+        config.set("nextnano++", "outputdirectory", self.SENTINEL)
+        after = InputFile(folder_nnp / "only_variables.in")
+
+        self.assertEqual(after.default_command_args["outputdirectory"], self.SENTINEL)
+        self.assertNotEqual(before.default_command_args["outputdirectory"], self.SENTINEL)
+
+    def test_a_files_config_is_its_own_copy(self):
+        # Why a copy rather than the shared global object: editing one file's config
+        # must not reach nn.config, nor any other input file.
+        config = self.global_config()
+        file = InputFile(folder_nnp / "only_variables.in")
+        original = config.get("nextnano++", "outputdirectory")
+
+        file.config.set("nextnano++", "outputdirectory", self.SENTINEL)
+        other = InputFile(folder_nnp / "only_variables.in")
+
+        self.assertIsNot(file.config, config)
+        self.assertEqual(config.get("nextnano++", "outputdirectory"), original)
+        self.assertEqual(other.default_command_args["outputdirectory"], original)
+
+    def test_explicit_configpath_still_wins_over_the_global_config(self):
+        # An explicit configpath stays authoritative: it names a config file to read,
+        # and the global config must not leak into it.
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        configpath = Path(folder.name) / "explicit.nnconfig"
+        explicit = defaults.NNConfig(configpath)
+        explicit.set("nextnano++", "outputdirectory", r"C:\explicit\out")
+        explicit.save()
+
+        config = self.global_config()
+        config.set("nextnano++", "outputdirectory", self.SENTINEL)
+
+        file = InputFile(folder_nnp / "only_variables.in", configpath=configpath)
+
+        self.assertEqual(file.default_command_args["outputdirectory"], r"C:\explicit\out")
 
 
 class TestSweep(unittest.TestCase):

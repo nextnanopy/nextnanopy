@@ -1,6 +1,6 @@
 from importlib.metadata import PackageNotFoundError, version
 
-from nextnanopy.defaults import NNConfig
+from nextnanopy.defaults import NNConfig, get_config
 from nextnanopy.inputs import InputFile, Sweep
 from nextnanopy.outputs import DataFile, DataFolder
 
@@ -21,22 +21,6 @@ __all__ = [
     "get_config",
     "__version__",
 ]
-
-_config = None
-
-
-def get_config():
-    """Return the process-wide NNConfig, building it on first use.
-
-    Constructing an NNConfig reads ~/.nextnanopy-config, and creates it if it is
-    missing, so it is deliberately not done at import time: importing the package
-    must not touch the user's home directory. `nextnanopy.config` resolves here via
-    the module __getattr__ below, so the config is built on first access instead.
-    """
-    global _config
-    if _config is None:
-        _config = NNConfig()
-    return _config
 
 
 def __getattr__(name):

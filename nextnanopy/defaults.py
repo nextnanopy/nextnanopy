@@ -262,3 +262,26 @@ class NNConfig(Config):
                 self.add_section(section)
                 for option, value in self.defaults[section].items():
                     self.set(section, option, value)
+
+
+_config = None
+
+
+def get_config():
+    """Return the process-wide NNConfig, building it on first use.
+
+    Constructing an NNConfig reads ~/.nextnanopy-config, and creates it if it is
+    missing, so it is deliberately not done at import time: importing the package
+    must not touch the user's home directory. `nextnanopy.config` resolves here via
+    the module __getattr__ in nextnanopy/__init__.py, so the config is built on first
+    access instead.
+
+    This is the configuration new input files start from: with no `configpath`,
+    InputFileTemplate.__init__ takes a copy of it. It lives here rather than in
+    nextnanopy/__init__.py, where it used to, because nextnanopy.inputs has to reach
+    it and cannot import the package root -- the package root imports nextnanopy.inputs.
+    """
+    global _config
+    if _config is None:
+        _config = NNConfig()
+    return _config
