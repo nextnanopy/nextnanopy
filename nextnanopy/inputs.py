@@ -110,7 +110,10 @@ class InputFileTemplate:
         self.product = "not valid"
         self.parse = parse
         self.__parallel__ = False
-        if fullpath is not None:
+        # `text` alone is enough to load: load_raw() only opens fullpath when text is
+        # None, so a caller who already has the contents needs no file on disk. Without
+        # both, there is nothing to load and fullpath stays None.
+        if fullpath is not None or text is not None:
             self.load(fullpath, text=text)
         if configpath is None:
             self.config = defaults.NNConfig()
@@ -525,17 +528,63 @@ class InputFileTemplate:
 
 
 class InputFile(InputFileTemplate):
-    def __new__(cls, fullpath=None, configpath=None, *args, **kwargs):
-        # The text is read here to pick the product's class, then passed on so the
-        # chosen class does not read the same file again.
-        # With no fullpath there is nothing to detect, and nothing to load: dispatch
-        # on the 'not valid' sentinel, which lands on InputFileTemplate.
-        if fullpath is None:
-            return defaults.get_InputFile("not valid")(fullpath, configpath, **kwargs)
-        with open(fullpath) as f:
-            text = f.read()
+    """Load a nextnano input file as the product-specific class that fits it.
+
+    `InputFile(path)` detects the product from the file's text and returns an instance of
+    that product's class (`nextnanopy.nnp.inputs.InputFile`, `nextnanopy.nn3.inputs.InputFile`,
+    and so on), or a bare `InputFileTemplate` if the text matches no known product.
+
+    Pass `text` to build from a string instead of from disk: `InputFile(text=...)` detects the
+    product from that text and never opens a file. `fullpath` is then just the name to give the
+    result (`InputFile(path, text=...)` reads nothing, but the object saves back to `path`).
+    With neither, there is nothing to detect and nothing to load, so an empty
+    `InputFileTemplate` comes back.
+
+    Parameters are `InputFileTemplate`'s; see it for what they mean and for the API of the
+    object you get back.
+
+    **Building from a string: use `InputFile(text=...)`, not `InputFile()` + `.text = ...`.**
+    The latter cannot work: `InputFile()` has no text to detect from, so it returns a
+    product-agnostic `InputFileTemplate` whose `load_variables()` is a no-op, and assigning
+    `.text` afterwards cannot re-class the object it is called on. The text round-trips, but
+    `.variables` stays empty and `.product` stays `'not valid'`, silently. Dispatch happens in
+    `__new__` or not at all, so the contents must be supplied at construction. (Assigning
+    `.text` to a file loaded *from a path* is fine — that object is already a product class.)
+
+    Two limitations follow from dispatching in `__new__`, both deliberate:
+
+    - **The result is not an `InputFile`.** The product classes are siblings of this class,
+      not subclasses, so `isinstance(InputFile(path), InputFile)` is `False`. Check against,
+      annotate with, and subclass `InputFileTemplate` — the base every product class shares.
+    - **This class cannot be subclassed.** `__new__` picks the class from the file's contents
+      and ignores `cls`, so a subclass would be silently discarded; it raises `TypeError`
+      instead. To extend one product, subclass that product's class; to extend all of them,
+      subclass `InputFileTemplate`.
+    """
+
+    # Takes exactly InputFileTemplate.__init__'s parameters, and must keep doing so:
+    # changing either signature requires changing both.
+    def __new__(cls, fullpath=None, configpath=None, parse=False, text=None):
+        # `cls` is ignored below — the class to build is chosen from the text — so a subclass
+        # would come back as the detected product class instead of itself, silently. Refuse
+        # rather than hand back an object of the wrong type.
+        if cls is not InputFile:
+            raise TypeError(
+                f"{cls.__name__} cannot subclass InputFile: InputFile.__new__ dispatches on "
+                f"the file's contents and would return the product's class, not "
+                f"{cls.__name__}. Subclass the product's InputFile, or InputFileTemplate."
+            )
+        if text is None:
+            # With neither text nor fullpath there is nothing to detect and nothing to load:
+            # dispatch on the 'not valid' sentinel, which lands on InputFileTemplate.
+            if fullpath is None:
+                return defaults.get_InputFile(defaults.NOT_VALID)(fullpath, configpath, parse=parse)
+            # Read here to pick the product's class, then pass the text on so the chosen
+            # class does not read the same file again.
+            with open(fullpath) as f:
+                text = f.read()
         _InputFileType = defaults.get_InputFile(defaults.input_text_type(text))
-        return _InputFileType(fullpath, configpath, text=text, **kwargs)
+        return _InputFileType(fullpath, configpath, parse=parse, text=text)
 
 
 class ExecutionQueue(threading.Thread):

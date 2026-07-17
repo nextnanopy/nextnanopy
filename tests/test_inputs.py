@@ -924,6 +924,95 @@ class TestInputFileDispatch(unittest.TestCase):
         self.assertEqual(file.product, "not valid")
         self.assertIsNone(file.fullpath)
 
+    def test_parse_passes_through_positionally(self):
+        # __new__ used to swallow a *args it never forwarded, so the third positional --
+        # `parse` in InputFileTemplate.__init__ -- was silently dropped: InputFile(p, None,
+        # True) returned an unparsed file with .content None and raised nothing.
+        fullpath = folder_nnp / "example.in"
+        file = InputFile(fullpath, None, True)
+        self.assertTrue(file.parse)
+        self.assertIsNotNone(file.content)
+
+    def test_parse_passes_through_by_keyword(self):
+        # the same parameter by its other spelling; this half always worked (it rode
+        # **kwargs, which __new__ did forward), so it pins that the rewrite kept it.
+        fullpath = folder_nnp / "example.in"
+        file = InputFile(fullpath, parse=True)
+        self.assertTrue(file.parse)
+        self.assertIsNotNone(file.content)
+
+    def test_unknown_keyword_is_rejected(self):
+        # __new__ spells InputFileTemplate.__init__'s parameters out instead of taking
+        # **kwargs, so a name that is not one of them must fail loudly, at __new__.
+        with self.assertRaises(TypeError):
+            InputFile(folder_nnp / "example.in", bogus=1)
+
+    def test_text_builds_from_a_string_without_reading_disk(self):
+        # InputFile(text=...) used to be a silent no-op: __init__ only called load() when
+        # fullpath was not None, so the text was dropped and an empty template came back.
+        # It must now detect the product from the text and parse it, opening no file.
+        fullpath = folder_nnp / "only_variables.in"
+        text = fullpath.read_text()
+        opened = []
+        with unittest.mock.patch.object(builtins, "open", self._counting_open(opened)):
+            file = InputFile(text=text)
+        self.assertIsInstance(file, defaults.get_InputFile("nextnano++"))
+        self.assertEqual(file.product, "nextnano++")
+        self.assertIsNone(file.fullpath)
+        # the config may be read; the input file must not be -- there is no path to read.
+        self.assertEqual([p for p in opened if "only_variables" in str(p)], [])
+        # the point of the feature: same bytes in, same file out as loading from disk.
+        from_disk = InputFile(fullpath)
+        self.assertEqual(list(file.variables.keys()), list(from_disk.variables.keys()))
+        self.assertEqual(
+            [v.value for v in file.variables.values()],
+            [v.value for v in from_disk.variables.values()],
+        )
+
+    def test_text_with_fullpath_names_the_file_without_reading_it(self):
+        # `fullpath` is the name to save back to; `text` is the contents. This used to
+        # raise `TypeError: got multiple values for keyword argument 'text'`, because
+        # __new__ spliced its own text= into a **kwargs that already carried the caller's.
+        fullpath = folder_nnp / "only_variables.in"
+        text = (folder_nn3 / "only_variables.in").read_text()
+        opened = []
+        with unittest.mock.patch.object(builtins, "open", self._counting_open(opened)):
+            file = InputFile(fullpath, text=text)
+        # the text decides the product, not the (nnp) path it is named after.
+        self.assertEqual(file.product, "nextnano3")
+        self.assertEqual(Path(file.fullpath), fullpath)
+        self.assertEqual([p for p in opened if Path(p) == fullpath], [])
+
+    def test_text_that_matches_no_product_gives_a_template(self):
+        # same contract as an unrecognized file on disk, reached through text=.
+        file = InputFile(text="this is not a nextnano input file\n")
+        self.assertIsInstance(file, InputFileTemplate)
+        self.assertEqual(file.product, "not valid")
+        self.assertEqual(len(file.variables), 0)
+
+    def test_cannot_be_subclassed(self):
+        # __new__ ignores cls and builds the class it detects, so a subclass used to come
+        # back as a plain product InputFile: no MyInput instance, no my_helper, no error.
+        # Defining the subclass is allowed; constructing one is what must raise.
+        class MyInput(InputFile):
+            def my_helper(self):
+                return "hello"
+
+        with self.assertRaises(TypeError) as ctx:
+            MyInput(folder_nnp / "example.in")
+        self.assertIn("InputFileTemplate", str(ctx.exception))
+
+    def test_subclassing_the_product_class_still_works(self):
+        # the escape hatch the TypeError points at must actually work.
+        class MyNnpInput(defaults.get_InputFile("nextnano++")):
+            def my_helper(self):
+                return "hello"
+
+        file = MyNnpInput(folder_nnp / "example.in")
+        self.assertIsInstance(file, MyNnpInput)
+        self.assertEqual(file.my_helper(), "hello")
+        self.assertEqual(file.product, "nextnano++")
+
 
 class TestSweep(unittest.TestCase):
     def test_init(self):
