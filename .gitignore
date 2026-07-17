@@ -17,3 +17,6 @@ dist/
 .ipynb_checkpoints/
 
 *.log
+
+# pytest coverage file
+.coverage
