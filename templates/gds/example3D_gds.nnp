@@ -79,13 +79,13 @@ poisson{
 output{
    format2D = AvsAscii_one_file
    format3D = AvsAscii_one_file
-   section1D{                                # ouput a 1D section of the simulation area (1D slice)
+   section1D{                                # output a 1D section of the simulation area (1D slice)
       name = "line_along_z"                  # name of section enters file name
       x = 500.0                              # at x = 500 nm
       y = 300.0                              # at y = 300 nm 
    }
 
-   section2D{                                # ouput a 2D section of the simulation area (2D slice)
+   section2D{                                # output a 2D section of the simulation area (2D slice)
       name = "rectangle_z_40"                # name of section enters file name
       z = 40.0                               # at z = 40 nm 
    }

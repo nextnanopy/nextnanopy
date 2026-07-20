@@ -1,0 +1,53 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "dictionaryDefinitions": [
+    {
+      "name": "project-terms",
+      "path": "./.cspell/project-terms.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["project-terms", "python", "en_us"],
+  "ignorePaths": [
+    ".git/**",
+    ".venv/**",
+    "**/.venv/**",
+    "**/site-packages/**",
+    "**/node_modules/**",
+    "**/__pycache__/**",
+    "**/.pytest_cache/**",
+    "**/.ruff_cache/**",
+    "**/*.egg-info/**",
+    "build/**",
+    "dist/**",
+    "temp_tests/**",
+    ".local_dev/**",
+    "docs/build/**",
+    "docs/examples/*.html",
+    "tests/datafiles/**",
+    "tests/outputs/**",
+    "**/*.dat",
+    "**/*.fld",
+    "**/*.vtr",
+    "**/*.coord",
+    "**/*.gds",
+    "**/*.log",
+    "**/*.png",
+    "**/*.svg"
+  ],
+  "ignoreRegExpList": [
+    "/\\b[0-9a-fA-F]{7,}\\b/",
+    "/https?:\\/\\/\\S+/",
+    "/<style[\\s\\S]*?<\\/style>/",
+    "/<script[\\s\\S]*?<\\/script>/",
+    "/--jp-[a-z0-9-]+/",
+    "/\\bon[a-z]+=/"
+  ],
+  "overrides": [
+    {
+      "filename": "docs/examples/**/*.ipynb",
+      "dictionaries": ["project-terms", "python", "en_us", "typescript", "html", "css", "node", "softwareTerms"]
+    }
+  ]
+}

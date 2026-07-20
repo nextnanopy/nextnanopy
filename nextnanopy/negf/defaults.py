@@ -64,7 +64,7 @@ def command_negf(
     database,
     outputdirectory,
     threads=0,
-    debug_ouptut_specifications=None,
+    debug_output_specifications=None,
     **kwargs,
 ):
     kwargs = OrderedDict(
@@ -75,8 +75,8 @@ def command_negf(
         license=["--license", _path(license)],
         threads=["--threads", threads],
     )
-    if debug_ouptut_specifications is not None:
-        kwargs["debug"] = ["--debug", debug_ouptut_specifications]
+    if debug_output_specifications is not None:
+        kwargs["debug"] = ["--debug", debug_output_specifications]
         kwargs.move_to_end("debug")
     return generate_command(kwargs.values())
 

@@ -157,15 +157,15 @@ sense. Default is ``False``.
 
 5. parallel_limit: int, optional
 
-number of simulation to run simultaniously. Espicially usefull for
-simple simulations which migh be more efficiently rn in parallel. Be
+number of simulation to run simultaneously. Especially useful for
+simple simulations which might be more efficiently rn in parallel. Be
 aware that some nextnano solvers parallelize computations internally in
 threads (controlled by –threads in nextnanopy config). To avoid
 unexpected behaviour and not desirable decrease of simulation speed use
 the rule: parallel_limit*threads<= number of physical cores of the
-mahcine default parallel_limit = 1
+machine default parallel_limit = 1
 
-\**kwags Any other parameter accepted by nextnanopy.InputFile.execute()
+\**kwargs Any other parameter accepted by nextnanopy.InputFile.execute()
 e.g. exe, license, database, outputdirectory
 
 Example of the simulation in parallel (2 Input files at a time)

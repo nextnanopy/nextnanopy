@@ -56,7 +56,7 @@ def command_nn3(
     outputdirectory,
     threads=0,
     debuglevel=0,
-    # dubuglevel=-1,             # pending change
+    # debuglevel=-1,             # pending change
     cancel=-1,
     softkill=-1,
     # system='default',          # pending change

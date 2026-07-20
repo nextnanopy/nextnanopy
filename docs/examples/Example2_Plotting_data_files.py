@@ -39,9 +39,9 @@
 # 
 # On the other hand, ```bandedges_2d.fld```, there are two coordinates (x and y) and also with several variables. Moreover, the structure of the raw data is organized in a totally different way than ```bandedges_1d.dat```. 
 # 
-# The user-friendlyness relies on the fact that in spite of the differences in the file formats, an unique class is used to load the information: ```nextnanopy.Datafile```.
+# The user-friendliness relies on the fact that in spite of the differences in the file formats, an unique class is used to load the information: ```nextnanopy.Datafile```.
 # 
-# As a remark, you can omit the argument ```product```. In this case, it will try to detect automatically the nextnano product (nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB), and then look for the best loading routine. This can be dangerous since it is not garanteed that the loaded data is correct. So, we recommend to always specify ```product```.
+# As a remark, you can omit the argument ```product```. In this case, it will try to detect automatically the nextnano product (nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB), and then look for the best loading routine. This can be dangerous since it is not guaranteed that the loaded data is correct. So, we recommend to always specify ```product```.
 # 
 
 # ## Example of a 1D nextnano++ simulation

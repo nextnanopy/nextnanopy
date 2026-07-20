@@ -729,7 +729,7 @@ installed and you want to use a given version for a set of input files.
 Method 2: without any configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can pass one or more specific arguments such as outputdirectoy or
+You can pass one or more specific arguments such as outputdirectory or
 threads:
 
 .. code:: ipython3

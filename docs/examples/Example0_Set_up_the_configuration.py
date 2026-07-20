@@ -190,7 +190,7 @@ my_input.execute()
 # 
 # ### Method 2: without any configuration file
 # 
-# You can pass one or more specific arguments like outputdirectoy or threads to the execute method like below:
+# You can pass one or more specific arguments like outputdirectory or threads to the execute method like below:
 # 
 # ```python
 # my_input.execute(outputdirectory=r'C:\Users\jun-liang.wang\Downloads', threads=4)

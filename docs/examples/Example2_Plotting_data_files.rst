@@ -60,7 +60,7 @@ load the information regardless of the data formats.
 *Remark: You can omit the argument ``product``. In this case, it will
 try to detect automatically the nextnano product (nextnano++, nextnano3,
 nextnano.NEGF or nextnano.MSB), and then look for the best loading
-routine. This can be dangerous since it is not garanteed that the loaded
+routine. This can be dangerous since it is not guaranteed that the loaded
 data is correct. So, we recommend to always specify ``product``.*
 
 Example of a 1D nextnano++ simulation

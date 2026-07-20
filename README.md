@@ -41,6 +41,9 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## Development version
 
+<!-- cspell:disable-next-line -->
+- the nextnano.NEGF keyword argument `debug_ouptut_specifications` is now spelled `debug_output_specifications`. If you passed the old name, update it: because it reaches the command builder through `**kwargs`, the misspelled name is now accepted and ignored rather than raising, so a stale call silently stops passing `--debug` to the solver.
+
 ## Version 1.2.0 (July 20th, 2026)
 
 - `InputFile(text=...)` now builds an input file from a string: the product is detected from the text, the right product class is returned, and the variables are parsed — without reading anything from disk. Previously the text was silently ignored and you got back an empty, product-agnostic object. `InputFile(fullpath, text=...)` does the same and keeps `fullpath` as the name to save back to; it used to raise `TypeError`. Note that `InputFile()` followed by `file.text = ...` cannot work and never could — with no text at construction there is nothing to detect the product from, so you get a product-agnostic object whose `.variables` stays empty. Use `InputFile(text=...)` instead.
@@ -135,7 +138,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 ### Version 0.1.17 (Jun 07th, 2023)
 
 - fixed a bug with nnp.shapes.GdsPolygons.get_obelisks
-- get_obelisks can be used again. The usage is deprecated, nnp.shapes.GdsPolygons.get_polygonal_prisms is prefered way to convert gds to nextnano++ structure
+- get_obelisks can be used again. The usage is deprecated, nnp.shapes.GdsPolygons.get_polygonal_prisms is preferred way to convert gds to nextnano++ structure
 
 ### Version 0.1.16 (Apr 25th, 2023)
 
@@ -153,7 +156,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ### Version 0.1.14 (Jul 27th, 2022)
 
-- nextnanopy.Sweep.save_sweep has parameter round_decimal to limit round of digits in the folder names. Deafault round_decimal = 8
+- nextnanopy.Sweep.save_sweep has parameter round_decimal to limit round of digits in the folder names. Default round_decimal = 8
 
 ### Version 0.1.13 (Jun 13th, 2022)
 

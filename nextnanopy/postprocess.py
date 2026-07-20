@@ -129,7 +129,7 @@ def simple_optimize(
     Parameters
     ----------
     input_file: str, input_file to execute
-    sweep_dict: dict with keys: variabels names
+    sweep_dict: dict with keys: variables names
                           values: list of variables values
     target_filepath: filepath to target value in output directory
     target_variable: target variable name
@@ -139,7 +139,7 @@ def simple_optimize(
                       'max' to maximize the target
                        'optimal' find the closest to optimal_target_value
     optimal_target_value
-    post_func: if specifide post_func(target) will be optimize instead of target
+    post_func: if specified post_func(target) will be optimize instead of target
 
     Returns
     -------
@@ -181,7 +181,7 @@ def simple_optimize(
 
 def calculate_CV(output_directory_path, bias1=None, bias2=None, total=False, net_charge_sign=-1):
     """
-    Calculates CV charateristic based on integrated_density_electron.dat and integrated_density_hole.dat files in ouput_directory
+    Calculates CV characteristic based on integrated_density_electron.dat and integrated_density_hole.dat files in output_directory_path
     Parameters
     ----------
     output_directory_path: str
@@ -216,7 +216,7 @@ def calculate_CV(output_directory_path, bias1=None, bias2=None, total=False, net
 
     """
     Here parameter voltage is found.
-    if both bias1 and bias2 are present in holes and electrones file, voltage = bias2-bias1
+    if both bias1 and bias2 are present in holes and electrons file, voltage = bias2-bias1
 
     bias 2 is ignored if bias1 is None
 

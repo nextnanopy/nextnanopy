@@ -1,0 +1,206 @@
+# Project vocabulary for cspell.
+# One word per line. Matching is case-insensitive unless a line starts with an
+# uppercase letter. Lines starting with # are comments.
+
+# --- nextnano products, tools and file formats ---
+nextnano
+nextnanopy
+nextnanoevo
+nextnanomat
+nnevo
+nnpp
+nnconfig
+negf
+avsascii
+GDSII
+
+# --- input-file syntax and execution options ---
+# Solver command-line flags and input-file keywords surfaced by defaults.py.
+inputfile
+inputfilename
+outputdirectory
+noautooutdir
+automkdir
+autodetection
+Autosearching
+softkill
+runmode
+configpath
+extensionless
+forwardslash
+onlyvar
+varsection
+
+# --- physics and device domain ---
+bandedge
+bandedges
+bandgap
+bandstructure
+eigenenergies
+Eigenstates
+heterostructure
+heterostructures
+intraband
+spinor
+wavefunctions
+Wannier
+Schottky
+neumann
+piezo
+pyro
+backgate
+Vgate
+efermi
+kpar
+hoppings
+smatrix
+Tridiagonal
+# "Schrodinger" splits into these two when the umlaut is written as "oe" or
+# when cspell tokenizes the accented form.
+Schroedinger
+Schr
+dinger
+
+# --- output parsing: dataset and coordinate metadata ---
+datafolder
+dfolder
+dfile
+Dictlist
+nspace
+veclen
+nentries
+ncells
+vmeta
+varname
+varn
+Subgrid
+Gridsize
+xgrid
+ygrid
+zgrid
+SXYZ
+
+# --- scientific Python stack ---
+interp
+fsolve
+loadtxt
+savetxt
+BLAS
+LAPACK
+pyvista
+gdspy
+kwant
+Spyder
+pythonw
+pyupgrade
+
+# --- matplotlib plotting API and style keys ---
+cmap
+cbar
+colorbar
+facecolor
+figsize
+fontsize
+labelsize
+linestyle
+titlesize
+titletext
+pcolor
+pcolormesh
+gouraud
+viridis
+nipy
+mplstyle
+xlabel
+ylabel
+xtick
+ytick
+xtol
+
+# --- short local identifiers used in the source ---
+# Kept because renaming them is churn, not clarity.
+funcs
+idxs
+indx
+ivar
+maxx
+maxy
+miny
+npath
+nline
+cmdi
+scal
+targ
+twrite
+spol
+gpols
+gdspols
+findpos
+loopable
+multivar
+onebyone
+subfolders
+photomasks
+mycollections
+xmlstr
+wdir
+getpid
+dkeys
+displayname
+# DataFile.valueo is a public attribute; renaming it would break the API.
+valueo
+# Bracket constants in nnp/assistants.py: {c,s}bk{l,r} = curly/square bracket
+# left/right; cblock = constant block.
+cbkl
+cbkr
+sbkl
+sbkr
+cblock
+# Palette hex code kept as a comment marker in utils/plotting.py.
+fdbc
+# Finalized quantum point contact, in the kwant template.
+fqpc
+
+# --- test fixtures and sample input files ---
+# Deliberate nonsense strings and sample variable names that assertions match
+# on. Do not "correct" these; the tests depend on the exact spelling.
+abls
+bandedgesxxxx
+TESTEXPORT
+miswire
+mycell
+Multiword
+MAYUS
+NUMEV
+MINGRID
+DOPECONC
+DOPEPOS
+infile
+
+# --- notebook and documentation infrastructure ---
+docstrings
+ipynb
+kernelspec
+mimebundle
+# Vendored ipympl / JupyterLab widget code embedded in recorded cell outputs.
+buttongrp
+ondownload
+ponyfill
+rubberband
+JSXTOOLS
+
+# --- British spellings used in docs and templates ---
+behaviour
+neighbours
+serialised
+visualise
+
+# --- proper nouns ---
+Heorhii
+yehiazarian
+Junliang
+liang
+
+# --- misc ---
+autofmt
+TOCTOU

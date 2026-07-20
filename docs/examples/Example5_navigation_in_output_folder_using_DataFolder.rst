@@ -27,14 +27,14 @@ below*
 
     import nextnanopy as nn
     
-    my_datafolder = nn.DataFolder(r'E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\ouput_files\example_folder')
+    my_datafolder = nn.DataFolder(r'E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\output_files\example_folder')
     print(my_datafolder)
 
 
 .. parsed-literal::
 
     DataFolder
-    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\ouput_files\example_folder
+    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\output_files\example_folder
     Folders: 3
     bias_00000
     Strain
@@ -186,14 +186,14 @@ The example for each method is given below:
 
     strain_folder = my_datafolder.folders['Strain']
     bulk_dispersions_folder = my_datafolder.go_to('bias_00000', 'Quantum', 'Bulk_dispersions')
-    dispersins_folder = my_datafolder.bias_00000.Optics
+    dispersions_folder = my_datafolder.bias_00000.Optics
     print(strain_folder)
 
 
 .. parsed-literal::
 
     DataFolder
-    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\ouput_files\example_folder\Strain
+    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\output_files\example_folder\Strain
     Folders: 0
     Files:
     ['elastic_energy_density.dat', 'hydrostatic_strain.dat', 'strain_simulation.dat']
@@ -211,7 +211,7 @@ DataFolder.file(‘name_of_the_file’) method:
 
 .. parsed-literal::
 
-    E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\ouput_files\example_folder\Strain\hydrostatic_strain.dat
+    E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\output_files\example_folder\Strain\hydrostatic_strain.dat
     
 
 Now you can convert it to nextnanopy.DataFile for further processing
@@ -233,7 +233,7 @@ Now you can convert it to nextnanopy.DataFile for further processing
     [Warning] nextnano product is not specified: nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB
     [Warning] Autosearching for the best loading method. Note: The result may not be correct
     DataFile
-    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\ouput_files\example_folder\bias_00000\Quantum\Bulk_dispersions\bulk_dispersion_quantum_region_kp8_user_defined_path_GeWell.dat
+    fullpath: E:\nextnano Users\heorhii.yehiazarian\nextnanopy\nextnanopy_package\nextnanopy\docs\examples\output_files\example_folder\bias_00000\Quantum\Bulk_dispersions\bulk_dispersion_quantum_region_kp8_user_defined_path_GeWell.dat
     Coordinates: 0 datasets
     Variables: 9 datasets
     	name: |k| - unit: 1/nm - shape: (21,)
@@ -271,7 +271,7 @@ but used as coordinate to plot*
 Find the files by keyword
 =========================
 
-The DataFodlder class can be also used to find files with a certain
+The DataFolder class can be also used to find files with a certain
 keyword.
 
 .. code:: python
@@ -304,8 +304,8 @@ The default value of ``deep`` is False.
 
 .. parsed-literal::
 
-    ['E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\variables_database.txt',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\variables_input.txt']
+    ['E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\variables_database.txt',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\variables_input.txt']
 
 
 
@@ -318,13 +318,13 @@ The default value of ``deep`` is False.
 
 .. parsed-literal::
 
-    ['E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\bias_00000\\density_acceptor_ionized.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\bias_00000\\density_donor_ionized.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\bias_00000\\density_electron.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\bias_00000\\density_hole.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\Strain\\elastic_energy_density.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\Structure\\density_donor.dat',
-     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\ouput_files\\example_folder\\Structure\\density_fixed_charge.dat']
+    ['E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\bias_00000\\density_acceptor_ionized.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\bias_00000\\density_donor_ionized.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\bias_00000\\density_electron.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\bias_00000\\density_hole.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\Strain\\elastic_energy_density.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\Structure\\density_donor.dat',
+     'E:\\nextnano Users\\heorhii.yehiazarian\\nextnanopy\\nextnanopy_package\\nextnanopy\\docs\\examples\\output_files\\example_folder\\Structure\\density_fixed_charge.dat']
 
 
 

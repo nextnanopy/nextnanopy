@@ -18,7 +18,7 @@ print(my_input)
 
 # This object contains all the relevant information of the input file such as the raw text, the variables and the configuration for the execution (see Example 0).
 # 
-# When you create ```my_input```, the class will first check automatically the type of the input file (nextnano++, nextnano3, nextnano.NEGF or nexntano.MSB). It will then get the raw text and extract all variables defined in the file:
+# When you create ```my_input```, the class will first check automatically the type of the input file (nextnano++, nextnano3, nextnano.NEGF or nextnano.MSB). It will then get the raw text and extract all variables defined in the file:
 # 
 # ```
 # $my_var = 3    # in nextnano++

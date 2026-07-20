@@ -11,7 +11,7 @@ In Example 4: Use Sweep to automate execution it is shown how to run few
 input files simultaneously using
 nextnanopy.Sweep.execute_sweep(parallel_limit = n). Implementation of
 the parallelization is based on thread like object
-nextanopy.inputs.ExecutionQueue. This example shows how to use this
+nextnanopy.inputs.ExecutionQueue. This example shows how to use this
 object directly to parallel several simulations at a time if your goal
 doesn’t fall under Sweep
 
@@ -25,7 +25,7 @@ The implementation is following: InputFile objects can be added to
 waiting queue (ExecutionQueue.waiting_queue). On run, InputFiles from
 queue is executed and added to execution pool (ExecutionQueue.started)
 until it is full. Whenever some simulations are finished, new InputFile
-is poped from waiting queue.
+is popped from waiting queue.
 
 To create ExecutionQueue object
 
@@ -34,7 +34,7 @@ To create ExecutionQueue object
     from nextnanopy.inputs import ExecutionQueue
     my_queue = ExecutionQueue(parallel_limit = 3, show_log = False)
 
-Folowing parameters can be passed:
+Following parameters can be passed:
 ''''''''''''''''''''''''''''''''''
 
 limit_parallel: int, optional
@@ -49,7 +49,7 @@ terminate_empty : bool, optional
 ::
 
    If True, terminates once all added files are executed and logged.
-   If you want to add more input files even after execution of all added in the beginning, use termanate_empy = False
+   If you want to add more input files even after execution of all added in the beginning, use terminate_empty = False
    Then the ExecutionQueue has to be stopped manually later (ExecutionQueue.stop())
    default: True
            
@@ -88,7 +88,7 @@ stop()
 ::
 
    stop the thread (once all added files are executed)
-   only necessary if termanate_empty = True
+   only necessary if terminate_empty = True
 
 join()
 
@@ -211,9 +211,9 @@ Be aware that some nextnano solvers parallelize computations internally
 in threads (controlled by –threads in nextnanopy config). To avoid
 unexpected behaviour and not desirable decrease of simulation speed use
 the rule: parallel_limit*threads<= number of physical cores of the
-mahcine
+machine
 
-\*if you run this example by yourselve, do not forget to delete created
+\*if you run this example by yourself, do not forget to delete created
 input files in examples/input_files folder (all examples with number at
 the end)
 
