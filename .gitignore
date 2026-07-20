@@ -20,3 +20,7 @@ dist/
 
 # pytest coverage file
 .coverage
+
+# for claude-assisted development
+CLAUDE.md
+.claude

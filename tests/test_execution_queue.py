@@ -1,7 +1,9 @@
 """Tests for nextnanopy.inputs.ExecutionQueue.
 
-Regression tests for CODE_REVIEW.md finding 2.3 (run() busy-spun at 100% CPU while
-simulations were running) plus basic contract tests — the class had no coverage before.
+Covers the queue's contract: every queued file runs to completion in both the
+sequential and parallel modes, all free slots fill in a single pass, run() waits
+on the queue instead of burning CPU while simulations are in flight, and
+terminate_empty=False keeps accepting work until it is told to stop.
 
 No nextnano executable is needed: FakeInputFile mimics InputFile.execute() by launching a
 dummy subprocess (python -c "time.sleep(N)") and returning the same info dict that

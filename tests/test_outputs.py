@@ -238,8 +238,8 @@ class TestOutputs_nnp(unittest.TestCase):
 
 
 class TestDataFilePlot(unittest.TestCase):
-    """Regression tests for the off-by-one fix in DataFile.plot() (review item 1.1):
-    with zero coords, every variable after the first (used as x-axis) must be plotted."""
+    """With zero coords, DataFile.plot() uses the first variable as the x-axis and
+    plots every remaining one — including the last."""
 
     def test_zero_coords_plots_all_variables(self):
         df = outputs.DataFile(folder_nnp / "total_charges.txt", product="nextnano++")
@@ -971,11 +971,12 @@ class TestDataFolder(unittest.TestCase):
 
 
 class TestSingleLoad(unittest.TestCase):
-    """Tripwires for review item 2.1-A: a DataFile must parse its file exactly once.
+    """A DataFile must parse its file exactly once.
 
-    Before the fix, the per-product DataFile classes acted as both public class and
-    loader delegate of the generic one, so nn.DataFile(path, product=...) ran the
-    real loader (Dat/Vtk/AvsAscii) twice, and autodetect ran it four times.
+    Construction runs the real loader (Dat/Vtk/AvsAscii) a single time, whether the
+    product is given explicitly or autodetected. Parsing is the expensive part of
+    loading, so a delegation change that reintroduces a second pass is a
+    performance regression these tests are here to catch.
     """
 
     def _count_loads(self, cls):

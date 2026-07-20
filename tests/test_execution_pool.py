@@ -1,7 +1,9 @@
 """Tests for nextnanopy.inputs.ExecutionPool.
 
-ExecutionPool is the ThreadPoolExecutor-based candidate replacement for
-ExecutionQueue (CODE_REVIEW.md 2.16). Same testing approach as
+ExecutionPool is the ThreadPoolExecutor-based counterpart to ExecutionQueue.
+Beyond the shared queue contract, this covers what the pool adds: work added
+after start() is picked up, a worker exception surfaces from join(), join()
+before start() raises, and stop() rejects new work. Same testing approach as
 test_execution_queue.py: no nextnano executable is needed — FakeInputFile
 launches a dummy subprocess and returns the info dict commands.execute() would.
 FakeInputFile.execute() blocks until the process exits when __parallel__ is
