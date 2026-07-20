@@ -41,6 +41,8 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 ## Development version
 
+## Version 1.2.0 (July 20th, 2026)
+
 - `InputFile(text=...)` now builds an input file from a string: the product is detected from the text, the right product class is returned, and the variables are parsed — without reading anything from disk. Previously the text was silently ignored and you got back an empty, product-agnostic object. `InputFile(fullpath, text=...)` does the same and keeps `fullpath` as the name to save back to; it used to raise `TypeError`. Note that `InputFile()` followed by `file.text = ...` cannot work and never could — with no text at construction there is nothing to detect the product from, so you get a product-agnostic object whose `.variables` stays empty. Use `InputFile(text=...)` instead.
 - bug fix: `InputFile`'s `parse` argument is no longer ignored when passed positionally. `InputFile(path, None, True)` silently left the file unparsed (`.content` was `None`); only the `InputFile(path, parse=True)` spelling worked. Both now behave the same.
 - `InputFile` cannot be subclassed and now says so with a `TypeError`. It chooses the class to build from the file's contents, so a subclass was silently discarded and you got a plain product class back. Subclass the product's `InputFile` (e.g. `nextnanopy.nnp.inputs.InputFile`), or `InputFileTemplate` for all products. Related: `isinstance(InputFile(path), InputFile)` is `False` — the object you get back is a product class, and `InputFileTemplate` is the common base to check against and annotate with.
