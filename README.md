@@ -12,17 +12,6 @@ nextnanopy is a Python module to interface the [nextnano](https://www.nextnano.c
 
 **Note:** A valid license for the nextnano software is not compulsory for the general use of nextnanopy, unless you would like to execute input files via Python.
 
-## Future of nextnanopy
-
-Currently, nextnanopy has basic features for [nextnano products](https://www.nextnano.com/products/products.php) nextnano++, nextnano³, nextnano.NEGF and nextnano.MSB.
-
-In future releases, we would like to implement:
-
-- **Common post-processing methods**: Like loading and plotting together bandedges, eigenenergies and eigenvalues, colormap of potential landscape with GDS polygons on top, etc.
-- **User-friendly input file creation/modification**: The idea is to load any input file and it would detect all the different blocks so the user can easily modify parameters like 'boundary conditions' or 'region material'. Similarly, it should be user-friendly to create any input file from scratch via Python.
-- **Feedback loops**: A routine that allows the user to optimize any figure of merit of a device with a given set of input variables. The user can set a post-processing routine to get the figure of merit from the simulated data and later, a new set of input variables will be generated and executed. This feedback loop will repeat until a set of conditions are satisfied.
-- **Guidelines for contributors**: Set of rules if you want to contribute to the project.
-
 ## Installation
 
 Nextnanopy can be installed on Linux / OS X / Windows.
