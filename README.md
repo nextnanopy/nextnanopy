@@ -30,8 +30,9 @@ For details, please refer to docs/How to install nextnanopy.md.
 
 ## Documentation
 
-Basic features are documented in docs/examples.
-Python scripts in templates/ will help you to start playing with nextnanopy.
+Basic features are documented in [docs/examples](docs/examples).
+Python scripts in [templates/](templates) will help you to start playing with nextnanopy. 
+More advanced scripts for postprocessing/plotting results of nextnano++ simulations are located in examples folder of the nextnano++ distribution.
 
 ## Support
 
