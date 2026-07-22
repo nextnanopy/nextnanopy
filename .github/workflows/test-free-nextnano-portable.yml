@@ -1,5 +1,6 @@
 # Downloads the free nextnano portable build from the URL held in the
-# NEXTNANO_FREE_PORTABLE_LINK secret and unzips it. Manual trigger only.
+# NEXTNANO_FREE_PORTABLE_LINK secret, unzips it, installs nextnanopy from this
+# checkout and points its config at the extracted build. Manual trigger only.
 
 
 name: download and test nextnano portable
@@ -12,6 +13,18 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Checkout first: actions/checkout cleans the workspace by default, which
+      # would delete the downloaded zip if it ran afterwards.
+      - uses: actions/checkout@v4
+
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install nextnanopy
+        run: pip install -e .
+
       # shell: cmd so `curl` is the real curl.exe. Under the default PowerShell
       # shell `curl` is an alias for Invoke-WebRequest and would not accept these
       # flags. The URL is passed through the environment to keep it off the
@@ -29,3 +42,6 @@ jobs:
       - name: List extracted files
         shell: pwsh
         run: Get-ChildItem -Recurse nextnano | Select-Object -First 50
+
+      - name: Set up nextnano config
+        run: python scripts/setup_nextnano_config.py
