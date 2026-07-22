@@ -1,7 +1,7 @@
 # NEXTNANOPY README
 
-[![BSD-3-Clause](https://img.shields.io/github/license/nextnanopy/nextnanopy)](https://opensource.org/licenses/BSD-3-Clause)
-[![Downloads](https://img.shields.io/github/downloads/nextnanopy/nextnanopy/total)](https://github.com/nextnanopy/nextnanopy/releases)
+[![BSD-3-Clause](https://img.shields.io/github/license/nextnano-GmbH/nextnanopy)](https://opensource.org/licenses/BSD-3-Clause)
+[![Downloads](https://img.shields.io/github/downloads/nextnano-GmbH/nextnanopy/total)](https://github.com/nextnano-GmbH/nextnanopy/releases)
 
 nextnanopy is a Python module to interface the [nextnano](https://www.nextnano.com/) software. This package includes features for:
 
@@ -14,7 +14,22 @@ nextnanopy is a Python module to interface the [nextnano](https://www.nextnano.c
 
 ## Installation
 
-Nextnanopy can be installed on Linux / OS X / Windows.
+Nextnanopy can be installed on Linux / macOS / Windows. It requires Python >= 3.10.
+
+To install the latest release the standard way, run the following in your Python environment of choice:
+
+```bash
+pip install nextnanopy
+```
+
+Alternatively, if you want the development version (for Python experts only), clone the GitHub repository into a directory of your choice and install it from there:
+
+```bash
+git clone https://github.com/nextnano-GmbH/nextnanopy.git
+cd nextnanopy
+pip install -e .
+```
+
 For details, please refer to docs/How to install nextnanopy.md.
 
 ## Documentation
