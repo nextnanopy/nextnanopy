@@ -14,7 +14,7 @@ nextnanopy is a Python module to interface the [nextnano](https://www.nextnano.c
 
 ## Installation
 
-Nextnanopy can be installed on Linux / macOS / Windows. It requires Python >= 3.10.
+nextnanopy can be installed on Linux / macOS / Windows. It requires Python >= 3.10.
 
 To install the latest release the standard way, run the following in your Python environment of choice:
 

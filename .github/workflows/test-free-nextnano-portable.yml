@@ -1,0 +1,31 @@
+# Downloads the free nextnano portable build from the URL held in the
+# NEXTNANO_FREE_PORTABLE_LINK secret and unzips it. Manual trigger only.
+
+
+name: download and test nextnano portable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: windows-latest
+
+    steps:
+      # shell: cmd so `curl` is the real curl.exe. Under the default PowerShell
+      # shell `curl` is an alias for Invoke-WebRequest and would not accept these
+      # flags. The URL is passed through the environment to keep it off the
+      # command line.
+      - name: Download portable zip
+        shell: cmd
+        env:
+          PORTABLE_URL: ${{ secrets.NEXTNANO_FREE_PORTABLE_LINK }}
+        run: curl -L -o output.zip "%PORTABLE_URL%"
+
+      - name: Unzip
+        shell: pwsh
+        run: Expand-Archive -Path output.zip -DestinationPath nextnano -Force
+
+      - name: List extracted files
+        shell: pwsh
+        run: Get-ChildItem -Recurse nextnano | Select-Object -First 50
