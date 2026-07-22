@@ -45,3 +45,8 @@ jobs:
 
       - name: Set up nextnano config
         run: python scripts/setup_nextnano_config.py
+
+      # execute() is told to raise on non-convergence (convergence_check_mode
+      # "terminate"), so a failed run exits non-zero and fails this step.
+      - name: Run test input file
+        run: python templates/execute_input_file.py
