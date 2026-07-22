@@ -1,0 +1,152 @@
+!TEXT 
+    ========================================================================================================================= 
+    "Double Quantum Well" 
+    https://www.nextnano.com/docu/nextnanoplus/tutorials/1D_double_qw.html
+    ------------------------------------------------------------------------------------------------------------------------- 
+    This input file is provided to you by nextnano GmbH (https://www.nextnano.com)
+    It is compatible with nextnano++ 3.0.0
+    Last modified on 2026/06/11
+    ========================================================================================================================= 
+    References: 
+    ------------------------------------------------------------------------------------------------------------------------- 
+    Quantum Wells, Wires and Dots
+    P. Harrison
+    Theoretical and Computational Physics of Semiconductor Nanostructures, 2nd ed., John Wiley & Sons, Ltd (2005)
+    https://doi.org/10.1002/0470010827
+    ========================================================================================================================= 
+!ENDTEXT 
+
+#---------------------------------------------------------------------------!
+
+$QW_WIDTH      = 6.0                                            # widths of both quantum wells (DisplayUnit:nm)
+$QW_SEPARATION = 4.0                                            # separation of the QWs        (RangeOfValues:From=1.0,To=14.0,Step=1.0)(ListOfValues:1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10,15,20,30) (DisplayUnit:nm) (HighlightInUserInterface)
+
+$middle        = 28.0                                           # middle of the structure (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+$QW1_min = $middle - $QW_SEPARATION / 2 - $QW_WIDTH             # minimum coordinate of quantum well #1 (DisplayUnit:nm) (DoNotShowInUserInterface)
+$QW1_max = $middle - $QW_SEPARATION / 2                         # maximum coordinate of quantum well #1 (DisplayUnit:nm) (DoNotShowInUserInterface)
+$QW2_min = $middle + $QW_SEPARATION / 2                         # minimum coordinate of quantum well #2 (DisplayUnit:nm) (DoNotShowInUserInterface)
+$QW2_max = $middle + $QW_SEPARATION / 2 + $QW_WIDTH             # maximum coordinate of quantum well #2 (DisplayUnit:nm) (DoNotShowInUserInterface)
+
+#---------------------------------------------------------------------------!
+
+run{ 
+    quantum{}
+}
+
+global{ 
+    simulate1D{}
+    
+    crystal_zb{ 
+        x_hkl = [1, 0, 0]
+        y_hkl = [0, 1, 0]
+    }
+    
+    substrate{ 
+        name = "GaAs"
+    }
+    
+    temperature = 300.0  # 300 Kelvin
+    
+}
+
+impurities{ 
+}
+
+contacts{ 
+    fermi{ name = "fermi_zero" bias = 0}  # define reference energy
+}
+
+structure{ 
+    output_region_index{ boxes = no }
+    output_material_index{ boxes = no }
+    output_alloy_composition{ boxes = no }
+    
+    region{ 
+        everywhere{                   # (default region in nextnano3)
+        }
+        contact { name = fermi_zero }
+        ternary_constant{ 
+            name = "Al(x)Ga(1-x)As"   # AlGaAs barriers
+            alloy_x = 0.2E0           # Al0.2Ga0.8As
+        }
+    }
+    region{ 
+        line{ 
+            x = [0E0, 56E0]           # AlGaAs barrier
+        }
+        ternary_constant{ 
+            name = "Al(x)Ga(1-x)As"   # AlGaAs barriers
+            alloy_x = 0.2E0           # Al0.2Ga0.8As
+        }
+    }
+    region{ 
+        line{ 
+            x = [$QW1_min, $QW1_max]  # !  GaAs quantum well
+        }
+        binary{ 
+            name = "GaAs"             # GaAs quantum wells
+        }
+    }
+    region{ 
+        line{ 
+            x = [$QW2_min, $QW2_max]  # !  GaAs quantum well
+        }
+        binary{ 
+            name = "GaAs"             # GaAs quantum wells
+        }
+    }
+}
+
+grid{ 
+    xgrid{ 
+        line{  pos = 0.0        spacing = 1 }
+        line{  pos = $QW1_min   spacing = 0.5 }
+        line{  pos = $QW2_max   spacing = 0.5 }
+        line{  pos = 56.0       spacing = 1 }
+    }
+}
+
+classical{ 
+    Gamma{ output_bandedge{ averaged = no } } 
+    HH{}
+    LH{}
+    SO{}
+    output_bandedges{ averaged = no }
+}
+
+poisson{ 
+    between_fermi_levels{}
+}
+
+currents{ 
+    recombination_model{ 
+        SRH         = no
+        Auger       = no
+        radiative   = no
+    }
+}
+
+quantum{ 
+    region{ 
+        name = "quantum_region"
+        x = [0E0, 56E0]
+        no_density = yes
+        boundary{ 
+            x = dirichlet
+        }
+        
+        Gamma{ 
+            num_ev = 4
+        }
+        
+        output_states{
+            max_num = 2
+            all_k_points = no
+            envelopes = yes
+            probabilities = yes
+                  # in_one_file = no   
+        }
+    }
+}
+
