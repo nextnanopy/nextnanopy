@@ -46,6 +46,12 @@ jobs:
       - name: Set up nextnano config
         run: python scripts/setup_nextnano_config.py
 
+      # Guard that the bundled demo we execute is still identical to the one
+      # shipped in the portable build, so the smoke test tracks the canonical
+      # example instead of a drifted copy.
+      - name: Check demo input matches shipped example
+        run: python scripts/check_demo_matches.py
+
       # execute() is told to raise on non-convergence (convergence_check_mode
       # "terminate"), so a failed run exits non-zero and fails this step.
       - name: Run test input file
