@@ -39,7 +39,7 @@ base = Path(os.environ.get("NEXTNANO_PORTABLE_DIR", "nextnano")).resolve()
 # the release-date directory. sorted()[-1] picks the newest if several coexist:
 # the date is in the path and YYYY_MM_DD sorts chronologically.
 nnp_dir = find_one(base, "**/nextnano++", "nextnano++ folder")
-path_exe = find_one(nnp_dir, "bin/nextnano++*.exe", "nextnano++ executable")
+path_exe = find_one(nnp_dir, "bin 32bit/nextnano++*.exe", "nextnano++ executable")
 path_database = find_one(nnp_dir, "database/database_free.nnp", "nextnano++ database")
 # The license is not under nextnano++/, so search the whole extraction tree.
 path_license = find_one(base, "**/License_free.lic", "nextnano++ license")
