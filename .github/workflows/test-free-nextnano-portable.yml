@@ -56,3 +56,9 @@ jobs:
       # "terminate"), so a failed run exits non-zero and fails this step.
       - name: Run test input file
         run: python templates/execute_input_file.py
+
+      # Same smoke test for a parameter sweep over the same demo: every
+      # generated input file is executed with convergence_check_mode
+      # "terminate", so any non-converging run in the sweep fails this step.
+      - name: Run test sweep
+        run: python templates/sweep_example.py
