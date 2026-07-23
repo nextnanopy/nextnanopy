@@ -34,14 +34,7 @@ For details, please refer to docs/How to install nextnanopy.md.
 
 ## Documentation
 
-The basic features are documented as Jupyter notebooks in [docs/examples](docs/examples), best read in order. We recommend every new nextnanopy user to go through Examples 0–2.
-
-- **[Example 0 — Set up the configuration](docs/examples/Example0_Set_up_the_configuration.ipynb):** point nextnanopy at your nextnano executables, databases and licenses. A one-time setup you do before running anything.
-- **[Example 1 — Execute an input file](docs/examples/Example1_Execute_an_input_file.ipynb)** and **[Example 2 — Plot data files](docs/examples/Example2_Plotting_data_files.ipynb):** the core workflow — load and edit an input file, run the solver, then load and plot the results. These two are the most important; once you are comfortable with them you can build almost any custom workflow.
-- **[Example 3 — Sweep to automate the execution](docs/examples/Example3_Sweep_to_automate_the_execution.ipynb):** the `Sweep` interface runs a simulation over a grid of variable values for you — a very handy way to replace hand-written, endless `for` loops.
-- **[Example 4 — Navigate the output folder with DataFolder](docs/examples/Example4_navigation_in_output_folder_using_DataFolder.ipynb):** a small convenience for locating result files inside an output directory. Optional — skip it if you already navigate folders comfortably with tools like `pathlib`.
-- **[Example 5 — Load polygons from a GDSII file](docs/examples/Example5_Load_polygons_from_a_GDSII_file.ipynb):** a niche API for turning GDSII layout polygons into nextnano++ shapes.
-- **[Example 6 — ExecutionQueue for parallel execution (advanced)](docs/examples/Example6_ExecutionQueue_for_parallel_execution%20-%20advanced.ipynb):** low-level control for managing many simulations in parallel. For experts only — most parallel runs can be built with the simpler `Sweep` interface from Example 3.
+The basic features are documented as Jupyter notebooks in [docs/examples](docs/examples), best read in order. We recommend every new nextnanopy user to go through Examples 0–2. A short description of what each example covers is on the [tutorials page of the nextnanopy documentation](https://www.nextnano.com/docu/nextnanopy/tutorials/index.html).
 
 Python scripts in [templates/](templates) will help you to start playing with nextnanopy.
 More advanced scripts for postprocessing/plotting results of nextnano++ simulations are located in the examples folder of the nextnano++ distribution.
