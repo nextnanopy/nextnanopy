@@ -30,7 +30,7 @@ cd nextnanopy
 pip install -e .
 ```
 
-For details, please refer to docs/How to install nextnanopy.md.
+For details — optional features, a development install from source, and dependencies — see the [installation guide in the nextnanopy documentation](https://www.nextnano.com/docu/nextnanopy/user_guide/index.html#installation).
 
 ## Documentation
 
