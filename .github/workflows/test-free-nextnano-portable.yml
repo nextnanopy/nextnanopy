@@ -1,15 +1,49 @@
 # Downloads the free nextnano portable build from the URL held in the
 # NEXTNANO_FREE_PORTABLE_LINK secret, unzips it, installs nextnanopy from this
-# checkout and points its config at the extracted build. Manual trigger only.
+# checkout and points its config at the extracted build.
+#
+# Triggers: manual dispatch; a daily run that is skipped unless the repo changed
+# in the last 24h; and a weekly Monday run that always executes, so a newly
+# published portable build is exercised even during a quiet week.
 
 
 name: download and test nextnano portable
 
 on:
   workflow_dispatch:
+  schedule:
+    # Once a day at 03:00 UTC. The `gate` job decides what actually runs: always
+    # on Mondays (the weekly build-drift check), and on other days only if the
+    # repo changed in the last 24 hours.
+    - cron: '0 3 * * *'
 
 jobs:
+  # Cheap Linux gate that decides whether the expensive Windows job runs, so a
+  # skipped day never spins up a Windows runner or downloads the build.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: decide
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"          # manual dispatch: always run
+          elif [ "$(date -u +%u)" = "1" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"          # Monday: weekly run, always
+          elif [ $(( $(date +%s) - $(git log -1 --format=%ct) )) -lt 86400 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"          # other days: repo changed in last 24h
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "No commits in the last 24h; skipping today's run."
+          fi
+
   download:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: windows-latest
 
     steps:
