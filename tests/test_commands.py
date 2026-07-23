@@ -13,7 +13,7 @@ folder_msb = Path("tests") / "datafiles" / "nextnano.MSB"
 class TestCommands(unittest.TestCase):
     def test_commands_nnp(self):
         self.maxDiff = None
-        inputfile = folder_nnp / "example.in"
+        inputfile = folder_nnp / "example.nnp"
         exe = Path("nextnano++") / "bin 64bit" / "nextnano++_Intel_64bit.exe"
         runmode = "--resume"
         no_file_options = "--autosave --logfile"
@@ -39,7 +39,7 @@ class TestCommands(unittest.TestCase):
 
     def test_commands_nn3(self):
         self.maxDiff = None
-        inputfile = folder_nn3 / "example.in"
+        inputfile = folder_nn3 / "example.nn3"
         exe = Path("nextnano++") / "bin 64bit" / "nextnano++_Intel_64bit.exe"
         license = Path("nextnanopy") / "License" / "License_nnp.lic"
         database = Path("nextnano++") / "Syntax" / "database_nnp.in"

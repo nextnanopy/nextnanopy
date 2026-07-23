@@ -203,7 +203,7 @@ class TestOutputs_nnp(unittest.TestCase):
         self.assertAlmostEqual(df.variables["<Gamma_i|HH_j>"].value[0], 0.0333932)
 
     def test_rest(self):
-        files = ["example.log", "example.in"]
+        files = ["example.log", "example.nnp"]
         for file in files:
             self.assertRaises(
                 NotImplementedError,
@@ -480,7 +480,7 @@ class TestOutputs_nn3(unittest.TestCase):
         self.assertEqual(len(df.variables.keys()), 0)
 
     def test_rest(self):
-        files = ["example.log", "example.in"]
+        files = ["example.log", "example.nnp"]
         for file in files:
             self.assertRaises(
                 NotImplementedError,

@@ -50,7 +50,7 @@ class TestFormatting(unittest.TestCase):
     """
 
     def test_nn3(self):
-        fullpath = folder_nn3 / "example.in"
+        fullpath = folder_nn3 / "example.nn3"
         text = fullpath.read_text()
         self.assertTrue(nn3_defaults.is_nn3_input_text(text))
         self.assertFalse(nnp_defaults.is_nnp_input_text(text))
@@ -65,7 +65,7 @@ class TestFormatting(unittest.TestCase):
         )
 
     def test_nnp(self):
-        fullpath = folder_nnp / "example.in"
+        fullpath = folder_nnp / "example.nnp"
         text = fullpath.read_text()
         self.assertFalse(nn3_defaults.is_nn3_input_text(text))
         self.assertTrue(nnp_defaults.is_nnp_input_text(text))
@@ -129,8 +129,8 @@ class TestInputFileType(unittest.TestCase):
 
     def test_agrees_with_input_text_type(self):
         for fullpath in [
-            folder_nn3 / "example.in",
-            folder_nnp / "example.in",
+            folder_nn3 / "example.nn3",
+            folder_nnp / "example.nnp",
             folder_negf / "example.xml",
             folder_negf / "Minimal_InputFile.negf",
             folder_msb / "example.msb",
@@ -151,7 +151,7 @@ class TestInputFileType(unittest.TestCase):
     def test_reads_the_file_once(self):
         # the whole point of the change: detection is one open(), not one per product.
         # A file matching no product used to be the worst case -- all five probes ran.
-        fullpath = folder_nnp / "example.in"
+        fullpath = folder_nnp / "example.nnp"
         real_open = builtins.open
         opened = []
 

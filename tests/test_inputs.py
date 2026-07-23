@@ -127,7 +127,7 @@ class Test_nnp(unittest.TestCase):
 
     def test_text(self):
         fullpath_onlyvar = folder_nnp / "only_variables.in"
-        fullpath_example = folder_nnp / "example.in"
+        fullpath_example = folder_nnp / "example.nnp"
         file = InputFile(fullpath_onlyvar)
         text = file.text
 
@@ -240,7 +240,7 @@ class Test_nnp(unittest.TestCase):
         duplicated output is idempotent, so a parse-twice-and-compare check passes even
         when the tree is corrupt.
         """
-        fullpath = folder_nnp / "example.in"
+        fullpath = folder_nnp / "example.nnp"
         file = InputFile(fullpath, parse=True)
         rendered = str(file.content)
 
@@ -393,7 +393,7 @@ class Test_nn3(unittest.TestCase):
 
     def test_text(self):
         fullpath_onlyvar = folder_nn3 / "only_variables.in"
-        fullpath_example = folder_nn3 / "example.in"
+        fullpath_example = folder_nn3 / "example.nn3"
         file = InputFile(fullpath_onlyvar)
         text = file.text
 
@@ -910,9 +910,9 @@ class TestInputFileDispatch(unittest.TestCase):
         # every product must reach its own InputFile class.
         cases = [
             (folder_nnp / "only_variables.in", "nextnano++"),
-            (folder_nnp / "example.in", "nextnano++"),
+            (folder_nnp / "example.nnp", "nextnano++"),
             (folder_nn3 / "only_variables.in", "nextnano3"),
-            (folder_nn3 / "example.in", "nextnano3"),
+            (folder_nn3 / "example.nn3", "nextnano3"),
             (
                 Path("tests") / "datafiles" / "nextnano.NEGF" / "example.xml",
                 "nextnano.NEGF_classic",
@@ -937,7 +937,7 @@ class TestInputFileDispatch(unittest.TestCase):
         # __new__ used to swallow a *args it never forwarded, so the third positional --
         # `parse` in InputFileTemplate.__init__ -- was silently dropped: InputFile(p, None,
         # True) returned an unparsed file with .content None and raised nothing.
-        fullpath = folder_nnp / "example.in"
+        fullpath = folder_nnp / "example.nnp"
         file = InputFile(fullpath, None, True)
         self.assertTrue(file.parse)
         self.assertIsNotNone(file.content)
@@ -945,7 +945,7 @@ class TestInputFileDispatch(unittest.TestCase):
     def test_parse_passes_through_by_keyword(self):
         # the same parameter by its other spelling; this half always worked (it rode
         # **kwargs, which __new__ did forward), so it pins that the rewrite kept it.
-        fullpath = folder_nnp / "example.in"
+        fullpath = folder_nnp / "example.nnp"
         file = InputFile(fullpath, parse=True)
         self.assertTrue(file.parse)
         self.assertIsNotNone(file.content)
@@ -954,7 +954,7 @@ class TestInputFileDispatch(unittest.TestCase):
         # __new__ spells InputFileTemplate.__init__'s parameters out instead of taking
         # **kwargs, so a name that is not one of them must fail loudly, at __new__.
         with self.assertRaises(TypeError):
-            InputFile(folder_nnp / "example.in", bogus=1)
+            InputFile(folder_nnp / "example.nnp", bogus=1)
 
     def test_text_builds_from_a_string_without_reading_disk(self):
         # InputFile(text=...) used to be a silent no-op: __init__ only called load() when
@@ -1008,7 +1008,7 @@ class TestInputFileDispatch(unittest.TestCase):
                 return "hello"
 
         with self.assertRaises(TypeError) as ctx:
-            MyInput(folder_nnp / "example.in")
+            MyInput(folder_nnp / "example.nnp")
         self.assertIn("InputFileTemplate", str(ctx.exception))
 
     def test_subclassing_the_product_class_still_works(self):
@@ -1017,7 +1017,7 @@ class TestInputFileDispatch(unittest.TestCase):
             def my_helper(self):
                 return "hello"
 
-        file = MyNnpInput(folder_nnp / "example.in")
+        file = MyNnpInput(folder_nnp / "example.nnp")
         self.assertIsInstance(file, MyNnpInput)
         self.assertEqual(file.my_helper(), "hello")
         self.assertEqual(file.product, "nextnano++")

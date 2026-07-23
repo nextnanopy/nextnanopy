@@ -7,7 +7,7 @@ import pathlib
 # Input file is located on Github
 #+++++++++++++++++++++++++++++++++++++++++++++++++
 InputFolder = os.path.join(pathlib.Path(__file__).parent.resolve(), r'input files')
-filename = r'sweep_example.in'
+filename = r'sweep_example.nnp'
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++
