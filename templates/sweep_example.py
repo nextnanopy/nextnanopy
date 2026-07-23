@@ -1,34 +1,24 @@
-import sys,os
-import nextnanopy as nn
+from pathlib import Path
+
 import numpy as np
-import pathlib
 
-#+++++++++++++++++++++++++++++++++++++++++++++++++
-# Input file is located on Github
-#+++++++++++++++++++++++++++++++++++++++++++++++++
-InputFolder = os.path.join(pathlib.Path(__file__).parent.resolve(), r'input files')
-filename = r'sweep_example.nnp'
+import nextnanopy as nn
 
+# Prototype input file whose variables are swept. QW_WIDTH and QW_SEPARATION
+# set the geometry of the double quantum well.
+input_file = Path(__file__).parent / "input files" / "DoubleQuantumWell_6nm_demo.nnp"
 
-#+++++++++++++++++++++++++++++++++++++++++++++++++
-# Specify start value, end value, number of points
-#+++++++++++++++++++++++++++++++++++++++++++++++++
-SweepVariable1 = 'ALLOY'   # Al content in AlGaAs layer
-alloyX_start  = 0.2   
-alloyX_end    = 1.0
-alloyX_points = 2
+# Each variable maps to the values it should take; the sweep runs one
+# simulation per combination of the two.
+sweep_variables = {
+    "QW_WIDTH": np.linspace(4.0, 8.0, 3),  # width of both quantum wells (nm)
+    "QW_SEPARATION": np.linspace(2.0, 6.0, 3),  # separation of the wells (nm)
+}
 
-SweepVariable2 = 'SIZE'    # thickness of AlGaAs layer (nm)
-thickness_start = 3.0
-thickness_end   = 10.0
-thickness_points= 3
+sweep = nn.Sweep(sweep_variables, input_file)
+sweep.save_sweep(temp=True) # saves the sweep to a temporary directory
 
-
-
-#%%
-ListOfValues_alloyX = np.linspace(alloyX_start, alloyX_end, alloyX_points)
-ListOfValues_thickness = np.linspace(thickness_start, thickness_end, thickness_points)
-InputPath = os.path.join(InputFolder, filename)
-sweep = nn.Sweep({f'{SweepVariable1}':ListOfValues_alloyX, f'{SweepVariable2}':ListOfValues_thickness}, InputPath)
-sweep.save_sweep()
-sweep.execute_sweep(delete_input_files=True, overwrite=True)   # overwrite=True overwrites previous outputs with the same name
+# show log=False means that the log of each simulation is not printed to the console
+# by default the failed simulation does not raise an exception
+# but you can change this behavior with the `convergenceCheck` argument
+sweep.execute_sweep(show_log=False, convergenceCheck=True, convergence_check_mode="terminate")
