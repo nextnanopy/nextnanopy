@@ -1,3 +1,4 @@
+import tempfile
 import unittest
 import warnings
 from unittest import mock
@@ -598,9 +599,8 @@ class TestOutputs_negf(unittest.TestCase):
     def test_rest(self):
         files = [
             "example.log",
-            "example.in",
+            "Minimal_InputFile.negf",
             "Material_Database.xml",
-            "Convergence.txt",
         ]
         for file in files:
             self.assertRaises(
@@ -609,6 +609,16 @@ class TestOutputs_negf(unittest.TestCase):
                 folder_negf / file,
                 "nextnano.NEGF",
             )
+
+    def test_missing_file(self):
+        # An unsupported extension proves existence is checked before loader dispatch:
+        # the missing path raises FileNotFoundError, not NotImplementedError.
+        self.assertRaises(
+            FileNotFoundError,
+            outputs.DataFile,
+            folder_negf / "does_not_exist.in",
+            "nextnano.NEGF",
+        )
 
 
 # NEGF C# and NEGF C++ have identical outputs. Maybe no need to test.
@@ -1041,12 +1051,15 @@ class TestSingleLoad(unittest.TestCase):
         self.assertIsInstance(df, outputs.DataFile)
 
     def test_nn3_unsupported_txt_raises_notimplemented(self):
-        # nn3's _find_txt_loader built NotImplementedError without raising it,
-        # then hit NameError on the unbound 'loader'. The path never touches
-        # disk, so a nonexistent file is fine here.
-        for name in ["materials.txt", "total_charges.txt"]:
-            with self.assertRaises(NotImplementedError):
-                outputs.DataFile(folder_nn3 / name, product="nextnano3")
+        # nn3 maps a few .txt names to loaders and raises NotImplementedError for the
+        # rest. DataFile checks existence before dispatch, so the files must exist:
+        # write throwaway .txt files with unsupported names to a temp directory.
+        with tempfile.TemporaryDirectory() as tmp:
+            for name in ["materials.txt", "total_charges.txt", "nope.txt"]:
+                path = Path(tmp) / name
+                path.write_text("")
+                with self.assertRaises(NotImplementedError):
+                    outputs.DataFile(path, product="nextnano3")
 
 
 class TestFldMultiwordLabel(unittest.TestCase):

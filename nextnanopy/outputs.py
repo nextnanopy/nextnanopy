@@ -375,6 +375,8 @@ class DataFileTemplate(Output):
 
     def __init__(self, fullpath, product=None, **loader_kwargs):
         super().__init__(fullpath)
+        if not os.path.isfile(self.fullpath):
+            raise FileNotFoundError(f"No such file: {self.fullpath}")
         self.product = product
         self.load(**loader_kwargs)
 
