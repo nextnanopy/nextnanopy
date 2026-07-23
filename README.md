@@ -48,6 +48,7 @@ Do you want to help nextnanopy? Please send an email to [python@nextnano.com](ma
 
 <!-- cspell:disable-next-line -->
 - the nextnano.NEGF keyword argument `debug_ouptut_specifications` is now spelled `debug_output_specifications`. If you passed the old name, update it: because it reaches the command builder through `**kwargs`, the misspelled name is now accepted and ignored rather than raising, so a stale call silently stops passing `--debug` to the solver.
+- `DataFile` now raises `FileNotFoundError` when the path does not exist. Existence is checked before the loader is selected, so a missing or mistyped path always raises `FileNotFoundError` regardless of extension; previously a missing file whose extension had no loader (e.g. `.in`, `.log`, `.txt`) raised `NotImplementedError` instead, reporting the wrong problem.
 
 ## Version 1.2.0 (July 20th, 2026)
 
